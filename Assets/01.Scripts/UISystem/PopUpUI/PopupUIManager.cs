@@ -131,18 +131,18 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
     
     private void OpenSettingPopup()
     {
-        if (_SettingPopup != null)
-        {
-            _SettingPopup.gameObject.SetActive(true);
-            _activePopupLList.AddFirst(_SettingPopup);
-            RefreshAllPopupDepth();
-        }
+        // if (_SettingPopup != null)
+        // {
+        //     _SettingPopup.gameObject.SetActive(true);
+        //     _activePopupLList.AddFirst(_SettingPopup);
+        //     RefreshAllPopupDepth();
+        // }
     }
 
     public void CloseSettingPopup()
     {
-        _activePopupLList.Remove(_SettingPopup);
-        _SettingPopup.gameObject.SetActive(false);
-        RefreshAllPopupDepth();
+        // _activePopupLList.Remove(_SettingPopup);
+        // _SettingPopup.gameObject.SetActive(false);
+        // RefreshAllPopupDepth();
     }
 }

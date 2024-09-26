@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//위치 노드 Scene뷰에서 보이게 
 public class PathPoints : MonoBehaviour
 {
     public Color gizmoColor = Color.red;

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eba4c02ed862854e81e9fd9ba59bc39, type: 3}
+  m_Name: RecoveryRoom
+  m_EditorClassIdentifier: 
+  buildingId: 6
+  name: "\uBCD1\uC2E4"
+  type: 5
+  baseCostEnergy: 30
+  baseCostFood: 30
+  baseCostFuel: 10
+  baseCostWorkforce: 10
+  upgradeMultiplier: 2
+  maxLevel: 0
+  productionOutput: 0
+  description: "\"\uB514\uBC84\uD504 \uC81C\uAC70"
+  prefabPath: " \uBD80\uC0C1 \uCE58\uB8CC\uB97C \uC704\uD55C \uBCD1\uC6D0\""

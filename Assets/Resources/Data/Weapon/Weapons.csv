@@ -1,0 +1,7 @@
+﻿Weapon_Id,Name,Type,Damage,Attack_Speed,Magazines,Prefab_Path,Sound_Path
+1,권총,Pistol,30,3,15,Assets/Prefabs/Pistol.prefab,Assets/Sounds/PistolShot.wav
+2,자동소총,Assualt,15,10,30,,
+3,저격소총,Sniper,75,1.5,5,,
+4,샷건,Shotgun,50,1,7,,
+5,런처,Launcher,100,0.5,3,,
+6,광선검,Sword,40,2.5,0,,

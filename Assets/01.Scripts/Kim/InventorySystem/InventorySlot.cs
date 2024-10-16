@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class InventorySlot
 {
     public CardType[] AllowedItems = new CardType[0];
@@ -46,7 +46,7 @@ public class InventorySlot
     
     public bool CanPlaceInSlot(CardObject itemObject)
     {
-        if (AllowedItems.Length <= 0 || itemObject == null || itemObject.data.Id < 0)
+        if (AllowedItems.Length <= 0 || itemObject == null || itemObject.cardData.Id < 0)
             return true;
         
         for (int i = 0; i < AllowedItems.Length; i++)

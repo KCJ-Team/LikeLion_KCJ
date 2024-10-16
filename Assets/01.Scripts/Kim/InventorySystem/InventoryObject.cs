@@ -6,19 +6,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
-    //Public Field
-    public string savePath;
     public CardDatabase database;
     public InventoryType invenType;
     public CardType type;
 
     public InventorySlot[] GetSlots => Container.Slots;
     
-    //Private Field
     [SerializeField] private Inventory Container = new Inventory();
     
-    
-    //일반 메소드
     public bool AddItem(Card card, int amount)
     {
         if (EmptySlotCount <= 0) return false;
@@ -69,7 +64,7 @@ public class InventoryObject : ScriptableObject
     {
         for (int i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i].card.Id == item.data.Id)
+            if (GetSlots[i].card.Id == item.cardData.Id)
             {
                 return true;
             }

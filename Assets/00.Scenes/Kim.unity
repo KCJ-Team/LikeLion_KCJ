@@ -2996,8 +2996,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0ea3163c0ad3a45b52c05136712175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: a0dc0fd442d8dbc47a76bdd32a695e70, type: 2}
   inventory: {fileID: 11400000, guid: 71f46ef98d566734ab3e136541e8c918, type: 2}
-  card: {fileID: 11400000, guid: 89aa97d99909c8b4983a61b27b9415d9, type: 2}
+  equipment: {fileID: 11400000, guid: bdfea5a70f038e941956793be8b4a503, type: 2}
+  card1: {fileID: 11400000, guid: bb46793e81c086346bf1a579568d5682, type: 2}
+  card2: {fileID: 11400000, guid: 133f8744d2a5c7c4aa452d699d5eb4bb, type: 2}
 --- !u!81 &3221803087202811273
 AudioListener:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@ public class Inventory
 
     public bool ContainsItem(CardObject cardObject)
     {
-        return Array.Find(Slots, i => i.card.Id == cardObject.data.Id) != null;
+        return Array.Find(Slots, i => i.card.Id == cardObject.cardData.Id) != null;
     }
 
     public bool ContainsItem(int id)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class BaseBuilding : MonoBehaviour, IBuilding
 {
+    [SerializeField]
     private BuildingData buildingData; // 빌딩의 ScriptableObject 데이터
     protected int currentLevel = 0; // 0, 1, 2(최종 업그레이드)
 
@@ -39,5 +40,10 @@ public abstract class BaseBuilding : MonoBehaviour, IBuilding
     public BuildingData GetBuildingData()
     {
         return buildingData;
+    }
+    
+    public BuildingData SetBuildingData(BuildingData aBuildingData)
+    {
+        return buildingData = aBuildingData;
     }
 }

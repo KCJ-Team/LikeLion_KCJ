@@ -23,4 +23,5 @@ MonoBehaviour:
   maxLevel: 2
   productionOutput: 20
   description: "\uC5D0\uB108\uC9C0\uB97C \uC0DD\uC0B0\uD558\uB294 \uBC1C\uC804\uC2E4"
-  prefabPath: 
+  level1ImagePath: Data/Building/PowerPlant_Level1
+  level2ImagePath: Data/Building/PowerPlant_Level2

@@ -23,4 +23,5 @@ MonoBehaviour:
   maxLevel: 0
   productionOutput: 20
   description: "\"\uC5F0\uAD6C\uD3EC\uC778\uD2B8\uB97C \uC0DD\uC0B0\uD558\uACE0"
-  prefabPath: " \uC5F0\uAD6C\uB97C \uD1B5\uD574 \uAE30\uC220\uC744 \uC5C5\uADF8\uB808\uC774\uB4DC\""
+  level1ImagePath: " \uC5F0\uAD6C\uB97C \uD1B5\uD574 \uAE30\uC220\uC744 \uC5C5\uADF8\uB808\uC774\uB4DC\""
+  level2ImagePath: 

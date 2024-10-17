@@ -23,4 +23,5 @@ MonoBehaviour:
   maxLevel: 2
   productionOutput: 10
   description: "\uC77C\uAFBC\uB4E4\uC744 \uC218\uC6A9\uD560 \uC218 \uC788\uB294 \uC219\uC18C"
-  prefabPath: 
+  level1ImagePath: 
+  level2ImagePath: 

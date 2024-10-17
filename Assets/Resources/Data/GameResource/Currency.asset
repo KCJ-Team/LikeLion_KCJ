@@ -16,5 +16,5 @@ MonoBehaviour:
   resourceName: "\uC7AC\uD654"
   resourceType: 4
   icon: {fileID: 0}
-  currentAmount: 0
+  currentAmount: 999
   maxAmount: 999

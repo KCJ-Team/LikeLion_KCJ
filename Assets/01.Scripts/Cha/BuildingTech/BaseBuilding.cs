@@ -5,45 +5,49 @@ using UnityEngine;
 public abstract class BaseBuilding : MonoBehaviour, IBuilding
 {
     [SerializeField]
-    private BuildingData buildingData; // 빌딩의 ScriptableObject 데이터
-    protected int currentLevel = 0; // 0, 1, 2(최종 업그레이드)
+    private Building building;
 
     public virtual void Build()
     {
-        Debug.Log(buildingData.name + " has been built.");
+        Debug.Log(building.BuildingData.name + " has been built.");
     }
 
-    public virtual void  Upgrade()
+    public virtual void Upgrade()
     {
         if (CanUpgrade())
         {
-            currentLevel++;
-            Debug.Log(buildingData.name + " upgraded to level " + currentLevel);
+            building.CurrentLevel++;
+            Debug.Log(building.BuildingData.name + " upgraded to level " + building.CurrentLevel);
         }
         else
         {
-            Debug.Log("Cannot upgrade " + buildingData.name);
+            Debug.Log("Cannot upgrade " + building.BuildingData.name);
         }
     }
     
     public bool CanUpgrade()
     {
-        return currentLevel < buildingData.maxLevel;
+        return building.CurrentLevel < building.BuildingData.maxLevel;
     }
 
     // 현재 빌딩의 생산량 반환
     public virtual int GetProductOutput()
     {
-        return buildingData.productionOutput;
-    }
-
-    public BuildingData GetBuildingData()
-    {
-        return buildingData;
+        return building.BuildingData.productionOutput;
     }
     
-    public BuildingData SetBuildingData(BuildingData aBuildingData)
+    public int GetCurrentProductOutput()
     {
-        return buildingData = aBuildingData;
+        return building.CurretProductionOutput;
+    }
+
+    public Building GetBuilding()
+    {
+        return building;
+    }
+    
+    public BuildingData GetBuildingData()
+    {
+        return building.BuildingData;
     }
 }

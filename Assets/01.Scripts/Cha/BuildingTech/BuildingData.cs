@@ -25,7 +25,6 @@ public class BuildingData : ScriptableObject
     public int baseCostFuel;
     public int baseCostWorkforce;
     public float upgradeMultiplier; // 업그레이드 시 적용할 배율
-    public int currentLevel; // 업그레이드 시 적용할 배율
     public int maxLevel; // 업그레이드 가능 최대 레벨
     public int productionOutput; // 생산 자원량 (기본 레벨 기준, 업그레이드 시 배율 적용)
     public string description; // 빌딩 설명

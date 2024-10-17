@@ -9,11 +9,14 @@ public interface IBuildingState
     void Build(BuildingStateMachine stateMachine, BaseBuilding buildingPrefab);
 }
 
+// 레벨 0은 아무것도 X, 비활성화, Build를 누르면 그림만 활성화하고 생산 시작
+
 public class Level0State : IBuildingState
 {
     public void Build(BuildingStateMachine stateMachine, BaseBuilding buildingPrefab)
     {
         // Build시 자원 소비 로직
+        Building building = buildingPrefab.GetBuilding();
         BuildingData buildingData = buildingPrefab.GetBuildingData();
 
         if (GameResourceManager.Instance.ConsumeResources(
@@ -25,9 +28,11 @@ public class Level0State : IBuildingState
             // 이미지 활성화 (Level 0에서 Level 1로 전환) => 나중엔 불투명으로 ㄱ.. 
             buildingPrefab.gameObject.GetComponent<Image>().enabled = true;
             
-            // 현재 레벨 증가
-            buildingData.currentLevel++;
-
+            // 생산량 표시
+            building.CurretProductionOutput = buildingData.productionOutput;
+            Debug.Log($"Production output updated to {building.CurretProductionOutput}");
+            BuildingManager.Instance.UpdateEnergyProductUI(building.CurretProductionOutput);
+            
             stateMachine.ChangeState(new Level1State()); // 상태 전환
         }
         else
@@ -41,6 +46,7 @@ public class Level1State : IBuildingState
 {
     public void Build(BuildingStateMachine stateMachine, BaseBuilding buildingPrefab)
     {
+        Building building = buildingPrefab.GetBuilding();
         BuildingData buildingData = buildingPrefab.GetBuildingData();
 
         // 4가지 자원을 한 번에 소비 (업그레이드 배율 적용)
@@ -56,9 +62,14 @@ public class Level1State : IBuildingState
             string imagePath = buildingData.level1ImagePath;
             stateMachine.ChangeSpriteImage(buildingPrefab, imagePath);
             
+            // 현재 생산량에 업그레이드 배율 적용 (레벨 1에서는 1배)
+            building.CurretProductionOutput = (int)(buildingData.productionOutput * buildingData.upgradeMultiplier);
+            Debug.Log($"Production output updated to {building.CurretProductionOutput}");
+            BuildingManager.Instance.UpdateEnergyProductUI(building.CurretProductionOutput);
+            
             // 현재 레벨 증가
-            buildingData.currentLevel++;
-
+            building.CurrentLevel++;
+            
             stateMachine.ChangeState(new Level2State()); // 상태 전환
         }
         else
@@ -72,10 +83,11 @@ public class Level2State : IBuildingState
 {
     public void Build(BuildingStateMachine stateMachine, BaseBuilding buildingPrefab)
     {
+        Building building = buildingPrefab.GetBuilding();
         BuildingData buildingData = buildingPrefab.GetBuildingData();
         
         // 현재 레벨이 maxLevel에 도달했는지 확인
-        if (buildingData.currentLevel >= buildingData.maxLevel)
+        if (building.CurrentLevel >= buildingData.maxLevel)
         {
             Debug.Log("Building is already at max level (Level 2).");
             return;  // 더 이상 업그레이드 불가
@@ -93,6 +105,14 @@ public class Level2State : IBuildingState
             // 이미지 전환
             string imagePath = buildingData.level2ImagePath;
             stateMachine.ChangeSpriteImage(buildingPrefab, imagePath);
+            
+            // 생산량에 업그레이드 배율 적용 (레벨 2에서는 2배)
+            building.CurretProductionOutput = (int)(buildingData.productionOutput * buildingData.upgradeMultiplier * 2);
+            Debug.Log($"Production output updated to {building.CurretProductionOutput}");
+            BuildingManager.Instance.UpdateEnergyProductUI(building.CurretProductionOutput);
+            
+            // 현재 레벨 증가
+            building.CurrentLevel++;
         }
         else
         {
@@ -107,7 +127,8 @@ public class Level2State : IBuildingState
 // 빌딩 UI 관리 FSM
 public class BuildingStateMachine
 {
-    [SerializeField] private IBuildingState currentState;
+    [SerializeField] 
+    private IBuildingState currentState;
 
     public BuildingStateMachine()
     {

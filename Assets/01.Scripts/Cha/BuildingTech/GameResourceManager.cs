@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class GameResourceManager : DD_Singleton<GameResourceManager>
 {
-    [SerializeField]
-    private SerializedDictionary<ResourceType, ResourceData> resources = new();
+    public SerializedDictionary<ResourceType, GameResource> resources = new();
     
     // 각 자원의 UI 텍스트
     public TextMeshProUGUI energyText;
@@ -15,7 +14,7 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
     public TextMeshProUGUI fuelText;
     public TextMeshProUGUI workforceText;
     public TextMeshProUGUI currencyText;
-
+    
     private void Start()
     {
         UpdateResourceUI();
@@ -30,13 +29,13 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
         workforceText.text = $"Workforce: {GetResourceAmount(ResourceType.Workforce)}";
         currencyText.text = $"Currency: {GetResourceAmount(ResourceType.Currency)}";
     }
-
+    
     // 특정 리소스 타입의 현재 수량을 가져옴
     public int GetResourceAmount(ResourceType type)
     {
-        if (resources.TryGetValue(type, out ResourceData resource))
+        if (resources.TryGetValue(type, out GameResource resource))
         {
-            return resource.currentAmount;
+            return resource.CurrentAmount;
         }
 
         Debug.LogWarning("Resource type not found: " + type);
@@ -46,15 +45,16 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
     // 특정 리소스 타입에 양을 추가하는 메서드
     public void AddResource(ResourceType type, int amount)
     {
-        if (resources.TryGetValue(type, out ResourceData resource))
+        if (resources.TryGetValue(type, out GameResource resource))
         {
-            resource.currentAmount += amount;
-            if (resource.currentAmount > resource.maxAmount)
+            resource.CurrentAmount += amount;
+            
+            if (resource.CurrentAmount > resource.ResourceData.maxAmount)
             {
-                resource.currentAmount = resource.maxAmount; // 최대값 초과 방지
+                resource.CurrentAmount = resource.ResourceData.maxAmount; // 최대값 초과 방지
             }
 
-            Debug.Log($"Added {amount} {resource.resourceName}. Current amount: {resource.currentAmount}");
+            Debug.Log($"Added {amount} {resource.ResourceData.resourceName}. Current amount: {resource.CurrentAmount}");
             UpdateResourceUI();
         }
     }
@@ -62,10 +62,10 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
     // 단일 자원 소비하는 메서드
     public bool ConsumeResource(ResourceType type, int amount)
     {
-        if (resources.TryGetValue(type, out ResourceData resource) && resource.currentAmount >= amount)
+        if (resources.TryGetValue(type, out GameResource resource) && resource.CurrentAmount >= amount)
         {
-            resource.currentAmount -= amount;
-            Debug.Log($"Consumed {amount} {resource.resourceName}. Remaining amount: {resource.currentAmount}");
+            resource.CurrentAmount -= amount;
+            Debug.Log($"Consumed {amount} {resource.ResourceData.resourceName}. Remaining amount: {resource.CurrentAmount}");
             UpdateResourceUI();
             return true;
         }
@@ -97,22 +97,5 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
             return false;
         }
     }
-
-    // 모든 자원의 상태를 출력
-    public void PrintAllResources()
-    {
-        foreach (var resource in resources)
-        {
-            Debug.Log($"{resource.Value.resourceName}: {resource.Value.currentAmount}/{resource.Value.maxAmount}");
-        }
-    }
-
-    // 자원을 Dictionary에 추가하는 초기화 로직 (필요시 호출)
-    public void InitializeResources(List<ResourceData> resourceDataList)
-    {
-        foreach (var resourceData in resourceDataList)
-        {
-            resources[resourceData.resourceType] = resourceData;
-        }
-    }
+    
 } // end class

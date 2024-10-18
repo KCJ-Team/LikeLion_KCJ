@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eba4c02ed862854e81e9fd9ba59bc39, type: 3}
+  m_Name: FuelPlant
+  m_EditorClassIdentifier: 
+  buildingId: 4
+  name: "\uC5F0\uB8CC\uC2E4"
+  type: 3
+  baseCostEnergy: 15
+  baseCostFood: 15
+  baseCostFuel: 10
+  baseCostWorkforce: 10
+  upgradeMultiplier: 2
+  maxLevel: 2
+  productionOutput: 20
+  description: "\uD0D0\uD5D8 \uC2DC \uAE30\uB3D9\uD560 \uC218 \uC788\uB294 \uC5F0\uB8CC\uC0DD\uC0B0"
+  level1ImagePath: 
+  level2ImagePath: 

@@ -30,6 +30,7 @@ public class TempPlayer : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
+            //인벤토리에 추가하는 방법
             inventory.AddItem(new Card(card1), 1);
         }
         
@@ -69,7 +70,7 @@ public class TempPlayer : MonoBehaviour
                 switch (slot.AllowedItems[0])
                 {
                     case CardType.Weapon :
-                        playerData.currentWeapon = slot.GetItemObject().characterDisplay;
+                        //playerData.currentWeapon = slot.GetItemObject().characterDisplay;
                         break;
                 }
             }

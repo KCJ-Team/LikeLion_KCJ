@@ -1,12 +1,20 @@
 using UnityEngine;
 
-// 무기 카드 오브젝트 클래스
-[CreateAssetMenu(fileName = "New WeaponCard", menuName = "Inventory System/Cards/WeaponCard")]
+[CreateAssetMenu(fileName = "New Weapon", menuName = "Inventory System/Cards/Weapon")]
 public class WeaponCardObject : CardObject
 {
-    public WeaponData weaponData; // 무기 관련 데이터
-
-    // 무기 카드 인스턴스 생성 메서드
+    // 무기 속성
+    public WeaponGrade grade;
+    public WeaponType weaponType;
+    
+    public float attackSpeed;
+    public float damage;
+    
+    public GameObject projectilePrefab; // 발사체 프리팹 (근접 무기는 null)
+    public GameObject effectPrefab; // 공격 이펙트 프리팹
+    
+    
+    // Card 클래스의 CreateCard 메서드를 오버라이드
     public override Card CreateCard()
     {
         return new WeaponCard(this);

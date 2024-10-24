@@ -17,8 +17,10 @@ MonoBehaviour:
     type: 3}
   stackable: 0
   type: 1
-  cardData:
-    Name: 
-    Id: 0
-  boneNames: []
-  weaponData: {fileID: 11400000, guid: 091fe1a7211b3ef4780bea701d2ec863, type: 2}
+  grade: 0
+  weaponType: 2
+  attackSpeed: 1
+  damage: 0
+  projectilePrefab: {fileID: 6628374992638961440, guid: 60e828fec411ae74bbab3a856df7bfe0,
+    type: 3}
+  effectPrefab: {fileID: 0}

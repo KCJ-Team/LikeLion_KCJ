@@ -25,23 +25,18 @@ public class Card
 // 무기 카드 클래스
 public class WeaponCard : Card
 {
-    public WeaponData WeaponData { get; private set; }
+    public WeaponCardObject WeaponData { get; private set; }
 
     public WeaponCard(WeaponCardObject weaponCard) : base(weaponCard)
     {
-        WeaponData = weaponCard.weaponData;
-    }
-
-    public void Use()
-    {
-        WeaponData.Use();
+        WeaponData = weaponCard;
     }
 }
 
 // 스킬 카드 클래스
 public class SkillCard : Card
 {
-    public SkillData SkillData { get; private set; }
+    /*public SkillData SkillData { get; private set; }
 
     public SkillCard(SkillCardObject skillCard) : base(skillCard)
     {
@@ -51,13 +46,13 @@ public class SkillCard : Card
     public void Use()
     {
         SkillData.Use();
-    }
+    }*/
 }
 
 // 버프 카드 클래스
 public class BuffCard : Card
 {
-    public BuffData BuffData { get; private set; }
+    /*public BuffData BuffData { get; private set; }
 
     public BuffCard(BuffCardObject buffCard) : base(buffCard)
     {
@@ -67,13 +62,13 @@ public class BuffCard : Card
     public void Apply()
     {
         BuffData.Apply();
-    }
+    }*/
 }
 
 // 아이템 카드 클래스
 public class ItemCard : Card
 {
-    public ItemData ItemData { get; private set; }
+    /*public ItemData ItemData { get; private set; }
 
     public ItemCard(ItemCardObject itemCard) : base(itemCard)
     {
@@ -83,5 +78,5 @@ public class ItemCard : Card
     public void Use()
     {
         ItemData.Use();
-    }
+    }*/
 }

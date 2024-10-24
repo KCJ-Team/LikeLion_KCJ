@@ -25,6 +25,11 @@ public class InventorySlot
     
     public CardObject GetItemObject()
     {
+        if (parent == null || parent.inventory == null || parent.inventory.database == null)
+        {
+            Debug.LogWarning("InventorySlot: parent, inventory, or database is null");
+            return null;
+        }
         return card.Id >= 0 ? parent.inventory.database.CardObjects[card.Id] : null;
     }
     

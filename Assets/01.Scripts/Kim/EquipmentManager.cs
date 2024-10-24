@@ -32,6 +32,7 @@ public class EquipmentManager : MonoBehaviour
     private void UpdateEquipment()
     {
         var weaponSlot = playerData.equipment.GetSlots.FirstOrDefault();
+        var QskillSlot = playerData.equipment.GetSlots[1];
         
         if (weaponSlot != null)
         {
@@ -46,6 +47,16 @@ public class EquipmentManager : MonoBehaviour
             {
                 playerData.UnequipWeapon();
                 weaponManager.UpdateWeapon();
+            }
+        }
+
+        if (QskillSlot != null)
+        {
+            var itemObject = QskillSlot.GetItemObject();
+            
+            if (itemObject is SkillCardObject skillCard)
+            {
+                playerData.EquipQSkill(skillCard);
             }
         }
     }

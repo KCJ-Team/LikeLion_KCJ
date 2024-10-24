@@ -18,5 +18,6 @@ MonoBehaviour:
   MoveSpeed: 5
   RotationSpeed: 10
   currentWeapon: {fileID: 0}
+  currentQSkill: {fileID: 11400000, guid: 477c98f24f1ff934497afdf0d7392461, type: 2}
   inventory: {fileID: 11400000, guid: 71f46ef98d566734ab3e136541e8c918, type: 2}
   equipment: {fileID: 11400000, guid: bdfea5a70f038e941956793be8b4a503, type: 2}

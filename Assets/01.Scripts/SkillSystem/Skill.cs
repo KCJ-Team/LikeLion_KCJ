@@ -4,13 +4,13 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
-    protected Character owner;
+    protected CharacterController owner;
     protected SkillState currentState;
     
     [SerializeField] protected float cooldown;
     protected float currentCooldown;
     
-    public virtual void Initialize(Character owner)
+    public virtual void Initialize(CharacterController owner)
     {
         this.owner = owner;
         currentCooldown = 0;
@@ -31,16 +31,17 @@ public abstract class Skill : MonoBehaviour
     {
         if (currentState != null)
             currentState.ExitState();
-            
+        
         currentState = newState;
-        currentState.EnterState();
+        if (currentState != null)
+            currentState.EnterState();
     }
     
     protected virtual void Update()
     {
         if (currentCooldown > 0)
             currentCooldown -= Time.deltaTime;
-            
+        
         if (currentState != null)
             currentState.UpdateState();
     }

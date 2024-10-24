@@ -6,14 +6,15 @@ public class CharacterController : MonoBehaviour
 {
     public PlayerData playerData;
     public WeaponManager weaponManager;
+    [SerializeField] private Skill currentSkill;
     
     private Vector3 movement;
     private Transform cameraTransform;
+    private Vector3 mouseDirection;
     
     public CardObject card1;
-
-    private Vector3 mouseDirection;
-
+    public CardObject card2;
+    
     private void Start()
     {
         cameraTransform = Camera.main.transform;
@@ -41,6 +42,23 @@ public class CharacterController : MonoBehaviour
         {
             //인벤토리에 추가하는 방법
             playerData.inventory.AddItem(new Card(card1), 1);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            //인벤토리에 추가하는 방법
+            playerData.inventory.AddItem(new Card(card2), 1);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Q) && playerData.currentQSkill != null)
+        {
+            // 스킬 프리팹을 생성하고 스킬 컴포넌트를 가져옴
+            GameObject skillObject = Instantiate(playerData.currentQSkill.skillData.gameObject, transform.position, transform.rotation);
+            Skill skill = skillObject.GetComponent<Skill>();
+        
+            // 스킬 초기화 및 실행
+            SetSkill(skill);
+            UseSkill();
         }
     }
 
@@ -91,6 +109,21 @@ public class CharacterController : MonoBehaviour
             {
                 transform.rotation = Quaternion.LookRotation(mouseDirection);
             }
+        }
+    }
+    
+    //스킬
+    public void SetSkill(Skill skill)
+    {
+        currentSkill = skill;
+        skill.Initialize(this);
+    }
+    
+    public void UseSkill()
+    {
+        if (currentSkill != null)
+        {
+            currentSkill.Execute();
         }
     }
 }

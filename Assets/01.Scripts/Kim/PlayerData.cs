@@ -13,6 +13,7 @@ public class PlayerData : ScriptableObject
     
     // 현재 장착한 장비 및 인벤토리, equipment 데이터
     public WeaponCardObject currentWeapon;
+    public SkillCardObject currentQSkill;
     public InventoryObject inventory;
     public InventoryObject equipment;
     
@@ -27,5 +28,15 @@ public class PlayerData : ScriptableObject
     public void UnequipWeapon()
     {
         currentWeapon = null;
+    }
+
+    public void EquipQSkill(SkillCardObject skill)
+    {
+        currentQSkill = skill;
+    }
+
+    public void UnequipSkill()
+    {
+        currentQSkill = null;
     }
 }

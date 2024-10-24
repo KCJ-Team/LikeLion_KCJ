@@ -17,6 +17,7 @@ public class MissileBombardment : Skill
     
     public void LaunchMissile(Vector3 targetPosition)
     {
+        Debug.Log("미사일 발사");
         // 미사일 스폰 위치 (플레이어 위 10유닛)
         Vector3 spawnPosition = transform.position + Vector3.forward * 5f + Vector3.up * 5f;
         

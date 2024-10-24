@@ -2055,9 +2055,6 @@ GameObject:
   - component: {fileID: 2133982663}
   - component: {fileID: 2133982662}
   - component: {fileID: 2133982667}
-  - component: {fileID: 2133982670}
-  - component: {fileID: 2133982669}
-  - component: {fileID: 2133982668}
   m_Layer: 0
   m_Name: PlayerSample
   m_TagString: Untagged
@@ -2163,61 +2160,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133982657}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8dd88de4e7c81194183ae947d8d3a624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: a0dc0fd442d8dbc47a76bdd32a695e70, type: 2}
   weaponManager: {fileID: 1360121522}
+  currentSkill: {fileID: 0}
   card1: {fileID: 11400000, guid: bb46793e81c086346bf1a579568d5682, type: 2}
---- !u!114 &2133982668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133982657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c54bc1b9bfc4997429fbbc1ceb83223c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2133982669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133982657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fddee8f9931c9b4c8fb8222bba612e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldown: 5
-  missilePrefab: {fileID: 5211020416672118385, guid: 9808bdbee24a94a47b55b84527f42815,
-    type: 3}
-  missileCount: 1
-  damage: 50
-  missileSpeed: 20
-  explosionRadius: 5
-  spreadRadius: 5
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 128
---- !u!114 &2133982670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133982657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0f2cc4a7954188469fe2306419276df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  card2: {fileID: 11400000, guid: 477c98f24f1ff934497afdf0d7392461, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

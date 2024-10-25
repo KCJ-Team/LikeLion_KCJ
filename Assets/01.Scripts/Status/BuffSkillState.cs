@@ -14,7 +14,7 @@ public class BuffSkillState : SkillState
     
     public override void EnterState()
     {
-        targetStatus = skill.GetComponent<Status>();
+        targetStatus = GameManager.Instance.Player.GetComponent<Status>();
         
         if (targetStatus != null)
         {

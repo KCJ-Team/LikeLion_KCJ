@@ -33,6 +33,8 @@ public class EquipmentManager : MonoBehaviour
     {
         var weaponSlot = playerData.equipment.GetSlots.FirstOrDefault();
         var QskillSlot = playerData.equipment.GetSlots[1];
+        var EskillSlot = playerData.equipment.GetSlots[2];
+        var BuffskillSlot = playerData.equipment.GetSlots[3];
         
         if (weaponSlot != null)
         {
@@ -57,6 +59,26 @@ public class EquipmentManager : MonoBehaviour
             if (itemObject is SkillCardObject skillCard)
             {
                 playerData.EquipQSkill(skillCard);
+            }
+        }
+        
+        if (EskillSlot != null)
+        {
+            var itemObject = EskillSlot.GetItemObject();
+            
+            if (itemObject is SkillCardObject skillCard)
+            {
+                playerData.EquipQSkill(skillCard);
+            }
+        }
+        
+        if (BuffskillSlot != null)
+        {
+            var itemObject = BuffskillSlot.GetItemObject();
+            
+            if (itemObject is BuffCardObject buffCard)
+            {
+                playerData.EquipBuffSkill(buffCard);
             }
         }
     }

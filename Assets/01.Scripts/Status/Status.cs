@@ -1,36 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Stats
-{
-    //추후에 PlayerData에서 가져오기
-    public float maxHealth = 100f;
-    public float moveSpeed = 5f;
-    public float attackPower = 10f;
-    public float defense = 5f;
-}
-
-// 캐릭터의 스탯과 상태를 관리하는 클래스
 public class Status : MonoBehaviour
 {
     [SerializeField]
-    private Stats baseStats;
-    private Stats currentStats;
-    
-    private float currentHealth;
+    private PlayerData playerData;
     private Dictionary<string, Buff> activeBuffs = new Dictionary<string, Buff>();
     
-    private void Awake()
-    {
-        // 초기 스탯 설정
-        currentStats = new Stats();
-        ResetStats();
-    }
+    private float currentHealth;
     
     private void Start()
     {
-        currentHealth = currentStats.maxHealth;
+        currentHealth = playerData.HP;
     }
     
     private void Update()
@@ -56,15 +37,6 @@ public class Status : MonoBehaviour
         {
             RemoveBuff(buffId);
         }
-    }
-    
-    // 스탯 초기화
-    public void ResetStats()
-    {
-        currentStats.maxHealth = baseStats.maxHealth;
-        currentStats.moveSpeed = baseStats.moveSpeed;
-        currentStats.attackPower = baseStats.attackPower;
-        currentStats.defense = baseStats.defense;
     }
     
     // 버프 적용
@@ -98,16 +70,18 @@ public class Status : MonoBehaviour
             switch (effect.type)
             {
                 case BuffType.MoveSpeed:
-                    currentStats.moveSpeed *= (1 + effect.value);
+                    playerData.MoveSpeed *= (1 + effect.value);
                     break;
                 case BuffType.MaxHealth:
-                    currentStats.maxHealth *= (1 + effect.value);
+                    playerData.HP *= (1 + effect.value);
                     break;
                 case BuffType.AttackPower:
-                    currentStats.attackPower *= (1 + effect.value);
+                    // AttackPower가 PlayerData에 없다면 추가 필요
+                    // playerData.AttackPower *= (1 + effect.value);
                     break;
                 case BuffType.Defense:
-                    currentStats.defense *= (1 + effect.value);
+                    // Defense가 PlayerData에 없다면 추가 필요
+                    // playerData.Defense *= (1 + effect.value);
                     break;
             }
         }
@@ -121,25 +95,25 @@ public class Status : MonoBehaviour
             switch (effect.type)
             {
                 case BuffType.MoveSpeed:
-                    currentStats.moveSpeed /= (1 + effect.value);
+                    playerData.MoveSpeed /= (1 + effect.value);
                     break;
                 case BuffType.MaxHealth:
-                    currentStats.maxHealth /= (1 + effect.value);
+                    playerData.HP /= (1 + effect.value);
                     break;
                 case BuffType.AttackPower:
-                    currentStats.attackPower /= (1 + effect.value);
+                    // AttackPower가 PlayerData에 없다면 추가 필요
+                    // playerData.AttackPower /= (1 + effect.value);
                     break;
                 case BuffType.Defense:
-                    currentStats.defense /= (1 + effect.value);
+                    // Defense가 PlayerData에 없다면 추가 필요
+                    // playerData.Defense /= (1 + effect.value);
                     break;
             }
         }
     }
     
     // 현재 스탯 가져오기
-    public float GetCurrentMoveSpeed() => currentStats.moveSpeed;
-    public float GetCurrentMaxHealth() => currentStats.maxHealth;
-    public float GetCurrentAttackPower() => currentStats.attackPower;
-    public float GetCurrentDefense() => currentStats.defense;
+    public float GetCurrentMoveSpeed() => playerData.MoveSpeed;
+    public float GetCurrentMaxHealth() => playerData.HP;
     public float GetCurrentHealth() => currentHealth;
 }

@@ -7,6 +7,9 @@ public class CharacterController : MonoBehaviour
     public PlayerData playerData;
     public WeaponManager weaponManager;
     [SerializeField] private Skill currentSkill;
+    [SerializeField] private BuffSkill currentBuff;
+    public float currentSpeed;
+    private Status _status;
     
     private Vector3 movement;
     private Transform cameraTransform;
@@ -50,14 +53,11 @@ public class CharacterController : MonoBehaviour
             playerData.inventory.AddItem(new Card(card2), 1);
         }
         
-        if (Input.GetKeyDown(KeyCode.Q) && playerData.currentQSkill != null)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && playerData.currentBuff != null)
         {
-            // 스킬 프리팹을 생성하고 스킬 컴포넌트를 가져옴
-            GameObject skillObject = Instantiate(playerData.currentQSkill.skillData.gameObject, transform.position, transform.rotation);
-            Skill skill = skillObject.GetComponent<Skill>();
-        
-            // 스킬 초기화 및 실행
-            SetSkill(skill);
+            GameObject buffObject = Instantiate(playerData.currentBuff.buffData.gameObject, transform.position, transform.rotation);
+            Skill buffSkill = buffObject.GetComponent<Skill>();
+            SetSkill(buffSkill);
             UseSkill();
         }
     }
@@ -119,11 +119,25 @@ public class CharacterController : MonoBehaviour
         skill.Initialize(this);
     }
     
+    public void SetBuff(BuffSkill buff)
+    {
+        currentBuff = buff;
+        buff.Initialize(this);
+    }
+    
     public void UseSkill()
     {
         if (currentSkill != null)
         {
             currentSkill.Execute();
+        }
+    }
+    
+    public void UseBuff()
+    {
+        if (currentBuff != null)
+        {
+            currentBuff.Execute();
         }
     }
 }

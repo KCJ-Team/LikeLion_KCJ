@@ -1868,6 +1868,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1804725841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1804725843}
+  - component: {fileID: 1804725842}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1804725842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804725841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902ebae479050e044a4d2cb32be98deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 2133982657}
+--- !u!4 &1804725843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804725841}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1824265492
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,6 +2100,7 @@ GameObject:
   - component: {fileID: 2133982663}
   - component: {fileID: 2133982662}
   - component: {fileID: 2133982667}
+  - component: {fileID: 2133982668}
   m_Layer: 0
   m_Name: PlayerSample
   m_TagString: Untagged
@@ -2168,8 +2214,23 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: a0dc0fd442d8dbc47a76bdd32a695e70, type: 2}
   weaponManager: {fileID: 1360121522}
   currentSkill: {fileID: 0}
+  currentBuff: {fileID: 0}
+  currentSpeed: 0
   card1: {fileID: 11400000, guid: bb46793e81c086346bf1a579568d5682, type: 2}
-  card2: {fileID: 11400000, guid: 477c98f24f1ff934497afdf0d7392461, type: 2}
+  card2: {fileID: 11400000, guid: 1fe912be947687240a4b00e9c0519d5a, type: 2}
+--- !u!114 &2133982668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133982657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4587e87681b7445499335c4225f473f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: a0dc0fd442d8dbc47a76bdd32a695e70, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2185,3 +2246,4 @@ SceneRoots:
   - {fileID: 1360121523}
   - {fileID: 1151686721}
   - {fileID: 2133982665}
+  - {fileID: 1804725843}

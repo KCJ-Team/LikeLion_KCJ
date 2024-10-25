@@ -1,29 +1,40 @@
 using System.Collections.Generic;
 
+/// <summary>
+/// 버프의 종류를 정의하는 열거형
+/// </summary>
 public enum BuffType
 {
-    MoveSpeed,
-    MaxHealth,
-    AttackPower,
-    Defense
+    MoveSpeed,    // 이동 속도
+    MaxHealth,    // 최대 체력
+    AttackPower,  // 공격력
+    Defense       // 방어력
 }
 
-// 버프 효과를 정의하는 클래스
+/// <summary>
+/// 개별 버프 효과를 정의하는 클래스
+/// Unity Inspector에서 설정 가능하도록 Serializable 속성 추가
+/// </summary>
 [System.Serializable]
 public class BuffEffect
 {
-    public BuffType type;
-    public float value; // 증가량 (퍼센트)
+    public BuffType type;    // 버프 타입
+    public float value;      // 효과 수치 (퍼센트 단위)
 }
 
-// 버프 정보를 담는 클래스
+/// <summary>
+/// 버프의 기본 정보를 담는 클래스
+/// </summary>
 public class Buff
 {
-    public string id;
-    public string name;
-    public float duration;
-    public List<BuffEffect> effects;
+    public string id;                    // 버프 고유 식별자
+    public string name;                  // 버프 이름
+    public float duration;               // 지속 시간
+    public List<BuffEffect> effects;     // 버프 효과 목록
     
+    /// <summary>
+    /// 버프 생성자
+    /// </summary>
     public Buff(string id, string name, float duration, List<BuffEffect> effects)
     {
         this.id = id;

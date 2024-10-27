@@ -6,5 +6,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EncounterData", menuName = "Encounter/Encounter Data", order = 1)]
 public class EncounterData : ScriptableObject
 {
-    public SerializedDictionary<int, Encounter> encounter = new();
+    public List<Encounter> encounters;
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class Encounter
@@ -7,19 +8,24 @@ public class Encounter
     public int encounterId;
     public string name;
     public string description;
-    public Choice choice1;
-    public Choice choice2;
-}
+    
+    // Choice 1 필드
+    public string choice1Text;
+    public string choice1Result;
+    public int choice1RewardEnergy;
+    public int choice1RewardFood;
+    public int choice1RewardFuel;
+    public int choice1RewardWorkforce;
+    public FactionType choice1Faction;
+    public float choice1FactionSupport;
 
-[Serializable]
-public class Choice
-{
-    public string text;
-    public string result;
-    public int energy;
-    public int food;
-    public int fuel;
-    public int workforce;
-    public string faction;
-    public float factionSupport;
+    // Choice 2 필드
+    public string choice2Text;
+    public string choice2Result;
+    public int choice2RewardEnergy;
+    public int choice2RewardFood;
+    public int choice2RewardFuel;
+    public int choice2RewardWorkforce;
+    public FactionType choice2Faction;
+    public float choice2FactionSupport;
 }

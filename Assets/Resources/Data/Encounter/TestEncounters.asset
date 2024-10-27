@@ -1,0 +1,608 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b431d42a5bd1cb49ad245fd0a502b90, type: 3}
+  m_Name: TestEncounters
+  m_EditorClassIdentifier: 
+  encounters:
+  - encounterId: 1
+    name: "\uD45C\uB958\uC790 \uD569\uB958 1"
+    description: "\uC6B0\uC8FC\uB97C \uB5A0\uB3CC\uB358 \uD45C\uB958\uC790\uB4E4\uC774
+      \uD569\uB958\uB97C \uC694\uCCAD\uD569\uB2C8\uB2E4."
+    choice1Text: "\uC218\uB77D\uD55C\uB2E4."
+    choice1Result: "\uD45C\uB958\uC790\uB4E4\uC740 \uAE30\uBED0\uD558\uBA70 \uADF8\uB4E4\uC758
+      \uC790\uC6D0\uB3C4 \uD568\uAED8 \uC81C\uACF5\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 5
+    choice1RewardFuel: 5
+    choice1RewardWorkforce: 20
+    choice1Faction: 0
+    choice1FactionSupport: 0
+    choice2Text: "\uAC70\uC808\uD55C\uB2E4."
+    choice2Result: "\uD45C\uB958\uC790\uB4E4\uC740 \uC2E4\uB9DD\uD55C\uCC44 \uB3CC\uC544\uAC11\uB2C8\uB2E4.
+      \uADF8\uB4E4\uC758 \uC6B4\uBA85\uC740 \uC774\uC81C \uC54C \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 2
+    name: "\uD45C\uB958\uC790 \uD569\uB958 2"
+    description: "\uC6B0\uC8FC\uB97C \uB5A0\uB3CC\uB358 \uD45C\uB958\uC790\uB4E4\uC774
+      \uD569\uB958\uB97C \uC694\uCCAD\uD569\uB2C8\uB2E4."
+    choice1Text: "\uC218\uB77D\uD55C\uB2E4."
+    choice1Result: "\uD45C\uB958\uC790\uB4E4\uC740 \uAE30\uBED0\uD558\uBA70 \uADF8\uB4E4\uC758
+      \uC790\uC6D0\uB3C4 \uD568\uAED8 \uC81C\uACF5\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 5
+    choice1RewardFood: 5
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 20
+    choice1Faction: 0
+    choice1FactionSupport: 0
+    choice2Text: "\uAC70\uC808\uD55C\uB2E4."
+    choice2Result: "\uD45C\uB958\uC790\uB4E4\uC740 \uC2E4\uB9DD\uD55C\uCC44 \uB3CC\uC544\uAC11\uB2C8\uB2E4.
+      \uADF8\uB4E4\uC758 \uC6B4\uBA85\uC740 \uC774\uC81C \uC54C \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 3
+    name: "\uC5D0\uB108\uC9C0 \uD68D\uB4DD"
+    description: "\uC815\uCC30\uB300\uAC00 \uC5B4\uB518\uAC00\uC5D0\uC11C \uBC1C\uACAC\uD55C
+      \uC5D0\uB108\uC9C0\uB97C \uBCF4\uB0B4\uC654\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uC218\uB77D\uD55C\uB2E4."
+    choice1Result: "\uC18C\uB7C9\uC758 \uC5D0\uB108\uC9C0\uB97C \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 20
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 0
+    choice1Faction: 0
+    choice1FactionSupport: 0
+    choice2Text: "\uAC70\uC808\uD55C\uB2E4."
+    choice2Result: "\uC815\uCC30\uB300\uB294 \uC5D0\uB108\uC9C0\uB97C \uD3D0\uAE30\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 4
+    name: "\uB178\uB3D9\uB825 \uD68D\uB4DD"
+    description: "\uC815\uCC30\uB300\uAC00 \uAD6C\uC870\uD55C \uD45C\uB958\uC790\uB4E4\uC774
+      \uB3C4\uCC29\uD588\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uBC1B\uC544\uB4E4\uC778\uB2E4."
+    choice1Result: "\uD45C\uB958\uC790\uB4E4\uC740 \uAE30\uBED0\uD558\uBA70 \uCDA9\uC131\uC744
+      \uB9F9\uC138\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 20
+    choice1Faction: 0
+    choice1FactionSupport: 0
+    choice2Text: "\uB0B4\uBCF4\uB0B8\uB2E4."
+    choice2Result: "\uD45C\uB958\uC790\uB4E4\uC740 \uC2E4\uB9DD\uD55C\uCC44 \uB3CC\uC544\uAC11\uB2C8\uB2E4.
+      \uADF8\uB4E4\uC758 \uC6B4\uBA85\uC740 \uC774\uC81C \uC54C \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 5
+    name: "\uC2DD\uB7C9 \uD68D\uB4DD"
+    description: "\uC815\uCC30\uB300\uAC00 \uC5B4\uB518\uAC00\uC5D0\uC11C \uBC1C\uACAC\uD55C
+      \uC2DD\uB7C9\uC744 \uBCF4\uB0B4\uC654\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uC218\uB77D\uD55C\uB2E4."
+    choice1Result: "\uC18C\uB7C9\uC758 \uC2DD\uB7C9\uC744 \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 20
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 0
+    choice1Faction: 0
+    choice1FactionSupport: 0
+    choice2Text: "\uAC70\uC808\uD55C\uB2E4."
+    choice2Result: "\uC815\uCC30\uB300\uB294 \uC2DD\uB7C9\uC744 \uD3D0\uAE30\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 6
+    name: "\uC5F0\uB8CC \uD68D\uB4DD"
+    description: "\uC815\uCC30\uB300\uAC00 \uC5B4\uB518\uAC00\uC5D0\uC11C \uBC1C\uACAC\uD55C
+      \uC5F0\uB8CC\uB97C \uBCF4\uB0B4\uC654\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uC218\uB77D\uD55C\uB2E4."
+    choice1Result: "\uC18C\uB7C9\uC758 \uC5F0\uB8CC\uB97C \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 20
+    choice1RewardWorkforce: 0
+    choice1Faction: 0
+    choice1FactionSupport: 0
+    choice2Text: "\uAC70\uC808\uD55C\uB2E4."
+    choice2Result: "\uC815\uCC30\uB300\uB294 \uC5F0\uB8CC\uB97C \uD3D0\uAE30\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 7
+    name: "\uC790\uC6D0 \uD68D\uB4DD 1"
+    description: "\uC6B0\uC8FC\uC120\uC758 \uAE4A\uC219\uD55C \uCC3D\uACE0\uC5D0\uC11C
+      \uC790\uC6D0\uB4E4\uC744 \uBC1C\uACAC\uD588\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uAC00\uC838\uAC04\uB2E4."
+    choice1Result: "\uB2E4\uC591\uD55C \uC790\uC6D0\uB4E4\uC744 \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 5
+    choice1RewardFood: 5
+    choice1RewardFuel: 5
+    choice1RewardWorkforce: 5
+    choice1Faction: 0
+    choice1FactionSupport: 0
+    choice2Text: "\uAC70\uC808\uD55C\uB2E4."
+    choice2Result: "\uC815\uCC30\uB300\uB294 \uC790\uC6D0\uB4E4\uC744 \uD3D0\uAE30\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 8
+    name: "\uC790\uC6D0 \uD68D\uB4DD 2"
+    description: "\uC815\uCC30\uB300\uAC00 \uC78A\uD600\uC9C4 \uD589\uC131\uC5D0\uC11C
+      \uBC1C\uACAC\uD55C \uC790\uC6D0\uB4E4\uC744 \uBCF4\uB0B4\uC654\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uC218\uB77D\uD55C\uB2E4."
+    choice1Result: "\uB2E4\uC591\uD55C \uC790\uC6D0\uB4E4\uC744 \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 10
+    choice1RewardFood: 10
+    choice1RewardFuel: 10
+    choice1RewardWorkforce: 10
+    choice1Faction: 0
+    choice1FactionSupport: 0
+    choice2Text: "\uAC70\uC808\uD55C\uB2E4."
+    choice2Result: "\uC815\uCC30\uB300\uB294 \uC790\uC6D0\uB4E4\uC744 \uD3D0\uAE30\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 9
+    name: "\uC6B0\uC8FC\uD574\uC801\uC758 \uC2B5\uACA9"
+    description: "\uC911\uBB34\uC7A5\uD55C \uC6B0\uC8FC\uD574\uC801\uC774 \uC2B5\uACA9\uD569\uB2C8\uB2E4.
+      \uADF8\uB4E4\uC740 \uC790\uC6D0\uC744 \uC694\uAD6C\uD569\uB2C8\uB2E4."
+    choice1Text: "\uB9DE\uC11C\uC2F8\uC6B4\uB2E4."
+    choice1Result: "\"\uB2F9\uC2E0\uC740 \uC2B9\uB9AC\uD588\uC9C0\uB9CC \uC6B0\uC8FC\uD574\uC801\uC740
+      \uB3C4\uB9DD\uCCE4\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 0
+    choice1Faction: -15
+    choice1FactionSupport: 0
+    choice2Text: 0.2
+    choice2Result: "\uD611\uC0C1\uD55C\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: -5
+    choice2RewardFuel: -5
+    choice2RewardWorkforce: -5
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 10
+    name: "\uD45C\uB958\uC790 \uC57D\uD0C8"
+    description: "\uC911\uBB34\uC7A5\uD55C \uD45C\uB958\uC790\uB4E4\uC774 \uD568\uC120\uC744
+      \uC57D\uD0C8\uD558\uB7EC \uD569\uB2C8\uB2E4."
+    choice1Text: "\uAC15\uB825\uD788 \uD1B5\uC81C\uD55C\uB2E4."
+    choice1Result: "\uB2F9\uC2E0\uC740 \uAC15\uB825\uD55C \uADDC\uC728\uB85C \uADF8\uB4E4\uC744
+      \uD1B5\uC81C\uD574 \uC77C\uAFBC\uC73C\uB85C \uB9CC\uB4E4\uC5C8\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 10
+    choice1Faction: 1
+    choice1FactionSupport: 0
+    choice2Text: "\uD611\uC0C1\uD55C\uB2E4."
+    choice2Result: "\uB2F9\uC2E0\uC740 \uC6B0\uC8FC\uD574\uC801\uACFC\uC758 \uD611\uC0C1\uD588\uC2B5\uB2C8\uB2E4.
+      \uC801\uC740 \uBB3C\uC790\uB85C \uB9CE\uC740 \uC77C\uAFBC\uB4E4\uC744 \uC9C0\uCF30\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: -5
+    choice2RewardFood: -5
+    choice2RewardFuel: -5
+    choice2RewardWorkforce: 0
+    choice2Faction: 3
+    choice2FactionSupport: 0.2
+  - encounterId: 11
+    name: "\uACE0\uC7A5\uB09C \uB4DC\uB860"
+    description: "\uACE0\uC7A5\uB09C \uB4DC\uB860\uC744 \uBC1C\uACAC\uD588\uC2B5\uB2C8\uB2E4.
+      \uC5B4\uB5BB\uAC8C \uD560\uAE4C\uC694?"
+    choice1Text: "\uB4DC\uB860\uC744 \uC218\uB9AC\uD55C\uB2E4"
+    choice1Result: "\uB4DC\uB860\uC744 \uC218\uB9AC\uD558\uC5EC \uC720\uC6A9\uD55C
+      \uC790\uC6D0\uC744 \uC5BB\uC5C8\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 5
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 5
+    choice1Faction: 1
+    choice1FactionSupport: 0.1
+    choice2Text: "\uB4DC\uB860\uC744 \uD30C\uAD34\uD55C\uB2E4"
+    choice2Result: "\uB4DC\uB860\uC744 \uD30C\uAD34\uD558\uACE0 \uBD80\uD488\uC744
+      \uD68C\uC218\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 10
+    choice2RewardWorkforce: 0
+    choice2Faction: 1
+    choice2FactionSupport: 0.05
+  - encounterId: 12
+    name: "\uC678\uACC4 \uC2E0\uD638 \uD0D0\uC9C0"
+    description: "\uC678\uACC4 \uC2E0\uD638\uAC00 \uD3EC\uCC29\uB418\uC5C8\uC2B5\uB2C8\uB2E4.
+      \uC870\uC0AC\uD560\uAE4C\uC694?"
+    choice1Text: "\uC870\uC0AC\uD55C\uB2E4"
+    choice1Result: "\uC2E0\uD638\uC758 \uC6D0\uC778\uC744 \uBC1D\uD600\uB0B4\uACE0
+      \uBCF4\uC0C1\uC744 \uC5BB\uC5C8\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 10
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 0
+    choice1Faction: 1
+    choice1FactionSupport: 0.1
+    choice2Text: "\uBB34\uC2DC\uD55C\uB2E4"
+    choice2Result: "\uC2E0\uD638\uB97C \uBB34\uC2DC\uD558\uACE0 \uC9C0\uB098\uAC11\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 13
+    name: "\uC720\uBB3C \uBC1C\uACAC"
+    description: "\uBC84\uB824\uC9C4 \uC6B0\uC8FC \uC815\uAC70\uC7A5\uC5D0\uC11C
+      \uC774\uC0C1\uD55C \uC720\uBB3C\uC744 \uBC1C\uACAC\uD588\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uC720\uBB3C\uC744 \uAC00\uC838\uAC04\uB2E4"
+    choice1Result: "\uC720\uBB3C\uC5D0\uC11C \uC2E0\uBE44\uD55C \uC5D0\uB108\uC9C0\uB97C
+      \uCD94\uCD9C\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 10
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 0
+    choice1Faction: 1
+    choice1FactionSupport: 0.2
+    choice2Text: "\uC720\uBB3C\uC744 \uB0A8\uACA8\uB454\uB2E4"
+    choice2Result: "\uC720\uBB3C\uC744 \uADF8\uB0E5 \uB450\uACE0 \uC9C0\uB098\uAC11\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 14
+    name: "\uC815\uAC70\uC7A5 \uAD6C\uCD9C \uC791\uC804"
+    description: "\uC704\uAE30\uC5D0 \uCC98\uD55C \uC6B0\uC8FC \uC815\uAC70\uC7A5\uC774
+      \uAD6C\uC870 \uC694\uCCAD\uC744 \uBCF4\uB0C8\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uAD6C\uC870\uD55C\uB2E4"
+    choice1Result: "\uC815\uAC70\uC7A5\uC744 \uBB34\uC0AC\uD788 \uAD6C\uCD9C\uD558\uACE0
+      \uC790\uC6D0\uC744 \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 5
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 10
+    choice1Faction: 2
+    choice1FactionSupport: 0.15
+    choice2Text: "\uBB34\uC2DC\uD55C\uB2E4"
+    choice2Result: "\uAD6C\uC870 \uC694\uCCAD\uC744 \uBB34\uC2DC\uD558\uACE0 \uC9C0\uB098\uAC14\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 15
+    name: "\uD3ED\uBC1C \uC9C1\uC804\uC758 \uBC18\uC751\uB85C"
+    description: "\uBC18\uC751\uB85C\uAC00 \uD3ED\uBC1C \uC9C1\uC804\uC785\uB2C8\uB2E4.
+      \uB300\uC751\uD560 \uBC29\uBC95\uC744 \uCC3E\uC73C\uC138\uC694."
+    choice1Text: "\uB0C9\uAC01 \uC2DC\uC2A4\uD15C\uC744 \uAC00\uB3D9\uD55C\uB2E4"
+    choice1Result: "\uB0C9\uAC01 \uC2DC\uC2A4\uD15C\uC774 \uC791\uB3D9\uD558\uC5EC
+      \uBC18\uC751\uB85C\uB97C \uC548\uC815\uD654\uC2DC\uCF30\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 20
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 0
+    choice1Faction: 2
+    choice1FactionSupport: 0.1
+    choice2Text: "\uB300\uD53C\uD55C\uB2E4"
+    choice2Result: "\uBAA8\uB4E0 \uC778\uC6D0\uC774 \uB300\uD53C\uD558\uC600\uC73C\uB098
+      \uC790\uC6D0 \uC190\uC2E4\uC774 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: -10
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 2
+    choice2FactionSupport: 0.05
+  - encounterId: 16
+    name: "\uC6B0\uC8FC \uD574\uC801\uC758 \uACF5\uACA9"
+    description: "\uC6B0\uC8FC \uD574\uC801\uC774 \uC790\uC6D0\uC744 \uC694\uAD6C\uD569\uB2C8\uB2E4."
+    choice1Text: "\uB9DE\uC11C \uC2F8\uC6B4\uB2E4"
+    choice1Result: "\uD574\uC801\uC744 \uBB3C\uB9AC\uCE58\uACE0 \uBCF4\uC0C1\uC744
+      \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 20
+    choice1RewardWorkforce: 0
+    choice1Faction: 2
+    choice1FactionSupport: 0.2
+    choice2Text: "\uC790\uC6D0\uC744 \uC900\uB2E4"
+    choice2Result: "\uD574\uC801\uC5D0\uAC8C \uC790\uC6D0\uC744 \uC8FC\uACE0 \uBB34\uC0AC\uD788
+      \uC9C0\uB098\uAC11\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: -15
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 17
+    name: "\uD45C\uB958\uC790 \uAD6C\uC870"
+    description: "\uD45C\uB958\uC790\uB4E4\uC774 \uAD6C\uC870 \uC694\uCCAD\uC744
+      \uBCF4\uB0C8\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uAD6C\uC870\uD55C\uB2E4"
+    choice1Result: "\uD45C\uB958\uC790\uB4E4\uC744 \uAD6C\uCD9C\uD558\uACE0 \uBCF4\uC0C1\uC744
+      \uBC1B\uC558\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 10
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 5
+    choice1Faction: 3
+    choice1FactionSupport: 0.1
+    choice2Text: "\uBB34\uC2DC\uD55C\uB2E4"
+    choice2Result: "\uD45C\uB958\uC790\uB4E4\uC744 \uBB34\uC2DC\uD558\uACE0 \uC9C0\uB098\uAC14\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 18
+    name: "\uC804\uB825 \uC2DC\uC2A4\uD15C \uACE0\uC7A5"
+    description: "\uC804\uB825 \uC2DC\uC2A4\uD15C\uC774 \uACE0\uC7A5\uB0AC\uC2B5\uB2C8\uB2E4.
+      \uC5B4\uB5BB\uAC8C \uD560\uAE4C\uC694?"
+    choice1Text: "\uC218\uB9AC\uD55C\uB2E4"
+    choice1Result: "\uC804\uB825 \uC2DC\uC2A4\uD15C\uC744 \uC218\uB9AC\uD558\uACE0
+      \uC790\uC6D0\uC744 \uD68C\uC218\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 15
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 0
+    choice1Faction: 2
+    choice1FactionSupport: 0.2
+    choice2Text: "\uB300\uCCB4 \uC5D0\uB108\uC9C0\uB97C \uC0AC\uC6A9\uD55C\uB2E4"
+    choice2Result: "\uB300\uCCB4 \uC5D0\uB108\uC9C0\uB97C \uC0AC\uC6A9\uD558\uC5EC
+      \uBB38\uC81C\uB97C \uD574\uACB0\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 3
+    choice2FactionSupport: 0.1
+  - encounterId: 19
+    name: "\uC678\uACC4 \uC0C1\uC778\uACFC\uC758 \uAC70\uB798"
+    description: "\uC678\uACC4 \uC0C1\uC778\uC774 \uD76C\uADC0\uD55C \uBB3C\uAC74\uC744
+      \uC81C\uC548\uD569\uB2C8\uB2E4."
+    choice1Text: "\uAC70\uB798\uB97C \uC9C4\uD589\uD55C\uB2E4"
+    choice1Result: "\uAC70\uB798\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC644\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 5
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 5
+    choice1Faction: 3
+    choice1FactionSupport: 0.1
+    choice2Text: "\uAC70\uB798\uB97C \uAC70\uC808\uD55C\uB2E4"
+    choice2Result: "\uAC70\uB798\uB97C \uAC70\uC808\uD558\uACE0 \uC9C0\uB098\uAC11\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 20
+    name: "\uBB34\uC778 \uD0D0\uC0AC\uC120\uC758 \uBC1C\uACAC"
+    description: "\uBB34\uC778 \uD0D0\uC0AC\uC120\uC774 \uADC0\uD658\uD558\uC9C0
+      \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uD0D0\uC0AC\uD560\uAE4C\uC694?"
+    choice1Text: "\uD0D0\uC0AC\uD55C\uB2E4"
+    choice1Result: "\uD0D0\uC0AC\uC120\uC758 \uC794\uD574\uC5D0\uC11C \uC790\uC6D0\uC744
+      \uD68C\uC218\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 10
+    choice1RewardWorkforce: 5
+    choice1Faction: 3
+    choice1FactionSupport: 0.1
+    choice2Text: "\uBB34\uC2DC\uD55C\uB2E4"
+    choice2Result: "\uD0D0\uC0AC\uC120\uC744 \uBB34\uC2DC\uD558\uACE0 \uC9C0\uB098\uAC14\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 21
+    name: "\uAE30\uBC00 \uBB38\uC11C \uBC1C\uACAC"
+    description: "\uBC84\uB824\uC9C4 \uC6B0\uC8FC\uC120\uC5D0\uC11C \uAE30\uBC00
+      \uBB38\uC11C\uB97C \uBC1C\uACAC\uD588\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uBB38\uC11C\uB97C \uD574\uB3C5\uD55C\uB2E4"
+    choice1Result: "\uBB38\uC11C\uB97C \uD574\uB3C5\uD558\uC5EC \uC911\uC694\uD55C
+      \uC815\uBCF4\uB97C \uC5BB\uC5C8\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 0
+    choice1Faction: 3
+    choice1FactionSupport: 0.2
+    choice2Text: "\uBB38\uC11C\uB97C \uD30C\uAE30\uD55C\uB2E4"
+    choice2Result: "\uAE30\uBC00\uC744 \uC720\uC9C0\uD558\uAE30 \uC704\uD574 \uBB38\uC11C\uB97C
+      \uD30C\uAE30\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 1
+    choice2FactionSupport: 0.1
+  - encounterId: 22
+    name: "\uAD11\uC0B0 \uBD95\uAD34"
+    description: "\uAD11\uC0B0\uC5D0\uC11C \uBD95\uAD34 \uC0AC\uACE0\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uAD6C\uC870 \uC791\uC5C5\uC744 \uC2DC\uC791\uD55C\uB2E4"
+    choice1Result: "\uAD11\uBD80\uB4E4\uC744 \uAD6C\uCD9C\uD558\uACE0 \uBCF4\uC0C1\uC744
+      \uBC1B\uC558\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 20
+    choice1Faction: 2
+    choice1FactionSupport: 0.2
+    choice2Text: "\uAD6C\uC870\uB97C \uD3EC\uAE30\uD55C\uB2E4"
+    choice2Result: "\uC790\uC6D0\uC744 \uC783\uC5C8\uC9C0\uB9CC \uC548\uC804\uC744
+      \uD655\uBCF4\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: -5
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 23
+    name: "\uC5F0\uB8CC \uB204\uCD9C"
+    description: "\uC5F0\uB8CC \uC800\uC7A5\uACE0\uC5D0\uC11C \uB204\uCD9C\uC774
+      \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uB204\uCD9C\uC744 \uCC28\uB2E8\uD55C\uB2E4"
+    choice1Result: "\uB204\uCD9C\uC744 \uCC28\uB2E8\uD558\uC5EC \uC5F0\uB8CC\uB97C
+      \uBCF4\uC874\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 15
+    choice1RewardWorkforce: 0
+    choice1Faction: 3
+    choice1FactionSupport: 0.1
+    choice2Text: "\uC5F0\uB8CC\uB97C \uBC84\uB9B0\uB2E4"
+    choice2Result: "\uC5F0\uB8CC \uC190\uC2E4\uC744 \uAC10\uC218\uD558\uACE0 \uC548\uC804\uC744
+      \uC720\uC9C0\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: -10
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 24
+    name: "\uBC29\uC0AC\uB2A5 \uAD6C\uC5ED \uD0D0\uC0AC"
+    description: "\uBC29\uC0AC\uB2A5\uC774 \uC2EC\uD55C \uC9C0\uC5ED\uC744 \uD0D0\uC0AC\uD560
+      \uAE30\uD68C\uAC00 \uC788\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uD0D0\uC0AC\uD55C\uB2E4"
+    choice1Result: "\uBC29\uC0AC\uB2A5 \uBCF4\uD638\uBCF5\uC744 \uCC29\uC6A9\uD558\uACE0
+      \uD0D0\uC0AC\uC5D0 \uC131\uACF5\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 10
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 5
+    choice1Faction: 4
+    choice1FactionSupport: 0.15
+    choice2Text: "\uD3EC\uAE30\uD55C\uB2E4"
+    choice2Result: "\uD0D0\uC0AC\uB97C \uD3EC\uAE30\uD558\uACE0 \uC548\uC804\uC744
+      \uC120\uD0DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 25
+    name: "\uAE30\uC220 \uC7A5\uBE44 \uC5C5\uADF8\uB808\uC774\uB4DC"
+    description: "\uC0C8\uB85C\uC6B4 \uAE30\uC220 \uC7A5\uBE44\uB97C \uC5C5\uADF8\uB808\uC774\uB4DC\uD560
+      \uAE30\uD68C\uAC00 \uC788\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uC5C5\uADF8\uB808\uC774\uB4DC\uD55C\uB2E4"
+    choice1Result: "\uAE30\uC220 \uC5C5\uADF8\uB808\uC774\uB4DC\uB85C \uC791\uC5C5
+      \uD6A8\uC728\uC774 \uD5A5\uC0C1\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 10
+    choice1Faction: 4
+    choice1FactionSupport: 0.2
+    choice2Text: "\uC5C5\uADF8\uB808\uC774\uB4DC\uB97C \uCDE8\uC18C\uD55C\uB2E4"
+    choice2Result: "\uC5C5\uADF8\uB808\uC774\uB4DC\uB97C \uCDE8\uC18C\uD558\uACE0
+      \uAE30\uC874 \uC7A5\uBE44\uB97C \uC720\uC9C0\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0
+  - encounterId: 26
+    name: "\uBCF4\uAE09\uD488 \uC57D\uD0C8"
+    description: "\uC678\uACC4 \uC0DD\uBA85\uCCB4\uAC00 \uBCF4\uAE09\uD488\uC744
+      \uC57D\uD0C8\uD588\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uC0DD\uBA85\uCCB4\uC640 \uC2F8\uC6B4\uB2E4"
+    choice1Result: "\uBCF4\uAE09\uD488\uC744 \uB418\uCC3E\uACE0 \uC790\uC6D0\uC744
+      \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 5
+    choice1RewardFood: 5
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 0
+    choice1Faction: 4
+    choice1FactionSupport: 0.1
+    choice2Text: "\uD611\uC0C1\uD55C\uB2E4"
+    choice2Result: "\uC0DD\uBA85\uCCB4\uC640 \uD611\uC0C1\uD558\uC5EC \uBCF4\uAE09\uD488\uC744
+      \uC77C\uBD80 \uB3CC\uB824\uBC1B\uC558\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 5
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 4
+    choice2FactionSupport: 0.05
+  - encounterId: 27
+    name: "\uC5F0\uAD6C\uC18C \uD654\uC7AC"
+    description: "\uC5F0\uAD6C\uC18C\uC5D0\uC11C \uD654\uC7AC\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4."
+    choice1Text: "\uD654\uC7AC\uB97C \uC9C4\uC555\uD55C\uB2E4"
+    choice1Result: "\uD654\uC7AC\uB97C \uC9C4\uC555\uD558\uACE0 \uC5F0\uAD6C\uC18C\uB97C
+      \uBCF5\uAD6C\uD588\uC2B5\uB2C8\uB2E4."
+    choice1RewardEnergy: 0
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 5
+    choice1Faction: 4
+    choice1FactionSupport: 0.2
+    choice2Text: "\uB300\uD53C\uD55C\uB2E4"
+    choice2Result: "\uD654\uC7AC\uB97C \uD53C\uD574 \uB300\uD53C\uC5D0 \uC131\uACF5\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 3
+    choice2FactionSupport: 0.1
+  - encounterId: 28
+    name: "\uC0DD\uBA85 \uC720\uC9C0 \uC7A5\uCE58 \uACE0\uC7A5"
+    description: "\uC0DD\uBA85 \uC720\uC9C0 \uC7A5\uCE58\uAC00 \uACE0\uC7A5\uB0AC\uC2B5\uB2C8\uB2E4.
+      \uC5B4\uB5BB\uAC8C \uD560\uAE4C\uC694?"
+    choice1Text: "\uAE34\uAE09 \uC218\uB9AC\uB97C \uD55C\uB2E4"
+    choice1Result: "\uC218\uB9AC\uB97C \uD1B5\uD574 \uC0DD\uBA85 \uC720\uC9C0 \uC7A5\uCE58\uAC00
+      \uC815\uC0C1 \uC791\uB3D9\uD569\uB2C8\uB2E4."
+    choice1RewardEnergy: 10
+    choice1RewardFood: 0
+    choice1RewardFuel: 0
+    choice1RewardWorkforce: 0
+    choice1Faction: 4
+    choice1FactionSupport: 0.15
+    choice2Text: "\uB300\uCCB4 \uC7A5\uBE44\uB97C \uC0AC\uC6A9\uD55C\uB2E4"
+    choice2Result: "\uB300\uCCB4 \uC7A5\uBE44\uB85C \uBB38\uC81C\uB97C \uD574\uACB0\uD588\uC2B5\uB2C8\uB2E4."
+    choice2RewardEnergy: 0
+    choice2RewardFood: 0
+    choice2RewardFuel: 0
+    choice2RewardWorkforce: 0
+    choice2Faction: 0
+    choice2FactionSupport: 0

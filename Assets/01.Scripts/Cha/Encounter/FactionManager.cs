@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
-public class FactionManager : SceneSingleton<BuildingManager>
+public class FactionManager : SceneSingleton<FactionManager>
 {
    public List<Faction> factions;
 
+   [Header("Test UI...")] 
+   public TextMeshProUGUI textFaction;
+   
    // 가장 지지도가 높은 팩션 반환
    public Faction GetLeadingFaction()
    {
@@ -17,9 +21,26 @@ public class FactionManager : SceneSingleton<BuildingManager>
    public void ChangeFactionSupport(FactionType factionType, float amount)
    {
       Faction faction = factions.Find(f => f.type == factionType);
+      
       if (faction != null)
       {
          faction.ChangeSupport(amount);
+         UpdateUI(faction);
       }
+   }
+   
+   // 전체 팩션의 지지도 출력
+   public void PrintFactionSupportLevels()
+   {
+      foreach (var faction in factions)
+      {
+         Debug.Log($"{faction.name} ({faction.type}): {faction.supportLevel}");
+      }
+   }
+
+   private void UpdateUI(Faction faction)
+   {
+      if (textFaction != null)
+         textFaction.text = $"Faction : {faction.type}\n FactionSupport : {faction.supportLevel}";
    }
 } // end class

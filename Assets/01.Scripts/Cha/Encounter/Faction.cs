@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum FactionType
 {
+    None,
     Red, // 질서와 규율
     Black, // 감시
     Green, // 구조와 봉사

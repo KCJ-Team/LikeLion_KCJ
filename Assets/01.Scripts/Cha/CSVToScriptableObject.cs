@@ -11,7 +11,7 @@ public class CSVToScriptableObject : MonoBehaviour
 {
     // CSV 파일을 ScriptableObject로 변환하는 메서드
     public static void ConvertCSV<T>(string csvFileName, string outputFolder) where T : ScriptableObject {
-        string filePath = $"Assets/Resources/Data/Building/{csvFileName}.csv"; // CSV 파일 경로
+        string filePath = $"Assets/Resources/Data/{csvFileName}.csv"; // CSV 파일 경로
         string[] lines = File.ReadAllLines(filePath);
 
         // CSV 첫 줄을 헤더로 간주하고, 데이터를 읽어온다

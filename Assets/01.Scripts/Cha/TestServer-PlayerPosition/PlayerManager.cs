@@ -7,6 +7,7 @@ using UnityEngine;
 /// <summary>
 /// Test용 플레이어매니저. 매니저단에서는 각 기능 관련 로직을 담당,
 /// NetworkHandler에서는 네트워크매니저와의 로직을 담당할지 말지 합칠지 그냥..
+/// 네트워크 핸들러 매니저?? 
 /// </summary>
 public class PlayerManager : SceneSingleton<PlayerManager>
 {

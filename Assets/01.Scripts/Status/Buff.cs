@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 
-/// <summary>
-/// 버프의 종류를 정의하는 열거형
-/// </summary>
+
+// 버프의 종류를 정의하는 열거형
 public enum BuffType
 {
     MoveSpeed,    // 이동 속도
-    MaxHealth,    // 최대 체력
     AttackPower,  // 공격력
-    Defense       // 방어력
+    Defense,       // 방어력
+    AttackSpeed     //공격 속도
 }
 
 /// <summary>

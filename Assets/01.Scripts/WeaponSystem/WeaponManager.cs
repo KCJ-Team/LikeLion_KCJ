@@ -82,14 +82,13 @@ public class WeaponManager : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        
+    
         if (Physics.Raycast(ray, out hit))
         {
-            var position = weaponHolder.position;
-            Vector3 shootDirection = new Vector3(hit.point.x, position.y, hit.point.z);
+            Vector3 shootDirection = new Vector3(hit.point.x, weaponHolder.position.y, hit.point.z) - weaponHolder.position;
 
-            GameObject projectile = Instantiate(playerData.currentWeapon.projectilePrefab, position, Quaternion.LookRotation(shootDirection));
-            
+            GameObject projectile = Instantiate(playerData.currentWeapon.projectilePrefab, weaponHolder.position, Quaternion.LookRotation(shootDirection));
+        
             projectile.GetComponent<Rigidbody>().velocity = shootDirection * 10f; // 발사체 속도 조정
         }
     }

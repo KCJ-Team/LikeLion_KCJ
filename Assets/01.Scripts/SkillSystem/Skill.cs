@@ -44,7 +44,7 @@ public abstract class Skill : MonoBehaviour
     }
     
     // 스킬의 초기 상태를 반환하는 추상 메서드
-    protected abstract SkillState GetInitialState();
+    public abstract SkillState GetInitialState();
     
     /// <summary>
     /// 스킬의 상태를 변경하는 메서드

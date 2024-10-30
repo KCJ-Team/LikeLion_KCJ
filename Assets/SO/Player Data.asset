@@ -19,8 +19,8 @@ MonoBehaviour:
   RotationSpeed: 10
   AttackPower: 0
   Defense: 0
-  currentWeapon: {fileID: 0}
-  currentQSkill: {fileID: 0}
+  currentWeapon: {fileID: 11400000, guid: bb46793e81c086346bf1a579568d5682, type: 2}
+  currentQSkill: {fileID: 11400000, guid: 477c98f24f1ff934497afdf0d7392461, type: 2}
   currentESkill: {fileID: 0}
   currentBuff: {fileID: 11400000, guid: 1fe912be947687240a4b00e9c0519d5a, type: 2}
   inventory: {fileID: 11400000, guid: 71f46ef98d566734ab3e136541e8c918, type: 2}

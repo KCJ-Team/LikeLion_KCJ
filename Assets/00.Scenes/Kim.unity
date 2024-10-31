@@ -2352,7 +2352,7 @@ MonoBehaviour:
   currentSkill: {fileID: 0}
   currentBuff: {fileID: 0}
   card1: {fileID: 11400000, guid: bb46793e81c086346bf1a579568d5682, type: 2}
-  card2: {fileID: 11400000, guid: dff83beaf5057634bbe5d264106dc137, type: 2}
+  card2: {fileID: 11400000, guid: ec980ab9a36ee104ba16e3911df66e5a, type: 2}
   card3: {fileID: 11400000, guid: 1fe912be947687240a4b00e9c0519d5a, type: 2}
 --- !u!114 &2133982668
 MonoBehaviour:

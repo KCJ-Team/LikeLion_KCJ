@@ -25,19 +25,49 @@ namespace Messages {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg5tZXNzYWdlcy5wcm90bxIIbWVzc2FnZXMaEHBsYXllcmluZm8ucHJvdG8a",
-            "CmNoYXQucHJvdG8aDnBhdGhpbmZvLnByb3RvInIKC0dhbWVNZXNzYWdlEjUK",
-            "D3BsYXllcl9wb3NpdGlvbhgBIAEoCzIaLnBsYXllcmluZm8uUGxheWVyUG9z",
-            "aXRpb25IABIhCgRjaGF0GAIgASgLMhEuY2hhdC5DaGF0TWVzc2FnZUgAQgkK",
-            "B21lc3NhZ2VCEloQc2VydmVyLWdvL3NyYy9wYmIGcHJvdG8z"));
+            "DnBhdGhpbmZvLnByb3RvGg5yZXNwb25zZS5wcm90byLWAQoLR2FtZU1lc3Nh",
+            "Z2USKgoLbWVzc2FnZVR5cGUYASABKA4yFS5tZXNzYWdlcy5NZXNzYWdlVHlw",
+            "ZRIyCg1wbGF5ZXJSZXF1ZXN0GAIgASgLMhkucGxheWVyaW5mby5QbGF5ZXJS",
+            "ZXF1ZXN0SAASJgoIcmVzcG9uc2UYAyABKAsyEi5tZXNzYWdlcy5SZXNwb25z",
+            "ZUgAEjQKDnBsYXllclBvc2l0aW9uGAQgASgLMhoucGxheWVyaW5mby5QbGF5",
+            "ZXJQb3NpdGlvbkgAQgkKB21lc3NhZ2UqYgoLTWVzc2FnZVR5cGUSEQoNU0VT",
+            "U0lPTl9MT0dJThAAEhIKDlNFU1NJT05fTE9HT1VUEAESEAoMUExBWUVSX1FV",
+            "RVJZEAISGgoWUExBWUVSX1BPU0lUSU9OX1VQREFURRADQhJaEHNlcnZlci1n",
+            "by9zcmMvcGJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Playerinfo.PlayerinfoReflection.Descriptor, global::Chat.ChatReflection.Descriptor, global::Pathinfo.PathinfoReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Messages.GameMessage), global::Messages.GameMessage.Parser, new[]{ "PlayerPosition", "Chat" }, new[]{ "Message" }, null, null, null)
+          new pbr::FileDescriptor[] { global::Playerinfo.PlayerinfoReflection.Descriptor, global::Pathinfo.PathinfoReflection.Descriptor, global::Messages.ResponseReflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Messages.MessageType), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Messages.GameMessage), global::Messages.GameMessage.Parser, new[]{ "MessageType", "PlayerRequest", "Response", "PlayerPosition" }, new[]{ "Message" }, null, null, null)
           }));
     }
     #endregion
 
   }
+  #region Enums
+  /// <summary>
+  /// 메시지 타입을 정의
+  /// </summary>
+  public enum MessageType {
+    /// <summary>
+    /// 세션 로그인 요청
+    /// </summary>
+    [pbr::OriginalName("SESSION_LOGIN")] SessionLogin = 0,
+    /// <summary>
+    /// 세션 로그아웃 요청
+    /// </summary>
+    [pbr::OriginalName("SESSION_LOGOUT")] SessionLogout = 1,
+    /// <summary>
+    /// 플레이어 정보 조회 요청
+    /// </summary>
+    [pbr::OriginalName("PLAYER_QUERY")] PlayerQuery = 2,
+    /// <summary>
+    /// 플레이어 위치 업데이트 요청
+    /// </summary>
+    [pbr::OriginalName("PLAYER_POSITION_UPDATE")] PlayerPositionUpdate = 3,
+  }
+
+  #endregion
+
   #region Messages
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GameMessage : pb::IMessage<GameMessage>
@@ -74,12 +104,16 @@ namespace Messages {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public GameMessage(GameMessage other) : this() {
+      messageType_ = other.messageType_;
       switch (other.MessageCase) {
+        case MessageOneofCase.PlayerRequest:
+          PlayerRequest = other.PlayerRequest.Clone();
+          break;
+        case MessageOneofCase.Response:
+          Response = other.Response.Clone();
+          break;
         case MessageOneofCase.PlayerPosition:
           PlayerPosition = other.PlayerPosition.Clone();
-          break;
-        case MessageOneofCase.Chat:
-          Chat = other.Chat.Clone();
           break;
       }
 
@@ -92,8 +126,44 @@ namespace Messages {
       return new GameMessage(this);
     }
 
-    /// <summary>Field number for the "player_position" field.</summary>
-    public const int PlayerPositionFieldNumber = 1;
+    /// <summary>Field number for the "messageType" field.</summary>
+    public const int MessageTypeFieldNumber = 1;
+    private global::Messages.MessageType messageType_ = global::Messages.MessageType.SessionLogin;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Messages.MessageType MessageType {
+      get { return messageType_; }
+      set {
+        messageType_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "playerRequest" field.</summary>
+    public const int PlayerRequestFieldNumber = 2;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Playerinfo.PlayerRequest PlayerRequest {
+      get { return messageCase_ == MessageOneofCase.PlayerRequest ? (global::Playerinfo.PlayerRequest) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.PlayerRequest;
+      }
+    }
+
+    /// <summary>Field number for the "response" field.</summary>
+    public const int ResponseFieldNumber = 3;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Messages.Response Response {
+      get { return messageCase_ == MessageOneofCase.Response ? (global::Messages.Response) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.Response;
+      }
+    }
+
+    /// <summary>Field number for the "playerPosition" field.</summary>
+    public const int PlayerPositionFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Playerinfo.PlayerPosition PlayerPosition {
@@ -104,24 +174,13 @@ namespace Messages {
       }
     }
 
-    /// <summary>Field number for the "chat" field.</summary>
-    public const int ChatFieldNumber = 2;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Chat.ChatMessage Chat {
-      get { return messageCase_ == MessageOneofCase.Chat ? (global::Chat.ChatMessage) message_ : null; }
-      set {
-        message_ = value;
-        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.Chat;
-      }
-    }
-
     private object message_;
     /// <summary>Enum of possible cases for the "message" oneof.</summary>
     public enum MessageOneofCase {
       None = 0,
-      PlayerPosition = 1,
-      Chat = 2,
+      PlayerRequest = 2,
+      Response = 3,
+      PlayerPosition = 4,
     }
     private MessageOneofCase messageCase_ = MessageOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -152,8 +211,10 @@ namespace Messages {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (MessageType != other.MessageType) return false;
+      if (!object.Equals(PlayerRequest, other.PlayerRequest)) return false;
+      if (!object.Equals(Response, other.Response)) return false;
       if (!object.Equals(PlayerPosition, other.PlayerPosition)) return false;
-      if (!object.Equals(Chat, other.Chat)) return false;
       if (MessageCase != other.MessageCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -162,8 +223,10 @@ namespace Messages {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
+      if (MessageType != global::Messages.MessageType.SessionLogin) hash ^= MessageType.GetHashCode();
+      if (messageCase_ == MessageOneofCase.PlayerRequest) hash ^= PlayerRequest.GetHashCode();
+      if (messageCase_ == MessageOneofCase.Response) hash ^= Response.GetHashCode();
       if (messageCase_ == MessageOneofCase.PlayerPosition) hash ^= PlayerPosition.GetHashCode();
-      if (messageCase_ == MessageOneofCase.Chat) hash ^= Chat.GetHashCode();
       hash ^= (int) messageCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -183,13 +246,21 @@ namespace Messages {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (messageCase_ == MessageOneofCase.PlayerPosition) {
-        output.WriteRawTag(10);
-        output.WriteMessage(PlayerPosition);
+      if (MessageType != global::Messages.MessageType.SessionLogin) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) MessageType);
       }
-      if (messageCase_ == MessageOneofCase.Chat) {
+      if (messageCase_ == MessageOneofCase.PlayerRequest) {
         output.WriteRawTag(18);
-        output.WriteMessage(Chat);
+        output.WriteMessage(PlayerRequest);
+      }
+      if (messageCase_ == MessageOneofCase.Response) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Response);
+      }
+      if (messageCase_ == MessageOneofCase.PlayerPosition) {
+        output.WriteRawTag(34);
+        output.WriteMessage(PlayerPosition);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -201,13 +272,21 @@ namespace Messages {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (messageCase_ == MessageOneofCase.PlayerPosition) {
-        output.WriteRawTag(10);
-        output.WriteMessage(PlayerPosition);
+      if (MessageType != global::Messages.MessageType.SessionLogin) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) MessageType);
       }
-      if (messageCase_ == MessageOneofCase.Chat) {
+      if (messageCase_ == MessageOneofCase.PlayerRequest) {
         output.WriteRawTag(18);
-        output.WriteMessage(Chat);
+        output.WriteMessage(PlayerRequest);
+      }
+      if (messageCase_ == MessageOneofCase.Response) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Response);
+      }
+      if (messageCase_ == MessageOneofCase.PlayerPosition) {
+        output.WriteRawTag(34);
+        output.WriteMessage(PlayerPosition);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -219,11 +298,17 @@ namespace Messages {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
+      if (MessageType != global::Messages.MessageType.SessionLogin) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) MessageType);
+      }
+      if (messageCase_ == MessageOneofCase.PlayerRequest) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerRequest);
+      }
+      if (messageCase_ == MessageOneofCase.Response) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Response);
+      }
       if (messageCase_ == MessageOneofCase.PlayerPosition) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerPosition);
-      }
-      if (messageCase_ == MessageOneofCase.Chat) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Chat);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -237,18 +322,27 @@ namespace Messages {
       if (other == null) {
         return;
       }
+      if (other.MessageType != global::Messages.MessageType.SessionLogin) {
+        MessageType = other.MessageType;
+      }
       switch (other.MessageCase) {
+        case MessageOneofCase.PlayerRequest:
+          if (PlayerRequest == null) {
+            PlayerRequest = new global::Playerinfo.PlayerRequest();
+          }
+          PlayerRequest.MergeFrom(other.PlayerRequest);
+          break;
+        case MessageOneofCase.Response:
+          if (Response == null) {
+            Response = new global::Messages.Response();
+          }
+          Response.MergeFrom(other.Response);
+          break;
         case MessageOneofCase.PlayerPosition:
           if (PlayerPosition == null) {
             PlayerPosition = new global::Playerinfo.PlayerPosition();
           }
           PlayerPosition.MergeFrom(other.PlayerPosition);
-          break;
-        case MessageOneofCase.Chat:
-          if (Chat == null) {
-            Chat = new global::Chat.ChatMessage();
-          }
-          Chat.MergeFrom(other.Chat);
           break;
       }
 
@@ -271,22 +365,35 @@ namespace Messages {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
+          case 8: {
+            MessageType = (global::Messages.MessageType) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            global::Playerinfo.PlayerRequest subBuilder = new global::Playerinfo.PlayerRequest();
+            if (messageCase_ == MessageOneofCase.PlayerRequest) {
+              subBuilder.MergeFrom(PlayerRequest);
+            }
+            input.ReadMessage(subBuilder);
+            PlayerRequest = subBuilder;
+            break;
+          }
+          case 26: {
+            global::Messages.Response subBuilder = new global::Messages.Response();
+            if (messageCase_ == MessageOneofCase.Response) {
+              subBuilder.MergeFrom(Response);
+            }
+            input.ReadMessage(subBuilder);
+            Response = subBuilder;
+            break;
+          }
+          case 34: {
             global::Playerinfo.PlayerPosition subBuilder = new global::Playerinfo.PlayerPosition();
             if (messageCase_ == MessageOneofCase.PlayerPosition) {
               subBuilder.MergeFrom(PlayerPosition);
             }
             input.ReadMessage(subBuilder);
             PlayerPosition = subBuilder;
-            break;
-          }
-          case 18: {
-            global::Chat.ChatMessage subBuilder = new global::Chat.ChatMessage();
-            if (messageCase_ == MessageOneofCase.Chat) {
-              subBuilder.MergeFrom(Chat);
-            }
-            input.ReadMessage(subBuilder);
-            Chat = subBuilder;
             break;
           }
         }
@@ -308,22 +415,35 @@ namespace Messages {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
+          case 8: {
+            MessageType = (global::Messages.MessageType) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            global::Playerinfo.PlayerRequest subBuilder = new global::Playerinfo.PlayerRequest();
+            if (messageCase_ == MessageOneofCase.PlayerRequest) {
+              subBuilder.MergeFrom(PlayerRequest);
+            }
+            input.ReadMessage(subBuilder);
+            PlayerRequest = subBuilder;
+            break;
+          }
+          case 26: {
+            global::Messages.Response subBuilder = new global::Messages.Response();
+            if (messageCase_ == MessageOneofCase.Response) {
+              subBuilder.MergeFrom(Response);
+            }
+            input.ReadMessage(subBuilder);
+            Response = subBuilder;
+            break;
+          }
+          case 34: {
             global::Playerinfo.PlayerPosition subBuilder = new global::Playerinfo.PlayerPosition();
             if (messageCase_ == MessageOneofCase.PlayerPosition) {
               subBuilder.MergeFrom(PlayerPosition);
             }
             input.ReadMessage(subBuilder);
             PlayerPosition = subBuilder;
-            break;
-          }
-          case 18: {
-            global::Chat.ChatMessage subBuilder = new global::Chat.ChatMessage();
-            if (messageCase_ == MessageOneofCase.Chat) {
-              subBuilder.MergeFrom(Chat);
-            }
-            input.ReadMessage(subBuilder);
-            Chat = subBuilder;
             break;
           }
         }

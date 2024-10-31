@@ -14,8 +14,9 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
     [SerializeField]
     private NetworkConfig networkConfig;
     
-    private ConcurrentQueue<GameMessage> receiveQueue = new ConcurrentQueue<GameMessage>(); // 작업큐
-    
+    // 수신된 메세지를 일시적으로 저장
+    private ConcurrentQueue<GameMessage> receiveQueue = new ConcurrentQueue<GameMessage>(); 
+  
     private void Start()
     {
         ConnectToServer();
@@ -54,7 +55,7 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
         if (stream != null && isRunning)
         {
             byte[] lengthBuffer = new byte[4];
-            // 비동기적으로 4바이트 길이 정보를 읽음
+            Debug.Log("Attempting to receive packet length...");
             stream.BeginRead(lengthBuffer, 0, lengthBuffer.Length, OnLengthReceived, lengthBuffer);
         }
     }
@@ -66,13 +67,15 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
             int bytesRead = stream.EndRead(ar);
             if (bytesRead == 0)
             {
-                Debug.LogWarning("Disconnected from server.");
+                Debug.LogWarning("Disconnected from server during length read.");
+                isRunning = false;
                 return;
             }
 
             byte[] lengthBuffer = (byte[])ar.AsyncState;
             int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
-
+            Debug.Log($"Packet length received: {messageLength} bytes");
+            
             // 메시지 본문을 읽기 위한 버퍼 준비
             byte[] messageBuffer = new byte[messageLength];
             stream.BeginRead(messageBuffer, 0, messageLength, OnMessageReceived, messageBuffer);
@@ -91,15 +94,27 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
             int bytesRead = stream.EndRead(ar);
             if (bytesRead == 0)
             {
-                Debug.LogWarning("Disconnected from server.");
+                Debug.LogWarning("Disconnected from server during message read.");
+                isRunning = false;
                 return;
             }
 
             byte[] messageBuffer = (byte[])ar.AsyncState;
+            Debug.Log($"Message received with {bytesRead} bytes out of expected {messageBuffer.Length} bytes");
+            
+            // 메시지 길이 검증
+            if (bytesRead != messageBuffer.Length)
+            {
+                Debug.LogError($"Expected message length {messageBuffer.Length}, but received {bytesRead}");
+                return;
+            }
+            
             GameMessage gameMessage = GameMessage.Parser.ParseFrom(messageBuffer);
-
+            Debug.Log("Parsed GameMessage successfully.");
+            
             // 수신 큐에 메시지를 추가
             receiveQueue.Enqueue(gameMessage);
+            Debug.Log($"receiveQueue count: {receiveQueue.Count}");
 
             // 다음 메시지를 기다리기 위해 StartReceiving 호출
             StartReceiving();
@@ -116,15 +131,30 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
         // 메인 스레드에서 큐에 있는 메시지를 처리
         while (receiveQueue.TryDequeue(out GameMessage gameMessage))
         {
+            Debug.Log("Message dequeued from receiveQueue.");
             JobQueue.Enqueue(() => ProcessMessage(gameMessage));
         }
     }
     
     private void ProcessMessage(GameMessage message)
     {
+        if (message == null) return;
+        
         Debug.Log($"Processed message: {message}");
+        
+        // TODO : messageType을 보고 처리 로직 구현하기
+        switch (message.MessageType) {
+            case MessageType.SessionLogin :
+
+                break;
+            
+            case MessageType.SessionLogout :
+
+                break;
+        }
     }
 
+    // TODO : try-catch로 오류처리..
     public void SendMessage(GameMessage message)
     {
         if (client != null && client.Connected)

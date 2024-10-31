@@ -24,9 +24,8 @@ public class Status : MonoBehaviour
         UpdateBuffs();  // 매 프레임마다 버프 상태 업데이트
     }
     
-    /// <summary>
-    /// 모든 활성화된 버프의 지속시간을 감소시키고 만료된 버프 제거
-    /// </summary>
+    
+    // 모든 활성화된 버프의 지속시간을 감소시키고 만료된 버프 제거
     private void UpdateBuffs()
     {
         List<string> expiredBuffs = new List<string>();
@@ -48,9 +47,7 @@ public class Status : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// 새로운 버프 추가
-    /// </summary>
+    // 새로운 버프 추가
     public void AddBuff(Buff buff)
     {
         // 같은 ID의 버프가 이미 있다면 제거
@@ -64,9 +61,7 @@ public class Status : MonoBehaviour
         ApplyBuff(buff);
     }
     
-    /// <summary>
-    /// 버프 제거
-    /// </summary>
+    // 버프 제거
     public void RemoveBuff(string buffId)
     {
         if (activeBuffs.TryGetValue(buffId, out Buff buff))
@@ -76,10 +71,9 @@ public class Status : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// 버프 효과 적용
-    /// 각 효과 타입에 따라 해당하는 스탯 수정
-    /// </summary>
+    
+    // 버프 효과 적용
+    // 각 효과 타입에 따라 해당하는 스탯 수정
     private void ApplyBuff(Buff buff)
     {
         foreach (var effect in buff.effects)
@@ -87,25 +81,24 @@ public class Status : MonoBehaviour
             switch (effect.type)
             {
                 case BuffType.MoveSpeed:
-                    playerData.MoveSpeed *= (1 + effect.value);  // 이동속도 증가
+                    playerData.MoveSpeed += effect.value;  // 이동속도 증가
                     break;
-                case BuffType.MaxHealth:
-                    playerData.HP *= (1 + effect.value);         // 최대체력 증가
+                case BuffType.AttackSpeed:
+                    playerData.currentWeapon.attackSpeed += effect.value; //공격속도 증가
                     break;
                 case BuffType.AttackPower:
-                    // 공격력 증가 (구현 필요)
+                    playerData.AttackPower += effect.value; //공격력 증가 근데 무기에 따른 공격력을 변화 해야될지도
                     break;
                 case BuffType.Defense:
-                    // 방어력 증가 (구현 필요)
+                    playerData.Defense += effect.value;
                     break;
             }
         }
     }
     
-    /// <summary>
-    /// 버프 효과 제거
-    /// 적용된 효과를 원래대로 되돌림
-    /// </summary>
+    
+    // 버프 효과 제거
+    // 적용된 효과를 원래대로 되돌림
     private void RemoveBuffEffect(Buff buff)
     {
         foreach (var effect in buff.effects)
@@ -113,16 +106,16 @@ public class Status : MonoBehaviour
             switch (effect.type)
             {
                 case BuffType.MoveSpeed:
-                    playerData.MoveSpeed /= (1 + effect.value);  // 이동속도 감소
+                    playerData.MoveSpeed -= effect.value;  // 이동속도 감소
                     break;
-                case BuffType.MaxHealth:
-                    playerData.HP /= (1 + effect.value);         // 최대체력 감소
+                case BuffType.AttackSpeed:
+                    playerData.currentWeapon.attackSpeed -= effect.value; //공격속도 감소
                     break;
                 case BuffType.AttackPower:
-                    // 공격력 감소 (구현 필요)
+                    playerData.AttackPower -= effect.value; //공격력 감소 근데 무기에 따른 공격력을 변화 해야될지도
                     break;
                 case BuffType.Defense:
-                    // 방어력 감소 (구현 필요)
+                    playerData.Defense -= effect.value;
                     break;
             }
         }

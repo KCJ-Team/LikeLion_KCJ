@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class CharacterController : MonoBehaviour
 {
     public PlayerData playerData;
     public WeaponManager weaponManager;
     [SerializeField] private Skill currentSkill;
     [SerializeField] private BuffSkill currentBuff;
-    public float currentSpeed;
-    private Status _status;
     
     private Vector3 movement;
     private Transform cameraTransform;
@@ -17,6 +16,7 @@ public class CharacterController : MonoBehaviour
     
     public CardObject card1;
     public CardObject card2;
+    public CardObject card3;
     
     private void Start()
     {
@@ -53,13 +53,15 @@ public class CharacterController : MonoBehaviour
             playerData.inventory.AddItem(new Card(card2), 1);
         }
         
-        if (Input.GetKeyDown(KeyCode.LeftShift) && playerData.currentBuff != null)
+        if (Input.GetKeyDown(KeyCode.H))
         {
-            GameObject buffObject = Instantiate(playerData.currentBuff.buffData.gameObject, transform.position, transform.rotation);
-            Skill buffSkill = buffObject.GetComponent<Skill>();
-            SetSkill(buffSkill);
-            UseSkill();
+            //인벤토리에 추가하는 방법
+            playerData.inventory.AddItem(new Card(card3), 1);
         }
+        
+        PressShiftBtn();
+        PressQBtn();
+        PressEBtn();
     }
 
     private void HandleInput()
@@ -119,12 +121,6 @@ public class CharacterController : MonoBehaviour
         skill.Initialize(this);
     }
     
-    public void SetBuff(BuffSkill buff)
-    {
-        currentBuff = buff;
-        buff.Initialize(this);
-    }
-    
     public void UseSkill()
     {
         if (currentSkill != null)
@@ -133,11 +129,33 @@ public class CharacterController : MonoBehaviour
         }
     }
     
-    public void UseBuff()
+    private void PressEBtn()
     {
-        if (currentBuff != null)
+        if (Input.GetKeyDown(KeyCode.E) && playerData.currentESkill != null)
         {
-            currentBuff.Execute();
+            
+        }
+    }
+
+    private void PressQBtn()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) && playerData.currentQSkill != null)
+        {
+            GameObject SkillObject = Instantiate(playerData.currentQSkill.skillData.gameObject, transform.position, transform.rotation);
+            Skill QSkill = SkillObject.GetComponent<Skill>();
+            SetSkill(QSkill);
+            UseSkill();
+        }
+    }
+    
+    private void PressShiftBtn()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && playerData.currentBuff != null)
+        {
+            GameObject buffObject = Instantiate(playerData.currentBuff.buffData.gameObject, transform.position, transform.rotation);
+            Skill buffSkill = buffObject.GetComponent<Skill>();
+            SetSkill(buffSkill);
+            UseSkill();
         }
     }
 }

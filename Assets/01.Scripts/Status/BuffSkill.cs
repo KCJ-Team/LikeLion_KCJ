@@ -12,7 +12,7 @@ public abstract class BuffSkill : Skill
     public List<BuffEffect> buffEffects = new List<BuffEffect>();   // 적용할 버프 효과들
     
     // 초기 상태를 BuffSkillState로 설정
-    protected override SkillState GetInitialState()
+    public override SkillState GetInitialState()
     {
         return new BuffSkillState(this);
     }

@@ -31,15 +31,15 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
         try
         {
             // 에디터와 빌드 환경에 따라 다른 IP 설정
-            string serverIP;
+           // string serverIP;
         
-// #if UNITY_EDITOR
-            serverIP = networkConfig.localServerIP;  // Unity 에디터에서 사용할 로컬 IP
-// #else
-            // serverIP = networkConfig.releaseServerIP;  // 빌드된 애플리케이션에서 사용할 릴리스 서버 IP
-// #endif
-            
-            client = new TcpClient(serverIP, networkConfig.serverPort);
+// // #if UNITY_EDITOR
+//             serverIP = networkConfig.localServerIP;  // Unity 에디터에서 사용할 로컬 IP
+// // #else
+//             // serverIP = networkConfig.releaseServerIP;  // 빌드된 애플리케이션에서 사용할 릴리스 서버 IP
+// // #endif
+//             
+            client = new TcpClient(networkConfig.serverIP, networkConfig.serverPort);
             stream = client.GetStream();
             isRunning = true;
             

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1fb1e3164124743a426ffc2bc2c38e, type: 3}
   m_Name: NetworkConfig
   m_EditorClassIdentifier: 
+  selectedIPType: 1
   localServerIP: 127.0.0.1
   releaseServerIP: 35.216.70.52
+  serverIP: 35.216.70.52
   serverPort: 8888

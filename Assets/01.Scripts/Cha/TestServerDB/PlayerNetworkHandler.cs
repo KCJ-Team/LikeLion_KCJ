@@ -1,6 +1,6 @@
 using UnityEngine;
 using Messages;
-using Playerinfo;
+using PlayerInfo;
 
 public class PlayerNetworkHandler
 {
@@ -18,7 +18,7 @@ public class PlayerNetworkHandler
         GameMessage message = new GameMessage
         {
             MessageType = messageType, // 메시지 타입 설정
-            PlayerRequest = new PlayerRequest()
+            PlayerInfo = new PlayerInfo.PlayerInfo()
             {
                 PlayerId = playerId
             }
@@ -31,7 +31,7 @@ public class PlayerNetworkHandler
     // 플레이어 위치 정보 전송
     public void SendPlayerPosition(TestPlayer player, Vector3 position, float speed)
     {
-        var playerPosition = new PlayerPosition
+        var playerPosition = new PlayerInfo.PlayerInfo()
         {
             PlayerId = player.playerId,
             X = position.x,

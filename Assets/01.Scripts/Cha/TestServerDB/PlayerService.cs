@@ -5,7 +5,7 @@ using SQLite;
 using UnityEngine;
 
 /// <summary>
-/// CRUD 서비스단 코드
+/// CRUD 서비스단 코드. DB와 소통하는 단
 /// </summary>
 public class PlayerService
 {

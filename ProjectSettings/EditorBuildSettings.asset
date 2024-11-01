@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/00.Scenes/ServerTest.unity
+    guid: ede385ab16793a14d990233f314e6ed5
+  - enabled: 1
     path: Assets/00.Scenes/Kim.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects: {}

@@ -5,10 +5,10 @@ using UnityEngine;
 //UI요소와 플레이어 정보 업데이트 스크립트
 public class UIPresenter : MonoBehaviour
 {
-    private PlayerInfo _playerInfo;
+    private PlayerInfo.PlayerInfo _playerInfo;
     private UIView _uiView;
 
-    public UIPresenter(PlayerInfo playerInfo, UIView uiView)
+    public UIPresenter(PlayerInfo.PlayerInfo playerInfo, UIView uiView)
     {
         _playerInfo = playerInfo;
         _uiView = uiView;
@@ -17,12 +17,12 @@ public class UIPresenter : MonoBehaviour
     
     public void UpdateView()
     {
-        _uiView.UpdateUI(_playerInfo.Name);
+        _uiView.UpdateUI(_playerInfo.PlayerId);
     }
 
     public void UpdateName(string name)
     {
-        _playerInfo.Name = name;
+        _playerInfo.PlayerId = name;
         UpdateView();
     }
 }

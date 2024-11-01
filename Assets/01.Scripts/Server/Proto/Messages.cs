@@ -24,20 +24,21 @@ namespace Messages {
     static MessagesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg5tZXNzYWdlcy5wcm90bxIIbWVzc2FnZXMaEHBsYXllcmluZm8ucHJvdG8a",
-            "DnBhdGhpbmZvLnByb3RvGg5yZXNwb25zZS5wcm90byLWAQoLR2FtZU1lc3Nh",
-            "Z2USKgoLbWVzc2FnZVR5cGUYASABKA4yFS5tZXNzYWdlcy5NZXNzYWdlVHlw",
-            "ZRIyCg1wbGF5ZXJSZXF1ZXN0GAIgASgLMhkucGxheWVyaW5mby5QbGF5ZXJS",
-            "ZXF1ZXN0SAASJgoIcmVzcG9uc2UYAyABKAsyEi5tZXNzYWdlcy5SZXNwb25z",
-            "ZUgAEjQKDnBsYXllclBvc2l0aW9uGAQgASgLMhoucGxheWVyaW5mby5QbGF5",
-            "ZXJQb3NpdGlvbkgAQgkKB21lc3NhZ2UqYgoLTWVzc2FnZVR5cGUSEQoNU0VT",
-            "U0lPTl9MT0dJThAAEhIKDlNFU1NJT05fTE9HT1VUEAESEAoMUExBWUVSX1FV",
-            "RVJZEAISGgoWUExBWUVSX1BPU0lUSU9OX1VQREFURRADQhJaEHNlcnZlci1n",
-            "by9zcmMvcGJiBnByb3RvMw=="));
+            "Cg5tZXNzYWdlcy5wcm90bxIIbWVzc2FnZXMaEHBsYXllckluZm8ucHJvdG8a",
+            "DnBhdGhJbmZvLnByb3RvGg5yZXNwb25zZS5wcm90bxoOcm9vbUluZm8ucHJv",
+            "dG8iwgEKC0dhbWVNZXNzYWdlEioKC21lc3NhZ2VUeXBlGAEgASgOMhUubWVz",
+            "c2FnZXMuTWVzc2FnZVR5cGUSLAoKcGxheWVySW5mbxgCIAEoCzIWLnBsYXll",
+            "ckluZm8uUGxheWVySW5mb0gAEiYKCHJlc3BvbnNlGAMgASgLMhIubWVzc2Fn",
+            "ZXMuUmVzcG9uc2VIABImCghyb29tSW5mbxgEIAEoCzISLnJvb21JbmZvLlJv",
+            "b21JbmZvSABCCQoHbWVzc2FnZSqeAQoLTWVzc2FnZVR5cGUSCwoHVU5LTk9X",
+            "ThAAEhEKDVNFU1NJT05fTE9HSU4QARISCg5TRVNTSU9OX0xPR09VVBACEhAK",
+            "DFBMQVlFUl9RVUVSWRADEhoKFlBMQVlFUl9QT1NJVElPTl9VUERBVEUQBBIV",
+            "ChFNQVRDSE1BS0lOR19TVEFSVBAFEhYKEk1BVENITUFLSU5HX0NBTkNFTBAG",
+            "QhJaEHNlcnZlci1nby9zcmMvcGJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Playerinfo.PlayerinfoReflection.Descriptor, global::Pathinfo.PathinfoReflection.Descriptor, global::Messages.ResponseReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::PlayerInfo.PlayerInfoReflection.Descriptor, global::Pathinfo.PathInfoReflection.Descriptor, global::Messages.ResponseReflection.Descriptor, global::RoomInfo.RoomInfoReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Messages.MessageType), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Messages.GameMessage), global::Messages.GameMessage.Parser, new[]{ "MessageType", "PlayerRequest", "Response", "PlayerPosition" }, new[]{ "Message" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Messages.GameMessage), global::Messages.GameMessage.Parser, new[]{ "MessageType", "PlayerInfo", "Response", "RoomInfo" }, new[]{ "Message" }, null, null, null)
           }));
     }
     #endregion
@@ -49,26 +50,41 @@ namespace Messages {
   /// </summary>
   public enum MessageType {
     /// <summary>
+    /// 사용안함
+    /// </summary>
+    [pbr::OriginalName("UNKNOWN")] Unknown = 0,
+    /// <summary>
     /// 세션 로그인 요청
     /// </summary>
-    [pbr::OriginalName("SESSION_LOGIN")] SessionLogin = 0,
+    [pbr::OriginalName("SESSION_LOGIN")] SessionLogin = 1,
     /// <summary>
     /// 세션 로그아웃 요청
     /// </summary>
-    [pbr::OriginalName("SESSION_LOGOUT")] SessionLogout = 1,
+    [pbr::OriginalName("SESSION_LOGOUT")] SessionLogout = 2,
     /// <summary>
     /// 플레이어 정보 조회 요청
     /// </summary>
-    [pbr::OriginalName("PLAYER_QUERY")] PlayerQuery = 2,
+    [pbr::OriginalName("PLAYER_QUERY")] PlayerQuery = 3,
     /// <summary>
     /// 플레이어 위치 업데이트 요청
     /// </summary>
-    [pbr::OriginalName("PLAYER_POSITION_UPDATE")] PlayerPositionUpdate = 3,
+    [pbr::OriginalName("PLAYER_POSITION_UPDATE")] PlayerPositionUpdate = 4,
+    /// <summary>
+    /// 매치 시작
+    /// </summary>
+    [pbr::OriginalName("MATCHMAKING_START")] MatchmakingStart = 5,
+    /// <summary>
+    /// 매치 취소
+    /// </summary>
+    [pbr::OriginalName("MATCHMAKING_CANCEL")] MatchmakingCancel = 6,
   }
 
   #endregion
 
   #region Messages
+  /// <summary>
+  /// 모든 최종 타입은 GameMessage 타입
+  /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GameMessage : pb::IMessage<GameMessage>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -106,14 +122,14 @@ namespace Messages {
     public GameMessage(GameMessage other) : this() {
       messageType_ = other.messageType_;
       switch (other.MessageCase) {
-        case MessageOneofCase.PlayerRequest:
-          PlayerRequest = other.PlayerRequest.Clone();
+        case MessageOneofCase.PlayerInfo:
+          PlayerInfo = other.PlayerInfo.Clone();
           break;
         case MessageOneofCase.Response:
           Response = other.Response.Clone();
           break;
-        case MessageOneofCase.PlayerPosition:
-          PlayerPosition = other.PlayerPosition.Clone();
+        case MessageOneofCase.RoomInfo:
+          RoomInfo = other.RoomInfo.Clone();
           break;
       }
 
@@ -128,7 +144,7 @@ namespace Messages {
 
     /// <summary>Field number for the "messageType" field.</summary>
     public const int MessageTypeFieldNumber = 1;
-    private global::Messages.MessageType messageType_ = global::Messages.MessageType.SessionLogin;
+    private global::Messages.MessageType messageType_ = global::Messages.MessageType.Unknown;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Messages.MessageType MessageType {
@@ -138,15 +154,15 @@ namespace Messages {
       }
     }
 
-    /// <summary>Field number for the "playerRequest" field.</summary>
-    public const int PlayerRequestFieldNumber = 2;
+    /// <summary>Field number for the "playerInfo" field.</summary>
+    public const int PlayerInfoFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Playerinfo.PlayerRequest PlayerRequest {
-      get { return messageCase_ == MessageOneofCase.PlayerRequest ? (global::Playerinfo.PlayerRequest) message_ : null; }
+    public global::PlayerInfo.PlayerInfo PlayerInfo {
+      get { return messageCase_ == MessageOneofCase.PlayerInfo ? (global::PlayerInfo.PlayerInfo) message_ : null; }
       set {
         message_ = value;
-        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.PlayerRequest;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.PlayerInfo;
       }
     }
 
@@ -162,15 +178,15 @@ namespace Messages {
       }
     }
 
-    /// <summary>Field number for the "playerPosition" field.</summary>
-    public const int PlayerPositionFieldNumber = 4;
+    /// <summary>Field number for the "roomInfo" field.</summary>
+    public const int RoomInfoFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Playerinfo.PlayerPosition PlayerPosition {
-      get { return messageCase_ == MessageOneofCase.PlayerPosition ? (global::Playerinfo.PlayerPosition) message_ : null; }
+    public global::RoomInfo.RoomInfo RoomInfo {
+      get { return messageCase_ == MessageOneofCase.RoomInfo ? (global::RoomInfo.RoomInfo) message_ : null; }
       set {
         message_ = value;
-        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.PlayerPosition;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.RoomInfo;
       }
     }
 
@@ -178,9 +194,9 @@ namespace Messages {
     /// <summary>Enum of possible cases for the "message" oneof.</summary>
     public enum MessageOneofCase {
       None = 0,
-      PlayerRequest = 2,
+      PlayerInfo = 2,
       Response = 3,
-      PlayerPosition = 4,
+      RoomInfo = 4,
     }
     private MessageOneofCase messageCase_ = MessageOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -212,9 +228,9 @@ namespace Messages {
         return true;
       }
       if (MessageType != other.MessageType) return false;
-      if (!object.Equals(PlayerRequest, other.PlayerRequest)) return false;
+      if (!object.Equals(PlayerInfo, other.PlayerInfo)) return false;
       if (!object.Equals(Response, other.Response)) return false;
-      if (!object.Equals(PlayerPosition, other.PlayerPosition)) return false;
+      if (!object.Equals(RoomInfo, other.RoomInfo)) return false;
       if (MessageCase != other.MessageCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -223,10 +239,10 @@ namespace Messages {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (MessageType != global::Messages.MessageType.SessionLogin) hash ^= MessageType.GetHashCode();
-      if (messageCase_ == MessageOneofCase.PlayerRequest) hash ^= PlayerRequest.GetHashCode();
+      if (MessageType != global::Messages.MessageType.Unknown) hash ^= MessageType.GetHashCode();
+      if (messageCase_ == MessageOneofCase.PlayerInfo) hash ^= PlayerInfo.GetHashCode();
       if (messageCase_ == MessageOneofCase.Response) hash ^= Response.GetHashCode();
-      if (messageCase_ == MessageOneofCase.PlayerPosition) hash ^= PlayerPosition.GetHashCode();
+      if (messageCase_ == MessageOneofCase.RoomInfo) hash ^= RoomInfo.GetHashCode();
       hash ^= (int) messageCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -246,21 +262,21 @@ namespace Messages {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (MessageType != global::Messages.MessageType.SessionLogin) {
+      if (MessageType != global::Messages.MessageType.Unknown) {
         output.WriteRawTag(8);
         output.WriteEnum((int) MessageType);
       }
-      if (messageCase_ == MessageOneofCase.PlayerRequest) {
+      if (messageCase_ == MessageOneofCase.PlayerInfo) {
         output.WriteRawTag(18);
-        output.WriteMessage(PlayerRequest);
+        output.WriteMessage(PlayerInfo);
       }
       if (messageCase_ == MessageOneofCase.Response) {
         output.WriteRawTag(26);
         output.WriteMessage(Response);
       }
-      if (messageCase_ == MessageOneofCase.PlayerPosition) {
+      if (messageCase_ == MessageOneofCase.RoomInfo) {
         output.WriteRawTag(34);
-        output.WriteMessage(PlayerPosition);
+        output.WriteMessage(RoomInfo);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -272,21 +288,21 @@ namespace Messages {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (MessageType != global::Messages.MessageType.SessionLogin) {
+      if (MessageType != global::Messages.MessageType.Unknown) {
         output.WriteRawTag(8);
         output.WriteEnum((int) MessageType);
       }
-      if (messageCase_ == MessageOneofCase.PlayerRequest) {
+      if (messageCase_ == MessageOneofCase.PlayerInfo) {
         output.WriteRawTag(18);
-        output.WriteMessage(PlayerRequest);
+        output.WriteMessage(PlayerInfo);
       }
       if (messageCase_ == MessageOneofCase.Response) {
         output.WriteRawTag(26);
         output.WriteMessage(Response);
       }
-      if (messageCase_ == MessageOneofCase.PlayerPosition) {
+      if (messageCase_ == MessageOneofCase.RoomInfo) {
         output.WriteRawTag(34);
-        output.WriteMessage(PlayerPosition);
+        output.WriteMessage(RoomInfo);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -298,17 +314,17 @@ namespace Messages {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (MessageType != global::Messages.MessageType.SessionLogin) {
+      if (MessageType != global::Messages.MessageType.Unknown) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) MessageType);
       }
-      if (messageCase_ == MessageOneofCase.PlayerRequest) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerRequest);
+      if (messageCase_ == MessageOneofCase.PlayerInfo) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerInfo);
       }
       if (messageCase_ == MessageOneofCase.Response) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Response);
       }
-      if (messageCase_ == MessageOneofCase.PlayerPosition) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerPosition);
+      if (messageCase_ == MessageOneofCase.RoomInfo) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RoomInfo);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -322,15 +338,15 @@ namespace Messages {
       if (other == null) {
         return;
       }
-      if (other.MessageType != global::Messages.MessageType.SessionLogin) {
+      if (other.MessageType != global::Messages.MessageType.Unknown) {
         MessageType = other.MessageType;
       }
       switch (other.MessageCase) {
-        case MessageOneofCase.PlayerRequest:
-          if (PlayerRequest == null) {
-            PlayerRequest = new global::Playerinfo.PlayerRequest();
+        case MessageOneofCase.PlayerInfo:
+          if (PlayerInfo == null) {
+            PlayerInfo = new global::PlayerInfo.PlayerInfo();
           }
-          PlayerRequest.MergeFrom(other.PlayerRequest);
+          PlayerInfo.MergeFrom(other.PlayerInfo);
           break;
         case MessageOneofCase.Response:
           if (Response == null) {
@@ -338,11 +354,11 @@ namespace Messages {
           }
           Response.MergeFrom(other.Response);
           break;
-        case MessageOneofCase.PlayerPosition:
-          if (PlayerPosition == null) {
-            PlayerPosition = new global::Playerinfo.PlayerPosition();
+        case MessageOneofCase.RoomInfo:
+          if (RoomInfo == null) {
+            RoomInfo = new global::RoomInfo.RoomInfo();
           }
-          PlayerPosition.MergeFrom(other.PlayerPosition);
+          RoomInfo.MergeFrom(other.RoomInfo);
           break;
       }
 
@@ -370,12 +386,12 @@ namespace Messages {
             break;
           }
           case 18: {
-            global::Playerinfo.PlayerRequest subBuilder = new global::Playerinfo.PlayerRequest();
-            if (messageCase_ == MessageOneofCase.PlayerRequest) {
-              subBuilder.MergeFrom(PlayerRequest);
+            global::PlayerInfo.PlayerInfo subBuilder = new global::PlayerInfo.PlayerInfo();
+            if (messageCase_ == MessageOneofCase.PlayerInfo) {
+              subBuilder.MergeFrom(PlayerInfo);
             }
             input.ReadMessage(subBuilder);
-            PlayerRequest = subBuilder;
+            PlayerInfo = subBuilder;
             break;
           }
           case 26: {
@@ -388,12 +404,12 @@ namespace Messages {
             break;
           }
           case 34: {
-            global::Playerinfo.PlayerPosition subBuilder = new global::Playerinfo.PlayerPosition();
-            if (messageCase_ == MessageOneofCase.PlayerPosition) {
-              subBuilder.MergeFrom(PlayerPosition);
+            global::RoomInfo.RoomInfo subBuilder = new global::RoomInfo.RoomInfo();
+            if (messageCase_ == MessageOneofCase.RoomInfo) {
+              subBuilder.MergeFrom(RoomInfo);
             }
             input.ReadMessage(subBuilder);
-            PlayerPosition = subBuilder;
+            RoomInfo = subBuilder;
             break;
           }
         }
@@ -420,12 +436,12 @@ namespace Messages {
             break;
           }
           case 18: {
-            global::Playerinfo.PlayerRequest subBuilder = new global::Playerinfo.PlayerRequest();
-            if (messageCase_ == MessageOneofCase.PlayerRequest) {
-              subBuilder.MergeFrom(PlayerRequest);
+            global::PlayerInfo.PlayerInfo subBuilder = new global::PlayerInfo.PlayerInfo();
+            if (messageCase_ == MessageOneofCase.PlayerInfo) {
+              subBuilder.MergeFrom(PlayerInfo);
             }
             input.ReadMessage(subBuilder);
-            PlayerRequest = subBuilder;
+            PlayerInfo = subBuilder;
             break;
           }
           case 26: {
@@ -438,12 +454,12 @@ namespace Messages {
             break;
           }
           case 34: {
-            global::Playerinfo.PlayerPosition subBuilder = new global::Playerinfo.PlayerPosition();
-            if (messageCase_ == MessageOneofCase.PlayerPosition) {
-              subBuilder.MergeFrom(PlayerPosition);
+            global::RoomInfo.RoomInfo subBuilder = new global::RoomInfo.RoomInfo();
+            if (messageCase_ == MessageOneofCase.RoomInfo) {
+              subBuilder.MergeFrom(RoomInfo);
             }
             input.ReadMessage(subBuilder);
-            PlayerPosition = subBuilder;
+            RoomInfo = subBuilder;
             break;
           }
         }

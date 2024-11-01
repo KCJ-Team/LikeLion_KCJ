@@ -24,15 +24,17 @@ namespace Messages {
     static ResponseReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg5yZXNwb25zZS5wcm90bxIIbWVzc2FnZXMiQQoIUmVzcG9uc2USJAoEY29k",
-            "ZRgBIAEoDjIWLm1lc3NhZ2VzLlJlc3BvbnNlQ29kZRIPCgdtZXNzYWdlGAIg",
-            "ASgJKlQKDFJlc3BvbnNlQ29kZRILCgdTVUNDRVNTEAASCQoFRVJST1IQARIP",
-            "CgtCQURfUkVRVUVTVBACEg0KCU5PVF9GT1VORBADEgwKCENPTkZMSUNUEARC",
-            "EloQc2VydmVyLWdvL3NyYy9wYmIGcHJvdG8z"));
+            "Cg5yZXNwb25zZS5wcm90bxIIbWVzc2FnZXMaDnJvb21JbmZvLnByb3RvInEK",
+            "CFJlc3BvbnNlEiQKBGNvZGUYASABKA4yFi5tZXNzYWdlcy5SZXNwb25zZUNv",
+            "ZGUSDwoHbWVzc2FnZRgCIAEoCRImCghyb29tSW5mbxgDIAEoCzISLnJvb21J",
+            "bmZvLlJvb21JbmZvSABCBgoEZGF0YSpUCgxSZXNwb25zZUNvZGUSCwoHU1VD",
+            "Q0VTUxAAEgkKBUVSUk9SEAESDwoLQkFEX1JFUVVFU1QQAhINCglOT1RfRk9V",
+            "TkQQAxIMCghDT05GTElDVBAEQhJaEHNlcnZlci1nby9zcmMvcGJiBnByb3Rv",
+            "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
+          new pbr::FileDescriptor[] { global::RoomInfo.RoomInfoReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Messages.ResponseCode), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Messages.Response), global::Messages.Response.Parser, new[]{ "Code", "Message" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Messages.Response), global::Messages.Response.Parser, new[]{ "Code", "Message", "RoomInfo" }, new[]{ "Data" }, null, null, null)
           }));
     }
     #endregion
@@ -87,6 +89,12 @@ namespace Messages {
     public Response(Response other) : this() {
       code_ = other.code_;
       message_ = other.message_;
+      switch (other.DataCase) {
+        case DataOneofCase.RoomInfo:
+          RoomInfo = other.RoomInfo.Clone();
+          break;
+      }
+
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -126,6 +134,38 @@ namespace Messages {
       }
     }
 
+    /// <summary>Field number for the "roomInfo" field.</summary>
+    public const int RoomInfoFieldNumber = 3;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::RoomInfo.RoomInfo RoomInfo {
+      get { return dataCase_ == DataOneofCase.RoomInfo ? (global::RoomInfo.RoomInfo) data_ : null; }
+      set {
+        data_ = value;
+        dataCase_ = value == null ? DataOneofCase.None : DataOneofCase.RoomInfo;
+      }
+    }
+
+    private object data_;
+    /// <summary>Enum of possible cases for the "data" oneof.</summary>
+    public enum DataOneofCase {
+      None = 0,
+      RoomInfo = 3,
+    }
+    private DataOneofCase dataCase_ = DataOneofCase.None;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public DataOneofCase DataCase {
+      get { return dataCase_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearData() {
+      dataCase_ = DataOneofCase.None;
+      data_ = null;
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -143,6 +183,8 @@ namespace Messages {
       }
       if (Code != other.Code) return false;
       if (Message != other.Message) return false;
+      if (!object.Equals(RoomInfo, other.RoomInfo)) return false;
+      if (DataCase != other.DataCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -152,6 +194,8 @@ namespace Messages {
       int hash = 1;
       if (Code != global::Messages.ResponseCode.Success) hash ^= Code.GetHashCode();
       if (Message.Length != 0) hash ^= Message.GetHashCode();
+      if (dataCase_ == DataOneofCase.RoomInfo) hash ^= RoomInfo.GetHashCode();
+      hash ^= (int) dataCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -178,6 +222,10 @@ namespace Messages {
         output.WriteRawTag(18);
         output.WriteString(Message);
       }
+      if (dataCase_ == DataOneofCase.RoomInfo) {
+        output.WriteRawTag(26);
+        output.WriteMessage(RoomInfo);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -196,6 +244,10 @@ namespace Messages {
         output.WriteRawTag(18);
         output.WriteString(Message);
       }
+      if (dataCase_ == DataOneofCase.RoomInfo) {
+        output.WriteRawTag(26);
+        output.WriteMessage(RoomInfo);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -211,6 +263,9 @@ namespace Messages {
       }
       if (Message.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Message);
+      }
+      if (dataCase_ == DataOneofCase.RoomInfo) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RoomInfo);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -230,6 +285,15 @@ namespace Messages {
       if (other.Message.Length != 0) {
         Message = other.Message;
       }
+      switch (other.DataCase) {
+        case DataOneofCase.RoomInfo:
+          if (RoomInfo == null) {
+            RoomInfo = new global::RoomInfo.RoomInfo();
+          }
+          RoomInfo.MergeFrom(other.RoomInfo);
+          break;
+      }
+
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -257,6 +321,15 @@ namespace Messages {
             Message = input.ReadString();
             break;
           }
+          case 26: {
+            global::RoomInfo.RoomInfo subBuilder = new global::RoomInfo.RoomInfo();
+            if (dataCase_ == DataOneofCase.RoomInfo) {
+              subBuilder.MergeFrom(RoomInfo);
+            }
+            input.ReadMessage(subBuilder);
+            RoomInfo = subBuilder;
+            break;
+          }
         }
       }
     #endif
@@ -282,6 +355,15 @@ namespace Messages {
           }
           case 18: {
             Message = input.ReadString();
+            break;
+          }
+          case 26: {
+            global::RoomInfo.RoomInfo subBuilder = new global::RoomInfo.RoomInfo();
+            if (dataCase_ == DataOneofCase.RoomInfo) {
+              subBuilder.MergeFrom(RoomInfo);
+            }
+            input.ReadMessage(subBuilder);
+            RoomInfo = subBuilder;
             break;
           }
         }

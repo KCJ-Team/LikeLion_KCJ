@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
 {
     public UIView _UIView;
     private UIPresenter _uiPresenter;
-    public PlayerInfo _playerInfo;
+    public PlayerInfo.PlayerInfo _playerInfo;
 
     private void Start()
     {

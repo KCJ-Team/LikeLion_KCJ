@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Net.Sockets;
 using Google.Protobuf;
 using Messages;
+using TMPro;
 using UnityEngine;
 
 public class GameNetworkManager : SceneSingleton<GameNetworkManager>
@@ -17,6 +18,9 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
     // 수신된 메세지를 일시적으로 저장
     private ConcurrentQueue<GameMessage> receiveQueue = new ConcurrentQueue<GameMessage>(); 
   
+    // 일단 테스트로 보여줄 텍스트 넣어두기
+    public TextMeshProUGUI textResult;
+
     private void Start()
     {
         ConnectToServer();
@@ -29,11 +33,11 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
             // 에디터와 빌드 환경에 따라 다른 IP 설정
             string serverIP;
         
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
             serverIP = networkConfig.localServerIP;  // Unity 에디터에서 사용할 로컬 IP
-#else
-            serverIP = networkConfig.releaseServerIP;  // 빌드된 애플리케이션에서 사용할 릴리스 서버 IP
-#endif
+// #else
+            // serverIP = networkConfig.releaseServerIP;  // 빌드된 애플리케이션에서 사용할 릴리스 서버 IP
+// #endif
             
             client = new TcpClient(serverIP, networkConfig.serverPort);
             stream = client.GetStream();
@@ -136,24 +140,6 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
         }
     }
     
-    private void ProcessMessage(GameMessage message)
-    {
-        if (message == null) return;
-        
-        Debug.Log($"Processed message: {message}");
-        
-        // TODO : messageType을 보고 처리 로직 구현하기
-        switch (message.MessageType) {
-            case MessageType.SessionLogin :
-
-                break;
-            
-            case MessageType.SessionLogout :
-
-                break;
-        }
-    }
-
     // TODO : try-catch로 오류처리..
     public void SendMessage(GameMessage message)
     {
@@ -164,6 +150,32 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
 
             stream.Write(lengthBytes, 0, 4);
             stream.Write(messageBytes, 0, messageBytes.Length);
+        }
+    }
+    
+    /// <summary>
+    /// 서버에서 보낸 패킷을 메세지로 받아 타입에 맞춰 로직을 짜준다.
+    /// </summary>
+    /// <param name="message"></param>
+    private void ProcessMessage(GameMessage message)
+    {
+        if (message == null) return;
+        // 왜 Type이 안오지??
+        Debug.Log($"Processed message: {message.ToString()}");
+        
+        // Test로 message 텍스트 화면에 쏴주기..
+        textResult.text = message.ToString();
+        
+        // TODO : messageType을 보고 처리 로직 구현하기
+        switch (message.MessageType) {
+            case MessageType.SessionLogin :
+                Debug.Log($"로그인 타입 / Processed message: {message.ToString()}");
+    
+                break;
+            
+            case MessageType.SessionLogout :
+
+                break;
         }
     }
 

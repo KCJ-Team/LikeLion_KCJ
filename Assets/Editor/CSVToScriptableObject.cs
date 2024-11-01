@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-public class CSVToScriptableObject : MonoBehaviour
+public class CSVToScriptableObject
 {
     // CSV 파일을 ScriptableObject로 변환하는 메서드
     public static void ConvertCSV<T>(string csvFileName, string outputFolder) where T : ScriptableObject

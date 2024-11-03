@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using Google.Protobuf;
 using Messages;
@@ -175,6 +176,63 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
             
             case MessageType.SessionLogout :
 
+                break;
+            case MessageType.MatchmakingStart :
+                if (message.MessageCase == GameMessage.MessageOneofCase.Response)
+                {
+                    // 방 생성시 클라이언트 로직 처리
+                    if (message.Response.RoomInfo != null)
+                    {
+                        var roomInfo = message.Response.RoomInfo;
+                        var players = new List<TestPlayer>();
+                        
+                        // RoomInfo의 플레이어를 list속에 플레이어 넣기
+                        foreach (var player in roomInfo.Players)
+                        {
+                            Debug.Log($"Player ID: {player.PlayerId}, Position: ({player.X}, {player.Y}, {player.Z})");
+
+                            // 플레이어 정보를 생성하고 List에 추가
+                            players.Add(new TestPlayer(
+                                player.PlayerId,
+                                player.X,  // X 좌표
+                                player.Y,  // Y 좌표
+                                player.Z,  // Z 좌표
+                                player.Speed,
+                                (int)player.Health    // Health를 int로 변환
+                            ));
+                        }
+
+                        // RoomManager에서 방 초기화 및 플레이어 생성 호출
+                        RoomManager.Instance.InitializeRoom(roomInfo.RoomId, players);
+                    }
+                }
+               
+                break;
+            
+            case MessageType.PlayerPositionUpdate:
+                if (message.MessageCase == GameMessage.MessageOneofCase.RoomPlayerUpdate)
+                {
+                    var roomPlayerUpdate = message.RoomPlayerUpdate;
+
+                    // 해당 플레이어의 ID와 위치 정보를 사용하여 위치 업데이트 메서드 호출
+                    Vector3 newPosition = new Vector3(
+                        roomPlayerUpdate.PlayerInfo.X,
+                        roomPlayerUpdate.PlayerInfo.Y,
+                        roomPlayerUpdate.PlayerInfo.Z
+                    );
+                    
+                    float newSpeed = roomPlayerUpdate.PlayerInfo.Speed;
+
+                    // RoomManager에서 바뀐 플레이어의 포지션을 업데이트
+                    RoomManager.Instance.UpdateOtherPlayerPosition(
+                        roomPlayerUpdate.PlayerInfo.PlayerId,
+                        newPosition,
+                        newSpeed
+                    );
+
+                    Debug.Log($"Player position updated for {roomPlayerUpdate.PlayerInfo.PlayerId}");
+                }
+                
                 break;
         }
     }

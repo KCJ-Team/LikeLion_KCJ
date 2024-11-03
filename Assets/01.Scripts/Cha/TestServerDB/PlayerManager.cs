@@ -10,11 +10,11 @@ using MessageType = Messages.MessageType;
 /// </summary>
 public class PlayerManager : SceneSingleton<PlayerManager>
 {
-    // 일단 테스트로 Player 넣어둠
+    // 일단 테스트로 넣어둠
     private TestPlayer player;
     private PlayerService playerService;
     private PlayerNetworkHandler playerNetworkHandler;
-    
+
     public TestPlayer Player
     {
         get => player;
@@ -29,25 +29,24 @@ public class PlayerManager : SceneSingleton<PlayerManager>
 
     public void Login()
     { 
-#if UNITY_EDITOR
-        // 에디터 환경에서 기존 로직으로 플레이어 불러오기
-        player = playerService.GetPlayer();
-        if (player == null)
-        {
-            player = playerService.CreatePlayer();
-            if (player == null) 
-            {
-                Debug.LogError("Failed to create new player.");
-                return;
-            }
-            Debug.Log($"Create New Player : {player.playerId}");
-        }
-        else
-        {
-            Debug.Log($"Get Current Player : {player.playerId}");
-        }
-#else
-        // 실제 빌드 환경에서는 항상 새 플레이어 생성 => DB 아이디 때문..
+        // 실제 로직, DB에서 플레이어 ID는 하나.
+        // player = playerService.GetPlayer();
+        // if (player == null)
+        // {
+        //     player = playerService.CreatePlayer();
+        //     if (player == null) 
+        //     {
+        //         Debug.LogError("Failed to create new player.");
+        //         return;
+        //     }
+        //     Debug.Log($"Create New Player : {player.playerId}");
+        // }
+        // else
+        // {
+        //     Debug.Log($"Get Current Player : {player.playerId}");
+        // }
+        
+        // 테스트를 위해 매번 로그인마다 새로운 ID를 디비에 저장한다.
         player = playerService.CreatePlayer();
         if (player == null)
         {
@@ -55,7 +54,6 @@ public class PlayerManager : SceneSingleton<PlayerManager>
             return;
         }
         Debug.Log($"Create New Player in Build: {player.playerId}");
-#endif
         
         // 이제 플레이어가 생겼으면 id를 가지고 세션 연결
         playerNetworkHandler.SendPlayerId(player.playerId, MessageType.SessionLogin); // playerId 전송
@@ -102,16 +100,18 @@ public class PlayerManager : SceneSingleton<PlayerManager>
         // 세션에 있는 플레이어에게 매치메이킹 취소 요청
         playerNetworkHandler.SendPlayerId(player.playerId, MessageType.MatchmakingCancel);
     }
-
+    
     // 플레이어 위치 업데이트 요청을 네트워크 핸들러에 전달
-    public void SendPlayerPosition(Vector3 position, Vector3 forward, float speed)
+    public void SendPlayerPosition(MessageType messageType, Vector3 position, float speed, int health)
     {
-        playerNetworkHandler.SendPlayerPosition(player, position, speed);
+        playerNetworkHandler.SendPlayerPosition(messageType, player, position, speed, health);
     }
-
+    
     private void OnApplicationQuit()
     {
         Logout();
         Debug.Log("Application is quitting, player logged out.");
     }
+
+   
 } // end class

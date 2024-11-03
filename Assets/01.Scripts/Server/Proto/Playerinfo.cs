@@ -27,17 +27,39 @@ namespace PlayerInfo {
             "ChBwbGF5ZXJJbmZvLnByb3RvEgpwbGF5ZXJJbmZvIoIBCgpQbGF5ZXJJbmZv",
             "EhAKCHBsYXllcklkGAEgASgJEgkKAXgYAiABKAISCQoBeRgDIAEoAhIJCgF6",
             "GAQgASgCEgoKAnJ4GAUgASgCEgoKAnJ5GAYgASgCEgoKAnJ6GAcgASgCEg0K",
-            "BXNwZWVkGAggASgCEg4KBmhlYWx0aBgJIAEoAkISWhBzZXJ2ZXItZ28vc3Jj",
-            "L3BiYgZwcm90bzM="));
+            "BXNwZWVkGAggASgCEg4KBmhlYWx0aBgJIAEoAio4CgpQcmVmYWJUeXBlEhIK",
+            "DlRZUEVfVU5ERUZJTkVEEAASCgoGVFlQRV9BEAESCgoGVFlQRV9CEAJCEloQ",
+            "c2VydmVyLWdvL3NyYy9wYmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PlayerInfo.PrefabType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInfo.PlayerInfo), global::PlayerInfo.PlayerInfo.Parser, new[]{ "PlayerId", "X", "Y", "Z", "Rx", "Ry", "Rz", "Speed", "Health" }, null, null, null, null)
           }));
     }
     #endregion
 
   }
+  #region Enums
+  /// <summary>
+  /// 프리팹 타입 정의 (딱 2가지 타입)
+  /// </summary>
+  public enum PrefabType {
+    /// <summary>
+    /// 기본값 (정의되지 않은 경우)
+    /// </summary>
+    [pbr::OriginalName("TYPE_UNDEFINED")] TypeUndefined = 0,
+    /// <summary>
+    /// 첫 번째 프리팹 타입
+    /// </summary>
+    [pbr::OriginalName("TYPE_A")] TypeA = 1,
+    /// <summary>
+    /// 두 번째 프리팹 타입
+    /// </summary>
+    [pbr::OriginalName("TYPE_B")] TypeB = 2,
+  }
+
+  #endregion
+
   #region Messages
   /// <summary>
   /// 요청, 응답으로 사용할 플레이어의 정보

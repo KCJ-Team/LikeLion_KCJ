@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Messages;
 using UnityEngine;
 
 /// <summary>
@@ -9,6 +10,7 @@ using UnityEngine;
 public class TestPlayerMovePosition : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public int health = 100;
     private Vector3 lastPosition;
 
     private void Start()
@@ -29,7 +31,7 @@ public class TestPlayerMovePosition : MonoBehaviour
         if (transform.position != lastPosition)
         {
             PlayerManager.Instance.SendPlayerPosition(
-                transform.position, transform.forward, moveSpeed
+                MessageType.PlayerPositionUpdate, transform.position, moveSpeed, health
             );
             
             lastPosition = transform.position;

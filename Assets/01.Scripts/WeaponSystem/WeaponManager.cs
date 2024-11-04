@@ -54,27 +54,13 @@ public class WeaponManager : MonoBehaviour
 
     private void FireWeapon()
     {
-        switch (playerData.currentWeapon.weaponType)
-        {
-            case WeaponType.Sword:
-                MeleeAttack();
-                break;
-            default:
-                RangedAttack();
-                break;
-        }
+        RangedAttack();
 
         // 이펙트 생성
-        if (playerData.currentWeapon.effectPrefab != null)
-        {
-            Instantiate(playerData.currentWeapon.effectPrefab, transform.position, transform.rotation);
-        }
-    }
-
-    // 근접 공격
-    private void MeleeAttack()
-    {
-        // 근접 공격 로직 구현
+        // if (playerData.currentWeapon.effectPrefab != null)
+        // {
+        //     Instantiate(playerData.currentWeapon.effectPrefab, transform.position, transform.rotation);
+        // }
     }
 
     // 원거리 공격

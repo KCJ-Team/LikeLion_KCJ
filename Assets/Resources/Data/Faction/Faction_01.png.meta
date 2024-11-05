@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0f6db82af0cc2364192ff0d86d8f8227
+guid: 3b71ec362dfdfbb49b781ada067d03af
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Icon_Factions_0
+      name: Faction_01_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 512
-        width: 512
-        height: 512
+        y: 520
+        width: 460
+        height: 408
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 187e2db7710165140b324e304f463f14
-      internalID: 430149262
+      spriteID: e974dea6ff4df584e8b5151a52855fe0
+      internalID: -2065004022
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon_Factions_1
+      name: Faction_01_1
       rect:
         serializedVersion: 2
-        x: 512
-        y: 512
-        width: 512
-        height: 512
+        x: 526
+        y: 532
+        width: 434
+        height: 428
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27c7c26662c608c48a02bfdc84be9042
-      internalID: 1414991884
+      spriteID: c89933016ae47ee4f865662591cb4abe
+      internalID: -1529345472
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon_Factions_2
+      name: Faction_01_2
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
+        y: 9
+        width: 464
+        height: 456
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff97e354581c7b34c84022f6e5554f69
+      internalID: -2125281260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faction_01_4
+      rect:
+        serializedVersion: 2
+        x: 508
         y: 0
-        width: 512
-        height: 512
+        width: 470
+        height: 475
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,29 +174,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 012823e0c9fca964a8dad9a0387eda10
-      internalID: 636447709
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icon_Factions_3
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 70c65c0e1f7146944808475908db5a07
-      internalID: -938558738
+      spriteID: d4372e0efe7d36f458d80caa2c2fc925
+      internalID: -166343795
       vertices: []
       indices: 
       edges: []
@@ -183,7 +183,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f68900f102b6f6042929700c4b83e06b
+    spriteID: f9aad651be9d989469ea7794449ade62
     internalID: 0
     vertices: []
     indices: 
@@ -191,10 +191,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Icon_Factions_0: 430149262
-      Icon_Factions_1: 1414991884
-      Icon_Factions_2: 636447709
-      Icon_Factions_3: -938558738
+      Faction_01_0: -2065004022
+      Faction_01_1: -1529345472
+      Faction_01_2: -2125281260
+      Faction_01_3: -146518361
+      Faction_01_4: -166343795
+      Faction_01_5: 853868667
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

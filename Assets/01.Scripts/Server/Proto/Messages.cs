@@ -31,11 +31,13 @@ namespace Messages {
             "ckluZm8uUGxheWVySW5mb0gAEiYKCHJlc3BvbnNlGAMgASgLMhIubWVzc2Fn",
             "ZXMuUmVzcG9uc2VIABImCghyb29tSW5mbxgEIAEoCzISLnJvb21JbmZvLlJv",
             "b21JbmZvSAASNgoQcm9vbVBsYXllclVwZGF0ZRgFIAEoCzIaLnJvb21JbmZv",
-            "LlJvb21QbGF5ZXJVcGRhdGVIAEIJCgdtZXNzYWdlKp4BCgtNZXNzYWdlVHlw",
+            "LlJvb21QbGF5ZXJVcGRhdGVIAEIJCgdtZXNzYWdlKuQBCgtNZXNzYWdlVHlw",
             "ZRILCgdVTktOT1dOEAASEQoNU0VTU0lPTl9MT0dJThABEhIKDlNFU1NJT05f",
             "TE9HT1VUEAISEAoMUExBWUVSX1FVRVJZEAMSGgoWUExBWUVSX1BPU0lUSU9O",
             "X1VQREFURRAEEhUKEU1BVENITUFLSU5HX1NUQVJUEAUSFgoSTUFUQ0hNQUtJ",
-            "TkdfQ0FOQ0VMEAZCEloQc2VydmVyLWdvL3NyYy9wYmIGcHJvdG8z"));
+            "TkdfQ0FOQ0VMEAYSFAoQUExBWUVSX0hQX1VQREFURRAHEhgKFFBMQVlFUl9D",
+            "SEFOR0VfV0VBUE9OEAgSFAoQUExBWUVSX0FOSU1BVElPThAJQhJaEHNlcnZl",
+            "ci1nby9zcmMvcGJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::PlayerInfo.PlayerInfoReflection.Descriptor, global::Pathinfo.PathInfoReflection.Descriptor, global::Messages.ResponseReflection.Descriptor, global::RoomInfo.RoomInfoReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Messages.MessageType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -78,6 +80,18 @@ namespace Messages {
     /// 매치 취소
     /// </summary>
     [pbr::OriginalName("MATCHMAKING_CANCEL")] MatchmakingCancel = 6,
+    /// <summary>
+    /// 플레이어 hp 변경시
+    /// </summary>
+    [pbr::OriginalName("PLAYER_HP_UPDATE")] PlayerHpUpdate = 7,
+    /// <summary>
+    /// 플레이어 무기 변경시 요청
+    /// </summary>
+    [pbr::OriginalName("PLAYER_CHANGE_WEAPON")] PlayerChangeWeapon = 8,
+    /// <summary>
+    /// 플레이어 애니메이션 파라미터값 변경시
+    /// </summary>
+    [pbr::OriginalName("PLAYER_ANIMATION")] PlayerAnimation = 9,
   }
 
   #endregion

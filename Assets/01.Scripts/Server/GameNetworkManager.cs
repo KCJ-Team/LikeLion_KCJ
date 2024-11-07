@@ -198,7 +198,7 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
                                 player.Y,  // Y 좌표
                                 player.Z,  // Z 좌표
                                 player.Speed,
-                                (int)player.Health    // Health를 int로 변환
+                                (int)player.Hp    // Health를 int로 변환
                             ));
                         }
 
@@ -233,6 +233,17 @@ public class GameNetworkManager : SceneSingleton<GameNetworkManager>
                     Debug.Log($"Player position updated for {roomPlayerUpdate.PlayerInfo.PlayerId}");
                 }
                 
+                break;
+            
+            // TODO : 다른 플레이어의 상태 변경 클라이언트 로직 구현하기..
+            case MessageType.PlayerHpUpdate:
+
+                break;
+            case MessageType.PlayerChangeWeapon :
+
+                break;
+            case MessageType.PlayerAnimation :
+
                 break;
         }
     }

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd32f97163ea4c94b885a84f15a193ee, type: 3}
-  m_Name: Workforce
+  m_Name: Research
   m_EditorClassIdentifier: 
-  resourceId: 2
-  resourceName: "\uC77C\uAFBC"
-  resourceType: 2
+  resourceId: 4
+  resourceName: "\uC5F0\uAD6C"
+  resourceType: 4
   icon: {fileID: 0}
   currentAmount: 0
   maxAmount: 999

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd32f97163ea4c94b885a84f15a193ee, type: 3}
   m_Name: Fuel
   m_EditorClassIdentifier: 
-  resourceId: 2
+  resourceId: 3
   resourceName: "\uC5F0\uB8CC"
-  resourceType: 2
+  resourceType: 3
   icon: {fileID: 0}
-  currentAmount: 999
+  currentAmount: 0
   maxAmount: 999

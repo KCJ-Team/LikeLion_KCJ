@@ -14,13 +14,21 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
     
     //키 바인딩 - 예시
     public KeyCode _escapeKey = KeyCode.Escape;
-    public KeyCode _inventoryKey = KeyCode.I;
-    public KeyCode _charInfoKey  = KeyCode.C;
-    public KeyCode _shopKey = KeyCode.V;
+    public KeyCode buildingKey = KeyCode.I;
+    public KeyCode incounterKey  = KeyCode.C;
+    public KeyCode storeKey = KeyCode.V;
     
+    [SerializeField]
     private LinkedList<PopupUI> _activePopupLList;  //실시간 팝업 관리 LinkedList
+    [SerializeField]
     private List<PopupUI> _allPopupList;            //전체 팝업 목록 List
 
+    // hyuna
+    [Header("PopUIs")]
+    public PopupUI buildingUpgradePopup;
+    public PopupUI incounterPopup;
+    public PopupUI storePopup;
+    
     private void Awake()
     {
         base.Awake();
@@ -46,8 +54,9 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         }
 
         // 단축키 조작 - 예시
-        //ToggleKeyDownAction(_inventoryKey, _inventoryPopup);
-        //ToggleKeyDownAction(_charInfoKey,  _characterInfoPopup);
+        ToggleKeyDownAction(buildingKey, buildingUpgradePopup);
+        ToggleKeyDownAction(incounterKey,  incounterPopup);
+        ToggleKeyDownAction(storeKey,  storePopup);
     }
     
     //일반 메소드
@@ -57,6 +66,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         _allPopupList = new List<PopupUI>()
         {
             //_inventoryPopup, _characterInfoPopup, _shopPopup, _SettingPopup, _SoundPopup
+            buildingUpgradePopup//, incounterPopup, storePopup
         };
 
         // 2. 모든 팝업에 이벤트 등록
@@ -74,7 +84,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
             popup._closeButton.onClick.AddListener(() => ClosePopup(popup));
         }
         
-        //OpenPopup(_inventoryPopup);
+        OpenPopup(buildingUpgradePopup);
         //OpenPopup(_characterInfoPopup);
     }
     

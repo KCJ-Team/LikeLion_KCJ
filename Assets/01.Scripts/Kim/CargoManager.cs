@@ -23,8 +23,8 @@ public class CargoManager : MonoBehaviour
     // 매 프레임마다 플레이어를 찾고, 움직임 상태를 업데이트하며, 필요시 화물을 이동시킨다.
     private void Update()
     {
-        var (player, otherPlayer) = FindPlayers();
-        UpdateMovementState(player, otherPlayer);
+        //var (player, otherPlayer) = FindPlayers();
+        //UpdateMovementState(player, otherPlayer);
         if (isMoving) MoveCargo();
     }
 
@@ -51,13 +51,10 @@ public class CargoManager : MonoBehaviour
     }
 
     // 씬에서 Player_kim과 OtherPlayer_kim 객체를 찾아 반환한다.
-    private (GameObject player, GameObject otherPlayer) FindPlayers()
-    {
-        return (
-            FindObjectOfType<Player_kim>()?.gameObject,
-            FindObjectOfType<OtherPlayer_kim>()?.gameObject
-        );
-    }
+    // private (GameObject player, GameObject otherPlayer) FindPlayers()
+    // {
+    //     return;
+    // }
 
     // 플레이어들의 위치에 따라 화물의 이동 상태를 업데이트한다.
     private void UpdateMovementState(GameObject player, GameObject otherPlayer)

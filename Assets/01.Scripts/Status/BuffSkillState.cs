@@ -1,23 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 버프 스킬의 상태를 관리하는 클래스
-/// </summary>
 public class BuffSkillState : SkillState
 {
     private BuffSkill buffSkill;         // 버프 스킬 참조
     private Status targetStatus;         // 버프를 적용할 대상의 Status 컴포넌트
+    private GameObject buffObject;        // 버프 스킬 오브젝트
+    private float buffEndTime;           // 버프 종료 시간
+    private bool isBuffActive = false;   // 버프 활성화 상태
     
     public BuffSkillState(Skill skill) : base(skill)
     {
         buffSkill = skill as BuffSkill;
+        buffObject = buffSkill.gameObject;
     }
     
-    /// <summary>
-    /// 상태 진입 시 버프 적용
-    /// </summary>
+    // 상태 진입 시 버프 적용
     public override void EnterState()
     {
         // 플레이어의 Status 컴포넌트 가져오기
@@ -35,14 +32,35 @@ public class BuffSkillState : SkillState
             
             // 대상에게 버프 적용
             targetStatus.AddBuff(newBuff);
+            
+            // 버프 종료 시간 설정
+            buffEndTime = Time.time + buffSkill.skillDuration;
+            isBuffActive = true;
         }
     }
     
-    // 버프 적용 후 바로 상태 종료
+    // 버프 지속시간 체크 및 오브젝트 삭제
     public override void UpdateState()
     {
-        skill.ChangeState(null);
+        if (isBuffActive && Time.time >= buffEndTime)
+        {
+            // 버프 제거
+            targetStatus.RemoveBuff(buffSkill.GetBuffId());
+            isBuffActive = false;
+            
+            // 오브젝트 삭제
+            if (buffObject != null)
+            {
+                Object.Destroy(buffObject);
+            }
+            
+            // 상태 종료
+            skill.ChangeState(null);
+        }
     }
-    
-    public override void ExitState() { }
+
+    public override void ExitState()
+    {
+        
+    }
 }

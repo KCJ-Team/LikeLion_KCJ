@@ -9,6 +9,7 @@ public class WeaponCardObject : CardObject
     
     public float attackSpeed;
     public float damage;
+    public float range;
     
     public GameObject projectilePrefab; // 발사체 프리팹 (근접 무기는 null)
     public GameObject effectPrefab; // 공격 이펙트 프리팹

@@ -8,18 +8,18 @@ public class UIManager : MonoBehaviour
 {
     public UIView _UIView;
     private UIPresenter _uiPresenter;
-    public PlayerInfo _playerInfo;
+    //public PlayerInfo _playerInfo;
 
     private void Start()
     {
-        _uiPresenter = new UIPresenter(_playerInfo, _UIView);
+        //_uiPresenter = new UIPresenter(_playerInfo, _UIView);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            _uiPresenter.UpdateName("Pressed k");
-        }
-    }
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.K))
+    //     {
+    //         _uiPresenter.UpdateName("Pressed k");
+    //     }
+    // }
 }

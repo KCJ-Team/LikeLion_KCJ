@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 버프를 부여하는 스킬의 기본 클래스
-/// Skill 클래스를 상속받아 버프 관련 기능 추가
-/// </summary>
+
+// 버프를 부여하는 스킬의 기본 클래스
+// Skill 클래스를 상속받아 버프 관련 기능 추가
 public abstract class BuffSkill : Skill
 {
-    public float skillDuration = 5f;                     // 버프 지속 시간
+    public float skillDuration;                     // 버프 지속 시간
     public List<BuffEffect> buffEffects = new List<BuffEffect>();   // 적용할 버프 효과들
     
     // 초기 상태를 BuffSkillState로 설정

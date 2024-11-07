@@ -1,9 +1,7 @@
 using UnityEngine;
 
-/// <summary>
-/// 발사체의 기본 동작을 정의하는 추상 클래스
-/// State 패턴을 사용하여 발사체의 상태를 관리
-/// </summary>
+// 발사체의 기본 동작을 정의하는 추상 클래스
+// State 패턴을 사용하여 발사체의 상태를 관리
 public abstract class Projectile : MonoBehaviour
 {
     protected ProjectileState currentState;   // 현재 발사체의 상태
@@ -21,7 +19,11 @@ public abstract class Projectile : MonoBehaviour
     // 발사체의 초기 상태를 반환하는 추상 메서드
     protected abstract ProjectileState GetInitialState();
     
-   
+    public float GetDamage()
+    {
+        return damage;
+    }
+    
     // 발사체의 상태를 변경하는 메서드
     public void ChangeState(ProjectileState newState)
     {

@@ -7,23 +7,13 @@ public class KnockBack : Skill
     [SerializeField] private float knockbackForce = 10f;
     [SerializeField] private float projectileDamage = 10f;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private LayerMask targetLayers; // 충돌 대상 레이어 추가
-    
-    //private float currentCooldown = 0f;
-    
-    private void Update()
-    {
-        if (currentCooldown > 0)
-        {
-            currentCooldown -= Time.deltaTime;
-        }
-    }
+    [SerializeField] private LayerMask targetLayers;
     
     public void FireProjectile()
     {
         firePoint = GameManager.Instance.Player.transform;
         
-        if (currentCooldown <= 0)
+        if (CanUseSkill())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

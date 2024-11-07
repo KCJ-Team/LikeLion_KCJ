@@ -1,9 +1,7 @@
 using UnityEngine;
 
-/// <summary>
-/// 발사체의 상태를 나타내는 추상 클래스
-/// State 패턴의 기본 구조 제공
-/// </summary>
+// 발사체의 상태를 나타내는 추상 클래스
+// State 패턴의 기본 구조 제공
 public abstract class ProjectileState
 {
     protected Projectile projectile;  // 이 상태가 속한 발사체 참조
@@ -19,4 +17,13 @@ public abstract class ProjectileState
     public abstract void UpdateState();
     // 상태 종료 시 호출되는 메서드
     public abstract void ExitState();
+    
+    public virtual void OnCollisionEnter(Collision collision)
+    {
+        // 기본 충돌 처리
+        if (collision.gameObject.TryGetComponent<IDamageable>(out IDamageable target))
+        {
+            target.TakeDamage(projectile.GetDamage());
+        }
+    }
 }

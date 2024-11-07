@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 미사일을 실제로 발사하는 상태를 구현한 클래스
-/// 지정된 위치에 일정 간격으로 여러 발의 미사일을 발사
-/// </summary>
+// 미사일을 실제로 발사하는 상태를 구현한 클래스
+// 지정된 위치에 일정 간격으로 여러 발의 미사일을 발사
 public class MissileFiringState : SkillState
 {
     private MissileBombing _missileBombing;
@@ -38,6 +36,11 @@ public class MissileFiringState : SkillState
             // 발사 카운트 증가 및 다음 발사 시간 설정
             firedMissiles++;
             nextFireTime = Time.time + fireInterval;
+        }
+
+        if (firedMissiles >= 5)
+        {
+            Object.Destroy(_missileBombing.gameObject);
         }
     }
     

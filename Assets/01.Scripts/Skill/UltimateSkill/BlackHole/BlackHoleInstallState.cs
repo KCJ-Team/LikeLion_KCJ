@@ -20,7 +20,7 @@ public class BlackHoleInstallState : SkillState
 
     public override void UpdateState()
     {
-        
+        Object.Destroy(_blackHole.gameObject);
     }
 
     public override void ExitState()

@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca38f1ebdb32de840854884fdfacc00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0
+  cooldown: 5
   cloneDuration: 3
-  moveSpeed: 20
+  moveSpeed: 7
   groundLayer:
     serializedVersion: 2
     m_Bits: 128

@@ -14,6 +14,7 @@ public class KnockBackFiringState : SkillState
         if (_knockBack.CanUseSkill())
         {
             _knockBack.FireProjectile();
+            Object.Destroy(_knockBack.gameObject);
         }
     }
     

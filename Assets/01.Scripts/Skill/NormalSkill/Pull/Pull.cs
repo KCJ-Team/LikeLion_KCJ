@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +6,17 @@ using UnityEngine;
 public class Pull : Skill
 {
     [SerializeField] private GameObject ProjectilePrefab;
-    [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private float projectileLifetime = 5f;
-    
-    //private Camera mainCamera;
-    
+    private Transform firePoint;
+
+    private void Start()
+    {
+        firePoint = GameManager.Instance.Player.GetComponent<WeaponManager>().firePoint;
+    }
+
     public void ShootProjectile()
     {
-        // 마우스 위치를 월드 좌표로 변환
+        /*// 마우스 위치를 월드 좌표로 변환
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         
@@ -29,16 +33,43 @@ public class Pull : Skill
             // ProjectilePrefab 인스턴스화
             GameObject projectile = Instantiate(ProjectilePrefab, transform.position, Quaternion.LookRotation(direction));
             
-            // Rigidbody가 있다면 속도 설정
-            Rigidbody rb = projectile.GetComponent<Rigidbody>();
-            if (rb != null)
+            PullProjectile pr = projectile.GetComponent<PullProjectile>();
+            
+            if (projectile != null)
             {
-                rb.velocity = direction * projectileSpeed;
+                pr.Initialize(direction, damage);
             }
             
             // 일정 시간 후 발사체 제거
             Destroy(projectile, projectileLifetime);
+        }*/
+        
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Vector3 targetPoint;
+        
+        if (Physics.Raycast(ray, out hit))
+        {
+            targetPoint = new Vector3(hit.point.x, firePoint.position.y, hit.point.z);
         }
+        else
+        {
+            targetPoint = ray.GetPoint(1000f);
+            targetPoint.y = firePoint.position.y;
+        }
+        
+        Vector3 direction = (targetPoint - firePoint.position).normalized;
+        
+        GameObject projectile = Instantiate(ProjectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
+        
+        PullProjectile pr = projectile.GetComponent<PullProjectile>();
+            
+        if (projectile != null)
+        {
+            pr.Initialize(direction, damage);
+        }
+        
+        Destroy(projectile, projectileLifetime);
     }
     
     public override SkillState GetInitialState()

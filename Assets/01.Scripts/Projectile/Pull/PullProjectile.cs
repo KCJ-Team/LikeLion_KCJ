@@ -11,11 +11,20 @@ public class PullProjectile : Projectile
     private Rigidbody targetRigidbody;       // 끌어당길 대상의 Rigidbody
     private bool isPulling = false;          // 현재 끌어당기는 중인지 여부
     
+    protected Vector3 direction;
+    
     private void Awake()
     {
         playerTransform = GameManager.Instance.Player.transform;
     }
-    
+
+    public override void Initialize(Vector3 direction, float damage)
+    {
+        this.direction = direction;
+        this.damage = damage;
+        base.Initialize(direction, damage);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // 아직 끌어당기는 중이 아니고 레이어가 일치할 때만
@@ -46,6 +55,6 @@ public class PullProjectile : Projectile
     
     protected override ProjectileState GetInitialState()
     {
-        return new PullProjectilePullingState(this);
+        return new PullProjectileMovingState(this, direction);
     }
 }

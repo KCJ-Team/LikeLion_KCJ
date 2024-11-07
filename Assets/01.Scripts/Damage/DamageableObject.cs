@@ -41,6 +41,6 @@ public class DamageableObject : MonoBehaviour, IDamageable
     // 사망 시 호출되는 가상 메서드
     protected virtual void OnDeath()
     {
-        //Debug.Log($"{gameObject.name} has died!");
+        
     }
 }

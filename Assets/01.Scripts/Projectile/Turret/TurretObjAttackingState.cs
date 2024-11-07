@@ -7,7 +7,7 @@ public class TurretObjAttackingState : ProjectileState
 
     public TurretObjAttackingState(Projectile projectile) : base(projectile)
     {
-        turret = (TurretObject)projectile;
+        turret = projectile as TurretObject;
     }
 
     public override void EnterState()
@@ -41,7 +41,7 @@ public class TurretObjAttackingState : ProjectileState
     private bool IsTargetInRange()
     {
         Transform target = turret.GetTarget();
-        return target != null && turret.DetectTarget() != null;
+        return target != null && Vector3.Distance(turret.transform.position, target.position) <= turret.GetDetectionRadius();
     }
 
     private void Attack(Vector3 direction)
@@ -51,5 +51,6 @@ public class TurretObjAttackingState : ProjectileState
 
     public override void ExitState()
     {
+        
     }
 }

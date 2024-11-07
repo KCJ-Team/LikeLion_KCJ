@@ -10,7 +10,6 @@ public class MissileBombing : Skill
     [Header("Missile Settings")]
     [SerializeField] private GameObject missilePrefab;    // 미사일 프리팹
     [SerializeField] private int missileCount = 5;        // 발사할 미사일 수
-    [SerializeField] private float damage = 50f;          // 미사일 당 데미지
     [SerializeField] private float explosionRadius = 5f;  // 폭발 반경
     
     [Header("Targeting Settings")]

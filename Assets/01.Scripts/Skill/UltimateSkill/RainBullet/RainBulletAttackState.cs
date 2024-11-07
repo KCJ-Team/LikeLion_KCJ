@@ -57,13 +57,11 @@ public class RainBulletAttackState : SkillState
         foreach (var hitCollider in hitColliders)
         {
             // // IHealth 인터페이스를 구현한 컴포넌트를 찾음
-            // IHealth health = hitCollider.GetComponent<IHealth>();
-            // if (health != null)
-            // {
-            //     health.TakeDamage(rainBullet.DamageAmount);
-            // }
-            
-            Debug.Log($"{hitCollider}");
+            DamageableObject damageableObject = hitCollider.GetComponent<DamageableObject>();
+            if (damageableObject != null)
+            {
+                damageableObject.TakeDamage(rainBullet.Damage);
+            }
         }
     }
 }

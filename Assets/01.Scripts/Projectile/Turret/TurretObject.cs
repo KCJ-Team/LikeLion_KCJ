@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TurretObject : Projectile
@@ -9,13 +10,7 @@ public class TurretObject : Projectile
     [SerializeField] private Transform firePoint;          // 발사 위치
 
     private Transform target;                              // 현재 타겟
-
-    private void Start()
-    {
-        Initialize(Vector3.zero, 10f); // 기본 데미지 설정
-        firePoint = this.transform;
-    }
-
+    
     protected override ProjectileState GetInitialState()
     {
         return new TurretObjDetectingState(this);
@@ -28,10 +23,11 @@ public class TurretObject : Projectile
         {
             GameObject projectileObj = Instantiate(projectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
             
-            Rigidbody rb = projectileObj.GetComponent<Rigidbody>();
-            if (rb != null)
+            StandardProjectile pr = projectileObj.GetComponent<StandardProjectile>();
+            
+            if (pr != null)
             {
-                rb.velocity = direction * speed;
+                pr.Initialize(direction, damage);
             }
         }
     }
@@ -40,10 +36,12 @@ public class TurretObject : Projectile
     public Transform DetectTarget()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, targetLayer);
+        
         if (colliders.Length > 0)
         {
             return colliders[0].transform;
         }
+        
         return null;
     }
 
@@ -51,17 +49,5 @@ public class TurretObject : Projectile
     public float GetAttackInterval() => attackInterval;
     public Transform GetTarget() => target;
     public void SetTarget(Transform newTarget) => target = newTarget;
-
-    // 시각적 디버깅을 위한 기즈모
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
-
-        if (firePoint != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(firePoint.position, 0.5f);
-        }
-    }
+    public float GetDetectionRadius() => detectionRadius;
 }

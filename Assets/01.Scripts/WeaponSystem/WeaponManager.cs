@@ -12,17 +12,13 @@ public class WeaponManager : MonoBehaviour
     private GameObject currentWeaponObject;
     private bool isFiring = false;
     private Transform currentWeaponHolder;
+    public Transform firePoint; // 발사 위치를 저장할 변수
     
-    private LayerMask enemyLayer; // Enemy 레이어 마스크
-
     private void Start()
     {
-        // Enemy 레이어의 마스크 설정
-        enemyLayer = LayerMask.GetMask("Enemy");
         UpdateWeapon();
     }
 
-    // 무기 타입에 따른 홀더 가져오기
     private Transform GetWeaponHolder(WeaponType type)
     {
         switch (type)
@@ -36,11 +32,10 @@ public class WeaponManager : MonoBehaviour
             case WeaponType.SniperRifle:
                 return SniperHolder;
             default:
-                return RifleHolder; // 기본값
+                return RifleHolder;
         }
     }
 
-    // 무기 업데이트 메서드
     public void UpdateWeapon()
     {
         if (currentWeaponObject != null)
@@ -50,15 +45,23 @@ public class WeaponManager : MonoBehaviour
 
         if (playerData.currentWeapon != null)
         {
-            // 무기 타입에 따른 홀더 설정
             currentWeaponHolder = GetWeaponHolder(playerData.currentWeapon.weaponType);
             
-            // 해당 홀더 위치에 무기 생성
+            // 홀더의 첫 번째 자식 오브젝트를 firePoint로 설정
+            if (currentWeaponHolder.childCount > 0)
+            {
+                firePoint = currentWeaponHolder.GetChild(0);
+            }
+            else
+            {
+                firePoint = currentWeaponHolder; // 자식이 없으면 홀더 자체를 사용
+                Debug.LogWarning($"Weapon holder {currentWeaponHolder.name} has no child objects!");
+            }
+            
             currentWeaponObject = Instantiate(playerData.currentWeapon.characterDisplay, currentWeaponHolder);
         }
     }
 
-    // 공격 메서드
     public void Attack()
     {
         if (playerData.currentWeapon == null) return;
@@ -73,7 +76,7 @@ public class WeaponManager : MonoBehaviour
     {
         isFiring = true;
 
-        while (Input.GetMouseButton(0)) // 마우스 버튼을 누르고 있는 동안 계속 발사
+        while (Input.GetMouseButton(0))
         {
             FireWeapon();
             yield return new WaitForSeconds(1f / playerData.currentWeapon.attackSpeed);
@@ -84,86 +87,61 @@ public class WeaponManager : MonoBehaviour
 
     private void FireWeapon()
     {
-        RangedAttack();
-    }
+        if (playerData.currentWeapon.projectilePrefab == null || firePoint == null) return;
 
-    // 원거리 공격
-    private void RangedAttack()
-    {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Vector3 targetPoint;
         
-        // 레이가 어떤 물체에 부딪히든 말든 방향을 구함
         if (Physics.Raycast(ray, out hit))
         {
-            targetPoint = new Vector3(hit.point.x, currentWeaponHolder.position.y, hit.point.z);
+            targetPoint = new Vector3(hit.point.x, firePoint.position.y, hit.point.z);
         }
         else
         {
             targetPoint = ray.GetPoint(1000f);
-            targetPoint.y = currentWeaponHolder.position.y;
+            targetPoint.y = firePoint.position.y;
         }
 
-        Vector3 direction = (targetPoint - currentWeaponHolder.position).normalized;
+        Vector3 direction = (targetPoint - firePoint.position).normalized;
         
         if (playerData.currentWeapon.weaponType == WeaponType.ShotGun)
         {
-            FireShotgunPattern(direction);
+            FireShotgunProjectiles(direction);
         }
         else
         {
-            FireSingleRay(direction);
+            FireSingleProjectile(direction);
         }
     }
     
-    private void FireSingleRay(Vector3 shootDirection)
+    private void FireSingleProjectile(Vector3 shootDirection)
     {
-        RaycastHit weaponHit;
-        if (Physics.Raycast(currentWeaponHolder.position, shootDirection, out weaponHit, playerData.currentWeapon.range, enemyLayer))
-        {
-            Debug.DrawLine(currentWeaponHolder.position, weaponHit.point, Color.red, 0.5f);
+        GameObject projectileObj = Instantiate(playerData.currentWeapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(shootDirection));
             
-            // 데미지 처리
-            if (weaponHit.collider.TryGetComponent<IDamageable>(out IDamageable target))
-            {
-                float finalDamage = playerData.currentWeapon.damage + playerData.AttackPower;
-                target.TakeDamage(finalDamage);
-            }
-        }
-        else
+        if (projectileObj.TryGetComponent<StandardProjectile>(out StandardProjectile projectile))
         {
-            Vector3 endPoint = currentWeaponHolder.position + shootDirection * playerData.currentWeapon.range;
-            Debug.DrawLine(currentWeaponHolder.position, endPoint, Color.green, 0.5f);
+            float finalDamage = playerData.currentWeapon.damage + playerData.AttackPower;
+            projectile.Initialize(shootDirection, finalDamage);
         }
     }
     
-    private void FireShotgunPattern(Vector3 baseDirection)
+    private void FireShotgunProjectiles(Vector3 baseDirection)
     {
         int pelletCount = 8;
         float spreadAngle = 20f;
-        float damagePerPellet = (playerData.currentWeapon.damage + playerData.AttackPower) / pelletCount; // 총 데미지를 펠릿 수로 나눔
+        float damagePerPellet = (playerData.currentWeapon.damage + playerData.AttackPower) / pelletCount;
     
         for (int i = 0; i < pelletCount; i++)
         {
             float randomAngle = Random.Range(-spreadAngle / 2, spreadAngle / 2);
             Vector3 spreadDirection = Quaternion.Euler(0, randomAngle, 0) * baseDirection;
-        
-            RaycastHit weaponHit;
-            if (Physics.Raycast(currentWeaponHolder.position, spreadDirection, out weaponHit, playerData.currentWeapon.range, enemyLayer))
-            {
-                Debug.DrawLine(currentWeaponHolder.position, weaponHit.point, Color.red, 0.5f);
+            
+            GameObject projectileObj = Instantiate(playerData.currentWeapon.projectilePrefab, firePoint.position, Quaternion.LookRotation(spreadDirection));
                 
-                // 데미지 처리
-                if (weaponHit.collider.TryGetComponent<IDamageable>(out IDamageable target))
-                {
-                    target.TakeDamage(damagePerPellet);
-                }
-            }
-            else
+            if (projectileObj.TryGetComponent<ShotgunPellet>(out ShotgunPellet pellet))
             {
-                Vector3 endPoint = currentWeaponHolder.position + spreadDirection * playerData.currentWeapon.range;
-                Debug.DrawLine(currentWeaponHolder.position, endPoint, Color.green, 0.5f);
+                pellet.Initialize(spreadDirection, damagePerPellet);
             }
         }
     }

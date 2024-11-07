@@ -5,7 +5,7 @@ public class KnockBack : Skill
     [SerializeField] private GameObject knockbackProjectilePrefab;
     [SerializeField] private float projectileSpeed = 20f;
     [SerializeField] private float knockbackForce = 10f;
-    [SerializeField] private float projectileDamage = 10f;
+    //[SerializeField] private float projectileDamage;
     [SerializeField] private Transform firePoint;
     [SerializeField] private LayerMask targetLayers;
     
@@ -32,6 +32,7 @@ public class KnockBack : Skill
             Vector3 direction = (new Vector3(targetPosition.x, firePosition.y, targetPosition.z) - firePosition).normalized;
             
             GameObject projectileObj = Instantiate(knockbackProjectilePrefab, firePosition, Quaternion.LookRotation(direction));
+            
             KnockbackProjectile projectile = projectileObj.GetComponent<KnockbackProjectile>();
             
             if (projectile != null)
@@ -39,7 +40,7 @@ public class KnockBack : Skill
                 projectile.SetSpeed(projectileSpeed);
                 projectile.SetKnockbackForce(knockbackForce);
                 projectile.SetTargetLayers(targetLayers);
-                projectile.Initialize(direction, projectileDamage);
+                projectile.Initialize(direction, damage);
             }
             
             currentCooldown = cooldown;

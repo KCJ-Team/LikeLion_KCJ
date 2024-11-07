@@ -13,6 +13,7 @@ public class PullProjectilePullingState : ProjectileState
     public PullProjectilePullingState(Projectile projectile) : base(projectile)
     {
         pullProjectile = projectile as PullProjectile;
+        
         if (pullProjectile != null)
         {
             playerTransform = pullProjectile.GetPlayerTransform();
@@ -28,7 +29,6 @@ public class PullProjectilePullingState : ProjectileState
     {
         if (hasTarget)
         {
-            // 물리 설정 변경
             targetRigidbody.useGravity = false;
             targetRigidbody.drag = 0;
         }
@@ -61,8 +61,6 @@ public class PullProjectilePullingState : ProjectileState
                 targetRigidbody.drag = 0.5f;
                 Object.Destroy(projectile.gameObject);
             }
-            
-            
         }
     }
     

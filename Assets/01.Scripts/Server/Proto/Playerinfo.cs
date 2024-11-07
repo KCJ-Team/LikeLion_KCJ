@@ -24,16 +24,26 @@ namespace PlayerInfo {
     static PlayerInfoReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChBwbGF5ZXJJbmZvLnByb3RvEgpwbGF5ZXJJbmZvIoIBCgpQbGF5ZXJJbmZv",
-            "EhAKCHBsYXllcklkGAEgASgJEgkKAXgYAiABKAISCQoBeRgDIAEoAhIJCgF6",
-            "GAQgASgCEgoKAnJ4GAUgASgCEgoKAnJ5GAYgASgCEgoKAnJ6GAcgASgCEg0K",
-            "BXNwZWVkGAggASgCEg4KBmhlYWx0aBgJIAEoAio4CgpQcmVmYWJUeXBlEhIK",
-            "DlRZUEVfVU5ERUZJTkVEEAASCgoGVFlQRV9BEAESCgoGVFlQRV9CEAJCEloQ",
-            "c2VydmVyLWdvL3NyYy9wYmIGcHJvdG8z"));
+            "ChBwbGF5ZXJJbmZvLnByb3RvEgpwbGF5ZXJJbmZvInEKE0FuaW1hdGlvblBh",
+            "cmFtZXRlcnMSEQoJaXNSdW5uaW5nGAEgASgCEg0KBWlzQWltGAIgASgIEhEK",
+            "CW1vdmVtZW50WBgDIAEoAhIRCgltb3ZlbWVudFkYBCABKAISEgoKd2VhcG9u",
+            "VHlwZRgFIAEoBSK4AgoKUGxheWVySW5mbxIQCghwbGF5ZXJJZBgBIAEoCRIJ",
+            "CgF4GAIgASgCEgkKAXkYAyABKAISCQoBehgEIAEoAhIKCgJyeBgFIAEoAhIK",
+            "CgJyeRgGIAEoAhIKCgJyehgHIAEoAhINCgVzcGVlZBgIIAEoAhIKCgJocBgJ",
+            "IAEoAhIVCg1yb3RhdGlvblNwZWVkGAogASgCEjQKD3ByZWZhYk1vZGVsVHlw",
+            "ZRgLIAEoDjIbLnBsYXllckluZm8uUGxheWVyTW9kZWxUeXBlEjYKEHByZWZh",
+            "YldlYXBvblR5cGUYDCABKA4yHC5wbGF5ZXJJbmZvLlBsYXllcldlYXBvblR5",
+            "cGUSMwoKYW5pbVBhcmFtcxgNIAEoCzIfLnBsYXllckluZm8uQW5pbWF0aW9u",
+            "UGFyYW1ldGVycyo8Cg9QbGF5ZXJNb2RlbFR5cGUSEwoPTU9ERUxfVU5ERUZJ",
+            "TkVEEAASCAoETUFMRRABEgoKBkZFTUFMRRACKloKEFBsYXllcldlYXBvblR5",
+            "cGUSFAoQV0VBUE9OX1VOREVGSU5FRBAAEgoKBlBJU1RPTBABEgsKB0FTU0FV",
+            "TFQQAhIKCgZTTklQRVIQAxILCgdTSE9UR1VOEARCEloQc2VydmVyLWdvL3Ny",
+            "Yy9wYmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PlayerInfo.PrefabType), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInfo.PlayerInfo), global::PlayerInfo.PlayerInfo.Parser, new[]{ "PlayerId", "X", "Y", "Z", "Rx", "Ry", "Rz", "Speed", "Health" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PlayerInfo.PlayerModelType), typeof(global::PlayerInfo.PlayerWeaponType), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInfo.AnimationParameters), global::PlayerInfo.AnimationParameters.Parser, new[]{ "IsRunning", "IsAim", "MovementX", "MovementY", "WeaponType" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInfo.PlayerInfo), global::PlayerInfo.PlayerInfo.Parser, new[]{ "PlayerId", "X", "Y", "Z", "Rx", "Ry", "Rz", "Speed", "Hp", "RotationSpeed", "PrefabModelType", "PrefabWeaponType", "AnimParams" }, null, null, null, null)
           }));
     }
     #endregion
@@ -41,26 +51,401 @@ namespace PlayerInfo {
   }
   #region Enums
   /// <summary>
-  /// 프리팹 타입 정의 (딱 2가지 타입)
+  /// 플레이어 모델 프리팹 타입 정의 (딱 2가지 타입)
   /// </summary>
-  public enum PrefabType {
+  public enum PlayerModelType {
     /// <summary>
     /// 기본값 (정의되지 않은 경우)
     /// </summary>
-    [pbr::OriginalName("TYPE_UNDEFINED")] TypeUndefined = 0,
+    [pbr::OriginalName("MODEL_UNDEFINED")] ModelUndefined = 0,
     /// <summary>
-    /// 첫 번째 프리팹 타입
+    /// 남캐 프리팹 타입
     /// </summary>
-    [pbr::OriginalName("TYPE_A")] TypeA = 1,
+    [pbr::OriginalName("MALE")] Male = 1,
     /// <summary>
-    /// 두 번째 프리팹 타입
+    /// 여캐 프리팹 타입
     /// </summary>
-    [pbr::OriginalName("TYPE_B")] TypeB = 2,
+    [pbr::OriginalName("FEMALE")] Female = 2,
+  }
+
+  /// <summary>
+  /// 플레이어 무기 프리팹 타입 정의
+  /// </summary>
+  public enum PlayerWeaponType {
+    /// <summary>
+    /// 기본값
+    /// </summary>
+    [pbr::OriginalName("WEAPON_UNDEFINED")] WeaponUndefined = 0,
+    /// <summary>
+    /// 권총
+    /// </summary>
+    [pbr::OriginalName("PISTOL")] Pistol = 1,
+    /// <summary>
+    /// 자동소총
+    /// </summary>
+    [pbr::OriginalName("ASSAULT")] Assault = 2,
+    /// <summary>
+    /// 저격소총
+    /// </summary>
+    [pbr::OriginalName("SNIPER")] Sniper = 3,
+    /// <summary>
+    /// 샷건
+    /// </summary>
+    [pbr::OriginalName("SHOTGUN")] Shotgun = 4,
   }
 
   #endregion
 
   #region Messages
+  /// <summary>
+  /// 플레이어 애니메이션 파라미터 정의
+  /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class AnimationParameters : pb::IMessage<AnimationParameters>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<AnimationParameters> _parser = new pb::MessageParser<AnimationParameters>(() => new AnimationParameters());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<AnimationParameters> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::PlayerInfo.PlayerInfoReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public AnimationParameters() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public AnimationParameters(AnimationParameters other) : this() {
+      isRunning_ = other.isRunning_;
+      isAim_ = other.isAim_;
+      movementX_ = other.movementX_;
+      movementY_ = other.movementY_;
+      weaponType_ = other.weaponType_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public AnimationParameters Clone() {
+      return new AnimationParameters(this);
+    }
+
+    /// <summary>Field number for the "isRunning" field.</summary>
+    public const int IsRunningFieldNumber = 1;
+    private float isRunning_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float IsRunning {
+      get { return isRunning_; }
+      set {
+        isRunning_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "isAim" field.</summary>
+    public const int IsAimFieldNumber = 2;
+    private bool isAim_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsAim {
+      get { return isAim_; }
+      set {
+        isAim_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "movementX" field.</summary>
+    public const int MovementXFieldNumber = 3;
+    private float movementX_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float MovementX {
+      get { return movementX_; }
+      set {
+        movementX_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "movementY" field.</summary>
+    public const int MovementYFieldNumber = 4;
+    private float movementY_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float MovementY {
+      get { return movementY_; }
+      set {
+        movementY_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "weaponType" field.</summary>
+    public const int WeaponTypeFieldNumber = 5;
+    private int weaponType_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int WeaponType {
+      get { return weaponType_; }
+      set {
+        weaponType_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as AnimationParameters);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(AnimationParameters other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(IsRunning, other.IsRunning)) return false;
+      if (IsAim != other.IsAim) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(MovementX, other.MovementX)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(MovementY, other.MovementY)) return false;
+      if (WeaponType != other.WeaponType) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (IsRunning != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(IsRunning);
+      if (IsAim != false) hash ^= IsAim.GetHashCode();
+      if (MovementX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(MovementX);
+      if (MovementY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(MovementY);
+      if (WeaponType != 0) hash ^= WeaponType.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (IsRunning != 0F) {
+        output.WriteRawTag(13);
+        output.WriteFloat(IsRunning);
+      }
+      if (IsAim != false) {
+        output.WriteRawTag(16);
+        output.WriteBool(IsAim);
+      }
+      if (MovementX != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(MovementX);
+      }
+      if (MovementY != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(MovementY);
+      }
+      if (WeaponType != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(WeaponType);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (IsRunning != 0F) {
+        output.WriteRawTag(13);
+        output.WriteFloat(IsRunning);
+      }
+      if (IsAim != false) {
+        output.WriteRawTag(16);
+        output.WriteBool(IsAim);
+      }
+      if (MovementX != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(MovementX);
+      }
+      if (MovementY != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(MovementY);
+      }
+      if (WeaponType != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(WeaponType);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (IsRunning != 0F) {
+        size += 1 + 4;
+      }
+      if (IsAim != false) {
+        size += 1 + 1;
+      }
+      if (MovementX != 0F) {
+        size += 1 + 4;
+      }
+      if (MovementY != 0F) {
+        size += 1 + 4;
+      }
+      if (WeaponType != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(WeaponType);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(AnimationParameters other) {
+      if (other == null) {
+        return;
+      }
+      if (other.IsRunning != 0F) {
+        IsRunning = other.IsRunning;
+      }
+      if (other.IsAim != false) {
+        IsAim = other.IsAim;
+      }
+      if (other.MovementX != 0F) {
+        MovementX = other.MovementX;
+      }
+      if (other.MovementY != 0F) {
+        MovementY = other.MovementY;
+      }
+      if (other.WeaponType != 0) {
+        WeaponType = other.WeaponType;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 13: {
+            IsRunning = input.ReadFloat();
+            break;
+          }
+          case 16: {
+            IsAim = input.ReadBool();
+            break;
+          }
+          case 29: {
+            MovementX = input.ReadFloat();
+            break;
+          }
+          case 37: {
+            MovementY = input.ReadFloat();
+            break;
+          }
+          case 40: {
+            WeaponType = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 13: {
+            IsRunning = input.ReadFloat();
+            break;
+          }
+          case 16: {
+            IsAim = input.ReadBool();
+            break;
+          }
+          case 29: {
+            MovementX = input.ReadFloat();
+            break;
+          }
+          case 37: {
+            MovementY = input.ReadFloat();
+            break;
+          }
+          case 40: {
+            WeaponType = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   /// <summary>
   /// 요청, 응답으로 사용할 플레이어의 정보
   /// </summary>
@@ -79,7 +464,7 @@ namespace PlayerInfo {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayerInfo.PlayerInfoReflection.Descriptor.MessageTypes[0]; }
+      get { return global::PlayerInfo.PlayerInfoReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -107,7 +492,11 @@ namespace PlayerInfo {
       ry_ = other.ry_;
       rz_ = other.rz_;
       speed_ = other.speed_;
-      health_ = other.health_;
+      hp_ = other.hp_;
+      rotationSpeed_ = other.rotationSpeed_;
+      prefabModelType_ = other.prefabModelType_;
+      prefabWeaponType_ = other.prefabWeaponType_;
+      animParams_ = other.animParams_ != null ? other.animParams_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -237,18 +626,78 @@ namespace PlayerInfo {
       }
     }
 
-    /// <summary>Field number for the "health" field.</summary>
-    public const int HealthFieldNumber = 9;
-    private float health_;
+    /// <summary>Field number for the "hp" field.</summary>
+    public const int HpFieldNumber = 9;
+    private float hp_;
     /// <summary>
     /// 플레이어 체력
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public float Health {
-      get { return health_; }
+    public float Hp {
+      get { return hp_; }
       set {
-        health_ = value;
+        hp_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "rotationSpeed" field.</summary>
+    public const int RotationSpeedFieldNumber = 10;
+    private float rotationSpeed_;
+    /// <summary>
+    /// 플레이어 회전속도
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float RotationSpeed {
+      get { return rotationSpeed_; }
+      set {
+        rotationSpeed_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "prefabModelType" field.</summary>
+    public const int PrefabModelTypeFieldNumber = 11;
+    private global::PlayerInfo.PlayerModelType prefabModelType_ = global::PlayerInfo.PlayerModelType.ModelUndefined;
+    /// <summary>
+    /// 플레이어의 프리팹 타입
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::PlayerInfo.PlayerModelType PrefabModelType {
+      get { return prefabModelType_; }
+      set {
+        prefabModelType_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "prefabWeaponType" field.</summary>
+    public const int PrefabWeaponTypeFieldNumber = 12;
+    private global::PlayerInfo.PlayerWeaponType prefabWeaponType_ = global::PlayerInfo.PlayerWeaponType.WeaponUndefined;
+    /// <summary>
+    /// 무기 프리팹 타입
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::PlayerInfo.PlayerWeaponType PrefabWeaponType {
+      get { return prefabWeaponType_; }
+      set {
+        prefabWeaponType_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "animParams" field.</summary>
+    public const int AnimParamsFieldNumber = 13;
+    private global::PlayerInfo.AnimationParameters animParams_;
+    /// <summary>
+    /// 애니메이션 파라미터들
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::PlayerInfo.AnimationParameters AnimParams {
+      get { return animParams_; }
+      set {
+        animParams_ = value;
       }
     }
 
@@ -275,7 +724,11 @@ namespace PlayerInfo {
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Ry, other.Ry)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Rz, other.Rz)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Speed, other.Speed)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Health, other.Health)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Hp, other.Hp)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RotationSpeed, other.RotationSpeed)) return false;
+      if (PrefabModelType != other.PrefabModelType) return false;
+      if (PrefabWeaponType != other.PrefabWeaponType) return false;
+      if (!object.Equals(AnimParams, other.AnimParams)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -291,7 +744,11 @@ namespace PlayerInfo {
       if (Ry != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Ry);
       if (Rz != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rz);
       if (Speed != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Speed);
-      if (Health != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Health);
+      if (Hp != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Hp);
+      if (RotationSpeed != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RotationSpeed);
+      if (PrefabModelType != global::PlayerInfo.PlayerModelType.ModelUndefined) hash ^= PrefabModelType.GetHashCode();
+      if (PrefabWeaponType != global::PlayerInfo.PlayerWeaponType.WeaponUndefined) hash ^= PrefabWeaponType.GetHashCode();
+      if (animParams_ != null) hash ^= AnimParams.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -342,9 +799,25 @@ namespace PlayerInfo {
         output.WriteRawTag(69);
         output.WriteFloat(Speed);
       }
-      if (Health != 0F) {
+      if (Hp != 0F) {
         output.WriteRawTag(77);
-        output.WriteFloat(Health);
+        output.WriteFloat(Hp);
+      }
+      if (RotationSpeed != 0F) {
+        output.WriteRawTag(85);
+        output.WriteFloat(RotationSpeed);
+      }
+      if (PrefabModelType != global::PlayerInfo.PlayerModelType.ModelUndefined) {
+        output.WriteRawTag(88);
+        output.WriteEnum((int) PrefabModelType);
+      }
+      if (PrefabWeaponType != global::PlayerInfo.PlayerWeaponType.WeaponUndefined) {
+        output.WriteRawTag(96);
+        output.WriteEnum((int) PrefabWeaponType);
+      }
+      if (animParams_ != null) {
+        output.WriteRawTag(106);
+        output.WriteMessage(AnimParams);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -388,9 +861,25 @@ namespace PlayerInfo {
         output.WriteRawTag(69);
         output.WriteFloat(Speed);
       }
-      if (Health != 0F) {
+      if (Hp != 0F) {
         output.WriteRawTag(77);
-        output.WriteFloat(Health);
+        output.WriteFloat(Hp);
+      }
+      if (RotationSpeed != 0F) {
+        output.WriteRawTag(85);
+        output.WriteFloat(RotationSpeed);
+      }
+      if (PrefabModelType != global::PlayerInfo.PlayerModelType.ModelUndefined) {
+        output.WriteRawTag(88);
+        output.WriteEnum((int) PrefabModelType);
+      }
+      if (PrefabWeaponType != global::PlayerInfo.PlayerWeaponType.WeaponUndefined) {
+        output.WriteRawTag(96);
+        output.WriteEnum((int) PrefabWeaponType);
+      }
+      if (animParams_ != null) {
+        output.WriteRawTag(106);
+        output.WriteMessage(AnimParams);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -426,8 +915,20 @@ namespace PlayerInfo {
       if (Speed != 0F) {
         size += 1 + 4;
       }
-      if (Health != 0F) {
+      if (Hp != 0F) {
         size += 1 + 4;
+      }
+      if (RotationSpeed != 0F) {
+        size += 1 + 4;
+      }
+      if (PrefabModelType != global::PlayerInfo.PlayerModelType.ModelUndefined) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) PrefabModelType);
+      }
+      if (PrefabWeaponType != global::PlayerInfo.PlayerWeaponType.WeaponUndefined) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) PrefabWeaponType);
+      }
+      if (animParams_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(AnimParams);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -465,8 +966,23 @@ namespace PlayerInfo {
       if (other.Speed != 0F) {
         Speed = other.Speed;
       }
-      if (other.Health != 0F) {
-        Health = other.Health;
+      if (other.Hp != 0F) {
+        Hp = other.Hp;
+      }
+      if (other.RotationSpeed != 0F) {
+        RotationSpeed = other.RotationSpeed;
+      }
+      if (other.PrefabModelType != global::PlayerInfo.PlayerModelType.ModelUndefined) {
+        PrefabModelType = other.PrefabModelType;
+      }
+      if (other.PrefabWeaponType != global::PlayerInfo.PlayerWeaponType.WeaponUndefined) {
+        PrefabWeaponType = other.PrefabWeaponType;
+      }
+      if (other.animParams_ != null) {
+        if (animParams_ == null) {
+          AnimParams = new global::PlayerInfo.AnimationParameters();
+        }
+        AnimParams.MergeFrom(other.AnimParams);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -520,7 +1036,26 @@ namespace PlayerInfo {
             break;
           }
           case 77: {
-            Health = input.ReadFloat();
+            Hp = input.ReadFloat();
+            break;
+          }
+          case 85: {
+            RotationSpeed = input.ReadFloat();
+            break;
+          }
+          case 88: {
+            PrefabModelType = (global::PlayerInfo.PlayerModelType) input.ReadEnum();
+            break;
+          }
+          case 96: {
+            PrefabWeaponType = (global::PlayerInfo.PlayerWeaponType) input.ReadEnum();
+            break;
+          }
+          case 106: {
+            if (animParams_ == null) {
+              AnimParams = new global::PlayerInfo.AnimationParameters();
+            }
+            input.ReadMessage(AnimParams);
             break;
           }
         }
@@ -575,7 +1110,26 @@ namespace PlayerInfo {
             break;
           }
           case 77: {
-            Health = input.ReadFloat();
+            Hp = input.ReadFloat();
+            break;
+          }
+          case 85: {
+            RotationSpeed = input.ReadFloat();
+            break;
+          }
+          case 88: {
+            PrefabModelType = (global::PlayerInfo.PlayerModelType) input.ReadEnum();
+            break;
+          }
+          case 96: {
+            PrefabWeaponType = (global::PlayerInfo.PlayerWeaponType) input.ReadEnum();
+            break;
+          }
+          case 106: {
+            if (animParams_ == null) {
+              AnimParams = new global::PlayerInfo.AnimationParameters();
+            }
+            input.ReadMessage(AnimParams);
             break;
           }
         }

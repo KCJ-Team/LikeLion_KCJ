@@ -8,16 +8,21 @@ using UnityEngine;
 
 public class BuildingManager : SceneSingleton<BuildingManager>
 {
+    [Header("Buildings")]
     [SerializeField] 
     private SerializedDictionary<BuildingType, BaseBuilding> buildings = new();
     private BuildingStateMachine stateMachine; // 상태 전환을 관리할 StateMachine
 
-    // Test : 생산량 UI 테스트
-    public TextMeshProUGUI energyProductionOutput;
+    [Header("UI MVP 패턴")] 
+    [SerializeField]
+    private BuildingUIView buildingUIView;
+    private BuildingUIPresenter buildingUIPresenter;
 
     private void Start()
     {
         stateMachine = new BuildingStateMachine();
+        
+        buildingUIPresenter = new BuildingUIPresenter(buildingUIView);
     }
 
     public void Build(BaseBuilding buildingPrefab, bool isCreated)
@@ -39,25 +44,25 @@ public class BuildingManager : SceneSingleton<BuildingManager>
         StartCoroutine(ProduceResources(buildingPrefab));
     }
     
-    // 자원 생산을 관리하는 코루틴
+    // 개별 빌딩의 자원 생산을 관리하는 코루틴
     private IEnumerator ProduceResources(BaseBuilding building)
     {
-        while (true) // 무한 반복, 1초마다 자원 생산
-        {
-            int output = building.GetCurrentProductOutput(); // 현재 생산량
-            
-            GameResourceManager.Instance.AddResource(ResourceType.Energy, output); // 에너지를 생산
-            
-            Debug.Log($"{building.GetBuildingData().name} produced {output} Energy.");
+        int productionAmount = building.GetCurrentProductOutput(); // 현재 빌딩의 생산량
+       // float productionInterval = building.ProductionInterval; // 현재 빌딩의 생산 주기
 
-            // 1초 대기
-            yield return new WaitForSeconds(1f);
+        while (true)
+        {
+           // yield return new WaitForSeconds(productionInterval); // 각 빌딩의 개별 생산 주기마다 생산
+
+            // 자원 생산 및 UI 업데이트
+            GameResourceManager.Instance.AddResource(ResourceType.Energy, productionAmount);
+            //  ShowProductionText(building, productionAmount); // 자원 생산량 UI 표시
         }
     }
     
     // 에너지 생산량 UI
     public void UpdateEnergyProductUI(int productOutput)
     {
-        energyProductionOutput.text = $"Energy Product: {productOutput}";
+       // energyProductionOutput.text = $"Energy Product: {productOutput}";
     }
 } // end class

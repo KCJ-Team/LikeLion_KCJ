@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceId: 4
   resourceName: "\uC5F0\uAD6C"
-  resourceType: 4
-  icon: {fileID: 0}
+  resourceType: 5
+  icon: {fileID: 21300000, guid: 2c813ef8a1159bc4fb3a1a143b4403bb, type: 3}
   currentAmount: 0
   maxAmount: 999

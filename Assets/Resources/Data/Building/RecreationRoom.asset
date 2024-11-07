@@ -23,5 +23,6 @@ MonoBehaviour:
   maxLevel: 0
   productionOutput: 0
   description: "\uC2A4\uD2B8\uB808\uC2A4 \uC81C\uAC70\uB97C \uC704\uD55C \uC624\uB77D\uC2E4"
-  level1ImagePath: 
-  level2ImagePath: 
+  level1ImagePath: Data/Building/RecreationRoom_1
+  level2ImagePath: Data/Building/RecreationRoom_2
+  resourceType: 0

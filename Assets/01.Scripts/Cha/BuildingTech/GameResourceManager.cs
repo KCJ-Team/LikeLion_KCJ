@@ -90,4 +90,16 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
         }
     }
     
+    // ResourceData 반환
+    public ResourceData GetResourceData(ResourceType type)
+    {
+        if (resources.TryGetValue(type, out GameResource resource))
+        {
+            return resource.ResourceData;
+        }
+
+        Debug.LogWarning("Resource type not found: " + type);
+        return null;
+    }
+    
 } // end class

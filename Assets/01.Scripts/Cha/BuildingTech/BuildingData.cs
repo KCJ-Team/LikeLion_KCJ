@@ -30,4 +30,5 @@ public class BuildingData : ScriptableObject
     public string description; // 빌딩 설명
     public string level1ImagePath; 
     public string level2ImagePath;
+    public ResourceType resourceType; // 생산자원타입
 }

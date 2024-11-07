@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum ResourceType
 {
+    None, // 없음
     Energy, // 에너지
     Food, // 식량
     Workforce, // 일꾼

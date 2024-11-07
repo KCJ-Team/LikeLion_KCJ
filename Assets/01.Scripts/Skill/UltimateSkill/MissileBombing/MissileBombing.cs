@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 미사일 폭격 스킬을 구현한 클래스
-/// 여러 발의 미사일을 순차적으로 발사하는 스킬
-/// </summary>
+
+// 미사일 폭격 스킬을 구현한 클래스
+// 여러 발의 미사일을 순차적으로 발사하는 스킬
 public class MissileBombing : Skill
 {
     [Header("Missile Settings")]
@@ -19,10 +18,8 @@ public class MissileBombing : Skill
     [SerializeField] private float spawnHeight = 20f;     // 미사일 생성 높이
     [SerializeField] private LayerMask groundLayer;       // 지면 감지를 위한 레이어
     
-    /// <summary>
-    /// 단일 미사일을 발사하는 메서드
-    /// </summary>
-    /// <param name="targetPosition">목표 위치</param>
+    // 단일 미사일을 발사하는 메서드
+    // <param name="targetPosition">목표 위치</param>
     public void LaunchMissile(Vector3 targetPosition)
     {
         // 목표 지점 위쪽에서 미사일 생성

@@ -4,14 +4,40 @@ using System.Collections;
 public class WeaponManager : MonoBehaviour
 {
     public PlayerData playerData;
-    public Transform weaponHolder; // 무기를 부착할 위치
+    public Transform RifleHolder;
+    public Transform PistolHolder;
+    public Transform ShotgunHolder;
+    public Transform SniperHolder;
     
     private GameObject currentWeaponObject;
     private bool isFiring = false;
+    private Transform currentWeaponHolder;
+    
+    private LayerMask enemyLayer; // Enemy 레이어 마스크
 
     private void Start()
     {
+        // Enemy 레이어의 마스크 설정
+        enemyLayer = LayerMask.GetMask("Enemy");
         UpdateWeapon();
+    }
+
+    // 무기 타입에 따른 홀더 가져오기
+    private Transform GetWeaponHolder(WeaponType type)
+    {
+        switch (type)
+        {
+            case WeaponType.Rifle:
+                return RifleHolder;
+            case WeaponType.Pistol:
+                return PistolHolder;
+            case WeaponType.ShotGun:
+                return ShotgunHolder;
+            case WeaponType.SniperRifle:
+                return SniperHolder;
+            default:
+                return RifleHolder; // 기본값
+        }
     }
 
     // 무기 업데이트 메서드
@@ -24,7 +50,11 @@ public class WeaponManager : MonoBehaviour
 
         if (playerData.currentWeapon != null)
         {
-            currentWeaponObject = Instantiate(playerData.currentWeapon.characterDisplay, weaponHolder);
+            // 무기 타입에 따른 홀더 설정
+            currentWeaponHolder = GetWeaponHolder(playerData.currentWeapon.weaponType);
+            
+            // 해당 홀더 위치에 무기 생성
+            currentWeaponObject = Instantiate(playerData.currentWeapon.characterDisplay, currentWeaponHolder);
         }
     }
 
@@ -54,27 +84,7 @@ public class WeaponManager : MonoBehaviour
 
     private void FireWeapon()
     {
-        switch (playerData.currentWeapon.weaponType)
-        {
-            case WeaponType.Sword:
-                MeleeAttack();
-                break;
-            default:
-                RangedAttack();
-                break;
-        }
-
-        // 이펙트 생성
-        if (playerData.currentWeapon.effectPrefab != null)
-        {
-            Instantiate(playerData.currentWeapon.effectPrefab, transform.position, transform.rotation);
-        }
-    }
-
-    // 근접 공격
-    private void MeleeAttack()
-    {
-        // 근접 공격 로직 구현
+        RangedAttack();
     }
 
     // 원거리 공격
@@ -82,14 +92,79 @@ public class WeaponManager : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-    
+        Vector3 targetPoint;
+        
+        // 레이가 어떤 물체에 부딪히든 말든 방향을 구함
         if (Physics.Raycast(ray, out hit))
         {
-            Vector3 shootDirection = new Vector3(hit.point.x, weaponHolder.position.y, hit.point.z) - weaponHolder.position;
+            targetPoint = new Vector3(hit.point.x, currentWeaponHolder.position.y, hit.point.z);
+        }
+        else
+        {
+            targetPoint = ray.GetPoint(1000f);
+            targetPoint.y = currentWeaponHolder.position.y;
+        }
 
-            GameObject projectile = Instantiate(playerData.currentWeapon.projectilePrefab, weaponHolder.position, Quaternion.LookRotation(shootDirection));
+        Vector3 direction = (targetPoint - currentWeaponHolder.position).normalized;
         
-            projectile.GetComponent<Rigidbody>().velocity = shootDirection * 10f; // 발사체 속도 조정
+        if (playerData.currentWeapon.weaponType == WeaponType.ShotGun)
+        {
+            FireShotgunPattern(direction);
+        }
+        else
+        {
+            FireSingleRay(direction);
+        }
+    }
+    
+    private void FireSingleRay(Vector3 shootDirection)
+    {
+        RaycastHit weaponHit;
+        if (Physics.Raycast(currentWeaponHolder.position, shootDirection, out weaponHit, playerData.currentWeapon.range, enemyLayer))
+        {
+            Debug.DrawLine(currentWeaponHolder.position, weaponHit.point, Color.red, 0.5f);
+            
+            // 데미지 처리
+            if (weaponHit.collider.TryGetComponent<IDamageable>(out IDamageable target))
+            {
+                float finalDamage = playerData.currentWeapon.damage + playerData.AttackPower;
+                target.TakeDamage(finalDamage);
+            }
+        }
+        else
+        {
+            Vector3 endPoint = currentWeaponHolder.position + shootDirection * playerData.currentWeapon.range;
+            Debug.DrawLine(currentWeaponHolder.position, endPoint, Color.green, 0.5f);
+        }
+    }
+    
+    private void FireShotgunPattern(Vector3 baseDirection)
+    {
+        int pelletCount = 8;
+        float spreadAngle = 20f;
+        float damagePerPellet = (playerData.currentWeapon.damage + playerData.AttackPower) / pelletCount; // 총 데미지를 펠릿 수로 나눔
+    
+        for (int i = 0; i < pelletCount; i++)
+        {
+            float randomAngle = Random.Range(-spreadAngle / 2, spreadAngle / 2);
+            Vector3 spreadDirection = Quaternion.Euler(0, randomAngle, 0) * baseDirection;
+        
+            RaycastHit weaponHit;
+            if (Physics.Raycast(currentWeaponHolder.position, spreadDirection, out weaponHit, playerData.currentWeapon.range, enemyLayer))
+            {
+                Debug.DrawLine(currentWeaponHolder.position, weaponHit.point, Color.red, 0.5f);
+                
+                // 데미지 처리
+                if (weaponHit.collider.TryGetComponent<IDamageable>(out IDamageable target))
+                {
+                    target.TakeDamage(damagePerPellet);
+                }
+            }
+            else
+            {
+                Vector3 endPoint = currentWeaponHolder.position + spreadDirection * playerData.currentWeapon.range;
+                Debug.DrawLine(currentWeaponHolder.position, endPoint, Color.green, 0.5f);
+            }
         }
     }
 }

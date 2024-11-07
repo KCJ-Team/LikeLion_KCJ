@@ -34,13 +34,14 @@ public class RainBulletAttackState : SkillState
         // 지속시간이 끝나면 스킬 종료
         if (elapsedTime >= rainBullet.duration)
         {
+            Object.Destroy(rainBullet.gameObject);
             rainBullet.ChangeState(null);
         }
     }
 
     public override void ExitState()
     {
-        // 필요한 정리 작업이 있다면 여기서 수행
+        
     }
 
     private void ApplyDamage()

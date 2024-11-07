@@ -20,7 +20,7 @@ public class TurretInstallState : SkillState
 
     public override void UpdateState()
     {
-        
+        Object.Destroy(_turret.gameObject);
     }
 
     public override void ExitState()

@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Player Data
   m_EditorClassIdentifier: 
   Character: {fileID: 0}
-  HP: 0
-  MP: 0
+  BaseHP: 200
+  BaseMP: 0
   MoveSpeed: 5
   RotationSpeed: 10
   AttackPower: 0
   Defense: 0
   currentWeapon: {fileID: 11400000, guid: bb46793e81c086346bf1a579568d5682, type: 2}
-  currentQSkill: {fileID: 11400000, guid: 477c98f24f1ff934497afdf0d7392461, type: 2}
+  currentQSkill: {fileID: 11400000, guid: 284ba3106032ca24eb54565a327256c6, type: 2}
   currentESkill: {fileID: 0}
   currentBuff: {fileID: 11400000, guid: 1fe912be947687240a4b00e9c0519d5a, type: 2}
   inventory: {fileID: 11400000, guid: 71f46ef98d566734ab3e136541e8c918, type: 2}

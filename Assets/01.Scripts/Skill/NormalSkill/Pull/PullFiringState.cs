@@ -41,6 +41,7 @@ public class PullFiringState : SkillState
         if (stateTimer >= stateLifetime)
         {
             // 스킬의 상태를 null로 변경하여 스킬 종료
+            Object.Destroy(_pull.gameObject);
             _pull.ChangeState(null);
         }
     }

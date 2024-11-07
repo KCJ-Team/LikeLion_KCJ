@@ -4,17 +4,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Player Data", menuName = "SO/PlayerData")]
 public class PlayerData : ScriptableObject
 {
+    [Header("Avartar")]
     public GameObject Character;
     
     // 기본 스탯들
-    public float HP;
-    public float MP;
+    [Header("Status")]
+    public float BaseHP;
+    public float BaseMP;
     public float MoveSpeed;
     public float RotationSpeed;
     public float AttackPower;  // 추가
     public float Defense;      // 추가
     
     // 현재 장착한 장비 및 인벤토리, equipment 데이터
+    [Header("Skill and Inventory")]
     public WeaponCardObject currentWeapon;
     public SkillCardObject currentQSkill;
     public SkillCardObject currentESkill;
@@ -40,7 +43,7 @@ public class PlayerData : ScriptableObject
         currentQSkill = skill;
     }
 
-    public void UnequipSkill()
+    public void UnequipQSkill()
     {
         currentQSkill = null;
     }

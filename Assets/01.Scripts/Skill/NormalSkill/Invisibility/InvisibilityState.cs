@@ -24,9 +24,11 @@ public class InvisibilityState : SkillState
 
     public override void ExitState()
     {
-        if (_invisibility.IsInvisible())
-        {
-            _invisibility.Visible();
-        }
+        // if (_invisibility.IsInvisible())
+        // {
+        //     Debug.Log("나가기");
+        //     _invisibility.Visible();
+        //     Object.Destroy(_invisibility.gameObject);
+        // }
     }
 }

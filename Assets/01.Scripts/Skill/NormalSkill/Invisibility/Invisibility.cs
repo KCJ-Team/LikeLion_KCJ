@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Invisibility : Skill 
@@ -5,29 +6,39 @@ public class Invisibility : Skill
     [SerializeField] private Material cloakingMat;
     public float duration = 5f;
 
-    private Material originalMat;
+    private List<RendererInfo> renderersInfo = new List<RendererInfo>();
     private bool isInvisible = false;
-    private MeshRenderer playerRenderer;
     private float remainingDuration;
 
-    private void Awake()
+    private class RendererInfo
     {
-        playerRenderer = GameManager.Instance.Player.GetComponent<MeshRenderer>();
-        
-        if (playerRenderer.material != null)
+        public SkinnedMeshRenderer Renderer;
+        public Material OriginalMaterial;
+
+        public RendererInfo(SkinnedMeshRenderer renderer, Material originalMaterial)
         {
-            originalMat = playerRenderer.material;
+            Renderer = renderer;
+            OriginalMaterial = originalMaterial;
         }
     }
 
-    private void Update()
+    private void Awake()
     {
-        if (currentCooldown > 0)
+        SkinnedMeshRenderer[] allRenderers = GameManager.Instance.Player.GetComponentsInChildren<SkinnedMeshRenderer>();
+        
+        foreach (SkinnedMeshRenderer renderer in allRenderers)
         {
-            currentCooldown -= Time.deltaTime;
+            if (renderer.material != null)
+            {
+                renderersInfo.Add(new RendererInfo(renderer, new Material(renderer.material)));
+            }
         }
+    }
 
-        // 지속시간 카운트다운을 여기서도 체크
+    protected override void Update()
+    {
+        base.Update();
+        
         if (isInvisible)
         {
             remainingDuration -= Time.deltaTime;
@@ -41,20 +52,31 @@ public class Invisibility : Skill
 
     public void Invisible()
     {
-        if (currentCooldown <= 0 && !isInvisible && playerRenderer != null && cloakingMat != null)
+        if (CanUseSkill())
         {
-            originalMat = new Material(playerRenderer.material);
-            playerRenderer.material = cloakingMat;
+            foreach (var rendererInfo in renderersInfo)
+            {
+                if (rendererInfo.Renderer != null && cloakingMat != null)
+                {
+                    rendererInfo.Renderer.material = cloakingMat;
+                }
+            }
             isInvisible = true;
-            remainingDuration = duration; // 지속시간 초기화
+            remainingDuration = duration;
         }
     }
 
     public void Visible()
     {
-        if (isInvisible && playerRenderer != null && originalMat != null)
+        if (isInvisible)
         {
-            playerRenderer.material = originalMat;
+            foreach (var rendererInfo in renderersInfo)
+            {
+                if (rendererInfo.Renderer != null && rendererInfo.OriginalMaterial != null)
+                {
+                    rendererInfo.Renderer.material = rendererInfo.OriginalMaterial;
+                }
+            }
             isInvisible = false;
             currentCooldown = cooldown;
             remainingDuration = 0f;
@@ -64,19 +86,9 @@ public class Invisibility : Skill
     public bool CanUseSkill()
     {
         return currentCooldown <= 0 && !isInvisible && 
-               playerRenderer != null && cloakingMat != null;
+               renderersInfo.Count > 0 && cloakingMat != null;
     }
 
-    public bool IsInvisible()
-    {
-        return isInvisible;
-    }
-
-    public float GetRemainingDuration()
-    {
-        return remainingDuration;
-    }
-    
     public override SkillState GetInitialState()
     {
         return new InvisibilityState(this);

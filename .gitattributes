@@ -1,0 +1,2 @@
+T_Megaspikan_Normal.png filter=lfs diff=lfs merge=lfs -text
+T_Megaspikan_BaseColor.png filter=lfs diff=lfs merge=lfs -text

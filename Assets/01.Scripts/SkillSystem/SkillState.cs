@@ -1,9 +1,8 @@
 using UnityEngine;
 
-/// <summary>
-/// 스킬의 상태를 나타내는 추상 클래스
-/// State 패턴을 구현하여 스킬의 다양한 단계를 관리
-/// </summary>
+
+// 스킬의 상태를 나타내는 추상 클래스
+// State 패턴을 구현하여 스킬의 다양한 단계를 관리
 public abstract class SkillState
 {
     // 이 상태가 속한 스킬의 참조

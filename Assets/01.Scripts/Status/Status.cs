@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 캐릭터의 상태와 버프를 관리하는 클래스
-/// </summary>
+
+// 캐릭터의 상태와 버프를 관리하는 클래스
 public class Status : MonoBehaviour
 {
     [SerializeField]
@@ -12,18 +11,10 @@ public class Status : MonoBehaviour
     // 현재 적용된 버프들을 관리하는 딕셔너리
     private Dictionary<string, Buff> activeBuffs = new Dictionary<string, Buff>();
     
-    private float currentHealth;     // 현재 체력
-    
-    private void Start()
-    {
-        currentHealth = playerData.HP;
-    }
-    
     private void Update()
     {
         UpdateBuffs();  // 매 프레임마다 버프 상태 업데이트
     }
-    
     
     // 모든 활성화된 버프의 지속시간을 감소시키고 만료된 버프 제거
     private void UpdateBuffs()
@@ -64,13 +55,15 @@ public class Status : MonoBehaviour
     // 버프 제거
     public void RemoveBuff(string buffId)
     {
+        //Debug.Log("버프제거");
         if (activeBuffs.TryGetValue(buffId, out Buff buff))
         {
             RemoveBuffEffect(buff);      // 버프 효과 제거
             activeBuffs.Remove(buffId);  // 활성 버프 목록에서 제거
         }
+        
+        
     }
-    
     
     // 버프 효과 적용
     // 각 효과 타입에 따라 해당하는 스탯 수정
@@ -95,7 +88,6 @@ public class Status : MonoBehaviour
             }
         }
     }
-    
     
     // 버프 효과 제거
     // 적용된 효과를 원래대로 되돌림
@@ -123,6 +115,4 @@ public class Status : MonoBehaviour
     
     // 현재 스탯 값을 반환하는 getter 메서드들
     public float GetCurrentMoveSpeed() => playerData.MoveSpeed;
-    public float GetCurrentMaxHealth() => playerData.HP;
-    public float GetCurrentHealth() => currentHealth;
 }

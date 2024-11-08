@@ -93,11 +93,16 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         
         // isPaused 상태에 따라 아이콘 업데이트
         imageStopNStart.sprite = isPaused ? iconPlay : iconPause;
+        
+        // 모든 빌딩의 생산을 멈추거나 다시 시작
+        // BuildingManager.Instance.UpdateAllProductions(isPaused);
     }
 
     // 2배속 토글 버튼
     public void ToggleDoubleTimeSpeed()
     {
         enableXSpeed = !enableXSpeed;
+
+        //BuildingManager.Instance.UpdateProductionSpeed(enableXSpeed);
     }
 } // end class

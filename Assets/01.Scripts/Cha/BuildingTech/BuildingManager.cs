@@ -40,6 +40,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
         }
     }
 
+    // 개별 코루틴 시작
     private void StartProducing(BaseBuilding buildingPrefab)
     {
         // 딕셔너리에서 이미 실행중인 코루틴을 검사하고 있다면 새로 시작하지 않음
@@ -54,6 +55,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
         productionCoroutines[buildingPrefab] = coroutine;
     }
     
+    // 개별 코루틴 종료
     public void StopProducing(BaseBuilding building)
     {
         // 실행 중인 코루틴이 있다면 중지 및 딕셔너리에서 제거
@@ -65,19 +67,68 @@ public class BuildingManager : SceneSingleton<BuildingManager>
         }
     }
 
-    // 개별 빌딩의 자원 생산을 관리하는 코루틴
     private IEnumerator ProduceResources(BaseBuilding building)
     {
-        float productionInterval = 2f; // building.ProductionInterval; // 현재 빌딩의 생산 주기
+        float baseProductionInterval = 2f; // 기본 생산 주기
+        float elapsedTime = 0f;
 
         while (true)
         {
-            yield return new WaitForSeconds(productionInterval); // 각 빌딩의 개별 생산 주기마다 생산
-
-            // 자원 생산 및 UI 업데이트
-            int productionAmount = building.GetCurrentProductOutput(); // 현재 빌딩의 생산량
-            GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
+            // 배속을 적용한 생산 주기를 계산
+            float productionInterval = baseProductionInterval / (GameTimeManager.Instance.enableXSpeed ? GameTimeManager.Instance.gameTimeSetting.xSpeed : 1f);
+        
+            // 일시정지 상태일 때는 생산을 중지하고 대기
+            if (!GameTimeManager.Instance.isPaused)
+            {
+                elapsedTime += Time.deltaTime;
+            
+                // 설정된 생산 주기 경과 시 자원 생산
+                if (elapsedTime >= productionInterval)
+                {
+                    elapsedTime = 0f;
+                
+                    // 자원 생산 및 UI 업데이트
+                    int productionAmount = building.GetCurrentProductOutput();
+                    GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
+                }
+            }
+        
+            yield return null; // 매 프레임마다 대기하면서 업데이트 체크
         }
+    }
+    // 모든 자원 생산 코루틴을 정지하거나 재개
+    public void UpdateAllProductions(bool isPaused)
+    {
+        // 코루틴 정지라면
+        if (isPaused)
+        {
+            foreach (var building in productionCoroutines.Keys)
+            {
+                StopProducing(building);
+            }
+            Debug.Log("All building productions paused.");
+        }
+        // 코루틴 재개라면
+        else
+        {
+            foreach (var building in productionCoroutines.Keys)
+            {
+                StartProducing(building);
+            }
+            Debug.Log("All building productions resumed.");
+        }
+    }
+    
+    // 배속 변경을 적용하는 메서드
+    public void UpdateProductionSpeed(bool enableXspeed)
+    {
+        // 모든 자원 생산 코루틴을 멈추고 재개하여 새로운 배속 반영
+        foreach (var building in productionCoroutines.Keys)
+        {
+            StopProducing(building);
+            StartProducing(building);
+        }
+        Debug.Log("All building production speeds updated to current game speed.");
     }
 
     // 자원 생산량 텍스트 표시, 빌딩 이미지 변경

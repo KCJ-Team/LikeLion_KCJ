@@ -5601,6 +5601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnBuilding: {fileID: 891302069}
   buildingPrefab: {fileID: 0}
+  isCreated: 0
 --- !u!1 &942080231
 GameObject:
   m_ObjectHideFlags: 0

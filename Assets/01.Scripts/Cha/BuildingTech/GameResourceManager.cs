@@ -47,6 +47,7 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
             }
 
             Debug.Log($"Added {amount} {resource.ResourceData.resourceName}. Current amount: {resource.CurrentAmount}");
+            
             gameResourceUIPresneter.UpdateResourceUI();
         }
     }

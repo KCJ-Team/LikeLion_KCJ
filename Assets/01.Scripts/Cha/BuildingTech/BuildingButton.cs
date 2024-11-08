@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class BuildingButton : MonoBehaviour
 {
-    public Button btnBuilding;
+    [SerializeField]
+    private Button btnBuilding;
     public BaseBuilding buildingPrefab; // 생성할 빌딩 프리팹
     private bool isCreated; // TODO : 추후엔 이거 저장해서(DB) 불러와야함
     

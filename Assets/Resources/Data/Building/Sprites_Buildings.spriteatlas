@@ -97,16 +97,16 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 0332824fefb3da645809b22aec9fdd6c, type: 3}
   m_PackedSpriteNamesToIndex:
   - Powerplant_0
-  - Quaters_0
+  - Quarters_0
   - RecreationRoom_0
-  - Quaters_1
+  - Quarters_1
   - Farm_1
   - FuelPlant_0
   - Clinic_0
   - Clinic_1
   - Powerplant_1
   - Farm_0
-  - Quaters_2
+  - Quarters_2
   - Farm_2
   - RecreationRoom_2
   - Powerplant_2

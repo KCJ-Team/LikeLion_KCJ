@@ -1,7 +1,7 @@
 ﻿Building_Id,Name,Type,BaseCostEnergy,BaseCostFood,BaseCostFuel,BaseCostWorkforce,UpgradeMultiplier,MaxLevel,ProductionOutput,Description,Level1ImagePath,Level2ImagePath,ResourceType
 1,발전실,PowerPlant,20,10,5,10,2,2,20,에너지를 생산하는 발전실,Data/Building/PowerPlant_1,Data/Building/PowerPlant_2,Energy
 2,바이오팜,BioFarm,10,10,20,5,2,2,20,식량을 생산하는 바이오농장,Data/Building/Farm_1,Data/Building/Farm_2,Food
-3,숙소,Quarters,15,15,10,10,2,2,10,일꾼들을 수용할 수 있는 숙소,Data/Building/Quaters_1,Data/Building/Quaters_2,None
+3,숙소,Quarters,15,15,10,10,2,2,10,일꾼들을 수용할 수 있는 숙소,Data/Building/Quarters_1,Data/Building/Quarters_2,None
 4,연료실,FuelPlant,15,15,10,10,2,2,20,탐험 할 수 있는 연료생산,Data/Building/FuelPlant_1,Data/Building/FuelPlant_2,Fuel
 5,연구실,ResearchLab,40,20,10,10,2,0,20,연구를 통해 기술을 업그레이드,,,Research
 6,병실,RecoveryRoom,30,30,10,10,2,0,0,디버프 제거와 부상 치료를 위한 병원,Data/Building/Clinic_1,Data/Building/Clinic_2,None

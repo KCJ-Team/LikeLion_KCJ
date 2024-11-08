@@ -24,16 +24,20 @@ public class Level0State : IBuildingState
                 buildingData.baseCostWorkforce))
         {
             Debug.Log($"{buildingData.name} upgraded to Level 1.");
-
-            // 이미지 활성화 (Level 0에서 Level 1로 전환) => 나중엔 불투명으로 ㄱ.. 
-            buildingPrefab.gameObject.GetComponent<Image>().enabled = true;
             
-            // 생산량 표시
+            // 이미지 변경, 생산량 표시
             building.CurretProductionOutput = buildingData.productionOutput;
             Debug.Log($"Production output updated to {building.CurretProductionOutput}");
-            BuildingManager.Instance.UpdateEnergyProductUI(building.CurretProductionOutput);
+
+            string imagePath = buildingData.level1ImagePath;
+            BuildingManager.Instance.UpdateEnergyProductUIAndImage(buildingData.type , imagePath, building.CurretProductionOutput);
             
-            stateMachine.ChangeState(new Level1State()); // 상태 전환
+            // 현재 레벨 증가
+            building.CurrentLevel++;
+            
+            // 연구실이 아니라면
+            if (buildingData.type != BuildingType.ResearchLab)
+                stateMachine.ChangeState(new Level1State()); // 상태 전환
         }
         else
         {
@@ -59,14 +63,14 @@ public class Level1State : IBuildingState
             Debug.Log($"{buildingData.name} upgraded to Level 2.");
 
             // 이미지 전환
-            string imagePath = buildingData.level1ImagePath;
-            stateMachine.ChangeSpriteImage(buildingPrefab, imagePath);
-            
-            // 현재 생산량에 업그레이드 배율 적용 (레벨 1에서는 1배)
-            building.CurretProductionOutput = (int)(buildingData.productionOutput * buildingData.upgradeMultiplier);
-            Debug.Log($"Production output updated to {building.CurretProductionOutput}");
-            BuildingManager.Instance.UpdateEnergyProductUI(building.CurretProductionOutput);
-            
+            // string imagePath = buildingData.level1ImagePath;
+            // stateMachine.ChangeSpriteImage(buildingPrefab, imagePath);
+            //
+            // // 현재 생산량에 업그레이드 배율 적용 (레벨 1에서는 1배)
+            // building.CurretProductionOutput = (int)(buildingData.productionOutput * buildingData.upgradeMultiplier);
+            // Debug.Log($"Production output updated to {building.CurretProductionOutput}");
+            // BuildingManager.Instance.UpdateEnergyProductUI(building.CurretProductionOutput);
+            //
             // 현재 레벨 증가
             building.CurrentLevel++;
             
@@ -102,15 +106,15 @@ public class Level2State : IBuildingState
         {
             Debug.Log($"{buildingData.name} upgraded to Level 2.");
 
-            // 이미지 전환
-            string imagePath = buildingData.level2ImagePath;
-            stateMachine.ChangeSpriteImage(buildingPrefab, imagePath);
-            
-            // 생산량에 업그레이드 배율 적용 (레벨 2에서는 2배)
-            building.CurretProductionOutput = (int)(buildingData.productionOutput * buildingData.upgradeMultiplier * 2);
-            Debug.Log($"Production output updated to {building.CurretProductionOutput}");
-            BuildingManager.Instance.UpdateEnergyProductUI(building.CurretProductionOutput);
-            
+            // // 이미지 전환
+            // string imagePath = buildingData.level2ImagePath;
+            // stateMachine.ChangeSpriteImage(buildingPrefab, imagePath);
+            //
+            // // 생산량에 업그레이드 배율 적용 (레벨 2에서는 2배)
+            // building.CurretProductionOutput = (int)(buildingData.productionOutput * buildingData.upgradeMultiplier * 2);
+            // Debug.Log($"Production output updated to {building.CurretProductionOutput}");
+            // BuildingManager.Instance.UpdateEnergyProductUI(building.CurretProductionOutput);
+            //
             // 현재 레벨 증가
             building.CurrentLevel++;
         }

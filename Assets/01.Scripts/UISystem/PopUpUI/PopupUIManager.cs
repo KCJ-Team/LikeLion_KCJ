@@ -144,7 +144,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
     }
     
     //팝업을 닫고 LinkedList에서 제거
-    private void ClosePopup(PopupUI popup)
+    public void ClosePopup(PopupUI popup)
     {
         activePopupLList.Remove(popup);
         popup.gameObject.SetActive(false);

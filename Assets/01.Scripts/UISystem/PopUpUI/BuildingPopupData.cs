@@ -19,21 +19,21 @@ public class BuildingPopupData : IPopupData
     {
         BuildingBase = buildingBase;
         
-        var data = buildingBase.GetBuildingData();
-        
-        Title = data.name;
-        Description = data.description;
+        Title = buildingBase.GetBuildingData().name;
+        Description = buildingBase.GetBuildingData().description;
         CurrentLevelText = $"Lv.{buildingBase.GetBuilding().CurrentLevel}";
+        
+        float multiplier = buildingBase.CurrentMultiplier; // 현재 레벨에 따른 배율
 
         // ProductOutput 텍스트 설정 로직
-        if (data.type == BuildingType.Quarters)
+        if (buildingBase.GetBuildingData().type == BuildingType.Quarters)
         {
             // '숙소' 건물 유형일 때, output은 인원수용량
-            ProductOutputText = $"Max.{data.productionOutput}";
+            ProductOutputText = $"Max.{buildingBase.GetCurrentProductOutput()}";
         }
-        else if (data.productionOutput != 0)
+        else if (buildingBase.GetBuildingData().productionOutput != 0)
         {
-            ProductOutputText = $"+{data.productionOutput}";
+            ProductOutputText = $"+{buildingBase.GetCurrentProductOutput()}";
         }
         else
         {
@@ -41,12 +41,12 @@ public class BuildingPopupData : IPopupData
         }
 
         // 비용 데이터 설정
-        CostEnergy = data.baseCostEnergy;
-        CostFood = data.baseCostFood;
-        CostWorkforce = data.baseCostWorkforce;
-        CostFuel = data.baseCostFuel;
+        CostEnergy = (int)(buildingBase.GetBuildingData().baseCostEnergy * multiplier);
+        CostFood = (int)(buildingBase.GetBuildingData().baseCostFood * multiplier);
+        CostWorkforce = (int)(buildingBase.GetBuildingData().baseCostWorkforce * multiplier);
+        CostFuel = (int)(buildingBase.GetBuildingData().baseCostFuel * multiplier);
 
         // 아이콘 설정
-        ProductOutputIcon = GameResourceManager.Instance.GetResourceData(data.resourceType)?.icon;
+        ProductOutputIcon = GameResourceManager.Instance.GetResourceData(buildingBase.GetBuildingData().resourceType)?.icon;
     }
 }

@@ -7,10 +7,7 @@ using UnityEngine.UI;
 public class BuildingUIPresenter
 {
     private BuildingUIView uiView;
-
-    // 크래프팅 버튼 
-    // private Dictionary<Button, bool> buttonUpgradeState = new Dictionary<Button, bool>();
-
+    
     public BuildingUIPresenter(BuildingUIView uiView)
     {
         this.uiView = uiView;
@@ -34,7 +31,7 @@ public class BuildingUIPresenter
                 buttons[0].onClick.AddListener(() => OnBuildingPopupButtonClicked(buttons[0]));
 
                 // 두 번째 버튼을 빌딩 목록 버튼으로 사용
-                buttons[1].onClick.AddListener(() => OnBuildingListButtonClicked(buildingType));
+                buttons[1].onClick.AddListener(() => OnBuildingListButtonClicked(buttons[1]));
             }
         }
         
@@ -59,12 +56,20 @@ public class BuildingUIPresenter
     }
 
     // 빌딩 목록 버튼 클릭 시 호출
-    private void OnBuildingListButtonClicked(BuildingType buildingType)
+    private void OnBuildingListButtonClicked(Button buildingButton)
     {
-        Debug.Log($"Building list button for {buildingType} clicked.");
         // TODO : 빌딩 목록 관련 추가 기능 수행
+        BaseBuilding buildingBase = buildingButton.GetComponent<BaseBuilding>();
+        
+        if (buildingBase != null)
+        {
+            OpenBuildingPopup(buildingBase);
+        }
+        else
+        {
+            Debug.LogWarning("BaseBuilding component not found on the parent of the button.");
+        }
     }
-
 
     // 팝업창 열기 및 콘텐츠 설정
     private void OpenBuildingPopup(BaseBuilding buildingBase)
@@ -80,15 +85,36 @@ public class BuildingUIPresenter
         popup.SetContent("Description", popupData.Description);
         popup.SetContent("CurrentLevel", popupData.CurrentLevelText);
         popup.SetContent("ProductOutput", popupData.ProductOutputText);
-        popup.SetContent("CostEnergy", $"{popupData.CostEnergy}");
-        popup.SetContent("CostFood", $"{popupData.CostFood}");
-        popup.SetContent("CostWorkforce", $"{popupData.CostWorkforce}");
-        popup.SetContent("CostFuel", $"{popupData.CostFuel}");
+        popup.SetContent("CostEnergy", $"-{popupData.CostEnergy}");
+        popup.SetContent("CostFood", $"-{popupData.CostFood}");
+        popup.SetContent("CostWorkforce", $"-{popupData.CostWorkforce}");
+        popup.SetContent("CostFuel", $"-{popupData.CostFuel}");
         popup.SetContent("ProductOutputIcon", "", popupData.ProductOutputIcon);
 
-        // // 빌드/업그레이드 버튼
-        string text = buildingBase.GetBuilding().CurrentLevel == 0 ? "Build" : "Upgrade";
+        // 빌드/업그레이드 버튼 텍스트 설정
+        string text;
+        if (!buildingBase.IsCreated)
+        {
+            text = "Build";
+            // buildingBase.IsCreated = true;
+        }
+        else if (buildingBase.GetBuilding().CurrentLevel < buildingBase.GetBuildingData().maxLevel)
+        {
+            // 이미 생성된 상태이며 최대 레벨이 아니라면 "Upgrade"
+            text = "Upgrade";
+        }
+        else
+        {
+            // 최대 레벨이라면 버튼을 숨기기
+            uiView.buildUpgradeButton.gameObject.SetActive(false);
+            text = null; // 버튼 텍스트는 필요 없음
+        }
+         
         popup.SetContent("Build", text);
+        
+        // 현재 자원이 업그레이드가 가능한지를 검사후 가능하면 버튼을 보여주고, 아니면 X
+        bool canUpgrade = BuildingManager.Instance.CanUpgradeBuilding(buildingBase);
+        uiView.buildUpgradeButton.gameObject.SetActive(canUpgrade);
 
         // 팝업 열기
         PopupUIManager.Instance.OpenPopup(popup);
@@ -110,7 +136,14 @@ public class BuildingUIPresenter
 
         // BuildingManager를 통해 빌딩 생성 또는 업그레이드
         BaseBuilding building = buildingPopupData.BuildingBase;
-        BuildingManager.Instance.Build(building, building.GetBuilding().CurrentLevel > 0);
+        
+        BuildingManager.Instance.Build(building);
+        
+        // isCreated가 false였다면, 이제 생성되었으므로 true로 설정
+        if (!building.IsCreated)
+        {
+            building.IsCreated = true;
+        }
         
         // 팝업 자동 닫기
         PopupUIManager.Instance.ClosePopup(popup);
@@ -119,22 +152,25 @@ public class BuildingUIPresenter
     // TODO 
     public void UpdateEnergyProductUIAndImage(BuildingType type, string imagePath, int productionOutput)
     {
-        // 스프라이트를 받고, 딕셔너리의 빌딩에서 타입을 찾아 확인후 path 변경
-        Sprite newSprite = Resources.Load<Sprite>(imagePath);
-        
+        Sprite newSprite = !string.IsNullOrEmpty(imagePath) ? Resources.Load<Sprite>(imagePath) : null;
+
         if (uiView.buildings.ContainsKey(type))
         {
             Button buildingButton = uiView.buildings[type][1];
             Image buildingImage = buildingButton.image;
 
+            // 이미지 경로가 유효하면 스프라이트 변경, 그렇지 않으면 알파값만 조정
             if (newSprite != null)
+            {
                 buildingImage.sprite = newSprite;
-        
+            }
+
             // 알파값을 1로 설정하여 완전히 불투명하게 만들기
             Color color = buildingImage.color;
             color.a = 1f;
             buildingImage.color = color;
-            
+
+            // 버튼 활성화
             buildingButton.enabled = true;
         }
         else
@@ -150,7 +186,7 @@ public class BuildingUIPresenter
             craftingButton.gameObject.SetActive(false);
         }
         
-        // 자원 생산 Text ui에 주기
+        // TODO : 자원 생산 Text ui에 주기
         
     }
 } // end class

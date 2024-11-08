@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public abstract class BaseBuilding : MonoBehaviour, IBuilding
     
     private BuildingStateMachine stateMachine;
 
+    public bool IsCreated { get; set; } = false; // 생성 여부를 나타내는 속성
+
     private void Awake()
     {
         stateMachine = new BuildingStateMachine(); // 각 빌딩별 고유의 상태 머신 생성
@@ -18,18 +21,20 @@ public abstract class BaseBuilding : MonoBehaviour, IBuilding
     {
         Debug.Log(building.BuildingData.name + " has been built.");
         
-        // 초기 생산량을 기본 생산량으로 설정
-        building.CurretProductionOutput = building.BuildingData.productionOutput;
-        Debug.Log($"{building.BuildingData.name} 생산량 초기화: {building.CurretProductionOutput}");
+        if (!IsCreated)
+        {
+            IsCreated = true;
+            Debug.Log($"{building.BuildingData.name} has been built.");
+            building.CurretProductionOutput = building.BuildingData.productionOutput;
+            Debug.Log($"{building.BuildingData.name} 생산량 초기화: {building.CurretProductionOutput}");
+        }
     }
 
     public virtual void Upgrade()
     {
         if (CanUpgrade())
         {
-            building.CurrentLevel++;
-            
-            // TODO : 업그레이드시 생산량 증가..
+            // building.CurrentLevel++;
             
             Debug.Log(building.BuildingData.name + " upgraded to level " + building.CurrentLevel);
         }
@@ -42,6 +47,25 @@ public abstract class BaseBuilding : MonoBehaviour, IBuilding
     public bool CanUpgrade()
     {
         return building.CurrentLevel < building.BuildingData.maxLevel;
+    }
+    
+    // 레벨에 따라 적용되는 업그레이드 배율 계산
+    public float CurrentMultiplier
+    {
+        get
+        {
+            int level = building.CurrentLevel;
+            float baseMultiplier = building.BuildingData.upgradeMultiplier;
+
+            // 레벨이 0일 때 isCreated 여부에 따라 배율 결정
+            if (level == 0)
+            {
+                return IsCreated ? baseMultiplier : 1;
+            }
+
+            // 레벨이 1 이상일 때는 baseMultiplier * 2^level
+            return baseMultiplier * Mathf.Pow(2, level);
+        }
     }
 
     // 현재 빌딩의 생산량 반환

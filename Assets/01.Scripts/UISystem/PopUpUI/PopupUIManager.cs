@@ -4,19 +4,11 @@ using UnityEngine;
 
 public enum PopupType
 {
-    BuildingUpgrade, Incounter, Store
+    BuildingUpgrade, Encounter, Store
 }
 
 public class PopupUIManager : SceneSingleton<PopupUIManager>
 {
-    /* 팝업 UI
-    public PopupUI _inventoryPopup;
-    public PopupUI _characterInfoPopup;
-    public PopupUI _shopPopup;
-    public PopupUI _SettingPopup;
-    public PopupUI _SoundPopup;
-    */
-    
     //키 바인딩 - 예시
     public KeyCode _escapeKey = KeyCode.Escape;
     public KeyCode buildingKey = KeyCode.I;
@@ -31,7 +23,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
     // hyuna
     [Header("PopUIs")]
     public PopupUI buildingUpgradePopup;
-    public PopupUI incounterPopup;
+    public PopupUI EncounterPopup;
     public PopupUI storePopup;
     
     private void Awake()
@@ -49,8 +41,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         // 1. 리스트 초기화
         allPopupList = new List<PopupUI>()
         {
-            //_inventoryPopup, _characterInfoPopup, _shopPopup, _SettingPopup, _SoundPopup
-            buildingUpgradePopup//, incounterPopup, storePopup
+            buildingUpgradePopup, EncounterPopup, storePopup
         };
 
         // 2. 모든 팝업에 이벤트 등록
@@ -67,9 +58,6 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
             // 닫기 버튼 이벤트
             popup.closeButton.onClick.AddListener(() => ClosePopup(popup));
         }
-        
-        // OpenPopup(buildingUpgradePopup);
-        //OpenPopup(_characterInfoPopup);
     }
     
     //시작 시 모든 팝업 닫기
@@ -98,7 +86,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
 
         // 단축키 조작
         ToggleKeyDownAction(buildingKey, buildingUpgradePopup);
-        ToggleKeyDownAction(incounterKey,  incounterPopup);
+        ToggleKeyDownAction(incounterKey,  EncounterPopup);
         ToggleKeyDownAction(storeKey,  storePopup);
     }
     
@@ -125,8 +113,8 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         {
             case PopupType.BuildingUpgrade:
                 return buildingUpgradePopup;
-            case PopupType.Incounter:
-                return incounterPopup;
+            case PopupType.Encounter:
+                return EncounterPopup;
             case PopupType.Store:
                 return storePopup;
             default:

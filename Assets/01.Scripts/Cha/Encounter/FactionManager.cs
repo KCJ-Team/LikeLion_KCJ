@@ -37,6 +37,13 @@ public class FactionManager : SceneSingleton<FactionManager>
          Debug.Log($"{faction.name} ({faction.type}): {faction.supportLevel}");
       }
    }
+   
+   // 특정 타입의 팩션 아이콘을 반환
+   public Sprite GetFactionIcon(FactionType factionType)
+   {
+      Faction faction = factions.Find(f => f.type == factionType);
+      return faction != null ? faction.icon : null;
+   }
 
    private void UpdateUI(Faction faction)
    {

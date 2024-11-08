@@ -69,4 +69,22 @@ public class PopupUI : MonoBehaviour, IPointerDownHandler
             }
         }
     }
+    
+    // 특정 key의 활성화 상태를 토글하거나 설정
+    public void ToggleActiveState(string key, bool? setActive = null)
+    {
+        // 텍스트 오브젝트의 활성화 상태를 변경
+        if (contentTexts.ContainsKey(key))
+        {
+            GameObject targetObject = contentTexts[key].gameObject;
+            targetObject.SetActive(setActive ?? !targetObject.activeSelf);
+        }
+        
+        // 아이콘 오브젝트의 활성화 상태를 변경
+        if (contentIcons.ContainsKey(key))
+        {
+            GameObject targetObject = contentIcons[key].gameObject;
+            targetObject.SetActive(setActive ?? !targetObject.activeSelf);
+        }
+    }
 } // end class

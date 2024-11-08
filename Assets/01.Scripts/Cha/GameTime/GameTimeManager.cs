@@ -23,6 +23,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
     public Button btnStopNStart;
     public Button btnSpeed;
     public Image imageStopNStart;
+    public Text textDday;
     
     // icons..
     public Sprite iconPause;
@@ -55,6 +56,12 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
             minute = 0;
             
             UpdateTimeUI(); // 초기 시간 UI 업데이트
+            
+            textDday.text = $"D-{currentDay}";
+            
+            // 3분 동안 두 번의 인카운터를 호출할 간격 계산
+            float encounterInterval = gameTimeSetting.dayDuration / 2f;
+            float nextEncounterTime = encounterInterval;
 
             // 타이머가 3분 지나가는중(100f)
             while (dayTimer < gameTimeSetting.dayDuration) 
@@ -69,12 +76,27 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     minute = (int)(totalMinutes % 60); // 분 계산
 
                     UpdateTimeUI(); // UI 업데이트 
+                    
+                    // 설정된 간격에 따라 랜덤 인카운터 호출
+                    if (dayTimer >= nextEncounterTime)
+                    {
+                        EncounterManager.Instance.ActivateNextEncounter();
+                        nextEncounterTime += encounterInterval; // 다음 호출 시간 설정
+                    }
                 }
                 
                 yield return null;
             }
 
             currentDay--; // 남은 일수 감소
+            
+            textDday.text = $"D-{currentDay}";
+            
+            if (currentDay < 0) // D-Day가 0일 때 종료 로직 호출
+            {
+                EndGame();
+                yield break; // End game; stop the coroutine
+            }
         }
 
         Debug.Log("D-Day reached! Game cycle complete!"); // 0일에 도달하면 게임 종료 또는 리셋 로직 실행
@@ -104,5 +126,12 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         enableXSpeed = !enableXSpeed;
 
         //BuildingManager.Instance.UpdateProductionSpeed(enableXSpeed);
+    }
+    
+    // TODO : D-day가 0이되어 게임종료시
+    private void EndGame()
+    {
+        Debug.Log("D-Day reached! Game cycle complete!");
+
     }
 } // end class

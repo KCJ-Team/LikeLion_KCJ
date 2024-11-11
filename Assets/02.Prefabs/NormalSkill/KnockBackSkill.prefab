@@ -44,13 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0415b3045cc2f424492cc8e5ad4c2713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10
   cooldown: 0
-  knockbackProjectilePrefab: {fileID: 6555648273942482187, guid: 1ed74ae395b69a0438d2a626413e887f,
+  knockbackProjectilePrefab: {fileID: 5938167112633497377, guid: bc29bffba2b451e499882f10a7e6adfc,
     type: 3}
-  projectileSpeed: 10
-  knockbackForce: 10
-  projectileDamage: 10
   firePoint: {fileID: 0}
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 256

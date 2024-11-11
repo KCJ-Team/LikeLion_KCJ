@@ -2,35 +2,69 @@ using UnityEngine;
 
 public class PullProjectile : Projectile
 {
-    [SerializeField] private LayerMask pullableLayerMask;  // 끌어당길 수 있는 레이어
-    [SerializeField] private float pullForce = 20f;        // 끌어당기는 힘
-    [SerializeField] private float maxPullDistance = 15f;  // 최대 끌어당기기 거리
-    [SerializeField] private float destroyDistance = 1f;   // 발사체가 파괴될 거리
+    [SerializeField] private LayerMask pullableLayerMask;
+    [SerializeField] private float pullForce = 20f;
+    [SerializeField] private float maxPullDistance = 15f;
+    [SerializeField] private float destroyDistance = 1f;
     
-    private Transform playerTransform;        // 플레이어의 Transform
-    private Rigidbody targetRigidbody;       // 끌어당길 대상의 Rigidbody
-    private bool isPulling = false;          // 현재 끌어당기는 중인지 여부
+    private Transform playerTransform;
+    private Rigidbody targetRigidbody;
+    private bool isPulling = false;
+    
+    protected Vector3 direction;
     
     private void Awake()
     {
         playerTransform = GameManager.Instance.Player.transform;
     }
-    
+
+    public override void Initialize(Vector3 direction, float damage)
+    {
+        this.direction = direction;
+        this.damage = damage;
+        base.Initialize(direction, damage);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // 이미 끌어당기는 중이면 무시
+        if (isPulling) return;
+        
+        HandleCollision(collision.gameObject);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        // 아직 끌어당기는 중이 아니고 레이어가 일치할 때만
-        if (!isPulling && ((1 << other.gameObject.layer) & pullableLayerMask.value) != 0)
+        // 이미 끌어당기는 중이면 무시
+        if (isPulling) return;
+        
+        HandleCollision(other.gameObject);
+    }
+
+    private void HandleCollision(GameObject hitObject)
+    {
+        // 레이어 마스크 체크
+        if (((1 << hitObject.layer) & pullableLayerMask.value) != 0)
         {
-            targetRigidbody = other.GetComponent<Rigidbody>();
+            // Rigidbody 가져오기
+            targetRigidbody = hitObject.GetComponent<Rigidbody>();
+            if (targetRigidbody == null)
+            {
+                targetRigidbody = hitObject.GetComponentInParent<Rigidbody>();
+            }
+
             if (targetRigidbody != null)
             {
                 isPulling = true;
-                // 발사체의 이동을 멈춤
+                
+                // 발사체의 물리 동작 조정
                 Rigidbody projectileRb = GetComponent<Rigidbody>();
                 if (projectileRb != null)
                 {
                     projectileRb.velocity = Vector3.zero;
+                    projectileRb.isKinematic = true;
                 }
+
                 // PullingState로 전환
                 ChangeState(new PullProjectilePullingState(this));
             }
@@ -46,6 +80,6 @@ public class PullProjectile : Projectile
     
     protected override ProjectileState GetInitialState()
     {
-        return new PullProjectilePullingState(this);
+        return new PullProjectileMovingState(this, direction);
     }
 }

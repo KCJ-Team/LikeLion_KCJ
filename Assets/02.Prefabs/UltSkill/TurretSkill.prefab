@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1907337306280b46a40327222b3610a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 20
   cooldown: 0
-  TurretPrefab: {fileID: 3325255517196708710, guid: 68369f8f080cdaa429f382f330f34a34,
+  TurretPrefab: {fileID: 282066603285489581, guid: 68369f8f080cdaa429f382f330f34a34,
     type: 3}

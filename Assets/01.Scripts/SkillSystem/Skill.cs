@@ -2,11 +2,12 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
+    [SerializeField] protected float damage;
     protected PlayerCharacterController owner;
     protected SkillState currentState;
     
     [SerializeField] protected float cooldown;
-    protected float currentCooldown = 0f;  // 추가된 currentCooldown
+    protected float currentCooldown = 0f;
     
     public float Cooldown => cooldown;
     

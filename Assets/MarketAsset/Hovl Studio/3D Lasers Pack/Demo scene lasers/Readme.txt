@@ -24,5 +24,7 @@ Using:
 3)Quality
 3.1) For better sparks quality enable "Anisotropic textures: Forced On" in quality settings.
 
+HDRP and URP support ---> RPG VFX Bundle -> URP and HDRP patches folder
+
 Contact me if you have any problems or questions.
 My email: gorobecn2@gmail.com

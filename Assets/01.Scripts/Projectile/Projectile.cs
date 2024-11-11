@@ -5,9 +5,8 @@ using UnityEngine;
 public abstract class Projectile : MonoBehaviour
 {
     protected ProjectileState currentState;   // 현재 발사체의 상태
-    protected float damage;                   // 발사체가 가하는 데미지
+    public float damage;                   // 발사체가 가하는 데미지
     public float speed;                    // 발사체의 이동 속도
-    
     
     // 발사체 초기화 메서드
     public virtual void Initialize(Vector3 direction, float damage)
@@ -18,11 +17,6 @@ public abstract class Projectile : MonoBehaviour
     
     // 발사체의 초기 상태를 반환하는 추상 메서드
     protected abstract ProjectileState GetInitialState();
-    
-    public float GetDamage()
-    {
-        return damage;
-    }
     
     // 발사체의 상태를 변경하는 메서드
     public void ChangeState(ProjectileState newState)

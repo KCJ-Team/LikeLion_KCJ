@@ -17,13 +17,4 @@ public abstract class ProjectileState
     public abstract void UpdateState();
     // 상태 종료 시 호출되는 메서드
     public abstract void ExitState();
-    
-    public virtual void OnCollisionEnter(Collision collision)
-    {
-        // 기본 충돌 처리
-        if (collision.gameObject.TryGetComponent<IDamageable>(out IDamageable target))
-        {
-            target.TakeDamage(projectile.GetDamage());
-        }
-    }
 }

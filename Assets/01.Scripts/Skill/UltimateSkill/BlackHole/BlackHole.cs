@@ -11,6 +11,13 @@ public class BlackHole : Skill
     {
         // 전달받은 위치에 터렛 생성
         currentBlackHole = Instantiate(BlackHolePrefab, targetPosition, Quaternion.identity);
+        Vector3 direction = Vector3.zero;
+        Projectile pr = currentBlackHole.GetComponent<Projectile>();
+            
+        if (currentBlackHole != null)
+        {
+            pr.Initialize(direction, damage);
+        }
     }
     
     public override SkillState GetInitialState()

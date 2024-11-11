@@ -8,7 +8,7 @@ public class TurretObjDetectingState : ProjectileState
     
     public TurretObjDetectingState(Projectile projectile) : base(projectile)
     {
-        turret = (TurretObject)projectile;
+        turret = projectile as TurretObject;
     }
     
     public override void EnterState()
@@ -33,5 +33,6 @@ public class TurretObjDetectingState : ProjectileState
     
     public override void ExitState()
     {
+        
     }
 }

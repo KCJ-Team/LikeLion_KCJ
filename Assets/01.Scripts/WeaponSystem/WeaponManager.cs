@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using System.Collections;
+using Random = UnityEngine.Random;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -11,12 +13,30 @@ public class WeaponManager : MonoBehaviour
     
     private GameObject currentWeaponObject;
     private bool isFiring = false;
+    private bool isReloading = false;
     private Transform currentWeaponHolder;
-    public Transform firePoint; // 발사 위치를 저장할 변수
+    public Transform firePoint;
     
+    private Animator _animator;
+    private int currentAmmo; // 현재 탄약
+    
+    private string reloadLayerName = "Reload"; // 리로드 애니메이션이 있는 레이어 이름
+    private int reloadLayerIndex; // 레이어 인덱스를 캐시
+    
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        reloadLayerIndex = _animator.GetLayerIndex(reloadLayerName);
+    }
+
     private void Start()
     {
         UpdateWeapon();
+        
+        if (reloadLayerIndex != -1)
+        {
+            _animator.SetLayerWeight(reloadLayerIndex, 0f);
+        }
     }
 
     private Transform GetWeaponHolder(WeaponType type)
@@ -47,28 +67,32 @@ public class WeaponManager : MonoBehaviour
         {
             currentWeaponHolder = GetWeaponHolder(playerData.currentWeapon.weaponType);
             
-            // 홀더의 첫 번째 자식 오브젝트를 firePoint로 설정
             if (currentWeaponHolder.childCount > 0)
             {
                 firePoint = currentWeaponHolder.GetChild(0);
             }
             else
             {
-                firePoint = currentWeaponHolder; // 자식이 없으면 홀더 자체를 사용
+                firePoint = currentWeaponHolder;
                 Debug.LogWarning($"Weapon holder {currentWeaponHolder.name} has no child objects!");
             }
             
             currentWeaponObject = Instantiate(playerData.currentWeapon.characterDisplay, currentWeaponHolder);
+            currentAmmo = playerData.currentWeapon.Ammo; // 무기 교체시 탄약 초기화
         }
     }
 
     public void Attack()
     {
-        if (playerData.currentWeapon == null) return;
+        if (playerData.currentWeapon == null || isReloading) return;
 
-        if (!isFiring)
+        if (!isFiring && currentAmmo > 0)
         {
             StartCoroutine(FireRoutine());
+        }
+        else if (currentAmmo <= 0)
+        {
+            StartReload(); // 탄약이 없으면 자동 장전
         }
     }
 
@@ -76,13 +100,33 @@ public class WeaponManager : MonoBehaviour
     {
         isFiring = true;
 
-        while (Input.GetMouseButton(0))
+        while (Input.GetMouseButton(0) && currentAmmo > 0 && !isReloading)
         {
             FireWeapon();
+            currentAmmo--;
             yield return new WaitForSeconds(1f / playerData.currentWeapon.attackSpeed);
         }
 
         isFiring = false;
+    }
+
+    public void StartReload()
+    {
+        if (!isReloading && currentAmmo < playerData.currentWeapon.Ammo)
+        {
+            StartCoroutine(ReloadRoutine());
+        }
+    }
+
+    private void Update()
+    {
+        // R키를 누르면 수동 재장전
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartReload();
+        }
+        
+        _animator.SetBool("IsReload",isReloading);
     }
 
     private void FireWeapon()
@@ -144,5 +188,48 @@ public class WeaponManager : MonoBehaviour
                 pellet.Initialize(spreadDirection, damagePerPellet);
             }
         }
+    }
+
+    // UI 표시용 현재 탄약 정보 가져오기
+    public int GetCurrentAmmo()
+    {
+        return currentAmmo;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return playerData.currentWeapon?.Ammo ?? 0;
+    }
+
+    public bool IsReloading()
+    {
+        return isReloading;
+    }
+    
+    private IEnumerator ReloadRoutine()
+    {
+        isReloading = true;
+        
+        // 리로드 레이어 활성화
+        if (reloadLayerIndex != -1)
+        {
+            _animator.SetLayerWeight(reloadLayerIndex, 1f);
+        }
+        
+        _animator.SetBool("IsReload", true);
+        
+        // 재장전 시간
+        float reloadTime = 2f;
+        yield return new WaitForSeconds(reloadTime);
+        
+        // 리로드 레이어 비활성화
+        if (reloadLayerIndex != -1)
+        {
+            _animator.SetLayerWeight(reloadLayerIndex, 0f);
+        }
+        
+        _animator.SetBool("IsReload", false);
+        currentAmmo = playerData.currentWeapon.Ammo;
+        isReloading = false;
     }
 }

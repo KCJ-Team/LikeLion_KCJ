@@ -37,7 +37,7 @@ public class MissileBombing : Skill
         if (missile != null)
         {
             // 미사일 초기화 및 상태 설정
-            missile.Setup(finalTarget, damage);
+            missile.Initialize(finalTarget, damage);
         }
     }
 

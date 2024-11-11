@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerCharacterController : MonoBehaviour
 {
     public PlayerData playerData;
-    public WeaponManager _weaponManager;
-    [SerializeField] private Skill currentSkill;
+    private WeaponManager _weaponManager;
+    private Skill currentSkill;
     private float rotationSpeed = 10f;
 
     private Animator _animator;
@@ -15,6 +15,7 @@ public class PlayerCharacterController : MonoBehaviour
     private Vector3 mouseDirection;
     private Quaternion targetRotation;
     private bool isAimLocked = false;
+    private float AimSpeed = 2f;
     
     private readonly string IS_RUNNING = "IsRunning";
     private readonly string IS_AIM = "IsAim";
@@ -106,15 +107,15 @@ public class PlayerCharacterController : MonoBehaviour
                 Vector3 cameraForward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
                 Vector3 cameraRight = Vector3.Cross(Vector3.up, cameraForward);
                 moveDirection = cameraForward * movement.z + cameraRight * movement.x;
+                transform.position += moveDirection * (AimSpeed * Time.deltaTime);
             }
             else
             {
                 Vector3 cameraForward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
                 Vector3 cameraRight = Vector3.Cross(Vector3.up, cameraForward);
                 moveDirection = cameraForward * movement.z + cameraRight * movement.x;
+                transform.position += moveDirection * (playerData.MoveSpeed * Time.deltaTime);
             }
-
-            transform.position += moveDirection * (playerData.MoveSpeed * Time.deltaTime);
         }
         
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);

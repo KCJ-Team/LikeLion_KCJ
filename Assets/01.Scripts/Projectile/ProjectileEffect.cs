@@ -54,7 +54,7 @@ public class ProjectileEffect : MonoBehaviour
                     Destroy(hitVFX, psChild.main.duration);
                 }
             }
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }

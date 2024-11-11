@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fddee8f9931c9b4c8fb8222bba612e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0
-  missilePrefab: {fileID: 3587742310654355212, guid: c9488d8ef6cce6544ac75611ce6df385,
-    type: 3}
-  missileCount: 5
   damage: 50
+  cooldown: 0
+  missilePrefab: {fileID: 5938167112633497377, guid: 856561ba3b445324886b16fa0a682bc6,
+    type: 3}
+  missileCount: 1
   explosionRadius: 5
   spreadRadius: 5
   spawnHeight: 20

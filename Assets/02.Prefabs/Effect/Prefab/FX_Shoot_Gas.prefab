@@ -121,7 +121,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   pullForce: 50
-  maxPullDistance: 15
+  maxPullDistance: 30
   destroyDistance: 1
 --- !u!1001 &8025999977752100644
 PrefabInstance:

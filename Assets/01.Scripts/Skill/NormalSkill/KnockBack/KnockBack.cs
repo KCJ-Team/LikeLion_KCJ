@@ -3,16 +3,18 @@ using UnityEngine;
 public class KnockBack : Skill
 {
     [SerializeField] private GameObject knockbackProjectilePrefab;
-    [SerializeField] private float projectileSpeed = 20f;
-    [SerializeField] private float knockbackForce = 10f;
-    //[SerializeField] private float projectileDamage;
+    //[SerializeField] private float projectileSpeed = 20f;
+    //[SerializeField] private float knockbackForce = 10f;
+    
     [SerializeField] private Transform firePoint;
-    [SerializeField] private LayerMask targetLayers;
+    
+    private void Start()
+    {
+        firePoint = GameManager.Instance.Player.GetComponent<WeaponManager>().firePoint;
+    }
     
     public void FireProjectile()
     {
-        firePoint = GameManager.Instance.Player.transform;
-        
         if (CanUseSkill())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -37,9 +39,6 @@ public class KnockBack : Skill
             
             if (projectile != null)
             {
-                projectile.SetSpeed(projectileSpeed);
-                projectile.SetKnockbackForce(knockbackForce);
-                projectile.SetTargetLayers(targetLayers);
                 projectile.Initialize(direction, damage);
             }
             

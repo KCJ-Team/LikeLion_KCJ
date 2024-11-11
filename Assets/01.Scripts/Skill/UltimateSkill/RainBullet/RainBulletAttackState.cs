@@ -6,32 +6,60 @@ public class RainBulletAttackState : SkillState
 {
     private RainBullet rainBullet;
     private float elapsedTime = 0f;
-    private float damageTickInterval = 0.5f;  // 데미지를 주는 간격
+    private float damageTickInterval = 0.5f;
     private float lastDamageTime = 0f;
+    private float damage;
+    private ParticleSystem activeEffect;
+    private bool isAnimationPlaying = false;
 
-    public RainBulletAttackState(Skill skill) : base(skill)
+    public RainBulletAttackState(Skill skill, float damage) : base(skill)
     {
         rainBullet = skill as RainBullet;
+        this.damage = damage;
     }
 
     public override void EnterState()
     {
         elapsedTime = 0f;
         lastDamageTime = 0f;
+        
+        // 이펙트 시작
+        if (rainBullet.SkillEffect != null)
+        {
+            activeEffect = Object.Instantiate(rainBullet.SkillEffect, rainBullet.transform.position, Quaternion.identity);
+            activeEffect.Play();
+        }
+        
+        // 애니메이션 시작
+        if (rainBullet.SkillAnimator != null)
+        {
+            rainBullet.SkillAnimator.Play("SpinAttackADualSwords", 0, 0f);
+            isAnimationPlaying = true;
+        }
     }
 
     public override void UpdateState()
     {
         elapsedTime += Time.deltaTime;
 
-        // 일정 간격으로 데미지 처리
         if (Time.time - lastDamageTime >= damageTickInterval)
         {
             ApplyDamage();
             lastDamageTime = Time.time;
         }
 
-        // 지속시간이 끝나면 스킬 종료
+        // 애니메이션 상태 확인 및 재생
+        if (isAnimationPlaying && rainBullet.SkillAnimator != null)
+        {
+            AnimatorStateInfo stateInfo = rainBullet.SkillAnimator.GetCurrentAnimatorStateInfo(0);
+            
+            // 애니메이션이 끝나면 다시 재생
+            if (!stateInfo.IsName("SpinAttackADualSwords") || stateInfo.normalizedTime >= 1.0f)
+            {
+                rainBullet.SkillAnimator.Play("SpinAttackADualSwords", 0, 0f);
+            }
+        }
+
         if (elapsedTime >= rainBullet.duration)
         {
             Object.Destroy(rainBullet.gameObject);
@@ -41,26 +69,31 @@ public class RainBulletAttackState : SkillState
 
     public override void ExitState()
     {
-        
+        // 이펙트 정리
+        if (activeEffect != null)
+        {
+            activeEffect.Stop();
+            Object.Destroy(activeEffect.gameObject);
+        }
+
+        // 애니메이션 정리
+        if (rainBullet.SkillAnimator != null)
+        {
+            rainBullet.SkillAnimator.CrossFade("IdleUnarmed", 0.1f);  // Idle 애니메이션으로 부드럽게 전환
+            isAnimationPlaying = false;
+        }
     }
 
     private void ApplyDamage()
     {
-        // 범위 내의 모든 대상을 찾음
-        Collider[] hitColliders = Physics.OverlapSphere(
-            rainBullet.transform.position, 
-            rainBullet.Radius, 
-            rainBullet.TargetLayer
-        );
+        Collider[] hitColliders = Physics.OverlapSphere(rainBullet.transform.position, rainBullet.Radius, rainBullet.TargetLayer);
 
-        // 찾은 모든 대상에게 데미지를 줌
         foreach (var hitCollider in hitColliders)
         {
-            // // IHealth 인터페이스를 구현한 컴포넌트를 찾음
             DamageableObject damageableObject = hitCollider.GetComponent<DamageableObject>();
             if (damageableObject != null)
             {
-                damageableObject.TakeDamage(rainBullet.Damage);
+                damageableObject.TakeDamage(damage);
             }
         }
     }

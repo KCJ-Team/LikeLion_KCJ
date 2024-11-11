@@ -16,7 +16,8 @@ public class EncounterPopupData : IPopupData
     public int Choice1RewardFuel { get; private set; }
     public int Choice1RewardWorkforce { get; private set; }
     public FactionType Choice1Faction { get; private set; }
-
+    public float Choice1FactionSupport { get; private set; }
+    
     // Choice 2 필드
     public string Choice2Text { get; private set; }
     public string Choice2Result { get; private set; }
@@ -25,6 +26,7 @@ public class EncounterPopupData : IPopupData
     public int Choice2RewardFuel { get; private set; }
     public int Choice2RewardWorkforce { get; private set; }
     public FactionType Choice2Faction { get; private set; }
+    public float Choice2FactionSupport { get; private set; }
     
     // Icon
     public Sprite EncounterChoiceIcon { get; private set; }
@@ -47,6 +49,7 @@ public class EncounterPopupData : IPopupData
         Choice1RewardFuel = encounter.choice1RewardFuel;
         Choice1RewardWorkforce = encounter.choice1RewardWorkforce;
         Choice1Faction = encounter.choice1Faction;
+        Choice1FactionSupport = encounter.choice1FactionSupport;
 
         // Choice 2 관련 데이터 설정
         Choice2Text = encounter.choice2Text;
@@ -56,6 +59,7 @@ public class EncounterPopupData : IPopupData
         Choice2RewardFuel = encounter.choice2RewardFuel;
         Choice2RewardWorkforce = encounter.choice2RewardWorkforce;
         Choice2Faction = encounter.choice2Faction;
+        Choice2FactionSupport = encounter.choice2FactionSupport;
         
         // 아이콘 설정
         EncounterChoiceIcon = Resources.Load<Sprite>("Data/Encounter/Icon_Choice");

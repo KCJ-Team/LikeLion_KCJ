@@ -21,12 +21,13 @@ public class Faction
     public string description;
     public Sprite icon;
 
-    [Range(0f, 1f)] public float supportLevel; // 지지도 (0 ~ 1)
+    [Range(0f, 1f)] 
+    public float supportLevel; // 지지도 (0 ~ 1)
     
     // 팩션 지지도 변화 메서드
     public void ChangeSupport(float amount)
     {
-        supportLevel = Mathf.Clamp01(supportLevel + amount); // 0과 1 사이로 제한
+        this.supportLevel = Mathf.Clamp01(supportLevel + amount); // 0과 1 사이로 제한
         Debug.Log($"{name} ({type}) support changed by {amount}. Current support: {supportLevel}");
     }
 }

@@ -6,28 +6,20 @@ using UnityEngine;
 
 public class GameResourceManager : DD_Singleton<GameResourceManager>
 {
+    [Header("Resources")]
     public SerializedDictionary<ResourceType, GameResource> resources = new();
-    
-    // 각 자원의 UI 텍스트
-    public TextMeshProUGUI energyText;
-    public TextMeshProUGUI foodText;
-    public TextMeshProUGUI fuelText;
-    public TextMeshProUGUI workforceText;
-    public TextMeshProUGUI currencyText;
+
+    [Header("UI MVP 패턴")] 
+    [SerializeField]
+    private GameResourceUIView gameResourceUIView;
+    private GameResourceUIPresenter gameResourceUIPresneter;
     
     private void Start()
     {
-        UpdateResourceUI();
-    }
-
-    // UI 업데이트
-    private void UpdateResourceUI()
-    {
-        energyText.text = $"Energy: {GetResourceAmount(ResourceType.Energy)}";
-        foodText.text = $"Food: {GetResourceAmount(ResourceType.Food)}";
-        fuelText.text = $"Fuel: {GetResourceAmount(ResourceType.Fuel)}";
-        workforceText.text = $"Workforce: {GetResourceAmount(ResourceType.Workforce)}";
-        currencyText.text = $"Currency: {GetResourceAmount(ResourceType.Currency)}";
+        gameResourceUIPresneter = new GameResourceUIPresenter(gameResourceUIView);
+        
+        // 게임이 시작되면 리소스 업데이트 시작
+        gameResourceUIPresneter.UpdateResourceUI();
     }
     
     // 특정 리소스 타입의 현재 수량을 가져옴
@@ -55,7 +47,8 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
             }
 
             Debug.Log($"Added {amount} {resource.ResourceData.resourceName}. Current amount: {resource.CurrentAmount}");
-            UpdateResourceUI();
+            
+            gameResourceUIPresneter.UpdateResourceUI();
         }
     }
 
@@ -66,7 +59,7 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
         {
             resource.CurrentAmount -= amount;
             Debug.Log($"Consumed {amount} {resource.ResourceData.resourceName}. Remaining amount: {resource.CurrentAmount}");
-            UpdateResourceUI();
+            gameResourceUIPresneter.UpdateResourceUI();
             return true;
         }
 
@@ -96,6 +89,18 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
             Debug.LogWarning("Not enough resources to upgrade.");
             return false;
         }
+    }
+    
+    // ResourceData 반환
+    public ResourceData GetResourceData(ResourceType type)
+    {
+        if (resources.TryGetValue(type, out GameResource resource))
+        {
+            return resource.ResourceData;
+        }
+
+        Debug.LogWarning("Resource type not found: " + type);
+        return null;
     }
     
 } // end class

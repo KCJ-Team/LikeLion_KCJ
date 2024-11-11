@@ -38,9 +38,12 @@ public class CSVToScriptableObject
                 }
                 else if (fields[j].FieldType.IsEnum)
                 {
-                    // 열거형인 경우 문자열을 Enum으로 변환
-                    object enumValue = Enum.Parse(fields[j].FieldType, row[j]);
-                    fields[j].SetValue(scriptableObject, enumValue);
+                    // 열거형인 경우 문자열을 Enum으로 변환 (빈 문자열일 경우 변환 생략)
+                    if (!string.IsNullOrEmpty(row[j]))
+                    {
+                        object enumValue = Enum.Parse(fields[j].FieldType, row[j]);
+                        fields[j].SetValue(scriptableObject, enumValue);
+                    }
                 }
                 else
                 {

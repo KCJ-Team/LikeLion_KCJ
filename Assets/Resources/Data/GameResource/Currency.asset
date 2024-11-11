@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd32f97163ea4c94b885a84f15a193ee, type: 3}
   m_Name: Currency
   m_EditorClassIdentifier: 
-  resourceId: 4
+  resourceId: 5
   resourceName: "\uC7AC\uD654"
-  resourceType: 4
-  icon: {fileID: 0}
-  currentAmount: 999
+  resourceType: 6
+  icon: {fileID: 21300000, guid: dce5c8fcb45631c4185c4efdd517073f, type: 3}
+  currentAmount: 0
   maxAmount: 999

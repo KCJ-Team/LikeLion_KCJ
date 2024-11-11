@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd32f97163ea4c94b885a84f15a193ee, type: 3}
   m_Name: Workforce
   m_EditorClassIdentifier: 
-  resourceId: 3
+  resourceId: 2
   resourceName: "\uC77C\uAFBC"
   resourceType: 3
-  icon: {fileID: 0}
-  currentAmount: 999
+  icon: {fileID: 21300000, guid: 4e44b3e399eecb346a08610dd674b36e, type: 3}
+  currentAmount: 0
   maxAmount: 999

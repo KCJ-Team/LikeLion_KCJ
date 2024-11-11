@@ -140,6 +140,9 @@ public class EncounterUIPresenter
         {
             DeactivateSelectedEncounterButton();
         }
+        
+        // 팩션 지지도를 확인하고 UI에 변경해주기
+        FactionManager.Instance.ChangeFactionSupport(popupData.Choice1Faction, popupData.Choice1FactionSupport);
     }
     
     // 2번 선택지
@@ -193,6 +196,9 @@ public class EncounterUIPresenter
         {
             DeactivateSelectedEncounterButton();
         }
+        
+        // 팩션 지지도를 확인하고 UI에 변경해주기
+        FactionManager.Instance.ChangeFactionSupport(popupData.Choice2Faction, popupData.Choice2FactionSupport);
     }
     
     // 버튼과 아이콘 활성화/비활성화 메서드

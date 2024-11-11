@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GameTimeSetting
   m_EditorClassIdentifier: 
   startDay: 14
-  dayDuration: 180
+  dayDuration: 90
   xSpeed: 2

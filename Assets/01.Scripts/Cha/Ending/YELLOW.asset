@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e52be2b402c8d4295a6d4a46a8d4e8, type: 3}
+  m_Name: YELLOW
+  m_EditorClassIdentifier: 
+  endingId: 2
+  endingName: "\uC790\uC720\uC758 \uC0C8\uBCBD"
+  endingType: 4
+  endingText: "\uBAA8\uB4E0 \uC5B5\uC555\uC774 \uC0AC\uB77C\uC9C4 \uC138\uC0C1, \uAC01\uC790\uAC00
+    \uC790\uC720\uB86D\uAC8C \uAFC8\uAFB8\uBA70 \uB098\uC544\uAC08 \uC218 \uC788\uB294
+    \uC0C8\uB85C\uC6B4 \uC138\uACC4\uAC00 \uD3BC\uCCD0\uC84C\uC2B5\uB2C8\uB2E4."
+  endingImage: {fileID: -166343795, guid: 3b71ec362dfdfbb49b781ada067d03af, type: 3}

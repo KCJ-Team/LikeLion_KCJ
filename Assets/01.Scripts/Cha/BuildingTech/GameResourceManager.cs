@@ -91,6 +91,28 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
         }
     }
     
+    // Energy, Food, Fuel 소비하는 메소드
+    public bool ConsumeResources(int energyCost, int foodCost, int fuelCost)
+    {
+        bool canConsume =
+            GetResourceAmount(ResourceType.Energy) >= energyCost &&
+            GetResourceAmount(ResourceType.Food) >= foodCost &&
+            GetResourceAmount(ResourceType.Fuel) >= fuelCost;
+
+        if (canConsume) {
+            // 각 자원 소비
+            ConsumeResource(ResourceType.Energy, energyCost);
+            ConsumeResource(ResourceType.Food, foodCost);
+            ConsumeResource(ResourceType.Fuel, fuelCost);
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning("Not enough resources to upgrade.");
+            return false;
+        }
+    }
+    
     // ResourceData 반환
     public ResourceData GetResourceData(ResourceType type)
     {
@@ -103,4 +125,19 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
         return null;
     }
     
+    // Currency와 Research 자원을 제외하고 0인 자원이 있는지 검사하는 메서드
+    public bool FindZeroResource()
+    {
+        foreach (var resource in resources)
+        {
+            if (resource.Key != ResourceType.Currency && 
+                resource.Key != ResourceType.Research && 
+                resource.Value.CurrentAmount == 0)
+            {
+                Debug.Log($"Resource {resource.Value.ResourceData.resourceName} has zero amount.");
+                return true;
+            }
+        }
+        return false;
+    }
 } // end class

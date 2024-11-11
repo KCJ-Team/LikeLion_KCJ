@@ -1,5 +1,5 @@
 ﻿Weapon_Id,Name,Type,Damage,Attack_Speed,Magazines,Reload_Time,Range,Prefab_Path,Sound_Path,Image_Path
-1,권총,Pistol,30,3,15,2,50,Assets/Prefabs/Pistol.prefab,Assets/Sounds/PistolShot.wav,Assets/Images/Pistol.png
-2,자동소총,Assault,15,10,30,3,100,Assets/Prefabs/AssaultRifle.prefab,Assets/Sounds/AssaultRifle.wav,Assets/Images/AssaultRifle.png
-3,저격소총,Sniper,75,1.5,5,4,300,Assets/Prefabs/SniperRifle.prefab,Assets/Sounds/SniperShot.wav,Assets/Images/SniperRifle.png
-4,샷건,Shotgun,50,1,7,3.5,30,Assets/Prefabs/Shotgun.prefab,Assets/Sounds/ShotgunShot.wav,Assets/Images/Shotgun.png
+1,권총,Pistol,30,3,15,2,50,Assets/Prefabs/Pistol.prefab,Assets/Resources/Data/Weapon/PistolShot.wav,Assets/Resources/Data/Weapon/Pistol.png
+2,자동소총,Assault,15,10,30,3,100,Assets/Prefabs/AssaultRifle.prefab,Assets/Resources/Data/Weapon/RifleShot.wav,Assets/Resources/Data/Weapon/Rifle.png
+3,저격소총,Sniper,75,1.5,5,4,300,Assets/Prefabs/SniperRifle.prefab,Assets/Resources/Data/Weapon/SniperShot.wav,Assets/Resources/Data/Weapon/Sniper.png
+4,샷건,Shotgun,50,1,7,3.5,30,Assets/Prefabs/Shotgun.prefab,Assets/Resources/Data/Weapon/ShotgunShot.wav,Assets/Resources/Data/Weapon/Shotgun.png

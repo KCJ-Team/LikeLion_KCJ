@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,23 +13,27 @@ public class EndingManager : SceneSingleton<EndingManager>
     [SerializeField] private SerializedDictionary<EndingType, EndingData> endings; // 엔딩 데이터 리스트
     
     [Header("UIs")]
-    [SerializeField] public GameObject endingPanel; // 엔딩 패널
-    [SerializeField] public Text endingTextUI; // 엔딩 텍스트 UI
-    [SerializeField] public Image endingIconUI; // 엔딩 아이콘 UI
+    public GameObject panelEnding; // 엔딩 패널
+    public Text textEndingTitle; // 엔딩 타이틀
+    public TextMeshProUGUI textEndingTitleKr; // 엔딩 타이틀 한국어
+    public Text textEnding; // 엔딩 텍스트 UI
+    public Image iconEndingFaction; // 엔딩 Faction 아이콘 UI
+    public Text textLeftDay;
+    public Image imageEndingBackground; 
     
     private void Start()
     {
-        if (endingPanel != null)
+        if (panelEnding != null)
         {
-            endingPanel.SetActive(false); // 시작 시 엔딩 패널 숨기기
+            panelEnding.SetActive(false); // 시작 시 엔딩 패널 숨기기
         }
     }
     
-    public void ShowEnding(EndingType endingType)
+    public void ShowEnding(EndingType endingType, int daySurvived, Sprite factionIcon = null)
     {
         if (endings.TryGetValue(endingType, out EndingData ending))
         {
-            DisplayEnding(ending);
+            DisplayEnding(ending, daySurvived, factionIcon);
         }
         else
         {
@@ -36,14 +41,32 @@ public class EndingManager : SceneSingleton<EndingManager>
         }
     }
    
-    private void DisplayEnding(EndingData ending)
+    private void DisplayEnding(EndingData ending, int daySurvived, Sprite factionIcon = null)
     {
-        if (endingPanel != null)
+        if (panelEnding != null)
         {
-            endingPanel.SetActive(true); // 엔딩 패널 표시
-            endingTextUI.text = ending.endingText; // 엔딩 텍스트 설정
-            endingIconUI.sprite = ending.endingImage; // 엔딩 아이콘 설정
+            panelEnding.SetActive(true); // 엔딩 패널 표시
+            
+            textEndingTitle.text = ending.endingTitle;
+            textEndingTitleKr.text = ending.endingTitleKr; 
+            textEnding.text = ending.endingText; // 엔딩 텍스트 설정
+            imageEndingBackground.sprite = ending.endingImage; // 엔딩 백그라운드 이미지 설정
+            textLeftDay.text = $"당신은 {daySurvived}일 까지 버텼습니다.";
+
+            // 아이콘 설정 및 알파값 조절
+            if (factionIcon != null)
+            {
+                iconEndingFaction.sprite = factionIcon;
+                iconEndingFaction.color = new Color(iconEndingFaction.color.r, iconEndingFaction.color.g, iconEndingFaction.color.b, 1f); // 알파값 1
+            }
+            else
+            {
+                iconEndingFaction.sprite = null;
+                iconEndingFaction.color = new Color(iconEndingFaction.color.r, iconEndingFaction.color.g, iconEndingFaction.color.b, 0f); // 알파값 0
+            }
+            
+            // 게임 시간 멈춤
+            GameTimeManager.Instance.TogglePauseTime();
         }
     }
-    
 } // end class

@@ -91,25 +91,44 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
         }
     }
     
-    // Energy, Food, Fuel 소비하는 메소드
-    public bool ConsumeResources(int energyCost, int foodCost, int fuelCost)
+    // // Energy, Food, Fuel 소비하는 메소드. 각각 다르게 소비함
+    // public void  ConsumeResources(int energyCost, int foodCost, int fuelCost)
+    // {
+    //     // 각 자원의 양이 충분할 때만 감소
+    //     if (GetResourceAmount(ResourceType.Energy) >= energyCost)
+    //         ConsumeResource(ResourceType.Energy, energyCost);
+    //     else
+    //         Debug.LogWarning("Not enough Energy to consume.");
+    //
+    //     if (GetResourceAmount(ResourceType.Food) >= foodCost)
+    //         ConsumeResource(ResourceType.Food, foodCost);
+    //     else
+    //         Debug.LogWarning("Not enough Food to consume.");
+    //
+    //     if (GetResourceAmount(ResourceType.Fuel) >= fuelCost)
+    //         ConsumeResource(ResourceType.Fuel, fuelCost);
+    //     else
+    //         Debug.LogWarning("Not enough Fuel to consume.");
+    // }
+    
+    // 특정 자원 타입과 비용을 받아 소비하는 메소드
+    public void ConsumeResourceWithCheck(ResourceType type, int cost)
     {
-        bool canConsume =
-            GetResourceAmount(ResourceType.Energy) >= energyCost &&
-            GetResourceAmount(ResourceType.Food) >= foodCost &&
-            GetResourceAmount(ResourceType.Fuel) >= fuelCost;
+        int currentAmount = GetResourceAmount(type);
 
-        if (canConsume) {
-            // 각 자원 소비
-            ConsumeResource(ResourceType.Energy, energyCost);
-            ConsumeResource(ResourceType.Food, foodCost);
-            ConsumeResource(ResourceType.Fuel, fuelCost);
-            return true;
+        if (currentAmount >= cost)
+        {
+            ConsumeResource(type, cost);
+        }
+        else if (currentAmount > 0)
+        {
+            // 자원이 cost보다 적지만 0이 아닐 때 남은 자원을 모두 소비
+            ConsumeResource(type, currentAmount);
+            Debug.LogWarning($"Not enough {type}. Consuming all available {type}.");
         }
         else
         {
-            Debug.LogWarning("Not enough resources to upgrade.");
-            return false;
+            Debug.LogWarning($"No {type} left to consume.");
         }
     }
     

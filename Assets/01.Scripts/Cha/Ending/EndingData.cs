@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public enum EndingType
@@ -12,8 +13,9 @@ public enum EndingType
 public class EndingData : ScriptableObject
 {
     public int endingId;
-    public string endingName; // 엔딩 이름 (예: Red Faction Ending, Bad Ending)
+    public string endingTitle; // 엔딩 이름
+    public string endingTitleKr;
     public EndingType endingType; // 엔딩타입
     public string endingText; // 엔딩 텍스트
-    public Sprite endingImage; // 엔딩 아이콘, 이미지
+    public Sprite endingImage; // 엔딩 백그라운드 이미지
 }

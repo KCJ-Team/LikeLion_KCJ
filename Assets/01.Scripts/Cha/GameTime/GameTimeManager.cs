@@ -12,7 +12,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
     public bool isPaused = false; // 시간 정지 여부
     public bool enableXSpeed = false; // 배속 가능성
 
-    private int currentDay; // 현재 일수
+    public int currentDay; // 현재 일수
     private float dayTimer = 0f;
 
     private int hour;
@@ -35,6 +35,8 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
     
     // 자원 상태가 경고인지 확인하는 변수
     private bool resourceWarningTriggered = false; 
+    
+    private bool hasCheckedAtMidnight = false;
     
     private void Start()
     {
@@ -63,7 +65,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
             minute = 0;
 
             UpdateTimeUI();
-            textDday.text = $"D-{currentDay}";
+            UpdateDayUI();
 
             float encounterInterval = gameTimeSetting.dayDuration / 2f;
             float nextEncounterTime = encounterInterval;
@@ -94,10 +96,17 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     }
                     
                     // 자정에 플래그 초기화 (다음 날을 위해)
-                    if (hour == 0 && minute == 0)
+                    if (hour == 0 && minute == 0 && !hasCheckedAtMidnight)
                     {
                         hasConsumedAt21 = false; // 자정에 플래그 초기화
                         CheckResourceWarning();
+                        hasCheckedAtMidnight = true; // 자정 검사를 완료 표시
+                    }
+                    
+                    // 자정이 지난 후 플래그 초기화
+                    if (hour == 1 && minute == 0)
+                    {
+                        hasCheckedAtMidnight = false;
                     }
 
                     if (dayTimer >= nextEncounterTime)
@@ -112,11 +121,20 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
 
             currentDay--;
 
-            textDday.text = $"D-{currentDay}";
+            UpdateDayUI();
 
-            if (currentDay < 0)
+            // TODO : currentday가 3때부터 d-day 색을 빨갛게 하거나 해야함
+            
+            if (currentDay == 0)
             {
-                GameEndFaction();
+                // Day 0에서 리소스를 검사하고 엔딩 결정
+                CheckResourceWarning();
+
+                if (!resourceWarningTriggered)  // 자원이 충분하다면 팩션 엔딩으로
+                {
+                    GameEndFaction();
+                }
+                
                 yield break;
             }
         }
@@ -130,6 +148,12 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         textTimer.text = $"{hour:D2}:{minute:D2}";
     }
     
+    // D-day 텍스트 변경
+    public void UpdateDayUI()
+    {
+        textDday.text = $"D-{currentDay}";
+    }
+    
     // 시간 정지 토글 버튼
     public void TogglePauseTime()
     {
@@ -141,7 +165,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         // 모든 빌딩의 생산을 멈추거나 다시 시작
         // BuildingManager.Instance.UpdateAllProductions(isPaused);
     }
-
+    
     // 2배속 토글 버튼
     public void ToggleDoubleTimeSpeed()
     {
@@ -177,46 +201,56 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         }
 
         // 자원 소비 적용
-        GameResourceManager.Instance.ConsumeResources(amount, amount, amount);
-
+        // GameResourceManager.Instance.ConsumeResources(amount, amount, amount);
+        GameResourceManager.Instance.ConsumeResourceWithCheck(ResourceType.Energy, amount);
+        GameResourceManager.Instance.ConsumeResourceWithCheck(ResourceType.Food, amount);
+        GameResourceManager.Instance.ConsumeResourceWithCheck(ResourceType.Fuel, amount);
+        
         // 디버깅 정보 출력
         Debug.Log("Resources consumed at 9AM.");
         Debug.Log($"Resources consumed: {amount} for each resource type on Day {currentDay}.");
     }
     
-    // 0시마다 실행하는 자원 검사 함수
+    // 0시마다 실행하는 자원 검사 함수. 폭동 엔딩 가능
     private void CheckResourceWarning()
     {
         bool hasZeroResource = GameResourceManager.Instance.FindZeroResource();
 
         if (hasZeroResource)
         {
-            if (resourceWarningTriggered)
+            // 처음 자원이 0이 되었을 때 경고 활성화 (panelWarning을 표시하고 다음날에만 폭동 엔딩 발동 조건 설정)
+            if (!resourceWarningTriggered && !panelWarning.activeSelf)
             {
-                Debug.Log("Resource is still zero. Triggering bad ending.");
+                Debug.Log("Warning: Resource at zero for the first time. Displaying warning message.");
                 
-                // TODO : 확인하기
-                EndingManager.Instance.ShowEnding(EndingType.RIOT); // 예시로 폭동 엔딩을 트리거
+                resourceWarningTriggered = true; // 처음 경고 상태로 설정
+                panelWarning.SetActive(true);    // 경고 패널 표시
             }
-            else
+            // 경고가 활성화된 상태에서 자원이 여전히 0일 경우 폭동 엔딩 발동
+            else if (resourceWarningTriggered && panelWarning.activeSelf)
             {
-                Debug.Log("Warning: Resource at zero. Displaying warning message.");
-                resourceWarningTriggered = true;
-                
-                // 경고 UI를 표시하거나 로직 추가
-                panelWarning.SetActive(true);
-                
+                Debug.Log("Resource is still zero after one day. Triggering Riot Ending.");
+
+                // 생존일 수 계산
+                int daySurvived = gameTimeSetting.startDay - currentDay;
+            
+                // 폭동 엔딩 호출
+                EndingManager.Instance.ShowEnding(EndingType.RIOT, daySurvived); 
+            
+                // 엔딩 이후 경고 초기화
+                resourceWarningTriggered = false;
+                panelWarning.SetActive(false);
             }
         }
         else
         {
-            resourceWarningTriggered = false; // 자원이 충분하면 경고 상태 초기화
+            // 자원이 충분해지면 경고 초기화
+            resourceWarningTriggered = false;
             panelWarning.SetActive(false);
         }
     }
     
     // Day 0이 될때 팩션 엔딩
-    // TODO : 확인하기
     private void GameEndFaction()
     {
         Debug.Log("D-Day reached! Game cycle complete!");
@@ -246,8 +280,11 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     break;
             }
             
+            // 생존일 수 계산
+            int daySurvived = gameTimeSetting.startDay - currentDay;
+            
             // 엔딩 타입에 따라 EndingManager를 통해 엔딩을 출력
-            EndingManager.Instance.ShowEnding(endingType);
+            EndingManager.Instance.ShowEnding(endingType, daySurvived, leadingFaction.icon);
         }
         else
         {

@@ -68,7 +68,7 @@ public class EquipmentManager : MonoBehaviour
             
             if (itemObject is SkillCardObject skillCard)
             {
-                playerData.EquipQSkill(skillCard);
+                playerData.EquipESkill(skillCard);
             }
         }
         

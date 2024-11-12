@@ -6,6 +6,8 @@ public class Health : MonoBehaviour
     [SerializeField] protected float maxHealth;     
     [SerializeField] private float currentHealth;
 
+    public bool IsDead;
+
     // 읽기 전용 프로퍼티
     public float MaxHealth => maxHealth;
     public float CurrentHealth => currentHealth;
@@ -43,7 +45,12 @@ public class Health : MonoBehaviour
         // 체력이 0 이하가 되면 사망 이벤트 발생
         if (currentHealth <= 0)
         {
+            IsDead = true;
             OnHealthDepleted?.Invoke();
+        }
+        else
+        {
+            IsDead = false;
         }
     }
 

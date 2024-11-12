@@ -91,6 +91,47 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
         }
     }
     
+    // // Energy, Food, Fuel 소비하는 메소드. 각각 다르게 소비함
+    // public void  ConsumeResources(int energyCost, int foodCost, int fuelCost)
+    // {
+    //     // 각 자원의 양이 충분할 때만 감소
+    //     if (GetResourceAmount(ResourceType.Energy) >= energyCost)
+    //         ConsumeResource(ResourceType.Energy, energyCost);
+    //     else
+    //         Debug.LogWarning("Not enough Energy to consume.");
+    //
+    //     if (GetResourceAmount(ResourceType.Food) >= foodCost)
+    //         ConsumeResource(ResourceType.Food, foodCost);
+    //     else
+    //         Debug.LogWarning("Not enough Food to consume.");
+    //
+    //     if (GetResourceAmount(ResourceType.Fuel) >= fuelCost)
+    //         ConsumeResource(ResourceType.Fuel, fuelCost);
+    //     else
+    //         Debug.LogWarning("Not enough Fuel to consume.");
+    // }
+    
+    // 특정 자원 타입과 비용을 받아 소비하는 메소드
+    public void ConsumeResourceWithCheck(ResourceType type, int cost)
+    {
+        int currentAmount = GetResourceAmount(type);
+
+        if (currentAmount >= cost)
+        {
+            ConsumeResource(type, cost);
+        }
+        else if (currentAmount > 0)
+        {
+            // 자원이 cost보다 적지만 0이 아닐 때 남은 자원을 모두 소비
+            ConsumeResource(type, currentAmount);
+            Debug.LogWarning($"Not enough {type}. Consuming all available {type}.");
+        }
+        else
+        {
+            Debug.LogWarning($"No {type} left to consume.");
+        }
+    }
+    
     // ResourceData 반환
     public ResourceData GetResourceData(ResourceType type)
     {
@@ -103,4 +144,19 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
         return null;
     }
     
+    // Currency와 Research 자원을 제외하고 0인 자원이 있는지 검사하는 메서드
+    public bool FindZeroResource()
+    {
+        foreach (var resource in resources)
+        {
+            if (resource.Key != ResourceType.Currency && 
+                resource.Key != ResourceType.Research && 
+                resource.Value.CurrentAmount == 0)
+            {
+                Debug.Log($"Resource {resource.Value.ResourceData.resourceName} has zero amount.");
+                return true;
+            }
+        }
+        return false;
+    }
 } // end class

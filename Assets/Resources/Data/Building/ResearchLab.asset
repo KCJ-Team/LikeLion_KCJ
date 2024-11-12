@@ -15,13 +15,13 @@ MonoBehaviour:
   buildingId: 5
   name: "\uC5F0\uAD6C\uC2E4"
   type: 4
-  baseCostEnergy: 40
-  baseCostFood: 20
-  baseCostFuel: 10
-  baseCostWorkforce: 10
+  baseCostEnergy: 30
+  baseCostFood: 30
+  baseCostFuel: 30
+  baseCostWorkforce: 30
   upgradeMultiplier: 2
   maxLevel: 0
-  productionOutput: 20
+  productionOutput: 5
   description: "\uC5F0\uAD6C\uB97C \uD1B5\uD574 \uAE30\uC220\uC744 \uC5C5\uADF8\uB808\uC774\uB4DC"
   level1ImagePath: 
   level2ImagePath: 

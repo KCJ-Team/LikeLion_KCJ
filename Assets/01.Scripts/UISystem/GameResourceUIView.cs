@@ -8,12 +8,15 @@ using TMPro;
 public class GameResourceUIView : MonoBehaviour
 {
     // 각 자원의 UI 텍스트
+    [Header("각 자원의 UI 텍스트")]
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI foodText;
     public TextMeshProUGUI workforceText;
     public TextMeshProUGUI fuelText;
     public TextMeshProUGUI researchText;
     public TextMeshProUGUI currencyText;
+    
+    //[Header("자원이 0일경우 Warning Text, 자원이 0일때 1day가 지나면 GameOver")]
     
     // UpdateResourceUI 메서드를 통해 자원 정보를 받아 UI를 업데이트
     public void UpdateResourceUI(int energy, int food, int workforce,  int fuel, int research, int currency)

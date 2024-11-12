@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e52be2b402c8d4295a6d4a46a8d4e8, type: 3}
+  m_Name: Illness
+  m_EditorClassIdentifier: 
+  endingId: 6
+  endingTitle: Terminal Illness
+  endingTitleKr: "\uCE58\uBA85\uC801 \uC9C8\uBCD1"
+  endingType: 7
+  endingText: "\uC9C8\uBCD1\uC774 \uB2F9\uC2E0\uC758 \uBAB8\uC744 \uC7A0\uC2DD\uD574
+    \uAC14\uC2B5\uB2C8\uB2E4. \uBAA8\uB4E0 \uB178\uB825\uC5D0\uB3C4 \uBD88\uAD6C\uD558\uACE0
+    \uBCD1\uC138\uB294 \uC545\uD654\uB418\uC5C8\uACE0, \uC774\uC81C \uD68C\uBCF5\uC758
+    \uAE38\uC740 \uBCF4\uC774\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+  endingImage: {fileID: 21300000, guid: 25c6f8265313c294ead4e19d4e793aa1, type: 3}

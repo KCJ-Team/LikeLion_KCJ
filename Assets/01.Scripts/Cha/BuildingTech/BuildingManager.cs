@@ -9,17 +9,19 @@ using UnityEngine;
 public class BuildingManager : SceneSingleton<BuildingManager>
 {
     [Header("Buildings")] 
-    [SerializeField] 
-    private SerializedDictionary<BuildingType, BaseBuilding> buildings = new();
+    [SerializeField] private SerializedDictionary<BuildingType, BaseBuilding> buildings = new();
 
     [Header("UI MVP 패턴")] 
-    [SerializeField] 
-    private BuildingUIView buildingUIView;
+    [SerializeField] private BuildingUIView buildingUIView;
     private BuildingUIPresenter buildingUIPresenter;
 
-    [Header("빌딩의 자원 생산 코루틴 관리")]
+    [Header("빌딩의 자원 생산 코루틴 관리")] 
     private Dictionary<BaseBuilding, Coroutine> productionCoroutines = new();
 
+    // 자원 생산 플래그
+    private bool hasProducedAt6AM = false;
+    private bool hasProducedAt6PM = false;
+    
     private void Start()
     {
         buildingUIPresenter = new BuildingUIPresenter(buildingUIView);
@@ -39,22 +41,73 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             StartProducing(buildingPrefab);
         }
     }
+    
+    // 특정 시간에 자원을 생산하도록 관리
+    public void ProduceResourcesAtScheduledTimes(int hour)
+    {
+        if (hour == 6 && !hasProducedAt6AM)
+        {
+            ProduceAllResources();
+            hasProducedAt6AM = true;
+            hasProducedAt6PM = false; // 오후 생산 플래그 초기화
+        }
+        else if (hour == 18 && !hasProducedAt6PM)
+        {
+            ProduceAllResources();
+            hasProducedAt6PM = true;
+            hasProducedAt6AM = false; // 다음 날 오전 생산 플래그 초기화
+        }
+    }
+
+    // 모든 빌딩의 자원을 생산하는 메서드
+    private void ProduceAllResources()
+    {
+        foreach (var building in buildings.Values)
+        {
+            if (building.IsCreated)
+            {
+                int productionAmount = building.GetCurrentProductOutput();
+                GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
+                Debug.Log($"{building.GetBuildingData().name} produced {productionAmount} resources.");
+            }
+        }
+    }
 
     // 개별 코루틴 시작
     private void StartProducing(BaseBuilding buildingPrefab)
     {
+        if (!buildingPrefab.IsCreated)
+            return;
+
         // 딕셔너리에서 이미 실행중인 코루틴을 검사하고 있다면 새로 시작하지 않음
         if (productionCoroutines.ContainsKey(buildingPrefab))
         {
             Debug.LogWarning($"{buildingPrefab.GetBuildingData().name}의 생산 코루틴이 이미 실행 중입니다.");
             return;
         }
-        
+
         // 빌딩의 자원 생산 코루틴을 시작
-        Coroutine coroutine = StartCoroutine(ProduceResources(buildingPrefab));
+        Coroutine coroutine = StartCoroutine(ScheduleProduction(buildingPrefab));
         productionCoroutines[buildingPrefab] = coroutine;
     }
-    
+
+    private IEnumerator ScheduleProduction(BaseBuilding building)
+    {
+        while (true)
+        {
+            if (!GameTimeManager.Instance.isPaused)
+            {
+                yield return new WaitUntil(() => GameTimeManager.Instance.IsScheduledProductionTime());
+
+                int productionAmount = building.GetCurrentProductOutput();
+                GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
+                Debug.Log($"{building.GetBuildingData().name} produced {productionAmount} resources.");
+            }
+
+            yield return null;
+        }
+    }
+
     // 개별 코루틴 종료
     public void StopProducing(BaseBuilding building)
     {
@@ -67,6 +120,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
         }
     }
 
+    // 사용안함.
     private IEnumerator ProduceResources(BaseBuilding building)
     {
         float baseProductionInterval = 2f; // 기본 생산 주기
@@ -75,27 +129,30 @@ public class BuildingManager : SceneSingleton<BuildingManager>
         while (true)
         {
             // 배속을 적용한 생산 주기를 계산
-            float productionInterval = baseProductionInterval / (GameTimeManager.Instance.enableXSpeed ? GameTimeManager.Instance.gameTimeSetting.xSpeed : 1f);
-        
+            float productionInterval = baseProductionInterval / (GameTimeManager.Instance.enableXSpeed
+                ? GameTimeManager.Instance.gameTimeSetting.xSpeed
+                : 1f);
+
             // 일시정지 상태일 때는 생산을 중지하고 대기
             if (!GameTimeManager.Instance.isPaused)
             {
                 elapsedTime += Time.deltaTime;
-            
+
                 // 설정된 생산 주기 경과 시 자원 생산
                 if (elapsedTime >= productionInterval)
                 {
                     elapsedTime = 0f;
-                
+
                     // 자원 생산 및 UI 업데이트
                     int productionAmount = building.GetCurrentProductOutput();
                     GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
                 }
             }
-        
+
             yield return null; // 매 프레임마다 대기하면서 업데이트 체크
         }
     }
+
     // 모든 자원 생산 코루틴을 정지하거나 재개
     public void UpdateAllProductions(bool isPaused)
     {
@@ -106,6 +163,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             {
                 StopProducing(building);
             }
+
             Debug.Log("All building productions paused.");
         }
         // 코루틴 재개라면
@@ -115,10 +173,11 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             {
                 StartProducing(building);
             }
+
             Debug.Log("All building productions resumed.");
         }
     }
-    
+
     // 배속 변경을 적용하는 메서드
     public void UpdateProductionSpeed(bool enableXspeed)
     {
@@ -128,6 +187,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             StopProducing(building);
             StartProducing(building);
         }
+
         Debug.Log("All building production speeds updated to current game speed.");
     }
 
@@ -136,7 +196,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
     {
         buildingUIPresenter.UpdateEnergyProductUIAndImage(type, imagePath, productionOutput);
     }
-    
+
     // 빌딩 업그레이드에 필요한 자원을 확인하는 메서드
     public bool CanUpgradeBuilding(BaseBuilding building)
     {
@@ -154,5 +214,19 @@ public class BuildingManager : SceneSingleton<BuildingManager>
                GameResourceManager.Instance.GetResourceAmount(ResourceType.Food) >= foodCost &&
                GameResourceManager.Instance.GetResourceAmount(ResourceType.Fuel) >= fuelCost &&
                GameResourceManager.Instance.GetResourceAmount(ResourceType.Workforce) >= workforceCost;
+    }
+    
+    // 특정 BuildingType에 해당하는 빌딩을 반환하는 메서드
+    public BaseBuilding GetBuilding(BuildingType buildingType)
+    {
+        if (buildings.TryGetValue(buildingType, out BaseBuilding building))
+        {
+            return building;
+        }
+        else
+        {
+            Debug.LogWarning($"Building of type {buildingType} not found.");
+            return null;
+        }
     }
 } // end class

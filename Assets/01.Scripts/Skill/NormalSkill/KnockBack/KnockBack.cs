@@ -3,10 +3,8 @@ using UnityEngine;
 public class KnockBack : Skill
 {
     [SerializeField] private GameObject knockbackProjectilePrefab;
-    //[SerializeField] private float projectileSpeed = 20f;
-    //[SerializeField] private float knockbackForce = 10f;
-    
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private float projectileLifetime = 5f;
+    private Transform firePoint;
     
     private void Start()
     {
@@ -15,40 +13,32 @@ public class KnockBack : Skill
     
     public void FireProjectile()
     {
-        if (CanUseSkill())
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Vector3 targetPosition;
+            
+        if (Physics.Raycast(ray, out hit))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            Vector3 targetPosition;
-            
-            if (Physics.Raycast(ray, out hit))
-            {
-                targetPosition = hit.point;
-            }
-            else
-            {
-                targetPosition = ray.GetPoint(100f);
-            }
-            
-            Vector3 firePosition = firePoint != null ? firePoint.position : transform.position;
-            Vector3 direction = (new Vector3(targetPosition.x, firePosition.y, targetPosition.z) - firePosition).normalized;
-            
-            GameObject projectileObj = Instantiate(knockbackProjectilePrefab, firePosition, Quaternion.LookRotation(direction));
-            
-            KnockbackProjectile projectile = projectileObj.GetComponent<KnockbackProjectile>();
-            
-            if (projectile != null)
-            {
-                projectile.Initialize(direction, damage);
-            }
-            
-            currentCooldown = cooldown;
+            targetPosition = new Vector3(hit.point.x, firePoint.position.y, hit.point.z);
         }
-    }
-    
-    public bool CanUseSkill()
-    {
-        return currentCooldown <= 0;
+        else
+        {
+            targetPosition = ray.GetPoint(1000f);
+            targetPosition.y = firePoint.position.y;
+        }
+            
+        Vector3 direction = (targetPosition - firePoint.position).normalized;
+            
+        GameObject projectileObj = Instantiate(knockbackProjectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
+            
+        KnockbackProjectile projectile = projectileObj.GetComponent<KnockbackProjectile>();
+            
+        if (projectile != null)
+        {
+            projectile.Initialize(direction, damage);
+        }
+            
+        Destroy(projectile, projectileLifetime);
     }
     
     public override SkillState GetInitialState()

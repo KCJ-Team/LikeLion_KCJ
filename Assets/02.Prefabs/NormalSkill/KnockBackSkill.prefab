@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  cooldown: 0
+  cooldown: 1
   knockbackProjectilePrefab: {fileID: 5938167112633497377, guid: bc29bffba2b451e499882f10a7e6adfc,
     type: 3}
-  firePoint: {fileID: 0}
+  projectileLifetime: 5

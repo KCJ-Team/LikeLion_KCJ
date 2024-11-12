@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   cooldown: 0
-  TurretPrefab: {fileID: 282066603285489581, guid: 68369f8f080cdaa429f382f330f34a34,
+  TurretPrefab: {fileID: 4039893779193312769, guid: 54f06018a9255d24598e2755587140a5,
     type: 3}

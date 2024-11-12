@@ -12,13 +12,16 @@ public class PlayerDamageable : DamageableObject
 
     private void OnTriggerEnter(Collider other)
     {
-        // Projectile 레이어의 오브젝트와 충돌했을 때
         if (other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
         {
-            // Projectile.cs에서 설정한 damage 값을 가져와 TakeDamage 메소드에 전달
             Projectile projectile = other.gameObject.GetComponent<Projectile>();
             projectileDamage = projectile.damage;
             TakeDamage(projectileDamage);
+        }
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            TakeDamage(10);
         }
     }
 

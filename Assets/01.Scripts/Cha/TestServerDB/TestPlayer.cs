@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 테스트용 클라이언트 플레이어데이터
-/// </summary>
+
+// 테스트용 클라이언트 플레이어데이터
 [Serializable]
 public class TestPlayer
 {
@@ -19,6 +18,7 @@ public class TestPlayer
 
     public TestPlayer()
     {
+        
     }
 
     public TestPlayer(string playerId, float x, float y, float z, float speed, int health)

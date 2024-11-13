@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/00.Scenes/Lobby.unity
     guid: ffae5535be8b3ce40b5dca6ee07df94b
   - enabled: 1
-    path: Assets/00.Scenes/Dungeon_01.unity
+    path: Assets/00.Scenes/Map_Elimination.unity
     guid: 70facf48a1308234ca80a825b3f845a3
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

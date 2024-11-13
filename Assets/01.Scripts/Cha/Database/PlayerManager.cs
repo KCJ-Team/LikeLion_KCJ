@@ -47,16 +47,16 @@ public class PlayerManager : SceneSingleton<PlayerManager>
         // }
         
         // 테스트를 위해 매번 로그인마다 새로운 ID를 디비에 저장한다.
-        player = playerService.CreatePlayer();
-        if (player == null)
-        {
-            Debug.LogError("Failed to create new player.");
-            return;
-        }
-        Debug.Log($"Create New Player in Build: {player.playerId}");
-        
-        // 이제 플레이어가 생겼으면 id를 가지고 세션 연결
-        playerNetworkHandler.SendPlayerId(player.playerId, MessageType.SessionLogin); // playerId 전송
+    //     player = playerService.CreatePlayer();
+    //     if (player == null)
+    //     {
+    //         Debug.LogError("Failed to create new player.");
+    //         return;
+    //     }
+    //     Debug.Log($"Create New Player in Build: {player.playerId}");
+    //     
+    //     // 이제 플레이어가 생겼으면 id를 가지고 세션 연결
+    //     playerNetworkHandler.SendPlayerId(player.playerId, MessageType.SessionLogin); // playerId 전송
     }
 
     public void Logout()

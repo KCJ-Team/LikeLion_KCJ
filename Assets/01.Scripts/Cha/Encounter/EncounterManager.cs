@@ -8,8 +8,23 @@ using Random = UnityEngine.Random;
 
 public class EncounterManager : SceneSingleton<EncounterManager>
 {
-    [SerializeField] private EncounterData encounterData;
-    [SerializeField] private List<Encounter> unresolvedEncounters;
+    [SerializeField] 
+    private EncounterData encounterData;
+
+    public EncounterData EncounterData
+    {
+        get => encounterData;
+        set => encounterData = value;
+    }
+
+    [SerializeField] // 게임중 사용할 인카운터
+     List<Encounter> unresolvedEncounters;
+
+    public List<Encounter> UnresolvedEncounters
+    {
+        get => unresolvedEncounters;
+        set => unresolvedEncounters = value;
+    }
 
     [Header("UI MVP 패턴")] 
     [SerializeField] 
@@ -52,8 +67,8 @@ public class EncounterManager : SceneSingleton<EncounterManager>
         int randomIndex = Random.Range(0, unresolvedEncounters.Count);
         currentEncounter = unresolvedEncounters[randomIndex];
         
-        // 선택된 인카운터를 리스트에서 제거
-        unresolvedEncounters.RemoveAt(randomIndex);
+        // // 선택된 인카운터를 리스트에서 제거
+        // unresolvedEncounters.RemoveAt(randomIndex);
         
         // Presenter를 통해 UI 업데이트
         encounterUIPresenter.OpenEncounterPopup(currentEncounter);

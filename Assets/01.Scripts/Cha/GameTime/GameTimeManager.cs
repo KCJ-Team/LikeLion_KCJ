@@ -49,8 +49,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         // 버튼 이벤트 등록
         btnStopNStart.onClick.AddListener(TogglePauseTime);
         btnSpeed.onClick.AddListener(ToggleDoubleTimeSpeed);
-
-        currentDay = gameTimeSetting.startDay; // 시작일 설정
+        
         StartCoroutine(DayCycle());
     }
     

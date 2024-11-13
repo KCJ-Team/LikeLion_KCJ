@@ -20,6 +20,7 @@ public class ResourceData : ScriptableObject
     public string resourceName;
     public ResourceType resourceType;
     public Sprite icon;
+    public int initAmount; // 초기양
     public int currentAmount;
     public int maxAmount; 
 }

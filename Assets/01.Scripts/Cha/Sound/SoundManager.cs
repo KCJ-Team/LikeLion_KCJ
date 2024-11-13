@@ -38,8 +38,25 @@ public enum MonsterSoundType
 }
 
 
-public class SoundManager : SceneSingleton<SoundManager>
+public class SoundManager : MonoBehaviour
 {
+    // 전역 싱글톤 인스턴스
+    private static SoundManager _instance;
+    public static SoundManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                // 인스턴스가 없으면 GameObject 생성 후 컴포넌트 추가
+                GameObject singletonObj = new GameObject(nameof(SoundManager));
+                _instance = singletonObj.AddComponent<SoundManager>();
+                DontDestroyOnLoad(singletonObj);
+            }
+            return _instance;
+        }
+    }
+    
     [Header("Mixer와 오디오 소스들")]
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private AudioSource bgmSource; // BGM만 관리
@@ -54,6 +71,20 @@ public class SoundManager : SceneSingleton<SoundManager>
     public SerializedDictionary<PlayerSoundType, AudioClip> playerClips = new();
     public SerializedDictionary<UISoundType, AudioClip> uiClips = new();
     public SerializedDictionary<MonsterSoundType, AudioClip> monsterClips = new();
+    
+    private void Awake()
+    {
+        // 싱글톤 인스턴스가 중복으로 생성되지 않도록 보장
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
     
     // BGM 재생 메소드
     public void PlayBGM(BGMSoundType bgmType)

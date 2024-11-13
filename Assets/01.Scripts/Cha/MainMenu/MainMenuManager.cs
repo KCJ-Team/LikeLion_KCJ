@@ -1,13 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
+using PlayerInfo;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
 /// MainMenu에서 사용하는 매니저
 /// </summary>
-public class MainMenuMaanger : MonoBehaviour
+public class MainMenuMaanger : SceneSingleton<MainMenuMaanger>
 {
+    [Header("MainMenu 씬에서 사용할 스크립터블 오브젝트 데이터들")]
+    public SerializedDictionary<ResourceType, ResourceData> resourceDatas;
+    public EncounterData encounterData;
+    public GameTimeSetting gameTimeData;
+    
     [Header("UI Panels")]
     [SerializeField] private GameObject mainTitlePanel;       // 메인 패널
     [SerializeField] private GameObject settingsPanel;       // 설정 패널
@@ -96,14 +103,37 @@ public class MainMenuMaanger : MonoBehaviour
     
     private void StartNewGame()
     {
-        // TODO : 게임 생성, 로딩씬으로 넘어가기
+        // 플레이어 타입 설정: Toggle 선택 여부에 따라 설정
+        PlayerModelType selectedType = toggleMaleChar.isOn ? PlayerModelType.Male : PlayerModelType.Female;
         
+        // PlayerService를 통해 DB에 접근해 플레이어 타입 저장
+        PlayerService playerService = new PlayerService();
         
+        if (playerService.CreatePlayer(selectedType))
+        {
+            // TODO : 시작 자원 정보들,
+            // 랜덤 인카운터 정보, 인벤토리 정보를 맨 처음 게임시작시에
+            // DB에 저장해서 초기화시킨다. 이때 id만 넘겨줘서 DB에는 id만 저장
+            // 유니티에서 로딩할떄 id를 다시 가져와서 SO에서 찾아서 데이터 적재
+
+            EncounterService encouterService = new EncounterService();
+
+            if (encouterService.CreateEncounters())
+            {
+                // TODO : 인벤토리 데이터에 권총 기본 무기 저장하기..
+                
+                // Lobby 씬으로 넘거가기
+                GameSceneDataManager.Instance.LoadScene("Lobby");
+            }
+        }
     }
 
     // TODO : DB에서 정보 가져와서 Continue 하기, 로딩씬으로 넘어가기
     private void ContinueGame()
     {
+        // ContinueGame에서는 DB에 저장되어있던 정보들을 불러와야함. 
+        
+        
         // // 게임 상태를 불러와서, 예를 들어 최근 저장된 씬으로 이동
         // if (GameDataManager.Instance.HasSavedGame())
         // {

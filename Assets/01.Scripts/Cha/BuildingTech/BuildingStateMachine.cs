@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public interface IBuildingState
 {
     void Build(BuildingStateMachine stateMachine, BaseBuilding buildingPrefab);
+    void Init(BaseBuilding buildingPrefab);
 }
 
 // 레벨 0은 아무것도 X, 비활성화, Build를 누르면 그림만 활성화하고 생산 시작
@@ -32,7 +33,7 @@ public class Level0State : IBuildingState
             BuildingManager.Instance.UpdateEnergyProductUIAndImage(buildingData.type , "", building.CurretProductionOutput);
             
             // 현재 레벨 증가
-            // building.CurrentLevel++;
+            building.CurrentLevel++;
             
             // 연구실이 아니라면
             if (buildingData.type != BuildingType.ResearchLab)
@@ -42,6 +43,17 @@ public class Level0State : IBuildingState
         {
             Debug.Log("Not enough resources to upgrade to Level 1.");
         }
+    }
+
+    public void Init(BaseBuilding buildingPrefab)
+    {
+        Building building = buildingPrefab.GetBuilding();
+        building.CurretProductionOutput = building.BuildingData.productionOutput;
+        
+        BuildingData buildingData = buildingPrefab.GetBuildingData();
+        BuildingManager.Instance.UpdateEnergyProductUIAndImage(buildingData.type , "", building.CurretProductionOutput);
+        
+        Debug.Log($"{building.BuildingData.name} initialized at Level 0 without consuming resources.");
     }
 }
 
@@ -77,6 +89,15 @@ public class Level1State : IBuildingState
         {
             Debug.Log("Not enough resources to upgrade to Level 2.");
         }
+    }
+
+    public void Init(BaseBuilding buildingPrefab)
+    {
+        Building building = buildingPrefab.GetBuilding();
+        building.CurretProductionOutput = (int)(building.BuildingData.productionOutput * buildingPrefab.CurrentMultiplier);
+        
+        BuildingManager.Instance.UpdateEnergyProductUIAndImage(building.BuildingData.type, building.BuildingData.level1ImagePath, building.CurretProductionOutput);
+        Debug.Log($"{building.BuildingData.name} initialized at Level 1 without consuming resources.");
     }
 }
 
@@ -123,6 +144,15 @@ public class Level2State : IBuildingState
         Debug.Log("Building is already at max level (Level 2).");
 
     }
+
+    public void Init(BaseBuilding buildingPrefab)
+    {
+        Building building = buildingPrefab.GetBuilding();
+        building.CurretProductionOutput = (int)(building.BuildingData.productionOutput * buildingPrefab.CurrentMultiplier);
+        
+        BuildingManager.Instance.UpdateEnergyProductUIAndImage(building.BuildingData.type, building.BuildingData.level2ImagePath, building.CurretProductionOutput);
+        Debug.Log($"{building.BuildingData.name} initialized at Level 2 without consuming resources.");
+    }
 }
 
 // 빌딩 UI 관리 FSM
@@ -148,29 +178,10 @@ public class BuildingStateMachine
     {
         currentState.Build(this, buildingPrefab);
     }
-
-    // 스프라이트 이미지 변경 메서드 (imagePath를 받아 처리)
-    public void ChangeSpriteImage(BaseBuilding buildingPrefab, string imagePath)
+    
+    // 저장된 데이터 로드시 빌딩 Init
+    public void Init(BaseBuilding buildingPrefab)
     {
-        Sprite newSprite = Resources.Load<Sprite>(imagePath);
-
-        if (newSprite != null)
-        {
-            // buildingPrefab의 Image 컴포넌트의 스프라이트 변경
-            Image prefabImage = buildingPrefab.gameObject.GetComponent<Image>();
-            if (prefabImage != null)
-            {
-                prefabImage.sprite = newSprite; // 스프라이트 변경
-                Debug.Log($"Image changed to: {imagePath}");
-            }
-            else
-            {
-                Debug.LogWarning("No Image component found on buildingPrefab.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"Image not found at: {imagePath}");
-        }
+        currentState.Init(buildingPrefab);
     }
 } // end class

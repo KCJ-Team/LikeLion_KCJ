@@ -49,8 +49,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         // 버튼 이벤트 등록
         btnStopNStart.onClick.AddListener(TogglePauseTime);
         btnSpeed.onClick.AddListener(ToggleDoubleTimeSpeed);
-
-        currentDay = gameTimeSetting.startDay; // 시작일 설정
+        
         StartCoroutine(DayCycle());
     }
     
@@ -161,8 +160,17 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         
         // isPaused 상태에 따라 아이콘 업데이트
         imageStopNStart.sprite = isPaused ? iconPlay : iconPause;
-        
-        // 모든 빌딩의 생산을 멈추거나 다시 시작
+    }
+    
+    // 외부에서 직접 게임 시간을 멈추거나 시작하도록 설정하는 메서드
+    public void SetPauseTime(bool pause)
+    {
+        isPaused = pause;
+
+        // isPaused 상태에 따라 아이콘 업데이트
+        imageStopNStart.sprite = isPaused ? iconPlay : iconPause;
+    
+        // 빌딩 생산 중단 또는 재개
         // BuildingManager.Instance.UpdateAllProductions(isPaused);
     }
     
@@ -170,8 +178,6 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
     public void ToggleDoubleTimeSpeed()
     {
         enableXSpeed = !enableXSpeed;
-
-        //BuildingManager.Instance.UpdateProductionSpeed(enableXSpeed);
     }
     
     public bool IsScheduledProductionTime()

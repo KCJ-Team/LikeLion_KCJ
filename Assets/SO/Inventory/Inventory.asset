@@ -18,32 +18,52 @@ MonoBehaviour:
   Container:
     Slots:
     - AllowedItems: 
-      card: {fileID: 0}
+      card:
+        Name: 
+        Id: -1
       amount: 0
     - AllowedItems: 
-      card: {fileID: 0}
+      card:
+        Name: 
+        Id: -1
       amount: 0
     - AllowedItems: 
-      card: {fileID: 0}
+      card:
+        Name: 
+        Id: -1
       amount: 1
     - AllowedItems: 
-      card: {fileID: 0}
+      card:
+        Name: 
+        Id: -1
       amount: 0
     - AllowedItems: 
-      card: {fileID: 0}
+      card:
+        Name: 
+        Id: -1
       amount: 0
     - AllowedItems: 
-      card: {fileID: 0}
+      card:
+        Name: 
+        Id: -1
       amount: 0
     - AllowedItems: 
-      card: {fileID: 0}
+      card:
+        Name: 
+        Id: -1
       amount: 0
     - AllowedItems: 
-      card: {fileID: 0}
+      card:
+        Name: 
+        Id: -1
       amount: 0
     - AllowedItems: 
-      card: {fileID: 0}
+      card:
+        Name: 
+        Id: -1
       amount: 0
     - AllowedItems: 
-      card: {fileID: 0}
+      card:
+        Name: 
+        Id: -1
       amount: 0

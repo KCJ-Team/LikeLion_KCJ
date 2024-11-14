@@ -4,7 +4,7 @@ using AYellowpaper.SerializedCollections;
 using TMPro;
 using UnityEngine;
 
-public class GameResourceManager : DD_Singleton<GameResourceManager>
+public class GameResourceManager : SceneSingleton<GameResourceManager>
 {
     [Header("Resources")]
     public SerializedDictionary<ResourceType, GameResource> resources = new();
@@ -91,25 +91,19 @@ public class GameResourceManager : DD_Singleton<GameResourceManager>
         }
     }
     
-    // // Energy, Food, Fuel 소비하는 메소드. 각각 다르게 소비함
-    // public void  ConsumeResources(int energyCost, int foodCost, int fuelCost)
-    // {
-    //     // 각 자원의 양이 충분할 때만 감소
-    //     if (GetResourceAmount(ResourceType.Energy) >= energyCost)
-    //         ConsumeResource(ResourceType.Energy, energyCost);
-    //     else
-    //         Debug.LogWarning("Not enough Energy to consume.");
-    //
-    //     if (GetResourceAmount(ResourceType.Food) >= foodCost)
-    //         ConsumeResource(ResourceType.Food, foodCost);
-    //     else
-    //         Debug.LogWarning("Not enough Food to consume.");
-    //
-    //     if (GetResourceAmount(ResourceType.Fuel) >= fuelCost)
-    //         ConsumeResource(ResourceType.Fuel, fuelCost);
-    //     else
-    //         Debug.LogWarning("Not enough Fuel to consume.");
-    // }
+    // 특정 자원의 현재 수량을 설정하는 메소드
+    public void SetResourceAmount(ResourceType type, int amount)
+    {
+        if (resources.TryGetValue(type, out GameResource resource))
+        {
+            resource.CurrentAmount = Mathf.Clamp(amount, 0, resource.ResourceData.maxAmount); // 최대값 제한
+            Debug.Log($"{type} resource amount set to {resource.CurrentAmount}");
+        }
+        else
+        {
+            Debug.LogWarning("Resource type not found: " + type);
+        }
+    }
     
     // 특정 자원 타입과 비용을 받아 소비하는 메소드
     public void ConsumeResourceWithCheck(ResourceType type, int cost)

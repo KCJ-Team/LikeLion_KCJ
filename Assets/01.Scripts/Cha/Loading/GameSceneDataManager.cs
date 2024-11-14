@@ -85,7 +85,8 @@ public class GameSceneDataManager : MonoBehaviour
                 break;
             
             case "Map_Elimination" :
-
+                // TODO : DB에서 플레이어 정보..!
+                
                 break;
         }
         

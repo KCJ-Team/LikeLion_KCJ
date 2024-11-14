@@ -22,10 +22,10 @@ public class ObjectManager : SceneSingleton<ObjectManager>
     private void Start()
     {
         // planetObjs 리스트 초기화 - 하위 오브젝트 자동 추가
-        DisablePlanetObjects(false);
+        ClearPlanetObjects(false);
     }
     
-    private void DisablePlanetObjects(bool isActive)
+    public void ClearPlanetObjects(bool isActive)
     {
         foreach (Transform child in planets.transform)
         {
@@ -40,6 +40,17 @@ public class ObjectManager : SceneSingleton<ObjectManager>
         }
 
         Debug.Log("Planet objects initialized, and all deactivated.");
+    }
+    
+    public void SetPlanetObjectsActive(bool isActive)
+    {
+        foreach (var planet in planetObjs)
+        {
+            planet.SetActive(isActive);
+            mapEliminationObj.SetActive(isActive);
+        }
+    
+        Debug.Log($"All planet objects set to active: {isActive}");
     }
     
     public void ActivatePlayerModel(PlayerModelType playerType)

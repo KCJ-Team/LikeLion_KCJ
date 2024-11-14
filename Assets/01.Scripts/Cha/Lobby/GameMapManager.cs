@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameMapManager : SceneSingleton<GameMapManager>
@@ -17,7 +18,13 @@ public class GameMapManager : SceneSingleton<GameMapManager>
     public Button btnStartGame; // 싱글 게임 시작
     // public Button btnMatchGame; // 멀티 매치메이킹
 
-    [Header("맵 정보 패널")] 
+    [Header("맵 관련 UI")] 
+    public Button btnToMap;
+    public Button btnToLobby;
+    
+    public GameObject panelMap;
+    public GameObject panelLobby;
+
     public GameObject panelMapInfo;
     public Text textMapName;
     public Image imageMapIcon;
@@ -28,8 +35,19 @@ public class GameMapManager : SceneSingleton<GameMapManager>
     {
         // Start 버튼에 클릭 이벤트 추가
         btnStartGame.onClick.AddListener(LoadMapScene);
+        btnToMap.onClick.AddListener(() => ToggleMapPanel(true));
+        btnToLobby.onClick.AddListener(() => ToggleMapPanel(false));
     }
-
+    
+    public void ToggleMapPanel(bool isActive)
+    {
+        panelMap.SetActive(isActive);
+        panelLobby.SetActive(!isActive);
+        
+        GameTimeManager.Instance.SetPauseTime(isActive);
+        ObjectManager.Instance.SetPlanetObjectsActive(isActive);
+    }
+    
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -75,7 +93,7 @@ public class GameMapManager : SceneSingleton<GameMapManager>
     {
         if (selectedMapData != null && !string.IsNullOrEmpty(selectedMapData.mapSceneName))
         {
-            SceneManager.LoadScene(selectedMapData.mapSceneName);
+            GameSceneDataManager.Instance.LoadScene(selectedMapData.mapSceneName);
         }
         else
         {

@@ -43,23 +43,23 @@ public class DatabaseManager : DD_Singleton<DatabaseManager>
     
     private void InitializeDatabase()
     {
-        // string persistentDbPath = Path.Combine(Application.persistentDataPath, DB_NAME);
-        //
-        // // DB가 존재하지 않으면 StreamingAssets에서 복사
-        // if (!File.Exists(persistentDbPath))
-        // {
-        //     string streamingDbPath = Path.Combine(Application.streamingAssetsPath, DB_NAME);
-        //     File.Copy(streamingDbPath, persistentDbPath);
-        //     Debug.Log("Database copied to persistentDataPath.");
-        // }
-
         string persistentDbPath = Path.Combine(Application.persistentDataPath, DB_NAME);
-        string streamingDbPath = Path.Combine(Application.streamingAssetsPath, DB_NAME);
-
-        // 매번 StreamingAssets에서 복사하여 덮어쓰기
-        File.Copy(streamingDbPath, persistentDbPath, true);
-        Debug.Log("Database copied to persistentDataPath.");
         
+        // DB가 존재하지 않으면 StreamingAssets에서 복사
+        if (!File.Exists(persistentDbPath))
+        {
+            string streamingDbPath = Path.Combine(Application.streamingAssetsPath, DB_NAME);
+            File.Copy(streamingDbPath, persistentDbPath);
+            Debug.Log("Database copied to persistentDataPath.");
+        }
+
+        // string persistentDbPath = Path.Combine(Application.persistentDataPath, DB_NAME);
+        // string streamingDbPath = Path.Combine(Application.streamingAssetsPath, DB_NAME);
+        //
+        // // 매번 StreamingAssets에서 복사하여 덮어쓰기
+        // File.Copy(streamingDbPath, persistentDbPath, true);
+        // Debug.Log("Database copied to persistentDataPath.");
+        //
         // DB 연결
         dbConnection = new SQLiteConnection(persistentDbPath);
         

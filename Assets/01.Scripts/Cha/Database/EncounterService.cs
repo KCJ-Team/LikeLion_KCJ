@@ -73,4 +73,53 @@ public class EncounterService
         }
     }
     
+    /// <summary>
+    /// 기존 인카운터 리스트들을 삭제하고, 인카운터 리스트를 저장하기
+    /// </summary>
+    /// <param name="encounters"></param>
+    /// <returns></returns>
+    public bool UpdateEncounters(List<Encounter> encounters)
+    {
+        try
+        {
+            // 기존 인카운터 데이터를 모두 삭제
+            dbConnection.Execute("DELETE FROM encounter");
+
+            // 새로운 인카운터 리스트 삽입
+            foreach (Encounter encounter in encounters)
+            {
+                var encounterModel = new EncounterModel
+                {
+                    EncounterId = encounter.encounterId
+                };
+
+                dbConnection.Insert(encounterModel);
+            }
+        
+            Debug.Log("Encounters updated successfully in the database.");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to update encounters: " + ex.Message);
+            return false;
+        }
+    }
+
+    public bool DeleteEncounters()
+    {
+        try
+        {
+            // 인카운터 테이블의 모든 데이터 삭제
+            dbConnection.Execute("DELETE FROM encounter");
+            
+            Debug.Log("All encounter data deleted from the database.");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to delete encounter data: " + ex.Message);
+            return false;
+        }
+    }
 } // end class

@@ -150,7 +150,7 @@ public class BuildingUIPresenter
     }
 
     // TODO 
-    public void UpdateEnergyProductUIAndImage(BuildingType type, string imagePath, int productionOutput)
+    public void UpdateProductUIAndImage(BuildingType type, string imagePath, int productionOutput)
     {
         Sprite newSprite = !string.IsNullOrEmpty(imagePath) ? Resources.Load<Sprite>(imagePath) : null;
 

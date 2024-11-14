@@ -40,11 +40,7 @@ public class EncounterManager : SceneSingleton<EncounterManager>
             Debug.LogError("EncounterData가 할당되지 않았습니다.");
             return;
         }
-
-        // 매니저에 사용할 인카운터 넘기기. Call by Value..
-        // TODO : DB..
-        unresolvedEncounters = encounterData.encounters.ToList();
-
+        
         encounterUIPresenter = new EncounterUIPresenter(encounterUIView);
     }
     

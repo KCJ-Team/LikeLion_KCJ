@@ -25,11 +25,16 @@ public class PlayerService
         // 기존 플레이어 데이터가 있는지 확인
         var existingPlayer = dbConnection.Table<PlayerModel>().FirstOrDefault();
 
+        // 기존 플레이어 데이터가 있으면 전체 데이터를 삭제하기.
         if (existingPlayer != null)
         {
-            // 기존 플레이어 데이터 삭제
             dbConnection.Delete(existingPlayer);
             Debug.Log("Existing player data deleted.");
+            
+            // TODO :
+            // Encounter 테이블의 모든 데이터 삭제
+            dbConnection.Execute("DELETE FROM encounter");
+            Debug.Log("Encounter table data deleted.");
         }
         
         // guid 생성
@@ -44,7 +49,14 @@ public class PlayerService
             PlayerFood = MainMenuMaanger.Instance.resourceDatas[ResourceType.Food].initAmount,
             PlayerWorkforce = MainMenuMaanger.Instance.resourceDatas[ResourceType.Workforce].initAmount,
             PlayerFuel = MainMenuMaanger.Instance.resourceDatas[ResourceType.Fuel].initAmount,
-            PlayerDDay = MainMenuMaanger.Instance.gameTimeData.startDay
+            PlayerDDay = MainMenuMaanger.Instance.gameTimeData.startDay,
+            PlayerPowerplantLevel = -1,
+            PlayerBiofarmLevel = -1,
+            PlayerQuartersLevel = -1,
+            PlayerFuelplantLevel = -1,
+            PlayerResearchLabLevel = -1,
+            PlayerRecoveryRoomLevel = -1,
+            PlayerRecreationRoomLevel = -1,
         };
         
         try
@@ -59,12 +71,6 @@ public class PlayerService
             Debug.LogError("Player Insert Fail : " + ex.Message);
             return false;
         }
-        
-        // // PlayerModel -> TestPlayer 직접매핑
-        // TestPlayer newPlayer = new TestPlayer
-        // {
-        //     playerId = playerModel.PlayerId
-        // };
         
        return true;
     }
@@ -94,50 +100,103 @@ public class PlayerService
     /// <summary>
     /// 플레이어의 자원
     /// </summary>
-    /// <param name="playerId"></param>
-    /// <param name="energy"></param>
-    /// <param name="food"></param>
-    /// <param name="workforce"></param>
-    /// <param name="fuel"></param>
-    /// <returns></returns>
-    public bool UpsertPlayerResources(string playerId, int energy, int food, int workforce, int fuel)
+    public bool UpdatePlayerResources(string playerId, int energy, int food, int workforce, int fuel, int research, int currency)
     {
         try
         {
-            // 플레이어 정보가 있는지 확인
             var playerModel = dbConnection.Table<PlayerModel>().FirstOrDefault(p => p.PlayerId == playerId);
-
+            
             if (playerModel != null)
             {
-                // 데이터가 있으면 업데이트
                 playerModel.PlayerEnergy = energy;
                 playerModel.PlayerFood = food;
                 playerModel.PlayerWorkforce = workforce;
                 playerModel.PlayerFuel = fuel;
+                playerModel.PlayerResearch = research;
+                playerModel.PlayerCurrency = currency;
+                
                 dbConnection.Update(playerModel);
+                
                 Debug.Log("Player resources updated successfully.");
+                return true;
             }
-            else
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to update player resources: " + ex.Message);
+            return false;
+        }
+    }
+    
+    /// <summary>
+    /// 빌딩 레벨 저장
+    /// </summary>
+    public bool UpdateBuildingLevels(string playerId, int powerPlantLevel, int bioFarmLevel, int quartersLevel, int fuelPlantLevel, int researchLabLevel, int recoveryRoomLevel, int recreationRoomLevel)
+    {
+        try
+        {
+            var playerModel = dbConnection.Table<PlayerModel>().FirstOrDefault(p => p.PlayerId == playerId);
+            if (playerModel != null)
             {
-                // 데이터가 없으면 새로 삽입
-                playerModel = new PlayerModel
-                {
-                    PlayerId = playerId,
-                    PlayerEnergy = energy,
-                    PlayerFood = food,
-                    PlayerWorkforce = workforce,
-                    PlayerFuel = fuel
-                };
-                dbConnection.Insert(playerModel);
-                Debug.Log("New player inserted with resources.");
+                playerModel.PlayerPowerplantLevel = powerPlantLevel;
+                playerModel.PlayerBiofarmLevel = bioFarmLevel;
+                playerModel.PlayerQuartersLevel = quartersLevel;
+                playerModel.PlayerFuelplantLevel = fuelPlantLevel;
+                playerModel.PlayerResearchLabLevel = researchLabLevel;
+                playerModel.PlayerRecoveryRoomLevel = recoveryRoomLevel;
+                playerModel.PlayerRecreationRoomLevel = recreationRoomLevel;
+                
+                dbConnection.Update(playerModel);
+                
+                Debug.Log("Building levels updated successfully.");
+                return true;
             }
-
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to update building levels: " + ex.Message);
+            return false;
+        }
+    }
+    
+    public bool UpdatePlayerDay(string playerId, int currentDay)
+    {
+        try
+        {
+            var playerModel = dbConnection.Table<PlayerModel>().FirstOrDefault(p => p.PlayerId == playerId);
+            if (playerModel != null)
+            {
+                playerModel.PlayerDDay = currentDay;
+                dbConnection.Update(playerModel);
+                Debug.Log("Player day updated successfully.");
+                return true;
+            }
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to update player day: " + ex.Message);
+            return false;
+        }
+    }
+    
+    public bool DeletePlayer()
+    {
+        try
+        {
+            // 플레이어 테이블의 모든 데이터 삭제
+            dbConnection.Execute("DELETE FROM player");
+            
+            Debug.Log("All player data deleted from the database.");
             return true;
         }
         catch (Exception ex)
         {
-            Debug.LogError("Failed to upsert player resources: " + ex.Message);
+            Debug.LogError("Failed to delete player data: " + ex.Message);
             return false;
         }
     }
+    
 } // end class

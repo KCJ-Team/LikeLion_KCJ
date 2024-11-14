@@ -10,7 +10,7 @@ public class Building
     private BuildingData buildingData;
     
     [SerializeField]
-    private int currentLevel; // 현재 빌딩의 레벨
+    private int currentLevel = -1; // 현재 빌딩의 레벨. 처음에는 -1로 하자
     
     [SerializeField]
     private int currentProductionOutput; // 현재 자원 생산량

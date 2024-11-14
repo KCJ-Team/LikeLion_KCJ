@@ -9,7 +9,7 @@ public abstract class BaseBuilding : MonoBehaviour, IBuilding
     private Building building;
     
     private BuildingStateMachine stateMachine;
-
+    
     public bool IsCreated { get; set; } = false; // 생성 여부를 나타내는 속성
 
     private void Awake()
@@ -25,6 +25,7 @@ public abstract class BaseBuilding : MonoBehaviour, IBuilding
         {
             IsCreated = true;
             Debug.Log($"{building.BuildingData.name} has been built.");
+            
             building.CurretProductionOutput = building.BuildingData.productionOutput;
             Debug.Log($"{building.BuildingData.name} 생산량 초기화: {building.CurretProductionOutput}");
         }
@@ -67,7 +68,31 @@ public abstract class BaseBuilding : MonoBehaviour, IBuilding
             return baseMultiplier * Mathf.Pow(2, level);
         }
     }
+    
+    public void SetLevel(int level)
+    {
+        building.CurrentLevel = level; 
+    }
 
+    public void InitializeState()
+    {
+        switch (building.CurrentLevel)
+        {
+            case 0:
+                stateMachine.ChangeState(new Level0State());
+                break;
+            case 1:
+                stateMachine.ChangeState(new Level1State());
+                break;
+            case 2:
+                stateMachine.ChangeState(new Level2State());
+                break;
+            default:
+                Debug.LogWarning("-1 level for building initialization.");
+                break;
+        }
+    }
+    
     // 현재 빌딩의 생산량 반환
     public virtual int GetProductOutput()
     {

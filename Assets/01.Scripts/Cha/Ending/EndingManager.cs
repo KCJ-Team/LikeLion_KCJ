@@ -19,7 +19,8 @@ public class EndingManager : SceneSingleton<EndingManager>
     public Text textEnding; // 엔딩 텍스트 UI
     public Image iconEndingFaction; // 엔딩 Faction 아이콘 UI
     public Text textLeftDay;
-    public Image imageEndingBackground; 
+    public Image imageEndingBackground;
+    public Button btnToTitle; 
     
     private void Start()
     {
@@ -27,6 +28,8 @@ public class EndingManager : SceneSingleton<EndingManager>
         {
             panelEnding.SetActive(false); // 시작 시 엔딩 패널 숨기기
         }
+        
+        btnToTitle.onClick.AddListener(GoToMainTitle);
     }
     
     public void ShowEnding(EndingType endingType, int daySurvived, Sprite factionIcon = null)
@@ -68,5 +71,13 @@ public class EndingManager : SceneSingleton<EndingManager>
             // 게임 시간 멈춤
             GameTimeManager.Instance.TogglePauseTime();
         }
+    }
+    
+    private void GoToMainTitle()
+    {
+        // 엔딩을 본 후에는 무조건 게임 초기화, 즉 DB에서 데이터를 지워야한다.
+        GameSceneDataManager.Instance.ClearDataInDB();
+        
+        GameSceneDataManager.Instance.LoadScene("MainMenu");
     }
 } // end class

@@ -96,7 +96,6 @@ public class BuildingUIPresenter
         if (!buildingBase.IsCreated)
         {
             text = "Build";
-            // buildingBase.IsCreated = true;
         }
         else if (buildingBase.GetBuilding().CurrentLevel < buildingBase.GetBuildingData().maxLevel)
         {
@@ -137,7 +136,7 @@ public class BuildingUIPresenter
         // BuildingManager를 통해 빌딩 생성 또는 업그레이드
         BaseBuilding building = buildingPopupData.BuildingBase;
         
-        BuildingManager.Instance.Build(building);
+        BuildingManager.Instance.BuildOrUpgrade(building);
         
         // isCreated가 false였다면, 이제 생성되었으므로 true로 설정
         if (!building.IsCreated)
@@ -185,8 +184,5 @@ public class BuildingUIPresenter
         {
             craftingButton.gameObject.SetActive(false);
         }
-        
-        // TODO : 자원 생산 Text ui에 주기
-        
     }
 } // end class

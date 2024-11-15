@@ -30,7 +30,11 @@ public class PauseMenuManager : SceneSingleton<PauseMenuManager>
         // ESC 입력으로 일시정지 메뉴 토글
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            TogglePauseMenu();
+            // 팝업이 열려 있으면 일시정지 메뉴를 띄우지 않음
+            if (!PopupUIManager.Instance.IsAnyPopupOpen())
+            {
+                TogglePauseMenu();
+            }
         }
     }
     

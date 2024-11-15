@@ -58,6 +58,12 @@ public class PlayerModel
     
     [Column("player_d_day")]
     public int PlayerDDay { get; set; }
+    
+    [Column("player_hp")]
+    public int PlayerHp { get; set; }
+    
+    [Column("player_stress")]
+    public int PlayerStress { get; set; }
 }
 
 // id

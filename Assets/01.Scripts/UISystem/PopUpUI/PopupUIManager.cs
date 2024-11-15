@@ -60,6 +60,12 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         }
     }
     
+    // 활성화된 팝업이 있는지 확인하는 메서드
+    public bool IsAnyPopupOpen()
+    {
+        return activePopupLList.Count > 0;
+    }
+    
     //시작 시 모든 팝업 닫기
     private void InitCloseAll()
     {

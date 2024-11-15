@@ -93,6 +93,9 @@ public class GameMapManager : SceneSingleton<GameMapManager>
     {
         if (selectedMapData != null && !string.IsNullOrEmpty(selectedMapData.mapSceneName))
         {
+            // 던전 맵을 로드하기 전에 현제 데이터들을 저장하고 넘어가기
+            GameSceneDataManager.Instance.SaveDataInDB();
+            
             GameSceneDataManager.Instance.LoadScene(selectedMapData.mapSceneName);
         }
         else

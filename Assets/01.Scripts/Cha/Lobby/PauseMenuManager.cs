@@ -59,14 +59,14 @@ public class PauseMenuManager : SceneSingleton<PauseMenuManager>
     // Save 버튼 클릭 메서드
     private void SaveGameData()
     {
-        GameSceneDataManager.Instance.SaveDataInDB();
+        GameSceneDataManager.Instance.SaveLobbyDataInDB();
         Debug.Log("Game data saved.");
     }
 
     // Save and Main Title 버튼 클릭 메서드
     private void SaveAndBackToMainTitle()
     {
-        GameSceneDataManager.Instance.SaveDataInDB();
+        GameSceneDataManager.Instance.SaveLobbyDataInDB();
         Debug.Log("Game data saved. And Back To MainMenu");
         
         Time.timeScale = 1; // 시간 스케일 복구

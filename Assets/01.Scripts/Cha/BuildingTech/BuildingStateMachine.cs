@@ -45,6 +45,7 @@ public class Level0State : IBuildingState
         }
     }
 
+    // 자원 소비 로직만 빼고, Product Output, UI 설정
     public void Init(BaseBuilding buildingPrefab)
     {
         Building building = buildingPrefab.GetBuilding();

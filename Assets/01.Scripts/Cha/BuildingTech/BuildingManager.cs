@@ -17,6 +17,10 @@ public class BuildingManager : SceneSingleton<BuildingManager>
 
     [Header("빌딩의 자원 생산 코루틴 관리")] 
     private Dictionary<BaseBuilding, Coroutine> productionCoroutines = new();
+    
+    [Header("특정 빌딩의 UseButton 상태 플래그")]
+    public bool isRecoveryRoomUsed = false; // 병원 UseButton 플래그
+    public bool isRecreationRoomUsed = false; // 오락시설 UseButton 플래그
 
     // 자원 생산 플래그
     private bool hasProducedAt6AM = false;
@@ -34,15 +38,6 @@ public class BuildingManager : SceneSingleton<BuildingManager>
     {
         // 개별 빌딩의 상태 머신을 통해 빌드 실행
         buildingPrefab.GetStateMachine().Build(buildingPrefab);
-
-        // 초기 생성의 경우, 병원, 오락실의 경우 X
-        if (buildingPrefab.GetBuildingData().type != BuildingType.RecoveryRoom ||
-            buildingPrefab.GetBuildingData().type != BuildingType.RecreationRoom ||
-            !buildingPrefab.IsCreated)
-        {
-            // 자원 자동 생산 시작
-            // StartProducing(buildingPrefab);
-        }
     }
     
     // 특정 시간에 자원을 생산하도록 관리
@@ -70,47 +65,31 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             if (building.IsCreated)
             {
                 int productionAmount = building.GetCurrentProductOutput();
-                GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
+                
+                // 만약 현재 빌딩 타입이 병원, 오락시설일때 눌려 있는 상태라면 
+                if (building.GetBuildingData().type == BuildingType.RecoveryRoom)
+                {
+                    if (isRecoveryRoomUsed)
+                    {
+                        LobbyMenuManager.Instance.ChangeHp(productionAmount);
+                    }
+                }
+                else if (building.GetBuildingData().type == BuildingType.RecreationRoom)
+                {
+                    if (isRecreationRoomUsed)
+                    {
+                        LobbyMenuManager.Instance.ChangeStress(productionAmount);
+                    }
+                }
+                else
+                {
+                    GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
+                }
                 
                 Debug.Log($"{building.GetBuildingData().name} produced {productionAmount} resources.");
             }
         }
     }
-    //
-    // // 개별 코루틴 시작
-    // private void StartProducing(BaseBuilding buildingPrefab)
-    // {
-    //     if (!buildingPrefab.IsCreated)
-    //         return;
-    //
-    //     // 딕셔너리에서 이미 실행중인 코루틴을 검사하고 있다면 새로 시작하지 않음
-    //     if (productionCoroutines.ContainsKey(buildingPrefab))
-    //     {
-    //         Debug.LogWarning($"{buildingPrefab.GetBuildingData().name}의 생산 코루틴이 이미 실행 중입니다.");
-    //         return;
-    //     }
-    //
-    //     // 빌딩의 자원 생산 코루틴을 시작
-    //     Coroutine coroutine = StartCoroutine(ScheduleProduction(buildingPrefab));
-    //     productionCoroutines[buildingPrefab] = coroutine;
-    // }
-    //
-    // private IEnumerator ScheduleProduction(BaseBuilding building)
-    // {
-    //     while (true)
-    //     {
-    //         if (!GameTimeManager.Instance.isPaused)
-    //         {
-    //             yield return new WaitUntil(() => GameTimeManager.Instance.IsScheduledProductionTime());
-    //
-    //             int productionAmount = building.GetCurrentProductOutput();
-    //             GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
-    //             Debug.Log($"{building.GetBuildingData().name} produced {productionAmount} resources.");
-    //         }
-    //
-    //         yield return null;
-    //     }
-    // }
 
     // 자원 생산량 텍스트 표시, 빌딩 이미지 변경
     public void UpdateEnergyProductUIAndImage(BuildingType type, string imagePath, int productionOutput)

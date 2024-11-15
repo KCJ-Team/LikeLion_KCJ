@@ -15,7 +15,9 @@ public class PopupUI : MonoBehaviour, IPointerDownHandler
     public Text headerText; // 팝업 헤더 텍스트
     public SerializedDictionary<string, Text> contentTexts = new(); // 콘텐츠 텍스트 맵핑
     public SerializedDictionary<string, Image> contentIcons = new(); // 콘텐츠 아이콘 맵핑
+    public SerializedDictionary<string, GameObject> contentObjs = new(); // 콘텐츠 에서 active할 오브젝트들
 
+    
     private IPopupData popupData; // 공통 데이터 인터페이스로 보관
     
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)

@@ -60,10 +60,16 @@ public class PlayerModel
     public int PlayerDDay { get; set; }
     
     [Column("player_hp")]
-    public int PlayerHp { get; set; }
+    public float PlayerHp { get; set; }
     
     [Column("player_stress")]
-    public int PlayerStress { get; set; }
+    public float PlayerStress { get; set; }
+    
+    [Column("player_attack")]
+    public float PlayerAttack { get; set; }
+    
+    [Column("player_defense")]
+    public float PlayerDefense { get; set; }
 }
 
 // id

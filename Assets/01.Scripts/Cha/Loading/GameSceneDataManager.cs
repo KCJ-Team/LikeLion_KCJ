@@ -80,7 +80,7 @@ public class GameSceneDataManager : MonoBehaviour
         switch (scene.name)
         {
             case "Lobby" :
-                LoadDataInDB();
+                LoadLobbyDataInDB();
 
                 break;
             
@@ -93,7 +93,7 @@ public class GameSceneDataManager : MonoBehaviour
     }
 
     // 데이터 로드
-    private void LoadDataInDB()
+    private void LoadLobbyDataInDB()
     {
         //  DB에서 Player랑 Encounter 테이블에서 정보들을 가져온다.
         PlayerService playerService = new PlayerService();
@@ -125,7 +125,7 @@ public class GameSceneDataManager : MonoBehaviour
         // Player D-day
         GameTimeManager.Instance.currentDay = playerModel.PlayerDDay;
 
-        // TODO : 빌딩 업그레이드 정보!
+        // 빌딩 업그레이드 정보
         BuildingManager.Instance.SetBuildingLevel(BuildingType.PowerPlant, playerModel.PlayerPowerplantLevel);
         BuildingManager.Instance.SetBuildingLevel(BuildingType.BioFarm, playerModel.PlayerBiofarmLevel);
         BuildingManager.Instance.SetBuildingLevel(BuildingType.Quarters, playerModel.PlayerQuartersLevel);
@@ -133,10 +133,14 @@ public class GameSceneDataManager : MonoBehaviour
         BuildingManager.Instance.SetBuildingLevel(BuildingType.ResearchLab, playerModel.PlayerResearchLabLevel);
         BuildingManager.Instance.SetBuildingLevel(BuildingType.RecoveryRoom, playerModel.PlayerRecoveryRoomLevel);
         BuildingManager.Instance.SetBuildingLevel(BuildingType.RecreationRoom, playerModel.PlayerRecreationRoomLevel);
+        
+        // 플레이어 정보
+        LobbyMenuManager.Instance.SetHpAndStress(playerModel.PlayerHp, playerModel.PlayerStress);
+        LobbyMenuManager.Instance.SetAttackAndDefense(playerModel.PlayerAttack, playerModel.PlayerDefense);
     }
 
     // TODO : 데이터 저장
-    public void SaveDataInDB()
+    public void SaveLobbyDataInDB()
     {
         PlayerService playerService = new PlayerService();
         
@@ -162,6 +166,7 @@ public class GameSceneDataManager : MonoBehaviour
         int recoveryRoomLevel = BuildingManager.Instance.GetBuildingLevel(BuildingType.RecoveryRoom);
         int recreationRoomLevel = BuildingManager.Instance.GetBuildingLevel(BuildingType.RecreationRoom);
 
+        
         playerService.UpdateBuildingLevels(playerId, powerPlantLevel, bioFarmLevel, quartersLevel, fuelPlantLevel,
             researchLabLevel, recoveryRoomLevel, recreationRoomLevel);
 
@@ -173,6 +178,14 @@ public class GameSceneDataManager : MonoBehaviour
         // 랜덤인카운터
         EncounterService encounterService = new EncounterService();
         encounterService.UpdateEncounters(EncounterManager.Instance.UnresolvedEncounters);
+        
+        // 플레이어 Hp, 방어력 등 기본 정보
+        float hp = LobbyMenuManager.Instance.hp;
+        float stress = LobbyMenuManager.Instance.stress;
+        float attack = LobbyMenuManager.Instance.attack;
+        float defense = LobbyMenuManager.Instance.defense;
+        
+        playerService.UpdatePlayerStats(playerId, hp, stress, attack, defense);
         
         // TODO : 인벤토리, 무기
         
@@ -196,6 +209,20 @@ public class GameSceneDataManager : MonoBehaviour
     /// </summary>
     private void OnApplicationQuit()
     {
-        SaveDataInDB();
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        
+        // 현재 씬이 로비일 경우에 로비 저장, 던전일 경우 던전 저장 
+        if (currentSceneName == "Lobby")
+        {
+            SaveLobbyDataInDB();
+        }
+        else if (currentSceneName.Contains("Dungeon")) // 던전 이름이 "Dungeon"을 포함한다고 가정
+        {
+            // SaveDungeonData();
+        }
+        else
+        {
+            Debug.LogWarning($"No specific save logic implemented for scene: {currentSceneName}");
+        }
     }
 } // end class

@@ -95,17 +95,17 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     }
                     
                     // 자정에 플래그 초기화 (다음 날을 위해)
-                    if (hour == 0 && minute == 0 && !hasCheckedAtMidnight)
+                    if (hour == 0 && minute == 0)
                     {
                         hasConsumedAt21 = false; // 자정에 플래그 초기화
                         CheckResourceWarning();
-                        hasCheckedAtMidnight = true; // 자정 검사를 완료 표시
+                        //hasCheckedAtMidnight = true; // 자정 검사를 완료 표시
                     }
                     
                     // 자정이 지난 후 플래그 초기화
                     if (hour == 1 && minute == 0)
                     {
-                        hasCheckedAtMidnight = false;
+                        //hasCheckedAtMidnight = false;
                     }
 
                     if (dayTimer >= nextEncounterTime)
@@ -221,8 +221,12 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
     private void CheckResourceWarning()
     {
         bool hasZeroResource = GameResourceManager.Instance.FindZeroResource();
+        bool hpWarning = LobbyMenuManager.Instance.hp < 10.0f; // HP 경고 조건, 10이하
+        bool stressWarning = LobbyMenuManager.Instance.stress > 90.0f; // Stress 경고 조건, 90이상
 
-        if (hasZeroResource)
+        Debug.Log($"[현재 리소스] hasZeroResource: {hasZeroResource}, hpWarning: {hpWarning}, stressWarning: {stressWarning}, Combined Condition: {hasZeroResource || hpWarning || stressWarning}");
+        
+        if (hasZeroResource || hpWarning || stressWarning)
         {
             // 처음 자원이 0이 되었을 때 경고 활성화 (panelWarning을 표시하고 다음날에만 폭동 엔딩 발동 조건 설정)
             if (!resourceWarningTriggered && !panelWarning.activeSelf)
@@ -232,7 +236,8 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                 resourceWarningTriggered = true; // 처음 경고 상태로 설정
                 panelWarning.SetActive(true);    // 경고 패널 표시
             }
-            // 경고가 활성화된 상태에서 자원이 여전히 0일 경우 폭동 엔딩 발동
+            
+            // 경고가 활성화된 상태에서 여전히 조건 충족 시 폭동 엔딩 발동
             else if (resourceWarningTriggered && panelWarning.activeSelf)
             {
                 Debug.Log("Resource is still zero after one day. Triggering Riot Ending.");
@@ -240,9 +245,27 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                 // 생존일 수 계산
                 int daySurvived = gameTimeSetting.startDay - currentDay;
             
-                // 폭동 엔딩 호출
-                EndingManager.Instance.ShowEnding(EndingType.RIOT, daySurvived); 
-            
+                // 엔딩 분기
+                if (hpWarning)
+                {
+                    Debug.Log("HP Warning active. Triggering HP Ending.");
+                    EndingManager.Instance.ShowEnding(EndingType.ILLNESS, daySurvived); // HP 엔딩
+                }
+                else if (stressWarning)
+                {
+                    Debug.Log("Stress Warning active. Triggering Stress Ending.");
+                    EndingManager.Instance.ShowEnding(EndingType.STRESS, daySurvived); // Stress 엔딩
+                }
+                else if (hasZeroResource)
+                {
+                    Debug.Log("Resource Warning active. Triggering Riot Ending.");
+                    EndingManager.Instance.ShowEnding(EndingType.RIOT, daySurvived); // Riot 엔딩
+                }
+                else
+                {
+                    EndingManager.Instance.ShowEnding(EndingType.RIOT, daySurvived); // Riot 엔딩
+                }
+
                 // 엔딩 이후 경고 초기화
                 resourceWarningTriggered = false;
                 panelWarning.SetActive(false);
@@ -250,6 +273,9 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         }
         else
         {
+            // 디버깅 메시지로 초기화 상태 확인
+            Debug.Log($"리소스가 해제 되어야함!!!!");
+            
             // 자원이 충분해지면 경고 초기화
             resourceWarningTriggered = false;
             panelWarning.SetActive(false);

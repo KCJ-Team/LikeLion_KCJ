@@ -10,7 +10,13 @@ public enum ResourceType
     Workforce, // 일꾼
     Fuel, // 연료
     Research, // 연구
-    Currency // 재화
+    Currency, // 재화
+    
+    // 24.11.15 관리하기 위해 추가하기
+    HP,
+    Stress,
+    Attack,
+    Defense
 }
 
 [CreateAssetMenu(fileName = "ResourceData", menuName = "Resources/Resource Data")]

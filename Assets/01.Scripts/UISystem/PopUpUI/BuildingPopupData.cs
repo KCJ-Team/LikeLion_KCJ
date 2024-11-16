@@ -47,6 +47,7 @@ public class BuildingPopupData : IPopupData
         CostFuel = (int)(buildingBase.GetBuildingData().baseCostFuel * multiplier);
 
         // 아이콘 설정
+        // 빌딩 프리팹의 ResourceData에 있는걸 가져오자
         ProductOutputIcon = GameResourceManager.Instance.GetResourceData(buildingBase.GetBuildingData().resourceType)?.icon;
     }
 }

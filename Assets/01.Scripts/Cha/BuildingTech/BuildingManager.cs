@@ -9,18 +9,22 @@ using UnityEngine;
 public class BuildingManager : SceneSingleton<BuildingManager>
 {
     [Header("Buildings")] 
-    [SerializeField] private SerializedDictionary<BuildingType, BaseBuilding> buildings = new();
+    [SerializeField] 
+    private SerializedDictionary<BuildingType, BaseBuilding> buildings = new();
 
     [Header("UI MVP 패턴")] 
-    [SerializeField] private BuildingUIView buildingUIView;
+    [SerializeField] 
+    private BuildingUIView buildingUIView;
     private BuildingUIPresenter buildingUIPresenter;
-
-    [Header("빌딩의 자원 생산 코루틴 관리")] 
-    private Dictionary<BaseBuilding, Coroutine> productionCoroutines = new();
+    
+    [Header("특정 빌딩의 UseButton 상태 플래그")]
+    public bool isRecoveryRoomUsed = false; // 병원 UseButton 플래그
+    public bool isRecreationRoomUsed = false; // 오락시설 UseButton 플래그
 
     // 자원 생산 플래그
     private bool hasProducedAt6AM = false;
     private bool hasProducedAt6PM = false;
+    private bool hasProducedAt12PM = false; // 12시 자원 생산 플래그
     
     private void Start()
     {
@@ -29,20 +33,24 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             buildingUIPresenter = new BuildingUIPresenter(buildingUIView);
         }
     }
+    
+    public BaseBuilding GetBuilding(BuildingType buildingType)
+    {
+        if (buildings.TryGetValue(buildingType, out BaseBuilding building))
+        {
+            return building; // 해당 BuildingType의 빌딩 반환
+        }
+        else
+        {
+            Debug.LogWarning($"Building of type {buildingType} not found.");
+            return null; // 없을 경우 null 반환
+        }
+    }
 
-    public void Build(BaseBuilding buildingPrefab)
+    public void BuildOrUpgrade(BaseBuilding buildingPrefab)
     {
         // 개별 빌딩의 상태 머신을 통해 빌드 실행
         buildingPrefab.GetStateMachine().Build(buildingPrefab);
-
-        // 초기 생성이라면인데, 병원, 오락실의 경우 X
-        if (buildingPrefab.GetBuildingData().type != BuildingType.RecoveryRoom ||
-            buildingPrefab.GetBuildingData().type != BuildingType.RecreationRoom ||
-            !buildingPrefab.IsCreated)
-        {
-            // 자원 자동 생산 시작
-            StartProducing(buildingPrefab);
-        }
     }
     
     // 특정 시간에 자원을 생산하도록 관리
@@ -60,6 +68,10 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             hasProducedAt6PM = true;
             hasProducedAt6AM = false; // 다음 날 오전 생산 플래그 초기화
         }
+        else if (hour == 12)
+        {
+            ProduceAllResources();
+        }
     }
 
     // 모든 빌딩의 자원을 생산하는 메서드
@@ -70,44 +82,29 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             if (building.IsCreated)
             {
                 int productionAmount = building.GetCurrentProductOutput();
-                GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
+                
+                // 만약 현재 빌딩 타입이 병원, 오락시설일때 눌려 있는 상태라면 
+                if (building.GetBuildingData().type == BuildingType.RecoveryRoom)
+                {
+                    if (isRecoveryRoomUsed)
+                    {
+                        LobbyMenuManager.Instance.ChangeHp(productionAmount);
+                    }
+                }
+                else if (building.GetBuildingData().type == BuildingType.RecreationRoom)
+                {
+                    if (isRecreationRoomUsed)
+                    {
+                        LobbyMenuManager.Instance.ChangeStress(productionAmount);
+                    }
+                }
+                else
+                {
+                    GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
+                }
+                
                 Debug.Log($"{building.GetBuildingData().name} produced {productionAmount} resources.");
             }
-        }
-    }
-
-    // 개별 코루틴 시작
-    private void StartProducing(BaseBuilding buildingPrefab)
-    {
-        if (!buildingPrefab.IsCreated)
-            return;
-
-        // 딕셔너리에서 이미 실행중인 코루틴을 검사하고 있다면 새로 시작하지 않음
-        if (productionCoroutines.ContainsKey(buildingPrefab))
-        {
-            Debug.LogWarning($"{buildingPrefab.GetBuildingData().name}의 생산 코루틴이 이미 실행 중입니다.");
-            return;
-        }
-
-        // 빌딩의 자원 생산 코루틴을 시작
-        Coroutine coroutine = StartCoroutine(ScheduleProduction(buildingPrefab));
-        productionCoroutines[buildingPrefab] = coroutine;
-    }
-
-    private IEnumerator ScheduleProduction(BaseBuilding building)
-    {
-        while (true)
-        {
-            if (!GameTimeManager.Instance.isPaused)
-            {
-                yield return new WaitUntil(() => GameTimeManager.Instance.IsScheduledProductionTime());
-
-                int productionAmount = building.GetCurrentProductOutput();
-                GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
-                Debug.Log($"{building.GetBuildingData().name} produced {productionAmount} resources.");
-            }
-
-            yield return null;
         }
     }
 
@@ -141,20 +138,6 @@ public class BuildingManager : SceneSingleton<BuildingManager>
                GameResourceManager.Instance.GetResourceAmount(ResourceType.Workforce) >= workforceCost;
     }
     
-    // 특정 BuildingType에 해당하는 빌딩을 반환하는 메서드
-    public BaseBuilding GetBuilding(BuildingType buildingType)
-    {
-        if (buildings.TryGetValue(buildingType, out BaseBuilding building))
-        {
-            return building;
-        }
-        else
-        {
-            Debug.LogWarning($"Building of type {buildingType} not found.");
-            return null;
-        }
-    }
-    
     // 빌딩의 레벨을 Get
     public int GetBuildingLevel(BuildingType buildingType)
     {
@@ -175,11 +158,13 @@ public class BuildingManager : SceneSingleton<BuildingManager>
         if (buildings.TryGetValue(buildingType, out BaseBuilding building))
         {
             building.SetLevel(level); // BaseBuilding에서 레벨 설정
-            building.IsCreated = true;
             building.InitializeState(); // 상태 초기화
-            
+
             if (building.GetBuilding().CurrentLevel > -1)
+            {
+                building.IsCreated = true;
                 building.GetStateMachine().Init(building);
+            }
             
             Debug.Log($"{buildingType} 레벨이 {level}로 설정되었습니다.");
         }

@@ -45,11 +45,11 @@ public class PlayerService
         {
             PlayerId = id,
             PlayerType = (int)type,
-            PlayerEnergy = MainMenuMaanger.Instance.resourceDatas[ResourceType.Energy].initAmount,
-            PlayerFood = MainMenuMaanger.Instance.resourceDatas[ResourceType.Food].initAmount,
-            PlayerWorkforce = MainMenuMaanger.Instance.resourceDatas[ResourceType.Workforce].initAmount,
-            PlayerFuel = MainMenuMaanger.Instance.resourceDatas[ResourceType.Fuel].initAmount,
-            PlayerDDay = MainMenuMaanger.Instance.gameTimeData.startDay,
+            PlayerEnergy = MainMenuManger.Instance.resourceDatas[ResourceType.Energy].initAmount,
+            PlayerFood = MainMenuManger.Instance.resourceDatas[ResourceType.Food].initAmount,
+            PlayerWorkforce = MainMenuManger.Instance.resourceDatas[ResourceType.Workforce].initAmount,
+            PlayerFuel = MainMenuManger.Instance.resourceDatas[ResourceType.Fuel].initAmount,
+            PlayerDDay = MainMenuManger.Instance.gameTimeData.startDay,
             PlayerPowerplantLevel = -1,
             PlayerBiofarmLevel = -1,
             PlayerQuartersLevel = -1,
@@ -57,6 +57,9 @@ public class PlayerService
             PlayerResearchLabLevel = -1,
             PlayerRecoveryRoomLevel = -1,
             PlayerRecreationRoomLevel = -1,
+            PlayerHp = (int)MainMenuManger.Instance.playerData.BaseHP,
+            PlayerAttack = (int)MainMenuManger.Instance.playerData.AttackPower,
+            PlayerDefense = (int)MainMenuManger.Instance.playerData.Defense,
         };
         
         try
@@ -182,6 +185,71 @@ public class PlayerService
         }
     }
     
+    public bool UpdatePlayerStats(string playerId, float hp, float stress, float attack, float defense)
+    {
+        try
+        {
+            // PlayerId로 플레이어 데이터를 가져옴
+            var playerModel = dbConnection.Table<PlayerModel>().FirstOrDefault(p => p.PlayerId == playerId);
+            if (playerModel != null)
+            {
+                // HP, 스트레스, 공격력, 방어력을 업데이트
+                playerModel.PlayerHp = hp;
+                playerModel.PlayerStress = stress;
+                playerModel.PlayerAttack = attack;
+                playerModel.PlayerDefense = defense;
+
+                // 데이터베이스에 업데이트
+                dbConnection.Update(playerModel);
+
+                Debug.Log("Player stats updated successfully.");
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning("Player not found for updating stats.");
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to update player stats: " + ex.Message);
+            return false;
+        }
+    }
+    
+    public bool UpdateTechLearnedStatus(string playerId, int tech01IsLearned, int tech02IsLearned, int tech03IsLearned)
+    {
+        try
+        {
+            // 플레이어 데이터를 ID로 검색
+            var playerModel = dbConnection.Table<PlayerModel>().FirstOrDefault(p => p.PlayerId == playerId);
+            if (playerModel != null)
+            {
+                // 기술 상태 업데이트
+                playerModel.PlayerTech01IsLearned = tech01IsLearned;
+                playerModel.PlayerTech02IsLearned = tech02IsLearned;
+                playerModel.PlayerTech03IsLearned = tech03IsLearned;
+
+                // 데이터베이스에 저장
+                dbConnection.Update(playerModel);
+
+                Debug.Log("Tech learned status updated successfully.");
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning("Player not found for updating tech learned status.");
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to update tech learned status: " + ex.Message);
+            return false;
+        }
+    }
+    
     public bool DeletePlayer()
     {
         try
@@ -198,5 +266,6 @@ public class PlayerService
             return false;
         }
     }
+
     
 } // end class

@@ -58,6 +58,27 @@ public class PlayerModel
     
     [Column("player_d_day")]
     public int PlayerDDay { get; set; }
+    
+    [Column("player_hp")]
+    public float PlayerHp { get; set; }
+    
+    [Column("player_stress")]
+    public float PlayerStress { get; set; }
+    
+    [Column("player_attack")]
+    public float PlayerAttack { get; set; }
+    
+    [Column("player_defense")]
+    public float PlayerDefense { get; set; }
+    
+    [Column("player_tech_01_isLearned")]
+    public int PlayerTech01IsLearned { get; set; } // 0은 x, 1은 true
+    
+    [Column("player_tech_02_isLearned")]
+    public int PlayerTech02IsLearned { get; set; }
+    
+    [Column("player_tech_03_isLearned")]
+    public int PlayerTech03IsLearned { get; set; }
 }
 
 // id

@@ -8,12 +8,13 @@ using UnityEngine.UI;
 /// <summary>
 /// MainMenu에서 사용하는 매니저
 /// </summary>
-public class MainMenuMaanger : SceneSingleton<MainMenuMaanger>
+public class MainMenuManger : SceneSingleton<MainMenuManger>
 {
     [Header("MainMenu 씬에서 사용할 스크립터블 오브젝트 데이터들")]
     public SerializedDictionary<ResourceType, ResourceData> resourceDatas;
     public EncounterData encounterData;
     public GameTimeSetting gameTimeData;
+    public PlayerData playerData;
     
     [Header("UI Panels")]
     [SerializeField] private GameObject mainTitlePanel;       // 메인 패널
@@ -120,24 +121,43 @@ public class MainMenuMaanger : SceneSingleton<MainMenuMaanger>
     
     private void StartNewGame()
     {
-        // 플레이어 타입 설정: Toggle 선택 여부에 따라 설정
+        // 캐릭터 선택에 따른 플레이어 타입 설정
         PlayerModelType selectedType = toggleMaleChar.isOn ? PlayerModelType.Male : PlayerModelType.Female;
-        
-        // 플레이어 모델 타입, 인카운터 전체, 기본 자원, 빌딩 0레벨 저장
+
+        // DB에 데이터를 저장
+        if (SaveInitGameData(selectedType))
+        {
+            // 씬을 로드
+            GameSceneDataManager.Instance.LoadScene("Lobby");
+        }
+    }
+    
+    /// <summary>
+    /// 새로운 게임 데이터 저장
+    /// </summary>
+    /// <param name="selectedType"></param>
+    /// <returns></returns>
+    public bool SaveInitGameData(PlayerModelType selectedType)
+    {
         PlayerService playerService = new PlayerService();
-        
+
+        // 플레이어 테이블에 저장
         if (playerService.CreatePlayer(selectedType))
         {
-            EncounterService encouterService = new EncounterService();
+            // 인카운터 테이블에 저장
+            EncounterService encounterService = new EncounterService();
 
-            if (encouterService.CreateEncounters())
+            if (encounterService.CreateEncounters())
             {
-                // TODO : 인벤토리 데이터에 권총 기본 무기 저장하기..
+                // TODO : 인벤토리 데이터에 기본 무기 저장 로직 추가
                 
-                // Lobby 씬으로 넘거가기
-                GameSceneDataManager.Instance.LoadScene("Lobby");
+                Debug.Log("New game data successfully saved.");
+                return true;
             }
         }
+
+        Debug.LogError("Failed to save new game data.");
+        return false;
     }
     
     private void ContinueGame()

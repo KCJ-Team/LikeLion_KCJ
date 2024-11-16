@@ -12,7 +12,7 @@ public class GameResourceManager : SceneSingleton<GameResourceManager>
     [Header("UI MVP 패턴")] 
     [SerializeField]
     private GameResourceUIView gameResourceUIView;
-    private GameResourceUIPresenter gameResourceUIPresneter;
+    public GameResourceUIPresenter gameResourceUIPresneter;
     
     private void Start()
     {

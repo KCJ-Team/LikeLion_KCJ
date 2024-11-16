@@ -30,7 +30,11 @@ public class PauseMenuManager : SceneSingleton<PauseMenuManager>
         // ESC 입력으로 일시정지 메뉴 토글
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            TogglePauseMenu();
+            // 팝업이 열려 있으면 일시정지 메뉴를 띄우지 않음
+            if (!PopupUIManager.Instance.IsAnyPopupOpen())
+            {
+                TogglePauseMenu();
+            }
         }
     }
     
@@ -55,14 +59,14 @@ public class PauseMenuManager : SceneSingleton<PauseMenuManager>
     // Save 버튼 클릭 메서드
     private void SaveGameData()
     {
-        GameSceneDataManager.Instance.SaveDataInDB();
+        GameSceneDataManager.Instance.SaveLobbyDataInDB();
         Debug.Log("Game data saved.");
     }
 
     // Save and Main Title 버튼 클릭 메서드
     private void SaveAndBackToMainTitle()
     {
-        GameSceneDataManager.Instance.SaveDataInDB();
+        GameSceneDataManager.Instance.SaveLobbyDataInDB();
         Debug.Log("Game data saved. And Back To MainMenu");
         
         Time.timeScale = 1; // 시간 스케일 복구

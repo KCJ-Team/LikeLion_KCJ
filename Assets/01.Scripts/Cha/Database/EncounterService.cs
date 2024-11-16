@@ -22,7 +22,7 @@ public class EncounterService
     /// </summary>
     public bool CreateEncounters()
     {
-        EncounterData encounterData = MainMenuMaanger.Instance.encounterData;
+        EncounterData encounterData = MainMenuManger.Instance.encounterData;
 
         try
         {

@@ -25,7 +25,7 @@ public class MissilePreparingState : SkillState
         // 범위 표시기 프리팹 로드 및 생성
         GameObject indicatorPrefab = Resources.Load<GameObject>("SkillRangeIndicator");
         rangeIndicator = GameObject.Instantiate(indicatorPrefab);
-        rangeIndicator.transform.localScale = new Vector3(5f, 5f, 1f); // 범위 크기 설정
+        rangeIndicator.transform.localScale = new Vector3(1f, 1f, 1f);
         rangeIndicator.SetActive(true);
     }
     

@@ -28,13 +28,13 @@ public class TestPlayerMovePosition : MonoBehaviour
         transform.Translate(movement);
 
         // 위치가 변경되었을 경우 서버에 전송
-        if (transform.position != lastPosition)
-        {
-            PlayerManager.Instance.SendPlayerPosition(
-                MessageType.PlayerPositionUpdate, transform.position, moveSpeed, health
-            );
-            
-            lastPosition = transform.position;
-        }
+        // if (transform.position != lastPosition)
+        // {
+        //     PlayerManager.Instance.SendPlayerPosition(
+        //         MessageType.PlayerPositionUpdate, transform.position, moveSpeed, health
+        //     );
+        //     
+        //     lastPosition = transform.position;
+        // }
     }
 }

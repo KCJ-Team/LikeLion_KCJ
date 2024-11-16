@@ -102,9 +102,28 @@ public class PlayerManager : SceneSingleton<PlayerManager>
     }
     
     // 플레이어 위치 업데이트 요청을 네트워크 핸들러에 전달
-    public void SendPlayerPosition(MessageType messageType, Vector3 position, float speed, int health)
+    public void SendPlayerPosition(MessageType messageType, Vector3 position, float speed)
     {
-        playerNetworkHandler.SendPlayerPosition(messageType, player, position, speed, health);
+        if (player == null)
+        {
+            Debug.LogWarning("Cannot send position: Player is not initialized");
+            return;
+        }
+
+        if (playerNetworkHandler == null)
+        {
+            Debug.LogError("PlayerNetworkHandler is not initialized");
+            return;
+        }
+
+        try
+        {
+            playerNetworkHandler.SendPlayerPosition(messageType, player, position, speed);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to send player position: {e.Message}");
+        }
     }
     
     private void OnApplicationQuit()
@@ -112,6 +131,4 @@ public class PlayerManager : SceneSingleton<PlayerManager>
         Logout();
         Debug.Log("Application is quitting, player logged out.");
     }
-
-   
-} // end class
+}

@@ -13,8 +13,8 @@ public class PlayerData : ScriptableObject
     public float BaseMP;
     public float MoveSpeed;
     public float RotationSpeed;
-    public float AttackPower;  // 추가
-    public float Defense;      // 추가
+    public float AttackPower;  
+    public float Defense;      
     
     // 현재 장착한 장비 및 인벤토리, equipment 데이터
     [Header("Skill and Inventory")]

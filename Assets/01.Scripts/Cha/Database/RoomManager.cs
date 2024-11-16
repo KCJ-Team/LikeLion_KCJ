@@ -56,6 +56,7 @@ public class RoomManager : SceneSingleton<RoomManager>
         // 나 자신이라면
         if (player.playerId == PlayerManager.Instance.Player.playerId)
         {
+            //이거를 player아바타로 교체 -> playerData.character
             newPlayer = Instantiate(playerPrefab, initialPosition, Quaternion.identity);
         }
         else

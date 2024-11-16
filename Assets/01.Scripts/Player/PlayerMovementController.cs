@@ -50,7 +50,6 @@ public class PlayerMovementController
         HandleInput();
         HandleRotation();
         Move();
-        UpdateServerPosition();
     }
 
     private void HandleInput()
@@ -118,37 +117,18 @@ public class PlayerMovementController
     // 서버에 위치 정보 업데이트
     private void UpdateServerPosition()
     {
-        bool shouldUpdate = false;
-
-        // 위치나 회전 변경이 임계값을 넘었는지 확인
-        if (Vector3.Distance(_transform.position, _lastPosition) > PositionUpdateThreshold ||
-            Quaternion.Angle(_transform.rotation, _lastRotation) > RotationUpdateThreshold)
+        // 플레이어가 룸에 입장했는지 확인
+        if (RoomManager.Instance == null || string.IsNullOrEmpty(RoomManager.Instance.RoomId))
         {
-            shouldUpdate = true;
+            return; // 룸에 입장하지 않은 상태면 위치 업데이트를 하지 않음
         }
 
-        if (shouldUpdate)
+        // 위치가 변경되었을 때만 서버에 업데이트
+        if (Vector3.Distance(_transform.position, _lastPosition) > PositionUpdateThreshold)
         {
             float currentSpeed = (_isAimLocked || _isSkillActive) ? AimSpeed : _player.playerData.MoveSpeed;
-            
-            // Health 컴포넌트에서 현재 체력 가져오기
-            int currentHealth = 100; // 기본값
-            if (_player.TryGetComponent<Health>(out var health))
-            {
-                currentHealth = (int)health.CurrentHealth;//나중에 float로 변경요청
-            }
-
-            // 서버에 위치 정보 전송
-            PlayerManager.Instance.SendPlayerPosition(
-                MessageType.PlayerPositionUpdate,
-                _transform.position,
-                currentSpeed,
-                currentHealth
-            );
-
-            // 마지막 위치와 회전 업데이트
+            PlayerManager.Instance.SendPlayerPosition(MessageType.PlayerPositionUpdate, _transform.position, currentSpeed);
             _lastPosition = _transform.position;
-            _lastRotation = _transform.rotation;
         }
     }
 }

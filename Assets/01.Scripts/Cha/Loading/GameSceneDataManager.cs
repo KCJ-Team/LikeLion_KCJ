@@ -137,6 +137,11 @@ public class GameSceneDataManager : MonoBehaviour
         // 플레이어 정보
         LobbyMenuManager.Instance.SetHpAndStress(playerModel.PlayerHp, playerModel.PlayerStress);
         LobbyMenuManager.Instance.SetAttackAndDefense(playerModel.PlayerAttack, playerModel.PlayerDefense);
+        
+        // 기술 연구 상태 로드
+        TechManager.Instance.techs[0].isLearned = playerModel.PlayerTech01IsLearned == 1;
+        TechManager.Instance.techs[1].isLearned = playerModel.PlayerTech02IsLearned == 1;
+        TechManager.Instance.techs[2].isLearned = playerModel.PlayerTech03IsLearned == 1;
     }
 
     // TODO : 데이터 저장
@@ -186,6 +191,13 @@ public class GameSceneDataManager : MonoBehaviour
         float defense = LobbyMenuManager.Instance.defense;
         
         playerService.UpdatePlayerStats(playerId, hp, stress, attack, defense);
+        
+        // 플레이어 연구실 Learned flag
+        int isLearnedTech01 = TechManager.Instance.techs[0].isLearned ? 1 : 0;
+        int isLearnedTech02 = TechManager.Instance.techs[1].isLearned ? 1 : 0;
+        int isLearnedTech03 = TechManager.Instance.techs[2].isLearned ? 1 : 0;
+        
+        playerService.UpdateTechLearnedStatus(playerId, isLearnedTech01, isLearnedTech02, isLearnedTech03);
         
         // TODO : 인벤토리, 무기
         

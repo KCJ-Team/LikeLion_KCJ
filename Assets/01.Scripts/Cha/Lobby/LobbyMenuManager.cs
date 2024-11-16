@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -16,10 +17,14 @@ public class LobbyMenuManager : SceneSingleton<LobbyMenuManager>
     public float attack;
     public float defense;
 
-    [Header("Down 패널 버튼들")] public Button btnProfile;
+    [Header("Down 패널 버튼들")] 
     public Button btnDeck;
     public Button btnStore;
-
+    
+    [Header("Down 버튼 누르면 열릴 UI 패널들")]
+    public GameObject deckPanel;
+    public GameObject storePanel;
+    
     [Header("HP와 Stress UI")] public Slider hpSlider;
     public Text hpText;
     public Slider stressSlider;
@@ -29,22 +34,27 @@ public class LobbyMenuManager : SceneSingleton<LobbyMenuManager>
 
     private void Start()
     {
-        // UI 초기화
-        // UpdateHpUI(hp);
-        // UpdateStressUI(stress);
-        // UpdateAttackUI(attack);
-        // UpdateDefenseUI(defense);
-
-        // 슬라이더 값이 변경되었을 때 이벤트 연결
-        hpSlider.onValueChanged.AddListener(OnHpSliderChanged);
-        stressSlider.onValueChanged.AddListener(OnStressSliderChanged);
+        // 버튼 클릭 이벤트 연결
+        btnDeck.onClick.AddListener(() => ShowPanel(deckPanel));
+        btnStore.onClick.AddListener(() => ShowPanel(storePanel));
+        
+        // 초기 상태: 모든 패널 비활성화
+        HideAllPanels();
     }
-
-    private void OnDestroy()
+    
+    private void HideAllPanels()
     {
-        // 슬라이더 이벤트 제거 (메모리 누수 방지)
-        hpSlider.onValueChanged.RemoveListener(OnHpSliderChanged);
-        stressSlider.onValueChanged.RemoveListener(OnStressSliderChanged);
+        // 모든 패널을 비활성화
+        if (deckPanel != null) deckPanel.SetActive(false);
+        if (storePanel != null) storePanel.SetActive(false);
+    }
+    
+    private void ShowPanel(GameObject panelToShow)
+    {
+        HideAllPanels();
+        
+        // 선택한 패널만 활성화
+        panelToShow.SetActive(true);
     }
 
     public void SetHpAndStress(float newHp, float newStress)
@@ -98,15 +108,5 @@ public class LobbyMenuManager : SceneSingleton<LobbyMenuManager>
     {
         attackText.text = $"{attack}";
         defenseText.text = $"{defense}";
-    }
-
-    private void OnHpSliderChanged(float value)
-    {
-        // SetHpAndStress(value);
-    }
-
-    private void OnStressSliderChanged(float value)
-    {
-        // UpdateStressUI(value);
     }
 } // end class

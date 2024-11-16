@@ -9,14 +9,13 @@ using UnityEngine;
 public class BuildingManager : SceneSingleton<BuildingManager>
 {
     [Header("Buildings")] 
-    [SerializeField] private SerializedDictionary<BuildingType, BaseBuilding> buildings = new();
+    [SerializeField] 
+    private SerializedDictionary<BuildingType, BaseBuilding> buildings = new();
 
     [Header("UI MVP 패턴")] 
-    [SerializeField] private BuildingUIView buildingUIView;
+    [SerializeField] 
+    private BuildingUIView buildingUIView;
     private BuildingUIPresenter buildingUIPresenter;
-
-    [Header("빌딩의 자원 생산 코루틴 관리")] 
-    private Dictionary<BaseBuilding, Coroutine> productionCoroutines = new();
     
     [Header("특정 빌딩의 UseButton 상태 플래그")]
     public bool isRecoveryRoomUsed = false; // 병원 UseButton 플래그
@@ -25,12 +24,26 @@ public class BuildingManager : SceneSingleton<BuildingManager>
     // 자원 생산 플래그
     private bool hasProducedAt6AM = false;
     private bool hasProducedAt6PM = false;
+    private bool hasProducedAt12PM = false; // 12시 자원 생산 플래그
     
     private void Start()
     {
         if (buildingUIPresenter == null)
         {
             buildingUIPresenter = new BuildingUIPresenter(buildingUIView);
+        }
+    }
+    
+    public BaseBuilding GetBuilding(BuildingType buildingType)
+    {
+        if (buildings.TryGetValue(buildingType, out BaseBuilding building))
+        {
+            return building; // 해당 BuildingType의 빌딩 반환
+        }
+        else
+        {
+            Debug.LogWarning($"Building of type {buildingType} not found.");
+            return null; // 없을 경우 null 반환
         }
     }
 
@@ -54,6 +67,10 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             ProduceAllResources();
             hasProducedAt6PM = true;
             hasProducedAt6AM = false; // 다음 날 오전 생산 플래그 초기화
+        }
+        else if (hour == 12)
+        {
+            ProduceAllResources();
         }
     }
 
@@ -119,20 +136,6 @@ public class BuildingManager : SceneSingleton<BuildingManager>
                GameResourceManager.Instance.GetResourceAmount(ResourceType.Food) >= foodCost &&
                GameResourceManager.Instance.GetResourceAmount(ResourceType.Fuel) >= fuelCost &&
                GameResourceManager.Instance.GetResourceAmount(ResourceType.Workforce) >= workforceCost;
-    }
-    
-    // 특정 BuildingType에 해당하는 빌딩을 반환하는 메서드
-    public BaseBuilding GetBuilding(BuildingType buildingType)
-    {
-        if (buildings.TryGetValue(buildingType, out BaseBuilding building))
-        {
-            return building;
-        }
-        else
-        {
-            Debug.LogWarning($"Building of type {buildingType} not found.");
-            return null;
-        }
     }
     
     // 빌딩의 레벨을 Get

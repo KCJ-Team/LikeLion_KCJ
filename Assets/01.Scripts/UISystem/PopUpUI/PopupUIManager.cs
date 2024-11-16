@@ -4,19 +4,20 @@ using UnityEngine;
 
 public enum PopupType
 {
-    BuildingUpgrade, Encounter, Store
+    BuildingUpgrade, Encounter, Store, Lab, Deck
 }
 
 public class PopupUIManager : SceneSingleton<PopupUIManager>
 {
     //키 바인딩 - 예시
-    public KeyCode _escapeKey = KeyCode.Escape;
-    public KeyCode buildingKey = KeyCode.I;
-    public KeyCode incounterKey  = KeyCode.C;
-    public KeyCode storeKey = KeyCode.V;
+    public KeyCode escapeKey = KeyCode.Escape;
+    public KeyCode storeKey = KeyCode.C;
+    public KeyCode labKey = KeyCode.V;
+    public KeyCode deckKey = KeyCode.X;
     
     [SerializeField]
     private LinkedList<PopupUI> activePopupLList;  //실시간 팝업 관리 LinkedList
+    
     [SerializeField]
     private List<PopupUI> allPopupList;            //전체 팝업 목록 List
 
@@ -24,7 +25,9 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
     [Header("PopUIs")]
     public PopupUI buildingUpgradePopup;
     public PopupUI EncounterPopup;
+    public PopupUI labPopup;
     public PopupUI storePopup;
+    public PopupUI deckPopup;
     
     private void Awake()
     {
@@ -41,7 +44,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         // 1. 리스트 초기화
         allPopupList = new List<PopupUI>()
         {
-            buildingUpgradePopup, EncounterPopup, storePopup
+            buildingUpgradePopup, EncounterPopup, labPopup, storePopup
         };
 
         // 2. 모든 팝업에 이벤트 등록
@@ -78,7 +81,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
     private void Update()
     {
         // ESC 누를 경우 링크드리스트의 First 닫기
-        if (Input.GetKeyDown(_escapeKey))
+        if (Input.GetKeyDown(escapeKey))
         {
             if (activePopupLList.Count > 0)
             {
@@ -91,8 +94,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         }
 
         // 단축키 조작
-        ToggleKeyDownAction(buildingKey, buildingUpgradePopup);
-        ToggleKeyDownAction(incounterKey,  EncounterPopup);
+        ToggleKeyDownAction(labKey,  labPopup);
         ToggleKeyDownAction(storeKey,  storePopup);
     }
     
@@ -123,6 +125,10 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
                 return EncounterPopup;
             case PopupType.Store:
                 return storePopup;
+            case PopupType.Lab:
+                return labPopup;
+            case PopupType.Deck:
+                return deckPopup;
             default:
                 Debug.LogWarning("Invalid PopupType requested.");
                 return null;

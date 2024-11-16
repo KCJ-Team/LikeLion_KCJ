@@ -218,6 +218,38 @@ public class PlayerService
         }
     }
     
+    public bool UpdateTechLearnedStatus(string playerId, int tech01IsLearned, int tech02IsLearned, int tech03IsLearned)
+    {
+        try
+        {
+            // 플레이어 데이터를 ID로 검색
+            var playerModel = dbConnection.Table<PlayerModel>().FirstOrDefault(p => p.PlayerId == playerId);
+            if (playerModel != null)
+            {
+                // 기술 상태 업데이트
+                playerModel.PlayerTech01IsLearned = tech01IsLearned;
+                playerModel.PlayerTech02IsLearned = tech02IsLearned;
+                playerModel.PlayerTech03IsLearned = tech03IsLearned;
+
+                // 데이터베이스에 저장
+                dbConnection.Update(playerModel);
+
+                Debug.Log("Tech learned status updated successfully.");
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning("Player not found for updating tech learned status.");
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to update tech learned status: " + ex.Message);
+            return false;
+        }
+    }
+    
     public bool DeletePlayer()
     {
         try

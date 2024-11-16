@@ -33,11 +33,12 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
     // 플래그: 21시 자원 소비가 하루에 한 번만 실행되도록 제어
     private bool hasConsumedAt21 = false;
     
+    // 12시의 자원 생산을 담당하는 플래그
+    public bool hasProducedAt12PM = false; // 12시 자원 생산 플래그
+    
     // 자원 상태가 경고인지 확인하는 변수
     private bool resourceWarningTriggered = false; 
-    
-    private bool hasCheckedAtMidnight = false;
-    
+
     private void Start()
     {
         if (gameTimeSetting == null)
@@ -82,9 +83,18 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     UpdateTimeUI();
 
                     // 6시, 18시에는 자원 생산, 
-                    if (hour == 6 || hour == 18)
+                    if (hour == 6 && minute == 0|| hour == 18 && minute == 0)
                     {
                         BuildingManager.Instance.ProduceResourcesAtScheduledTimes(hour);
+                    }
+
+                    if (hour == 12 && minute == 0)
+                    {
+                        // 12시에 만약 플래그가 true라면 자원을 생산하자
+                        if (hasProducedAt12PM)
+                        {
+                            BuildingManager.Instance.ProduceResourcesAtScheduledTimes(hour);
+                        }
                     }
                     
                     // 21시에는 자원 소비 (한 번만 실행)

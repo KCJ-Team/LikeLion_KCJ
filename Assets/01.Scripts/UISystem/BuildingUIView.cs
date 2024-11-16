@@ -27,4 +27,10 @@ public class BuildingUIView : MonoBehaviour
     [Header("UseButton의 아이콘")] 
     public Sprite iconUse;
     public Sprite iconUnused;
+    
+    [Header("연구실의 Learn 그룹들")] 
+    public GameObject[] objLearn;
+    public Button[] btnLearns;
+    public Image[] imageLearned;
+
 } // end class

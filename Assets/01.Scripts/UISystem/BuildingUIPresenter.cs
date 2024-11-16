@@ -50,6 +50,54 @@ public class BuildingUIPresenter
 
         // 팝업창의 업그레이드 버튼 등록
         uiView.buildUpgradeButton.onClick.AddListener(BuildOrUpgradeBuilding);
+        
+        // 연구실의 Learn 버튼들 클릭 이벤트 등록
+        for (int i = 0; i < uiView.btnLearns.Length; i++)
+        {
+            int index = i; // 클로저 문제 방지
+            Button button = uiView.btnLearns[index];
+            button.onClick.AddListener(() => OnLearnButtonClicked(index));
+        }
+    }
+    
+    /// <summary>
+    /// 연구 버튼 클릭 시 호출
+    /// </summary>
+    private void OnLearnButtonClicked(int techIndex)
+    {
+        if (techIndex < 0 || techIndex >= TechManager.Instance.techs.Count)
+        {
+            Debug.LogError($"Invalid tech index: {techIndex}");
+            return;
+        }
+
+        Tech tech = TechManager.Instance.techs[techIndex];
+
+        // TechManager에 로직 전달
+        TechManager.Instance.LearnTech(tech);
+
+        // UI 업데이트 => 체크로바꾸기? 
+        UpdateLearnButtonUI(techIndex);
+    }
+    
+    private void UpdateLearnButtonUI(int techIndex)
+    {
+        if (techIndex < 0 || techIndex >= TechManager.Instance.techs.Count)
+        {
+            Debug.LogError($"Invalid tech index: {techIndex}");
+            return;
+        }
+
+        // Tech 상태를 가져옴
+        Tech tech = TechManager.Instance.techs[techIndex];
+
+        // UI 요소 업데이트
+        if (tech.isLearned)
+        {
+            // 학습된 경우 버튼 비활성화 및 체크 표시 활성화
+            uiView.objLearn[techIndex].SetActive(false);
+            uiView.imageLearned[techIndex].gameObject.SetActive(true);
+        }
     }
 
     // 빌딩 크래프팅 버튼 클릭 시 호출
@@ -75,12 +123,62 @@ public class BuildingUIPresenter
 
         if (buildingBase != null)
         {
-            OpenBuildingPopup(buildingBase);
+            // 빌딩이 연구실인지 확인
+            if (buildingBase.GetBuildingData().type == BuildingType.ResearchLab)
+            {
+                OpenResearchLabPopup(buildingBase); // 연구실 전용 팝업 열기
+            }
+            else
+            {
+                OpenBuildingPopup(buildingBase); // 일반 빌딩 팝업 열기
+            }
         }
         else
         {
             Debug.LogWarning("BaseBuilding component not found on the parent of the button.");
         }
+    }
+    
+    // 연구실 전용 팝업창 열기
+    private void OpenResearchLabPopup(BaseBuilding buildingBase)
+    {
+        PopupUI popup = PopupUIManager.Instance.GetPopup(PopupType.Lab);
+
+        if (popup == null)
+        {
+            Debug.LogError("ResearchLab Popup not found in PopupUIManager.");
+            return;
+        }
+
+        // 현재 연구포인트를 가져옴.
+        int availableResearchPoints = GameResourceManager.Instance.GetResourceAmount(ResourceType.Research);
+
+        // 기술 리스트 순회
+        for (int i = 0; i < TechManager.Instance.techs.Count; i++)
+        {
+            Tech tech = TechManager.Instance.techs[i];
+            
+            if (!tech.isLearned && availableResearchPoints >= tech.techCost)
+            {
+                // 연구 가능: objLearn 활성화, imageLearned 비활성화
+                uiView.objLearn[i].SetActive(true);
+                uiView.imageLearned[i].gameObject.SetActive(false);
+            }
+            else if (!tech.isLearned && availableResearchPoints < tech.techCost)
+            {
+                // 연구 포인트 부족: objLearn 비활성화
+                uiView.objLearn[i].SetActive(false);
+            }
+            else if (tech.isLearned)
+            {
+                // 이미 연구된 경우: imageLearned 활성화
+                uiView.imageLearned[i].gameObject.SetActive(true);
+                uiView.objLearn[i].SetActive(false);
+            }
+        }
+
+        // 팝업 열기
+        PopupUIManager.Instance.OpenPopup(popup);
     }
 
     // 병원/오락시설이 Use가 되면 처리.. 

@@ -5,7 +5,7 @@ public class PlayerCharacterController : MonoBehaviour
     [Header("Components")]
     public PlayerData playerData;
     private WeaponManager _weaponManager;
-    private Health _health;
+    public Health _health;
     private Animator _animator;
     
     // Sub-controllers

@@ -31,41 +31,56 @@ public class PlayerNetworkHandler
     }
     
     // 플레이어 위치 정보 전송
-    public void SendPlayerPosition(MessageType messageType, TestPlayer player, Vector3 position, float speed, int hp)
+    public void SendPlayerPosition(MessageType messageType, TestPlayer player, Vector3 position, float speed)
     {
-         // RoomManager에서 roomId와 플레이어 목록 가져오기
-         string roomId = RoomManager.Instance.RoomId;
-         
-         // RoomPlayerUpdate 객체 생성
-         // TODO : 모델, 웨폰 프리팹도 초기화 시켜주어야함
-         var roomPlayerUpdate = new RoomInfo.RoomPlayerUpdate()
-         {
-             RoomId = roomId,
-             PlayerInfo = new PlayerInfo.PlayerInfo()
-             {
-                 PlayerId = player.playerId,
-                 X = position.x,
-                 Y = position.y,
-                 Z = position.z,
-                 Speed = speed,
-                 Hp = hp,
-             }
-         };
-        
-         GameMessage message = new GameMessage
-         {
-             MessageType = messageType, // 메시지 타입 설정\
-             RoomPlayerUpdate = roomPlayerUpdate
-         };
-        
-         // 디버깅 정보 출력
-         Debug.Log("\n Sending player position to server:");
-         // Debug.Log($"Player ID: {player.playerId}");
-         // Debug.Log($"Position - X: {position.x}, Y: {position.y}, Z: {position.z}");
-         // Debug.Log($"Speed: {speed}");
-         // Debug.Log($"Health: {health} \n");
-        
-        networkManager.SendMessage(message);
+        if (player == null)
+        {
+            Debug.LogError("Cannot send position: Player is null");
+            return;
+        }
+
+        if (RoomManager.Instance == null)
+        {
+            Debug.LogError("RoomManager instance is null");
+            return;
+        }
+
+        string roomId = RoomManager.Instance.RoomId;
+        if (string.IsNullOrEmpty(roomId))
+        {
+            Debug.LogError("Cannot send position: RoomId is null or empty");
+            return;
+        }
+
+        try
+        {
+            var roomPlayerUpdate = new RoomInfo.RoomPlayerUpdate
+            {
+                RoomId = roomId,
+                PlayerInfo = new PlayerInfo.PlayerInfo
+                {
+                    PlayerId = player.playerId,
+                    X = position.x,
+                    Y = position.y,
+                    Z = position.z,
+                    Speed = speed
+                }
+            };
+
+            GameMessage message = new GameMessage
+            {
+                MessageType = messageType,
+                RoomPlayerUpdate = roomPlayerUpdate
+            };
+
+            networkManager.SendMessage(message);
+            
+            Debug.Log($"Position sent - Room: {roomId}, Player: {player.playerId}, Pos: {position}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error creating or sending position update: {e.Message}");
+        }
     }
     
     
@@ -165,4 +180,4 @@ public class PlayerNetworkHandler
         
         networkManager.SendMessage(message);
     }
-} // end class
+}

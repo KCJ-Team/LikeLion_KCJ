@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596d93f9b76c2994291694bf201f0e87, type: 3}
   m_Name: Equipment
   m_EditorClassIdentifier: 
-  savePath: 
   database: {fileID: 11400000, guid: 51bec8d7b147ca74f9cf0d148a51479e, type: 2}
   invenType: 1
   type: 0
@@ -34,11 +33,6 @@ MonoBehaviour:
         Id: -1
       amount: 0
     - AllowedItems: 04000000
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 03000000
       card:
         Name: 
         Id: -1

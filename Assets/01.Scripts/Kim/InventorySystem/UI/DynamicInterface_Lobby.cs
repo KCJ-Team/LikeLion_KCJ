@@ -6,62 +6,58 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class DynamicInterface : UserInterface
+public class DynamicInterface_Lobby : UserInterface
 {
     public GameObject inventoryPrefab;
     public GameObject contentPanel;
-    public int X_START;
-    public int Y_START;
-    public int X_SPACE_BETWEEN_ITEM;
-    public int Y_SPACE_BETWEEN_ITEM;
-    public int ITEMS_PER_PAGE = 10;
-    
+
+    [SerializeField]
     private List<GameObject> instantiatedSlots = new List<GameObject>();
 
     public override void CreateSlots()
     {
+        // 슬롯과 InventorySlot을 매핑하기 위한 딕셔너리 초기화
         slotsOnInterface = new SerializedDictionary<GameObject, InventorySlot>();
         
+        // 기존에 생성된 슬롯들을 모두 제거
         foreach (var slot in instantiatedSlots)
         {
             Destroy(slot);
         }
         instantiatedSlots.Clear();
-
+    
         int itemCount = inventory.GetSlots.Count();
-        
+    
+        // 슬롯 개수만큼 반복하여 슬롯을 생성
         for (int i = 0; i < itemCount; i++)
         {
-            var obj = CreateSlotObj();
-            obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-
+            // 슬롯 프리팹을 인스턴스화하여 슬롯 오브젝트 생성
+            GameObject obj = CreateSlotObj();
+            
             AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
             AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
             AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
             AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
+            // 클릭 이벤트 추가
+            AddEvent(obj, EventTriggerType.PointerClick, delegate { OnClick(obj); });
+
+            // 슬롯 데이터를 UI 오브젝트와 매핑
+            inventory.GetSlots[i].slotDisplay = obj; // 슬롯 데이터를 UI 슬롯에 연결
+            slotsOnInterface.Add(obj, inventory.GetSlots[i]);// 딕셔너리에 추가
             
-            inventory.GetSlots[i].slotDisplay = obj;
-            slotsOnInterface.Add(obj, inventory.GetSlots[i]);
+            // 생성된 슬롯을 리스트에 추가
             instantiatedSlots.Add(obj);
         }
-        
-        int columns = (itemCount + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
-        float contentWidth = columns * (X_SPACE_BETWEEN_ITEM + inventoryPrefab.GetComponent<RectTransform>().rect.width);
-        contentPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, contentWidth);
     }
+    
 
     public GameObject CreateSlotObj()
     {
-        var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, contentPanel.transform);
-
+        // 슬롯 프리팹을 Content Panel의 자식으로 생성
+        GameObject obj = Instantiate(inventoryPrefab, contentPanel.transform);
+       //  obj.AddComponent<SlotHandler>();
+        
         return obj;
-    }
-
-    public Vector3 GetPosition(int i)
-    {
-        int column = i / ITEMS_PER_PAGE;
-        int row = i % ITEMS_PER_PAGE;
-        return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * column), Y_START + (-Y_SPACE_BETWEEN_ITEM * row), 0f);
     }
 }

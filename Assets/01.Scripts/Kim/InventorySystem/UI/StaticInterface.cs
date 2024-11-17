@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,7 +10,7 @@ public class StaticInterface : UserInterface
     
     public override void CreateSlots()
     {
-        slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
+        slotsOnInterface = new SerializedDictionary<GameObject, InventorySlot>();
         
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {

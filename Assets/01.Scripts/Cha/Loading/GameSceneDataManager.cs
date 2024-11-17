@@ -142,6 +142,15 @@ public class GameSceneDataManager : MonoBehaviour
         TechManager.Instance.techs[0].isLearned = playerModel.PlayerTech01IsLearned == 1;
         TechManager.Instance.techs[1].isLearned = playerModel.PlayerTech02IsLearned == 1;
         TechManager.Instance.techs[2].isLearned = playerModel.PlayerTech03IsLearned == 1;
+        
+        // TODO : 확인필요
+        // 인벤토리
+        InventoryService inventoryService = new InventoryService();
+        inventoryService.GetAllInventory(); // 인벤토리를 가져와 playerData의 inventory에 적재
+        
+        // // 이큅먼트
+        // EquipmentService equipmentService = new EquipmentService();
+        // equipmentService.LoadEquipment();
     }
 
     // TODO : 데이터 저장
@@ -199,12 +208,20 @@ public class GameSceneDataManager : MonoBehaviour
         
         playerService.UpdateTechLearnedStatus(playerId, isLearnedTech01, isLearnedTech02, isLearnedTech03);
         
-        // TODO : 인벤토리, 무기
+        // TODO : 확인필요
+        // 인벤토리
+        // InventoryService inventoryService = new InventoryService();
+        // inventoryService.UpdateInventory();
+        //
+        // // 이큅먼트
+        // EquipmentService equipmentService = new EquipmentService();
+        // equipmentService.SaveEquipment();
         
         Debug.Log("DB에 데이터 저장 완료");
     }
     
     // DB의 데이터들을 초기화. 게임 엔딩시 사용.
+    // TODO : 
     public void ClearDataInDB()
     {
         PlayerService playerService = new PlayerService();

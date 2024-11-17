@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: DefenceBuffCard
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 0}
+  characterPrefab: {fileID: 8250591972788044732, guid: 3c164dc139575144fab2dd4505184c7c,
+    type: 3}
   characterDisplay: {fileID: 0}
   stackable: 0
   type: 4

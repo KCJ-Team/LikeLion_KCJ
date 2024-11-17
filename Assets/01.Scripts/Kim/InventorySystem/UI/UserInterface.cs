@@ -53,24 +53,55 @@ public abstract class UserInterface : MonoBehaviour
     // 슬롯 데이터가 업데이트될 때 호출되는 메서드
     public void OnSlotUpdate(InventorySlot slot)
     {
+        var slotDisplay = slot.slotDisplay; // 슬롯의 UI GameObject를 가져옵니다.
+
         if (slot.card.Id <= -1) // 슬롯에 카드 데이터가 없을 경우
         {
-            var image = slot.slotDisplay.GetComponent<Image>(); // .transform.GetChild(0).GetComponent<Image>(); // 이미지 컴포넌트 가져오기
-            image.sprite = null; // 슬롯의 이미지를 제거
-            image.color = new Color(1, 1, 1, 0); // 이미지 색상을 투명으로 설정
-            
-            Debug.Log("슬롯에 카드 데이터가 없어서 이미지를 제거 null");
+            // 프리팹을 제거
+            var tempObject = slotDisplay.transform.GetChild(0).gameObject;
+            if (tempObject != null)
+            {
+                Destroy(tempObject); // 카드가 없는 경우 해당 UI 객체를 제거
+            }
         }
         else // 슬롯에 유효한 카드 데이터가 있는 경우
         {
-            // 바뀌어야할 카드 이미지.. 
-            var image = slot.slotDisplay.GetComponent<Image>(); // slot.slotDisplay.transform.GetChild(0).GetComponent<Image>(); // 이미지 컴포넌트 가져오기
-            image.sprite = slot.GetItemObject().uiDisplay; // 슬롯에 표시할 아이템의 이미지를 설정
-            image.color = new Color(1, 1, 1, 1); // 이미지 색상을 불투명으로 설정
-            
-            Debug.Log($"슬롯에 데이터가 있음!! {slot.card.Name}");
+            // 바뀌어야할 카드 프리팹을 생성
+            GameObject tempPrefab = slot.GetItemObject().characterPrefab;
+            if (tempPrefab != null)
+            {
+                // 기존의 GameObject를 제거하고 새 프리팹을 생성
+                GameObject existingObject = slotDisplay.gameObject; // slotDisplay.transform.GetChild(0).gameObject;
+                if (existingObject != null)
+                {
+                    Destroy(existingObject); // 기존의 객체 제거
+                }
 
+                // 새 GameObject 생성
+                GameObject newItem = Instantiate(tempPrefab, slotDisplay.transform);
+                newItem.transform.localPosition = Vector3.zero; // 위치 초기화
+                newItem.SetActive(true); // 활성화
+            }
         }
+        
+        // if (slot.card.Id <= -1) // 슬롯에 카드 데이터가 없을 경우
+        // {
+        //     var image = slot.slotDisplay.GetComponent<Image>(); // .transform.GetChild(0).GetComponent<Image>(); // 이미지 컴포넌트 가져오기
+        //     image.sprite = null; // 슬롯의 이미지를 제거
+        //     image.color = new Color(1, 1, 1, 0); // 이미지 색상을 투명으로 설정
+        //     
+        //     Debug.Log("슬롯에 카드 데이터가 없어서 이미지를 제거 null");
+        // }
+        // else // 슬롯에 유효한 카드 데이터가 있는 경우
+        // {
+        //     // 바뀌어야할 카드 이미지.. 
+        //     var image = slot.slotDisplay.GetComponent<Image>(); // slot.slotDisplay.transform.GetChild(0).GetComponent<Image>(); // 이미지 컴포넌트 가져오기
+        //     image.sprite = slot.GetItemObject().uiDisplay; // 슬롯에 표시할 아이템의 이미지를 설정
+        //     image.color = new Color(1, 1, 1, 1); // 이미지 색상을 불투명으로 설정
+        //     
+        //     Debug.Log($"슬롯에 데이터가 있음!! {slot.card.Name}");
+        //
+        // }
     }
 
     // 슬롯을 생성하는 추상 메서드, 상속받은 클래스에서 구현해야 함
@@ -343,7 +374,7 @@ public abstract class UserInterface : MonoBehaviour
             tempTransform.position = originalTransform.position;
 
             // 크기를 고정 (133x178)
-            tempTransform.sizeDelta = new Vector2(133, 178);
+            tempTransform.sizeDelta = new Vector2(210, 280);
 
             // `Horizontal Layout Group`의 영향을 받지 않도록 LayoutElement 추가
             LayoutElement layoutElement = tempItem.AddComponent<LayoutElement>();

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: KnockBackCard
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  characterPrefab: {fileID: 8250591972788044732, guid: 52f9280310d8b64479c252ef051ad7cf,
+    type: 3}
   characterDisplay: {fileID: 0}
   stackable: 0
   type: 2

@@ -10,7 +10,8 @@ public class DynamicInterface_Lobby : UserInterface
 {
     public GameObject inventoryPrefab;
     public GameObject contentPanel;
-
+    public bool isWeaponInven;
+    
     [SerializeField]
     private List<GameObject> instantiatedSlots = new List<GameObject>();
 
@@ -27,12 +28,19 @@ public class DynamicInterface_Lobby : UserInterface
         instantiatedSlots.Clear();
     
         int itemCount = inventory.GetSlots.Count();
+       
     
         // 슬롯 개수만큼 반복하여 슬롯을 생성
         for (int i = 0; i < itemCount; i++)
         {
+            // 카드 타입이 'Weapon'인 경우만 처리
+            if (isWeaponInven && inventory.GetSlots[i].GetItemObject().type != CardType.Weapon)
+            {
+                continue;  // Weapon 타입이 아니면 이 슬롯은 건너뜀
+            }
+            
             // 슬롯 프리팹을 인스턴스화하여 슬롯 오브젝트 생성
-            GameObject obj = CreateSlotObj();
+            GameObject obj = CreateSlotObj(i);
             
             AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
             AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
@@ -43,7 +51,8 @@ public class DynamicInterface_Lobby : UserInterface
             AddEvent(obj, EventTriggerType.PointerClick, delegate { OnClick(obj); });
 
             // 슬롯 데이터를 UI 오브젝트와 매핑
-            inventory.GetSlots[i].slotDisplay = obj; // 슬롯 데이터를 UI 슬롯에 연결
+            // inventory.GetSlots[i].slotDisplay = obj; // 슬롯 데이터를 UI 슬롯에 연결
+            inventory.GetSlots[i].slotDisplay = obj;
             slotsOnInterface.Add(obj, inventory.GetSlots[i]);// 딕셔너리에 추가
             
             // 생성된 슬롯을 리스트에 추가
@@ -51,13 +60,32 @@ public class DynamicInterface_Lobby : UserInterface
         }
     }
     
-
-    public GameObject CreateSlotObj()
+    public GameObject CreateSlotObj(int slotIndex)
     {
-        // 슬롯 프리팹을 Content Panel의 자식으로 생성
-        GameObject obj = Instantiate(inventoryPrefab, contentPanel.transform);
-       //  obj.AddComponent<SlotHandler>();
+        // inventory.GetSlots[slotIndex].GetItemObject().characterDisplay가 Prefab이라면 인스턴스화해야 함
+        GameObject obj = inventory.GetSlots[slotIndex].GetItemObject().characterPrefab;
+
+        // 객체가 null이 아니면, Prefab을 인스턴스화하여 Content Panel의 자식으로 설정
+        if (obj != null)
+        {
+            // 인스턴스화
+            GameObject instantiatedObj = Instantiate(obj, contentPanel.transform);
         
-        return obj;
+            // 인스턴스화된 객체 활성화
+            instantiatedObj.SetActive(true);
+        
+            return instantiatedObj;  // 인스턴스화된 객체 반환
+        }
+
+        return null; // null이면 반환
     }
+    
+    // public GameObject CreateSlotObj()
+    // {
+    //     // 슬롯 프리팹을 Content Panel의 자식으로 생성
+    //     GameObject obj = Instantiate(inventoryPrefab, contentPanel.transform);
+    //    //  obj.AddComponent<SlotHandler>();
+    //     
+    //     return obj;
+    // }
 }

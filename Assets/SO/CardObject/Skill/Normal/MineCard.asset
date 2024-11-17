@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: MineCard
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 0}
+  characterPrefab: {fileID: 8250591972788044732, guid: b62189e12a23e9f49a18b83f89e11a28,
+    type: 3}
   characterDisplay: {fileID: 0}
   stackable: 0
   type: 2

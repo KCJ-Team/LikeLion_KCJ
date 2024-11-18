@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daeaac0b7dca984478411f8bfbf4b8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   cooldown: 0
-  BlackHolePrefab: {fileID: 3434383518053191532, guid: eba4033fe866fcc44bdb74049f7dc386,
+  BlackHolePrefab: {fileID: 3797912586305360933, guid: fd289fff60ec84e43a01d5b6ea9ff16e,
     type: 3}

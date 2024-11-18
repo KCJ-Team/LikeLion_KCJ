@@ -39,9 +39,9 @@ public class PlayerSkillController
             UseSkill(KeyCode.E, _playerData.currentESkill?.skillData.gameObject);
         }
         
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            UseSkill(KeyCode.LeftShift, _playerData.currentBuff?.buffData.gameObject);
+            UseSkill(KeyCode.F, _playerData.currentBuff?.buffData.gameObject);
         }
 
         // 활성화된 스킬 확인 및 상태 업데이트
@@ -119,26 +119,29 @@ public class PlayerSkillController
             _activeSkills.Remove(key);
         }
 
-        // 마우스 방향으로 회전
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, _player.transform.position);
-
-        if (groundPlane.Raycast(ray, out float rayDistance))
+        // F키가 아닐 때만 마우스 방향으로 회전
+        if (key != KeyCode.F)
         {
-            Vector3 pointToLook = ray.GetPoint(rayDistance);
-            Vector3 direction = pointToLook - _player.transform.position;
-            direction.y = 0f;
-            
-            if (direction.magnitude > 0.1f)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane groundPlane = new Plane(Vector3.up, _player.transform.position);
+
+            if (groundPlane.Raycast(ray, out float rayDistance))
             {
-                _player.transform.rotation = Quaternion.LookRotation(direction.normalized);
+                Vector3 pointToLook = ray.GetPoint(rayDistance);
+                Vector3 direction = pointToLook - _player.transform.position;
+                direction.y = 0f;
+            
+                if (direction.magnitude > 0.1f)
+                {
+                    _player.transform.rotation = Quaternion.LookRotation(direction.normalized);
+                }
             }
         }
 
         // 새 스킬 생성 및 초기화
         GameObject skillObject = Object.Instantiate(skillPrefab, _player.transform.position, _player.transform.rotation);
         Skill skill = skillObject.GetComponent<Skill>();
-        
+    
         if (skill != null)
         {
             skill.Initialize(_player);

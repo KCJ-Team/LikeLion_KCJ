@@ -26,13 +26,13 @@ public class TurretObjAttackingState : ProjectileState
             return;
         }
 
-        // 타겟을 향해 회전
-        Vector3 direction = (target.position - turret.transform.position).normalized;
-        turret.transform.rotation = Quaternion.LookRotation(direction);
+        // 터렛 헤드만 타겟을 향해 회전
+        turret.RotateTurretHead(target.position);
 
         // 공격 간격마다 발사
         if (Time.time >= nextAttackTime)
         {
+            Vector3 direction = (target.position - turret.transform.position).normalized;
             Attack(direction);
             nextAttackTime = Time.time + turret.GetAttackInterval();
         }

@@ -74,7 +74,6 @@ public class WeaponManager : MonoBehaviour
             else
             {
                 firePoint = currentWeaponHolder;
-                Debug.LogWarning($"Weapon holder {currentWeaponHolder.name} has no child objects!");
             }
             
             currentWeaponObject = Instantiate(playerData.currentWeapon.characterDisplay, currentWeaponHolder);

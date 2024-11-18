@@ -7,7 +7,8 @@ using UnityEngine;
 // Skill 클래스를 상속받아 버프 관련 기능 추가
 public abstract class BuffSkill : Skill
 {
-    public float skillDuration;                     // 버프 지속 시간
+    public float skillDuration;
+    public GameObject EffectPrefab;
     public List<BuffEffect> buffEffects = new List<BuffEffect>();   // 적용할 버프 효과들
     
     // 초기 상태를 BuffSkillState로 설정

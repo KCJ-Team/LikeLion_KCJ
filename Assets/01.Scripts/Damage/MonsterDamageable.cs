@@ -1,8 +1,7 @@
 using UnityEngine;
 
-/// <summary>
-/// 몬스터의 데미지 처리 클래스
-/// </summary>
+
+// 몬스터의 데미지 처리 클래스
 public class MonsterDamageable : DamageableObject
 {
     private float projectileDamage;
@@ -21,43 +20,7 @@ public class MonsterDamageable : DamageableObject
 
     public override void TakeDamage(float damage)
     {
-        if (!IsAlive) return;
-
         // 몬스터는 damge 그대로 받음
         health.DecreaseHealth(damage);
-
-        if (!IsAlive)
-        {
-            OnDeath();
-        }
-    }
-
-    protected override void OnDeath()
-    {
-        base.OnDeath();
-
-        GrantRewards();
-        StartCoroutine(DeathSequence());
-    }
-
-    private void GrantRewards()
-    {
-        // 경험치와 골드 지급
-        if (GameManager.Instance.playerData != null)
-        {
-            // 여기에 플레이어에게 보상 지급 로직 추가
-        }
-    }
-
-    private System.Collections.IEnumerator DeathSequence()
-    {
-        // 사망 애니메이션 또는 이펙트 재생
-        // animator.SetTrigger("Die");
-
-        // 사망 이펙트를 위한 대기 시간
-        yield return new WaitForSeconds(1f);
-
-        // 오브젝트 제거
-        Destroy(gameObject);
     }
 }

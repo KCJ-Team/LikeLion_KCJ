@@ -22,20 +22,6 @@ public class RainBulletAttackState : SkillState
     {
         elapsedTime = 0f;
         lastDamageTime = 0f;
-        
-        // 이펙트 시작
-        if (rainBullet.SkillEffect != null)
-        {
-            activeEffect = Object.Instantiate(rainBullet.SkillEffect, rainBullet.transform.position, Quaternion.identity);
-            activeEffect.Play();
-        }
-        
-        // 애니메이션 시작
-        if (rainBullet.SkillAnimator != null)
-        {
-            rainBullet.SkillAnimator.Play("SpinAttackADualSwords", 0, 0f);
-            isAnimationPlaying = true;
-        }
     }
 
     public override void UpdateState()
@@ -47,19 +33,7 @@ public class RainBulletAttackState : SkillState
             ApplyDamage();
             lastDamageTime = Time.time;
         }
-
-        // 애니메이션 상태 확인 및 재생
-        if (isAnimationPlaying && rainBullet.SkillAnimator != null)
-        {
-            AnimatorStateInfo stateInfo = rainBullet.SkillAnimator.GetCurrentAnimatorStateInfo(0);
-            
-            // 애니메이션이 끝나면 다시 재생
-            if (!stateInfo.IsName("SpinAttackADualSwords") || stateInfo.normalizedTime >= 1.0f)
-            {
-                rainBullet.SkillAnimator.Play("SpinAttackADualSwords", 0, 0f);
-            }
-        }
-
+        
         if (elapsedTime >= rainBullet.duration)
         {
             Object.Destroy(rainBullet.gameObject);
@@ -69,19 +43,7 @@ public class RainBulletAttackState : SkillState
 
     public override void ExitState()
     {
-        // 이펙트 정리
-        if (activeEffect != null)
-        {
-            activeEffect.Stop();
-            Object.Destroy(activeEffect.gameObject);
-        }
-
-        // 애니메이션 정리
-        if (rainBullet.SkillAnimator != null)
-        {
-            rainBullet.SkillAnimator.CrossFade("IdleUnarmed", 0.1f);  // Idle 애니메이션으로 부드럽게 전환
-            isAnimationPlaying = false;
-        }
+        
     }
 
     private void ApplyDamage()

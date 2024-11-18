@@ -220,6 +220,18 @@ public class GameSceneDataManager : MonoBehaviour
         Debug.Log("DB에 데이터 저장 완료");
     }
     
+    // TODO : 던전 진입시 씬 넘어갈때 로드할 데이터 
+    public void DungeonLoadData()
+    {
+        
+    }
+
+    // TODO : 던전 게임 종료후 로비씬으로 넘어가기전 저장할 데이터 
+    public void DungeonSaveData()
+    {
+        
+    }
+    
     // DB의 데이터들을 초기화. 게임 엔딩시 사용.
     // TODO : 
     public void ClearDataInDB()

@@ -145,8 +145,8 @@ public class GameSceneDataManager : MonoBehaviour
         
         // TODO : 확인필요
         // 인벤토리
-        // InventoryService inventoryService = new InventoryService();
-        // inventoryService.GetAllInventory(); // 인벤토리를 가져와 playerData의 inventory에 적재
+         InventoryService inventoryService = new InventoryService();
+         inventoryService.GetAllInventory(); // 인벤토리를 가져와 playerData의 inventory에 적재
         //
         // // // 이큅먼트
         // EquipmentService equipmentService = new EquipmentService();

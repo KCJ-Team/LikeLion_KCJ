@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 0}
+  characterPrefab: {fileID: 8250591972788044732, guid: b303f1f7eac193449902642529680f24,
+    type: 3}
   characterDisplay: {fileID: 4653492567734856790, guid: c86babe08f621f6409e5ee60abf12454,
     type: 3}
   stackable: 0
   type: 1
   grade: 0
   weaponType: 4
+  baseDamage: 0
   attackSpeed: 1
-  damage: 10
   Ammo: 10
   projectilePrefab: {fileID: 5938167112633497377, guid: d0eaf85ff56d0c64fb405794ea432135,
     type: 3}

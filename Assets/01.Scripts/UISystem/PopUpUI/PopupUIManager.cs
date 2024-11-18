@@ -44,7 +44,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         // 1. 리스트 초기화
         allPopupList = new List<PopupUI>()
         {
-            buildingUpgradePopup, EncounterPopup, labPopup, storePopup
+            buildingUpgradePopup, EncounterPopup, labPopup, storePopup, deckPopup
         };
 
         // 2. 모든 팝업에 이벤트 등록

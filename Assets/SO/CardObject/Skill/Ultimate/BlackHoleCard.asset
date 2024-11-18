@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: BlackHoleCard
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 0}
+  characterPrefab: {fileID: 8250591972788044732, guid: 337c7757010409b49b09ddcafbb7e495,
+    type: 3}
   characterDisplay: {fileID: 0}
   stackable: 0
   type: 2

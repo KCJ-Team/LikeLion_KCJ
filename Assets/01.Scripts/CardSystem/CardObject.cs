@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class CardObject : ScriptableObject
 {
     public Sprite uiDisplay;              // UI에 표시될 이미지
+    public GameObject characterPrefab; // hyuna. 이미지대신 프리팹으로 사용해보기
     public GameObject characterDisplay;   // 3D 모델
     public bool stackable;                // 중첩 가능 여부
     public CardType type;                 // 카드 타입

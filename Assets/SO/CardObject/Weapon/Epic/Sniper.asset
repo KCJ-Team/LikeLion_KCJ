@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Sniper
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 0}
+  characterPrefab: {fileID: 8250591972788044732, guid: ddde555dd83611346a0f64fd9fbf96c4,
+    type: 3}
   characterDisplay: {fileID: 6499000194494919818, guid: 5f742be40d7cfe94ebd2f15f1027dfbb,
     type: 3}
   stackable: 0

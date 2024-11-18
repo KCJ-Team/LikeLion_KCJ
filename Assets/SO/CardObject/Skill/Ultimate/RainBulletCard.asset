@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: RainBulletCard
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 0}
+  characterPrefab: {fileID: 8250591972788044732, guid: ffe421ec08e11e24091304caa7162eb5,
+    type: 3}
   characterDisplay: {fileID: 0}
   stackable: 0
   type: 2

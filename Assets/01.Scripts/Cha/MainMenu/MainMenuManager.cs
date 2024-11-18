@@ -15,6 +15,7 @@ public class MainMenuManger : SceneSingleton<MainMenuManger>
     public EncounterData encounterData;
     public GameTimeSetting gameTimeData;
     public PlayerData playerData;
+    public CardDatabase CardDatabase;
     
     [Header("UI Panels")]
     [SerializeField] private GameObject mainTitlePanel;       // 메인 패널
@@ -149,10 +150,14 @@ public class MainMenuManger : SceneSingleton<MainMenuManger>
 
             if (encounterService.CreateEncounters())
             {
-                // TODO : 인벤토리 데이터에 기본 무기 저장 로직 추가
-                
-                Debug.Log("New game data successfully saved.");
-                return true;
+                // // 인벤토리에 기본 무기 저장
+                 //InventoryService inventoryService = new InventoryService();
+               
+                 //if (inventoryService.CreateInventory())
+                {
+                     Debug.Log("New game data successfully saved.");
+                    return true;
+                }
             }
         }
 

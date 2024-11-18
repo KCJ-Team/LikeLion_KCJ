@@ -12,16 +12,18 @@ public class PlayerDamageable : DamageableObject
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
         {
             Projectile projectile = other.gameObject.GetComponent<Projectile>();
             projectileDamage = projectile.damage;
             TakeDamage(projectileDamage);
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyDamage"))
         {
-            TakeDamage(10);
+            MonsterDamageValue monsterDamageValue = other.gameObject.GetComponent<MonsterDamageValue>();
+            
+            TakeDamage(monsterDamageValue.Damage);
         }
     }
 
@@ -46,10 +48,5 @@ public class PlayerDamageable : DamageableObject
             OnDeath();
         }
     }
-
-    protected override void OnDeath()
-    {
-        base.OnDeath();
-        // 플레이어 사망 시 추가 처리
-    }
+    
 }

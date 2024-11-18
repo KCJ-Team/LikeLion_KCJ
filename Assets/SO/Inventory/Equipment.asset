@@ -17,22 +17,22 @@ MonoBehaviour:
   type: 0
   Container:
     Slots:
-    - AllowedItems: 01000000
+    - AllowedItems: 
       card:
         Name: 
         Id: -1
       amount: 0
-    - AllowedItems: 02000000
+    - AllowedItems: 
       card:
         Name: 
         Id: -1
       amount: 0
-    - AllowedItems: 02000000
+    - AllowedItems: 
       card:
         Name: 
         Id: -1
       amount: 0
-    - AllowedItems: 04000000
+    - AllowedItems: 
       card:
         Name: 
         Id: -1

@@ -356,10 +356,6 @@ public abstract class UserInterface : MonoBehaviour
                     parentTransform = parentTransform.parent; // 부모로 이동
                 }
 
-                // 해당하는 유저 인터페이스를 보고 드래그/드래그 아웃 불가 가능 설정
-                // UserInterface targetUI = hitObject.transform.parent.GetComponent<UserInterface>(); // 타겟 슬롯의 UserInterface
-                // 웨폰과 SkillAndBuff -> equip만 가능, equip -> 그냥 뺴기만 가능(레이를 안봄)
-
                 // 동일한 인터페이스끼리는 X
                 if (targetUI.interfaceType != this.interfaceType)
                 {
@@ -368,7 +364,7 @@ public abstract class UserInterface : MonoBehaviour
 
                     Transform targetUserInterface = targetUI.transform;
                     var targetSlotsOnInterface = targetUserInterface.GetComponent<UserInterface>().slotsOnInterface;
-
+                    
                     InventorySlot targetSlot = targetSlotsOnInterface[hitObject.transform.parent.gameObject];
 
                     // 웨폰, 스킬앤버프 => 타겟의 인터페이스 타입이 equip이면
@@ -380,12 +376,10 @@ public abstract class UserInterface : MonoBehaviour
                     }
                     else
                     {
-                        // 그외면 그냥 아이템 뺴기 
-                        // TODO : Equip에서 가는건 어디든 그냥 아이템 삭제
+                        
                     }
                 }
-
-
+                
                 break; // 유효한 슬롯을 찾았으면 더 이상 반복할 필요 없음
             }
         }

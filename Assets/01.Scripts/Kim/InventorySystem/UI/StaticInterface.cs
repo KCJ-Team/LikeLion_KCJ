@@ -61,8 +61,13 @@ public class StaticInterface : UserInterface
         }
         else // 착용 아이템을 넣어야한다면.. 
         {
+            // 엠티 슬롯의 자식 오브젝트들을 먼저 삭제
+            foreach (Transform child in slotObj.transform)
+            {
+                Destroy(child.gameObject); // 기존의 자식 오브젝트 삭제
+            }
+            
             // 빈 슬롯 아이템을 먼저 생성하고 그 하위에 넣어주어야함.
-            // 슬롯에 아이템이 있으면 아이템의 프리팹을 인스턴스화
             GameObject obj = currentSlot.GetItemObject().characterPrefab;
 
             // 인스턴스화하여 Content Panel의 자식으로 설정

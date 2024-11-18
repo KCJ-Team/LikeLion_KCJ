@@ -41,7 +41,7 @@ public class DynamicInterface : UserInterface
             AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
             
-            inventory.GetSlots[i].slotDisplay = obj;
+            inventory.GetSlots[i].targetObject = obj;
             slotsOnInterface.Add(obj, inventory.GetSlots[i]);
             instantiatedSlots.Add(obj);
         }

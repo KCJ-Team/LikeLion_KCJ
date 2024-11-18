@@ -24,13 +24,18 @@ MonoBehaviour:
       amount: 0
     - AllowedItems: 
       card:
-        Name: 
-        Id: -1
-      amount: 0
+        Name: InvisibilityCard
+        Id: 12
+      amount: 1
     - AllowedItems: 
       card:
-        Name: 
-        Id: -1
+        Name: KnockBackCard
+        Id: 13
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: MineCard
+        Id: 14
       amount: 1
     - AllowedItems: 
       card:
@@ -44,9 +49,14 @@ MonoBehaviour:
       amount: 0
     - AllowedItems: 
       card:
-        Name: 
-        Id: -1
-      amount: 0
+        Name: ASBuffCard
+        Id: 22
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: DefenceBuffCard
+        Id: 23
+      amount: 1
     - AllowedItems: 
       card:
         Name: 
@@ -54,16 +64,6 @@ MonoBehaviour:
       amount: 0
     - AllowedItems: 
       card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
+        Name: SpeedBuffCard
+        Id: 24
+      amount: 1

@@ -86,8 +86,8 @@ public class InventoryService
                 {
                     Card card = new Card(cardObject);
                     
-                    LobbyMenuManager.Instance.playerData.inventory.AddItem(card, 1); // 수량은 1로 설정
-                    Debug.Log($"Added card {cardObject.name} (ID: {card.Id}) to player inventory.");
+                    bool result = LobbyMenuManager.Instance.playerData.inventory.AddItem(card, 1); // 수량은 1로 설정
+                    Debug.Log($"{result} 결과 ! Added card {cardObject.name} (ID: {card.Id}) to player inventory.");
                 }
                 else
                 {

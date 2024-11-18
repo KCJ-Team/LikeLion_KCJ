@@ -76,8 +76,10 @@ public class LobbyMenuUIPresenter
         
         // playerData에서 인벤토리 데이터 가져오기
        // LobbyMenuManager.Instance.playerData.inventory.GetSlots[0;
-
-        
+       // InventoryService inventoryService = new InventoryService();
+       // inventoryService.GetAllInventory(); // 인벤토리를 가져와 playerData의 inventory에 적재
+       //
+       //  
         
         
     }

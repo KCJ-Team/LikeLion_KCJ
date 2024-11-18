@@ -11,27 +11,39 @@ using AYellowpaper.SerializedCollections;
 using DG.Tweening;
 using Unity.VisualScripting;
 
+public enum InterfaceType
+{
+    Weapon,
+    SkillAndBuff,
+    Equipment
+}
+
 public abstract class UserInterface : MonoBehaviour
 {
+    public InterfaceType interfaceType; // UI 타입을 저장하는 변수
+
     // 인벤토리 데이터 객체, 슬롯 정보를 포함
     public InventoryObject inventory;
 
     // 슬롯 UI(GameObject)와 인벤토리 데이터(InventorySlot)를 매핑하는 딕셔너리
-    public SerializedDictionary<GameObject, InventorySlot> slotsOnInterface = new SerializedDictionary<GameObject, InventorySlot>();
+    public SerializedDictionary<GameObject, InventorySlot> slotsOnInterface =
+        new SerializedDictionary<GameObject, InventorySlot>();
 
     private bool isMovedUp = false; // 슬롯이 위로 올라가 있는 상태인지 체크
     private HorizontalLayoutGroup layoutGroup; // HorizontalLayoutGroup 참조
     private float originalSpacing;
-    
+    private static bool isInitialized = false;
+
     public void Start()
     {
         // 인벤토리 슬롯 초기화
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
             inventory.GetSlots[i].parent = this; // 슬롯의 부모를 현재 UserInterface로 설정
-            inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate; // 슬롯 데이터 변경 시 호출될 이벤트 등록
+            // inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate; // 슬롯 데이터 변경 시 호출될 이벤트 등록
+            Debug.Log($"Registered OnSlotUpdate for slot: {inventory.GetSlots[i].card.Name}");
         }
-        
+
         // 레이아웃그룹 
         layoutGroup = GetComponent<HorizontalLayoutGroup>(); // layoutGroup 참조 가져오기
         if (layoutGroup != null)
@@ -45,45 +57,90 @@ public abstract class UserInterface : MonoBehaviour
 
         CreateSlots(); // 슬롯 생성
 
+        Debug.Log("UserInterface_Start실행 : " + this.interfaceType);
+
         // 현재 UI에서 마우스가 들어오거나 나갈 때의 이벤트를 등록
-    //AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
-    //AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
+        // AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
+        // AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
     }
 
-    // 슬롯 데이터가 업데이트될 때 호출되는 메서드
+    // 매개변수의 slot으로 ui가 업데이트가 되어야하는 것.. 
     public void OnSlotUpdate(InventorySlot slot)
     {
-        var slotDisplay = slot.slotDisplay; // 슬롯의 UI GameObject를 가져옵니다.
+        Debug.Log($"OnSlotUpdate 실행됨. 슬롯 : {slot.card.Name}");
 
-        if (slot.card.Id <= -1) // 슬롯에 카드 데이터가 없을 경우
+        var slotDisplay = slot.targetObject; // 슬롯의 UI GameObject를 가져옵니다.
+
+        if (slot.card.Id <= -1) // 슬롯에 카드 데이터가 없을 경우, 즉 삭제되어야할 카드라면
         {
             // 프리팹을 제거
-            var tempObject = slotDisplay.transform.GetChild(0).gameObject;
-            if (tempObject != null)
+            var tempObject = slotDisplay.gameObject;
+            if (tempObject != null && tempObject.activeSelf)
             {
+                Debug.Log($"프리팹제거, : {tempObject.name}");
                 Destroy(tempObject); // 카드가 없는 경우 해당 UI 객체를 제거
+               slotsOnInterface.Remove(tempObject);
             }
         }
         else // 슬롯에 유효한 카드 데이터가 있는 경우
         {
-            // 바뀌어야할 카드 프리팹을 생성
             GameObject tempPrefab = slot.GetItemObject().characterPrefab;
             if (tempPrefab != null)
             {
-                // 기존의 GameObject를 제거하고 새 프리팹을 생성
-                GameObject existingObject = slotDisplay.gameObject; // slotDisplay.transform.GetChild(0).gameObject;
-                if (existingObject != null)
+                if (slotDisplay.transform.childCount > 0)
                 {
-                    Destroy(existingObject); // 기존의 객체 제거
-                }
+                    // Empty Slot이라면.. 하위오브젝트를 생성, 그게 아니라면 삭제하고 바꿔치기를 해야함. 
+                    if (slotDisplay.transform.childCount == 1)
+                    {
+                        Transform existingItem = slotDisplay.transform.GetChild(0);
+                        if (existingItem != null)
+                        {
+                            Destroy(existingItem.gameObject); // 기존의 객체 제거
 
-                // 새 GameObject 생성
-                GameObject newItem = Instantiate(tempPrefab, slotDisplay.transform);
-                newItem.transform.localPosition = Vector3.zero; // 위치 초기화
-                newItem.SetActive(true); // 활성화
+                            GameObject newItem = Instantiate(tempPrefab, slotDisplay.transform);
+                            newItem.transform.localPosition = Vector3.zero; // 위치 초기화
+                            Debug.Log($"엠티슬롯 : {tempPrefab.name}");
+                            newItem.SetActive(true); // 활성화
+                        }
+                    }
+                    else
+                    {
+                        slot.onAfterUpdated -= OnSlotUpdate;  // 이미 구독되어 있으면 제거
+                        slot.onAfterUpdated += OnSlotUpdate;  // 새로 구독
+                        
+                        // // // 부모 슬롯에 새로운 아이템 추가.. 
+                        GameObject newItem = Instantiate(tempPrefab, slotDisplay.transform.parent);
+                        newItem.SetActive(true); // 활성화
+                        // 슬롯 을 추가하면서 인벤토리.getslot을 하거나 해야할듯
+
+                        // 이큅먼트에서 슬롯을 찾아 인벤토리에 넣기?
+                        // 현재 인벤이 이큅먼트인지..를 봐야함.. 
+                        InventorySlot findSlot = inventory.FindItemOnInventory(slot.card);
+                        //
+                        AddEvent(newItem, EventTriggerType.PointerEnter, delegate { OnEnter(newItem); });
+                        AddEvent(newItem, EventTriggerType.PointerExit, delegate { OnExit(newItem); });
+                        AddEvent(newItem, EventTriggerType.BeginDrag, delegate { OnDragStart(newItem); });
+                        AddEvent(newItem, EventTriggerType.EndDrag, delegate { OnDragEnd(newItem); });
+                        AddEvent(newItem, EventTriggerType.Drag, delegate { OnDrag(newItem); });
+                        // 클릭 이벤트 추가
+                        AddEvent(newItem, EventTriggerType.PointerClick, delegate { OnClick(newItem); });
+                        
+                        // findSlot.targetObject = newItem;
+                        // 타겟 오브젝트 설정..?
+                        findSlot.targetObject = newItem;
+                        slotsOnInterface.Add(newItem, findSlot);
+
+                        Debug.Log($"엠티가 아닌 인벤슬롯 : {tempPrefab.name}");
+                    }
+                }
+            }
+            else
+            {
+                // 프리팹이 없다면 여기에서 에러 처리를 할 수 있습니다. 예: 로그 출력
+                Debug.LogWarning("슬롯에 배치할 카드 프리팹이 없습니다.");
             }
         }
-        
+
         // if (slot.card.Id <= -1) // 슬롯에 카드 데이터가 없을 경우
         // {
         //     var image = slot.slotDisplay.GetComponent<Image>(); // .transform.GetChild(0).GetComponent<Image>(); // 이미지 컴포넌트 가져오기
@@ -142,12 +199,12 @@ public abstract class UserInterface : MonoBehaviour
         MouseData.slotHoveredOver = obj; // 현재 마우스가 위치한 슬롯을 기록
         Debug.Log($"OnEnter: {obj.name}");
     }
-    
+
     // 마우스가 특정 슬롯에 클릭
     public void OnClick(GameObject obj)
     {
         Debug.Log($"OnClick called on {obj.name}");
-        
+
         // if (obj != null)
         // {
         //     // 현재 강조된 슬롯이 있고, 클릭된 슬롯이 다른 슬롯인 경우 강조 해제
@@ -165,13 +222,13 @@ public abstract class UserInterface : MonoBehaviour
             FocusSlot(obj);
         }
     }
-    
+
     private void FocusSlot(GameObject obj)
     {
         Debug.Log($"Focusing slot {obj.name}");
-        
+
         isMovedUp = true;
-        
+
         // Horizontal Layout Group의 spacing을 부드럽게 60으로 증가
         DOTween.To(() => layoutGroup.spacing, x => layoutGroup.spacing = x, 60f, 0.3f).SetEase(Ease.OutQuad);
     }
@@ -181,7 +238,8 @@ public abstract class UserInterface : MonoBehaviour
         isMovedUp = false;
 
         // Horizontal Layout Group의 spacing을 부드럽게 원래 값(-10)으로 복구
-        DOTween.To(() => layoutGroup.spacing, x => layoutGroup.spacing = x, originalSpacing, 0.3f).SetEase(Ease.OutQuad);
+        DOTween.To(() => layoutGroup.spacing, x => layoutGroup.spacing = x, originalSpacing, 0.3f)
+            .SetEase(Ease.OutQuad);
     }
 
 
@@ -203,131 +261,168 @@ public abstract class UserInterface : MonoBehaviour
         MouseData.slotHoveredOver = null; // 마우스가 슬롯 위에 있지 않음을 기록
         Debug.Log($"OnExit: {obj.name}");
     }
-    
-     // 드래그가 시작되었을 때 호출
-     public void OnDragStart(GameObject obj)
-     {
-         Debug.Log($"OnBeginDrag called on {obj.name}");
 
-         CreateTempItem(obj);
-         // MouseData.tempItemBeingDragged = CreateTempItem(obj); // 드래그 중 표시할 임시 아이템 생성
-     }
-     
-     // 드래그 중 호출
-     public void OnDrag(GameObject obj)
-     {
-         Debug.Log($"OnDrag called on {obj.name}");
-         
-         if (MouseData.tempItemBeingDragged != null)
-         {
-             // RectTransform을 가져옴
-             RectTransform tempTransform = MouseData.tempItemBeingDragged.GetComponent<RectTransform>();
-         
-             // 현재 마우스 위치를 월드 좌표로 변환
-             Vector3 worldPosition;
-             if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
-                     tempTransform, // RectTransform 기준
-                     Input.mousePosition, // 현재 마우스 위치
-                     Camera.main, // 카메라
-                     out worldPosition)) // 변환된 월드 좌표를 출력
-             {
-                 tempTransform.position = worldPosition; // 변환된 월드 좌표를 설정
-             }
-             else
-             {
-                 Debug.LogError("Failed to convert mouse position to world position.");
-             }
-         }
-         
-     }
-     
-     // 드래그가 끝났을 때 호출
-     public void OnDragEnd(GameObject obj)
-     {
-         // 마우스 위치를 UI의 월드 좌표로 변환
-         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    // 드래그가 시작되었을 때 호출
+    public void OnDragStart(GameObject obj)
+    {
+        Debug.Log($"OnBeginDrag called on {obj.name}");
+        
+        if (this.interfaceType == InterfaceType.Equipment) return;
 
-         // PointerEventData 설정
-         PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
-         {
-             position = Input.mousePosition // 마우스 화면 좌표
-         };
+        CreateTempItem(obj);
+        // MouseData.tempItemBeingDragged = CreateTempItem(obj); // 드래그 중 표시할 임시 아이템 생성
+    }
 
-         // 레이캐스트가 유효한 UI 요소와 충돌하는지 확인
-         List<RaycastResult> raycastResults = new List<RaycastResult>();
-         EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+    // 드래그 중 호출
+    public void OnDrag(GameObject obj)
+    {
+        Debug.Log($"OnDrag called on {obj.name}");
 
-         // 결과가 없으면, 레이캐스트 실패로 간주
-         if (raycastResults.Count == 0)
-         {
-             Debug.Log("유효한 슬롯을 찾을 수 없음. 드래그 취소");
-             Destroy(MouseData.tempItemBeingDragged); // 임시 아이템 제거
-             return;
-         }
+        if (MouseData.tempItemBeingDragged != null)
+        {
+            // RectTransform을 가져옴
+            RectTransform tempTransform = MouseData.tempItemBeingDragged.GetComponent<RectTransform>();
 
-         bool isValidSlotFound = false;
+            // 현재 마우스 위치를 월드 좌표로 변환
+            Vector3 worldPosition;
+            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
+                    tempTransform, // RectTransform 기준
+                    Input.mousePosition, // 현재 마우스 위치
+                    Camera.main, // 카메라
+                    out worldPosition)) // 변환된 월드 좌표를 출력
+            {
+                tempTransform.position = worldPosition; // 변환된 월드 좌표를 설정
+            }
+            else
+            {
+                Debug.LogError("Failed to convert mouse position to world position.");
+            }
+        }
+    }
 
-         // 모든 레이캐스트 결과를 확인
-         foreach (RaycastResult result in raycastResults)
-         {
-             GameObject hitObject = result.gameObject;
-             Debug.Log("레이캐스트 되는 거 : " + hitObject.name);
+    // 드래그가 끝났을 때 호출
+    public void OnDragEnd(GameObject obj)
+    {
+        // 임시 아이템 삭제
+        Destroy(MouseData.tempItemBeingDragged);
 
-             // 슬롯에 해당하는 UI 요소인지 확인
-             if (hitObject.CompareTag("Slot"))
-             {
-                 isValidSlotFound = true;
-                 Debug.Log($"아이템을 {obj.name}에서 {hitObject.name} 슬롯으로 이동");
+        // 마우스 위치를 UI의 월드 좌표로 변환
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                 // 슬롯 간 아이템 이동 처리 (여기서 실제 이동하는 코드를 추가해야 합니다)
-                 InventorySlot sourceSlot = slotsOnInterface[obj];
-                
-                 Transform targetUserInterface = hitObject.transform.parent;
-                 var targetSlotsOnInterface = targetUserInterface.GetComponent<UserInterface>().slotsOnInterface;
-                 
-                 InventorySlot targetSlot = targetSlotsOnInterface[hitObject];
-                 inventory.SwapItems(sourceSlot, targetSlot);
+        // PointerEventData 설정
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition // 마우스 화면 좌표
+        };
 
-                 // 임시 아이템 삭제
-                 Destroy(MouseData.tempItemBeingDragged);
-                 break; // 유효한 슬롯을 찾았으면 더 이상 반복할 필요 없음
-             }
-         }
+        // 레이캐스트가 유효한 UI 요소와 충돌하는지 확인
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
 
-         // 유효한 슬롯을 찾지 못했다면 취소
-         if (!isValidSlotFound)
-         {
-             Debug.Log("유효한 슬롯에 드롭되지 않음. 드래그 취소");
-             Destroy(MouseData.tempItemBeingDragged); // 임시 아이템 제거
-         }
-         
-         // if (MouseData.slotHoveredOver != null)
-         // {
-         //     Debug.Log($"Transferring item from {obj.name} to {MouseData.slotHoveredOver.name}");
-         //     // 슬롯 간 아이템을 이동시키는 코드 실행
-         //     // // 슬롯 간 아이템을 스왑
-         //     // InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-         //     // inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
-         //
-         // }
-         // else
-         // {
-         //     Debug.Log("No valid slot to transfer the item.");
-         // }
-         
-         
-         // Destroy(MouseData.tempItemBeingDragged); // 임시 아이템 제거
-         
-         // if (MouseData.interfaceMouseIsOver == null) // 마우스가 UI 외부에 있는 경우
-         // {
-         //     Debug.Log("Dropped outside valid slots. Cancelling drag.");
-         //
-         //     slotsOnInterface[obj].RemoveItem(); // 드래그 중인 아이템 제거
-         //     return;
-         // }
-         
-     }
-     
+        // 결과가 없으면, 레이캐스트 실패로 간주
+        if (raycastResults.Count == 0)
+        {
+            Debug.Log("유효한 슬롯을 찾을 수 없음. 드래그 취소");
+            Destroy(MouseData.tempItemBeingDragged); // 임시 아이템 제거
+            return;
+        }
+
+        bool isValidSlotFound = false;
+
+        // 모든 레이캐스트 결과를 확인
+        foreach (RaycastResult result in raycastResults)
+        {
+            GameObject hitObject = result.gameObject;
+            Debug.Log("레이캐스트 되는 거 : " + hitObject.name);
+
+            // 슬롯에 해당하는 UI 요소인지 확인
+            if (hitObject.CompareTag("Slot"))
+            {
+                isValidSlotFound = true;
+
+                // 슬롯의 부모를 거슬러 올라가면서 UserInterface를 찾음
+                Transform parentTransform = hitObject.transform;
+                UserInterface targetUI = null;
+
+                // 부모를 계속 따라 올라가며 UserInterface를 찾음
+                while (parentTransform != null)
+                {
+                    targetUI = parentTransform.GetComponent<UserInterface>();
+                    if (targetUI != null)
+                    {
+                        break; // UserInterface를 찾았으면 루프 종료
+                    }
+
+                    parentTransform = parentTransform.parent; // 부모로 이동
+                }
+
+                // 해당하는 유저 인터페이스를 보고 드래그/드래그 아웃 불가 가능 설정
+                // UserInterface targetUI = hitObject.transform.parent.GetComponent<UserInterface>(); // 타겟 슬롯의 UserInterface
+                // 웨폰과 SkillAndBuff -> equip만 가능, equip -> 그냥 뺴기만 가능(레이를 안봄)
+
+                // 동일한 인터페이스끼리는 X
+                if (targetUI.interfaceType != this.interfaceType)
+                {
+                    // 슬롯 간 아이템 이동 처리 (여기서 실제 이동하는 코드를 추가해야 합니다)
+                    InventorySlot sourceSlot = slotsOnInterface[obj];
+
+                    Transform targetUserInterface = targetUI.transform;
+                    var targetSlotsOnInterface = targetUserInterface.GetComponent<UserInterface>().slotsOnInterface;
+
+                    InventorySlot targetSlot = targetSlotsOnInterface[hitObject.transform.parent.gameObject];
+
+                    // 웨폰, 스킬앤버프 => 타겟의 인터페이스 타입이 equip이면
+                    if (targetUI.interfaceType == InterfaceType.Equipment)
+                    {
+                        // 장착(스왑)
+                        inventory.SwapItems(sourceSlot, targetSlot);
+                        Debug.Log($"아이템을 {obj.name}에서 {hitObject.name} 슬롯으로 이동");
+                    }
+                    else
+                    {
+                        // 그외면 그냥 아이템 뺴기 
+                        // TODO : Equip에서 가는건 어디든 그냥 아이템 삭제
+                    }
+                }
+
+
+                break; // 유효한 슬롯을 찾았으면 더 이상 반복할 필요 없음
+            }
+        }
+
+        // 유효한 슬롯을 찾지 못했다면 취소
+        if (!isValidSlotFound)
+        {
+            Debug.Log("유효한 슬롯에 드롭되지 않음. 드래그 취소");
+            Destroy(MouseData.tempItemBeingDragged); // 임시 아이템 제거
+        }
+
+        // if (MouseData.slotHoveredOver != null)
+        // {
+        //     Debug.Log($"Transferring item from {obj.name} to {MouseData.slotHoveredOver.name}");
+        //     // 슬롯 간 아이템을 이동시키는 코드 실행
+        //     // // 슬롯 간 아이템을 스왑
+        //     // InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
+        //     // inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
+        //
+        // }
+        // else
+        // {
+        //     Debug.Log("No valid slot to transfer the item.");
+        // }
+
+
+        // Destroy(MouseData.tempItemBeingDragged); // 임시 아이템 제거
+
+        // if (MouseData.interfaceMouseIsOver == null) // 마우스가 UI 외부에 있는 경우
+        // {
+        //     Debug.Log("Dropped outside valid slots. Cancelling drag.");
+        //
+        //     slotsOnInterface[obj].RemoveItem(); // 드래그 중인 아이템 제거
+        //     return;
+        // }
+    }
+
     // // 임시 아이템을 생성하는 메서드 (현재 사용되지 않음)
     // private GameObject CreateTempItem(GameObject obj)
     // {
@@ -345,7 +440,7 @@ public abstract class UserInterface : MonoBehaviour
     //     }
     //     return tempItem; // 생성된 임시 아이템 반환
     // }
-    
+
     private void CreateTempItem(GameObject obj)
     {
         if (MouseData.tempItemBeingDragged == null)
@@ -374,7 +469,8 @@ public abstract class UserInterface : MonoBehaviour
             tempTransform.position = originalTransform.position;
 
             // 크기를 고정 (133x178)
-            tempTransform.sizeDelta = new Vector2(210, 280);
+            //tempTransform.sizeDelta = new Vector2(210, 280);
+            tempTransform.localScale = new Vector3(1f, 1f, 1f);
 
             // `Horizontal Layout Group`의 영향을 받지 않도록 LayoutElement 추가
             LayoutElement layoutElement = tempItem.AddComponent<LayoutElement>();

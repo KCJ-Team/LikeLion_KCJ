@@ -13,7 +13,7 @@ public class InventoryObject : ScriptableObject
     public InventorySlot[] GetSlots => Container.Slots;  // 슬롯 배열을 반환 (인벤토리 내 아이템들)
 
     [SerializeField] private Inventory Container = new Inventory();  // 인벤토리 슬롯들을 관리하는 Inventory 객체
-
+    
     // 인벤토리에 아이템을 추가하는 메서드
     public bool AddItem(Card card, int amount)
     {
@@ -33,6 +33,8 @@ public class InventoryObject : ScriptableObject
         
         // 슬롯에 아이템이 존재하고 스택 가능하면 수량만 증가
         slot.AddAmount(amount);
+        
+        Debug.Log($"{card.Name} 추가됨 인벤토리 SO에 ");
         return true;
     }
 
@@ -106,45 +108,44 @@ public class InventoryObject : ScriptableObject
         Debug.Log($"스왑 시작: 슬롯 1 ({sourceItem.card.Name}, 수량: {sourceItem.amount}) <-> 슬롯 2 ({targetItem.card.Name}, 수량: {targetItem.amount})");
 
         // hyuna
-        // 두 슬롯의 아이템 교환이 가능한지 확인
+        // Available Item을 검사 , 두 슬롯의 아이템 교환이 가능한지 확인
         bool canSwapSource = targetItem.CanPlaceInSlot(sourceItem.GetItemObject());
         bool canSwapTarget = sourceItem.CanPlaceInSlot(targetItem.GetItemObject());
-
+        
         // 교환이 가능한 경우
         if (canSwapSource && canSwapTarget)
         {
-            // 아이템을 스왑하기 위한 임시 슬롯을 생성
+            // 타겟 아이템이 Empty Slot일 경우 교환 불가능, 엠티를 대체. 
+            if (targetItem.card.Id <= -1)
+            {
+                // 타겟 슬롯에 소스 아이템을 그대로 넣고, 소스 슬롯은 비워준다
+                targetItem.UpdateSlot(sourceItem.card, sourceItem.amount);
+                sourceItem.RemoveItem();  // 소스 슬롯을 비워준다
+                Debug.Log($"슬롯 2가 비어 있었으므로, 아이템을 슬롯 2에 배치하고 슬롯 1은 비워두었습니다.");
+                return;
+            }
+            
+            // tmffhtdmf 업데이트 
             InventorySlot temp = new InventorySlot(targetItem.card, targetItem.amount);
 
-            // 슬롯 1과 슬롯 2의 아이템 교환
+            // 슬롯 1과 슬롯 2의 데이터를 바로 교환
+            Card tempCard = targetItem.card;  // 임시로 targetItem의 카드 데이터를 저장
+            int tempAmount = targetItem.amount;   // 임시로 targetItem의 수량을 저장
+            
+            // 인벤 -> 이큅 전달, 이큅먼트 슬롯 아래에 생성
             targetItem.UpdateSlot(sourceItem.card, sourceItem.amount);
+            
+            sourceItem.RemoveItem();
+            // 이큅 -> 인벤으로 새로운 아이템 생성
             sourceItem.UpdateSlot(temp.card, temp.amount);
+            
+            // 전달한건 삭제하기 
         
             Debug.Log("아이템 스왑 완료");
         }
         else
         {
-            // 소스 아이템이 없는 경우
-            if (sourceItem.card.Id <= -1)
-            {
-                // sourceItem이 비어 있다면, sourceItem에 targetItem 아이템 추가
-                sourceItem.UpdateSlot(targetItem.card, targetItem.amount);
-               // targetItem.Clear();  // targetItem은 비워두기
-                Debug.Log($"슬롯 1이 비어 있었으므로, 아이템을 슬롯 1에 배치");
-            }
-            // 타겟 아이템이 없는 경우. 
-            else if (targetItem.card.Id <= -1)
-            {
-                // targetItem이 비어 있다면, targetItem에 sourceItem 아이템 추가
-                targetItem.UpdateSlot(sourceItem.card, sourceItem.amount);
-                // sourceItem.Clear();  // sourceItem은 비워두기
-                Debug.Log($"슬롯 2가 비어 있었으므로, 아이템을 슬롯 2에 배치");
-            }
-            else
-            {
-                // 아이템 교환이 불가능한 경우
-                Debug.Log("아이템 교환이 불가능합니다. 조건을 만족하지 않음.");
-            }
+            Debug.Log("아이템 교환이 불가능합니다. 맞는 Available 슬롯 타입이 아님");
         }
         
         // // 두 슬롯이 서로 교환 가능한지 확인
@@ -157,7 +158,6 @@ public class InventoryObject : ScriptableObject
         // }
         // else
         // {
-        //     Debug.Log("아이템 교환이 불가능합니다. 조건을 만족하지 않음.");
         // }
     }
 

@@ -10,22 +10,21 @@ public class DynamicInterface_Lobby : UserInterface
 {
     public GameObject inventoryPrefab;
     public GameObject contentPanel;
-    public bool isWeaponInven;
-    
+
     [SerializeField]
-    private List<GameObject> instantiatedSlots = new List<GameObject>();
+    //private List<GameObject> instantiatedSlots = new List<GameObject>();
 
     public override void CreateSlots()
     {
         // 슬롯과 InventorySlot을 매핑하기 위한 딕셔너리 초기화
         slotsOnInterface = new SerializedDictionary<GameObject, InventorySlot>();
         
-        // 기존에 생성된 슬롯들을 모두 제거
-        foreach (var slot in instantiatedSlots)
-        {
-            Destroy(slot);
-        }
-        instantiatedSlots.Clear();
+        // // 기존에 생성된 슬롯들을 모두 제거
+        // foreach (var slot in instantiatedSlots)
+        // {
+        //     Destroy(slot);
+        // }
+        // instantiatedSlots.Clear();
     
         int itemCount = inventory.GetSlots.Count();
        
@@ -33,12 +32,24 @@ public class DynamicInterface_Lobby : UserInterface
         // 슬롯 개수만큼 반복하여 슬롯을 생성
         for (int i = 0; i < itemCount; i++)
         {
-            // 카드 타입이 'Weapon'인 경우만 처리
-            if (isWeaponInven && inventory.GetSlots[i].GetItemObject().type != CardType.Weapon)
+            CardObject itemObject = inventory.GetSlots[i].GetItemObject();
+            
+            // 만약 itemObject가 null이면.. 슬롯을 생성 XXX임 
+            if (itemObject == null) continue;
+            
+            // 인터페이스 타입에 맞는 아이템만 생성
+            if (this.interfaceType == InterfaceType.Weapon && itemObject.type != CardType.Weapon)
             {
                 continue;  // Weapon 타입이 아니면 이 슬롯은 건너뜀
             }
+            else if (this.interfaceType == InterfaceType.SkillAndBuff && (itemObject.type != CardType.Skill && itemObject.type != CardType.Buff))
+            {
+                continue;  // SkillAndBuff 타입이 아니면 이 슬롯은 건너뜀
+            }
             
+            // 여기에서 초기화 작업?? 
+            inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate; // 슬롯 데이터 변경 시 호출될 이벤트
+            //
             // 슬롯 프리팹을 인스턴스화하여 슬롯 오브젝트 생성
             GameObject obj = CreateSlotObj(i);
             
@@ -52,11 +63,11 @@ public class DynamicInterface_Lobby : UserInterface
 
             // 슬롯 데이터를 UI 오브젝트와 매핑
             // inventory.GetSlots[i].slotDisplay = obj; // 슬롯 데이터를 UI 슬롯에 연결
-            inventory.GetSlots[i].slotDisplay = obj;
+            inventory.GetSlots[i].targetObject = obj;
             slotsOnInterface.Add(obj, inventory.GetSlots[i]);// 딕셔너리에 추가
             
             // 생성된 슬롯을 리스트에 추가
-            instantiatedSlots.Add(obj);
+           // instantiatedSlots.Add(obj);
         }
     }
     

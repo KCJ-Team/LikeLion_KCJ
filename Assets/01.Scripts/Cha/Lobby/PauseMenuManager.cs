@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenuManager : SceneSingleton<PauseMenuManager>
+public class PauseMenuManager : MonoBehaviour
 {
     [Header("게임 일시정지 UI")] 
     public GameObject canvasPauseMenu;

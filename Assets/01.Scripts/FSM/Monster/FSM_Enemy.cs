@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -110,6 +111,11 @@ public class FSM_Enemy : StateMachine<FSM_EnemyState>
         playerTransform = null;
         return false;
     }
+
+    public void BossDeath()
+    {
+        //보스 죽었을 때 이벤트
+    }
     
     public bool IsPlayerInRange(float range)
     {
@@ -119,7 +125,7 @@ public class FSM_Enemy : StateMachine<FSM_EnemyState>
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         return distanceToPlayer <= range;
     }
-
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

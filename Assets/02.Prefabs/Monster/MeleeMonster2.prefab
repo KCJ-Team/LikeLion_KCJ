@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3331034062854542109}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleFrontLeft_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5391314307903371735}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleRearLeft_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8085126561132554145}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleFrontLeft_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1207982440649131935}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleFrontLeft_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7556945603068961766}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleFrontRight_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4213136198876104589}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleFrontLeft_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 315805937351465577}
   - component: {fileID: 2896134689496782723}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SK_Pistripod
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1012491864043116382}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2165946152723865901}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleFrontRight_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2801625856203439696}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleRearRight_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,7 +401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1104174644330564316}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleRearRight_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -432,7 +432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7847482620373014712}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -469,7 +469,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7991773722478815747}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleRearLeft_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,7 +502,7 @@ GameObject:
   m_Component:
   - component: {fileID: 437020283832323247}
   - component: {fileID: 2896486629409706010}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SK_PistripodWeakPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -607,7 +607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 380119178713609247}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleRearRight_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,7 +639,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2948040356095576761}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleRearLeft_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -671,7 +671,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4087186701348725060}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleFrontRight_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -702,7 +702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4985804757354283264}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleFrontRight_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -745,7 +745,7 @@ GameObject:
   - component: {fileID: 2965005415254715192}
   - component: {fileID: 7118487939160977452}
   - component: {fileID: 3508425062881314564}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MeleeMonster2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,7 +967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c375b385ea78f448514a17b49dd07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 10
   currentHealth: 0
   IsDead: 0
   OnHealthChanged:
@@ -978,7 +978,20 @@ MonoBehaviour:
       m_Calls: []
   OnHealthDepleted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4805906184386991469, guid: a86bce2861194bf4d9abe804af6e013f,
+          type: 3}
+        m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
+        m_MethodName: OnMonsterKilled
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7923431643084346031
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,7 +1001,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7431238318967662120}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_Sack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1019,7 +1032,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6526247015645194921}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleRearRight_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1051,7 +1064,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3492540500438943482}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_Jaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1082,7 +1095,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 907956247742211149}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pistripod_TentacleRearLeft_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

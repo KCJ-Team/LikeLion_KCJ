@@ -3,12 +3,15 @@ using System.Linq;
 
 public class EquipmentManager : MonoBehaviour
 {
-    public PlayerData playerData;
-    public WeaponManager weaponManager;
+    private PlayerData playerData;
+    //public WeaponManager weaponManager;
     public StaticInterface equipmentInterface;
 
     private void Start()
     {
+        playerData = LobbyMenuManager.Instance.playerData;
+        //weaponManager = GameManager.Instance.Player.GetComponent<WeaponManager>();
+        
         if (equipmentInterface == null) return;
         
         // 인터페이스 초기화
@@ -42,13 +45,13 @@ public class EquipmentManager : MonoBehaviour
             
             if (weaponSlot.card.Id >= 0 && itemObject != null && itemObject is WeaponCardObject weaponCard)
             {
-                playerData.EquipWeapon(weaponCard);
-                weaponManager.UpdateWeapon();
+                playerData.EquipWeapon(weaponCard); 
+                //weaponManager.UpdateWeapon();
             }
             else
             {
                 playerData.UnequipWeapon();
-                weaponManager.UpdateWeapon();
+                //weaponManager.UpdateWeapon();
             }
         }
 

@@ -2,21 +2,26 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class DungeonManager : MonoBehaviour
+public class SpawnManager : MonoBehaviour
 {
-    [Header("Spawn Settings")]
+    [Header("MonsterSpawn Settings")] 
+    public Transform playerSpawnPoint;
+    
+    [Header("MonsterSpawn Settings")]
     public Spawner spawner;
     public int monstersPerWave = 5;    // 한 번에 생성할 몬스터 수
     public float spawnInterval = 10f;   // 생성 간격 (초)
-    
-    [Header("UI")]
-    public GameObject dungeonClearPanel;  // 던전 클리어 UI 패널
+
+    [Header("UI")] public GameObject dungeonClearPanel;
 
     [Header("Rewards")]
     public CardObject[] possibleWeapons; 
 
-    private void Start()
+    private void Awake()
     {
+        //지정 위치에 플레이어 생성
+        GameManager.Instance.Player = Instantiate(GameManager.Instance.playerData.Character, playerSpawnPoint.position, Quaternion.identity);
+            
         // 몬스터 생성 코루틴 시작
         StartCoroutine(SpawnMonsterRoutine());
     }

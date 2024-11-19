@@ -3325,11 +3325,9 @@ GameObject:
   - component: {fileID: 6026887161113680490}
   - component: {fileID: 3376430080093639842}
   - component: {fileID: 138851287601929887}
-  - component: {fileID: 6870847910544257352}
   - component: {fileID: 2187458735174657491}
   - component: {fileID: 5225097804334533997}
   - component: {fileID: 3875342184631732217}
-  - component: {fileID: 7559383349370804367}
   m_Layer: 6
   m_Name: MaleCharacter
   m_TagString: Untagged
@@ -3466,21 +3464,6 @@ MonoBehaviour:
   ShotgunHolder: {fileID: 1948287931687543388}
   SniperHolder: {fileID: 614360162003409254}
   firePoint: {fileID: 0}
---- !u!114 &6870847910544257352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8966254859239675267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22504d6c94e72494696ca459ddbb11e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: a0dc0fd442d8dbc47a76bdd32a695e70, type: 2}
-  weaponManager: {fileID: 138851287601929887}
-  equipmentInterface: {fileID: 0}
 --- !u!114 &2187458735174657491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3530,29 +3513,6 @@ MonoBehaviour:
   OnHealthDepleted:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7559383349370804367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8966254859239675267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6808319e5d52c544dbef9db43011f340, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: a0dc0fd442d8dbc47a76bdd32a695e70, type: 2}
-  cards:
-  - {fileID: 11400000, guid: 9a38115a129a1e54f9531d205c72a1ec, type: 2}
-  - {fileID: 11400000, guid: 15ec6976db1513d459cfb606d0b57741, type: 2}
-  - {fileID: 11400000, guid: 59ca03e86d1a72a4c8f1a175da53dc43, type: 2}
-  - {fileID: 11400000, guid: dff83beaf5057634bbe5d264106dc137, type: 2}
-  - {fileID: 11400000, guid: ea32b860081a71648891ac971aea226a, type: 2}
-  - {fileID: 11400000, guid: 4da2763727fa8b940b1c7db5f0f0b935, type: 2}
-  - {fileID: 11400000, guid: 477c98f24f1ff934497afdf0d7392461, type: 2}
-  - {fileID: 11400000, guid: ec980ab9a36ee104ba16e3911df66e5a, type: 2}
-  - {fileID: 11400000, guid: cabbfd1f101fd86478d3be1dbcf49475, type: 2}
 --- !u!1 &9045029225258072693
 GameObject:
   m_ObjectHideFlags: 0

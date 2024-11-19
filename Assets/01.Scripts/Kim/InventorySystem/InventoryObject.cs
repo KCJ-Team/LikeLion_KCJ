@@ -18,7 +18,7 @@ public class InventoryObject : ScriptableObject
     public bool AddItem(Card card, int amount)
     {
         // 비어 있는 슬롯이 없으면 아이템을 추가할 수 없음
-        // if (EmptySlotCount <= 0) return false;
+        if (EmptySlotCount <= 0) return false;
 
         // 현재 아이템이 슬롯에 존재하는지 찾기
         InventorySlot slot = FindItemOnInventory(card);
@@ -26,14 +26,6 @@ public class InventoryObject : ScriptableObject
         // 카드가 스택 불가능하거나, 슬롯에 아이템이 없다면 새로운 슬롯에 아이템 추가
         if (!database.CardObjects[card.Id].stackable || slot == null)
         {
-            // 비어 있는 슬롯이 없는 경우, 새로운 슬롯을 생성
-            if (EmptySlotCount <= 0)
-            {
-                InventorySlot newSlot = new InventorySlot();
-                newSlot.UpdateSlot(card, amount);
-                return true;
-            }
-            
             // 빈 슬롯에 아이템과 수량을 설정
             GetEmptySlot().UpdateSlot(card, amount);
             return true;

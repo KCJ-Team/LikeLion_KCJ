@@ -31,12 +31,13 @@ public class DynamicInterface_Lobby : UserInterface
         // 슬롯 개수만큼이 아니고.. 음.. itemObject가 -1이면 건너띄워야하지 않을까? 
         for (int i = 0; i < itemCount; i++)
         {
+            inventory.GetSlots[i].onAfterUpdated -= OnSlotUpdate;
+            
             CardObject itemObject = inventory.GetSlots[i].GetItemObject();
             
             // 만약 itemObject가 null이면.. 슬롯을 생성 XXX임 
             if (itemObject == null) continue;
             if (itemObject.cardData.Id == -1) continue;
-            
             
             // 인터페이스 타입에 맞는 아이템만 생성
             if (this.interfaceType == InterfaceType.Weapon && itemObject.type != CardType.Weapon)
@@ -49,6 +50,7 @@ public class DynamicInterface_Lobby : UserInterface
             }
             
             // 여기에서 초기화 작업?? 
+            inventory.GetSlots[i].onAfterUpdated -= OnSlotUpdate;
             inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate; // 슬롯 데이터 변경 시 호출될 이벤트
             //
             // 슬롯 프리팹을 인스턴스화하여 슬롯 오브젝트 생성

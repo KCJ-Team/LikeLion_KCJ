@@ -64,12 +64,6 @@ public abstract class UserInterface : MonoBehaviour
         // AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
     }
 
-    public void InitializeCard(InventorySlot slot)
-    {
-        slot.parent = this;
-        slot.onAfterUpdated += OnSlotUpdate;
-    }
-
     // 매개변수의 slot으로 ui가 업데이트가 되어야하는 것.. 
     public void OnSlotUpdate(InventorySlot slot)
     {
@@ -85,7 +79,7 @@ public abstract class UserInterface : MonoBehaviour
             {
                 Debug.Log($"프리팹제거, : {tempObject.name}");
                 Destroy(tempObject); // 카드가 없는 경우 해당 UI 객체를 제거
-               slotsOnInterface.Remove(tempObject);
+                slotsOnInterface.Remove(tempObject);
             }
         }
         else // 슬롯에 유효한 카드 데이터가 있는 경우
@@ -509,11 +503,19 @@ public abstract class UserInterface : MonoBehaviour
         if (this.interfaceType == InterfaceType.Equipment) return;
         
         // slotsOnInterface의 모든 키(GameObject)를 순회
-        foreach (var slot in slotsOnInterface.Keys.ToList()) // ToList로 복사본을 순회
+        foreach (var kvp in slotsOnInterface.ToList()) // ToList로 복사본을 순회
         {
-            if (slot != null) // slot이 null이 아닌 경우만 파괴
+            var slotGameObject = kvp.Key;
+            var inventorySlot = kvp.Value;
+
+            if (slotGameObject != null) // GameObject가 null이 아닌 경우만 처리
             {
-                Destroy(slot); // GameObject 파괴
+                Destroy(slotGameObject); // GameObject 파괴
+            }
+
+            if (inventorySlot != null) // InventorySlot이 null이 아닌 경우
+            {
+                inventorySlot.onAfterUpdated -= OnSlotUpdate; // 델리게이트 해제
             }
         }
         

@@ -95,8 +95,8 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         }
 
         // 단축키 조작
-        ToggleKeyDownAction(labKey,  labPopup);
         ToggleKeyDownAction(storeKey,  storePopup);
+        ToggleKeyDownAction(deckKey,  deckPopup);
     }
     
     //단축 키 입력에 따라 팝업 열고 닫기
@@ -148,7 +148,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         if (rectTransform != null)
         {
             rectTransform.localScale = Vector3.zero; // 초기 크기 설정
-            rectTransform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack); // 팝업 확대
+            rectTransform.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutQuad); // 팝업 확대
         }
         
         RefreshAllPopupDepth();
@@ -165,7 +165,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         var rectTransform = popup.GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            rectTransform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack) // 팝업 축소
+            rectTransform.DOScale(Vector3.zero, 0.15f).SetEase(Ease.InQuad) // 팝업 축소
                 .OnComplete(() =>
                 {
                     popup.gameObject.SetActive(false); // 애니메이션 완료 후 비활성화

@@ -57,7 +57,7 @@ public class LobbyMenuUIView : MonoBehaviour
         
         // 패널 닫기
         deckPanel.SetActive(false);
-        profilePanel.SetActive(false);
+        // profilePanel.SetActive(false);
 
         // 팝업 닫기 (예외 팝업은 닫지 않음)
         if (popupInventory != exceptionPopup)

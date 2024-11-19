@@ -51,7 +51,3 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  skillEffect: {fileID: 6597932298756112774, guid: f557e2abb0060d6489d288de8cfd867c,
-    type: 3}
-  animator: {fileID: 0}
-  animationTrigger: RainBullet

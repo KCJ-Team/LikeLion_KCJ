@@ -284,20 +284,7 @@ MonoBehaviour:
       m_Calls: []
   OnHealthDepleted:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4805906184386991469, guid: a86bce2861194bf4d9abe804af6e013f,
-          type: 3}
-        m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
-        m_MethodName: OnMonsterKilled
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &629784330527278513
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,24 +8,19 @@ using UnityEngine;
 
 public class BuildingManager : SceneSingleton<BuildingManager>
 {
-    [Header("Buildings")] 
-    [SerializeField] 
-    private SerializedDictionary<BuildingType, BaseBuilding> buildings = new();
+    [Header("Buildings")] [SerializeField] private SerializedDictionary<BuildingType, BaseBuilding> buildings = new();
 
-    [Header("UI MVP 패턴")] 
-    [SerializeField] 
-    private BuildingUIView buildingUIView;
+    [Header("UI MVP 패턴")] [SerializeField] private BuildingUIView buildingUIView;
     private BuildingUIPresenter buildingUIPresenter;
-    
-    [Header("특정 빌딩의 UseButton 상태 플래그")]
-    public bool isRecoveryRoomUsed = false; // 병원 UseButton 플래그
+
+    [Header("특정 빌딩의 UseButton 상태 플래그")] public bool isRecoveryRoomUsed = false; // 병원 UseButton 플래그
     public bool isRecreationRoomUsed = false; // 오락시설 UseButton 플래그
 
     // 자원 생산 플래그
     private bool hasProducedAt6AM = false;
     private bool hasProducedAt6PM = false;
     private bool hasProducedAt12PM = false; // 12시 자원 생산 플래그
-    
+
     private void Start()
     {
         if (buildingUIPresenter == null)
@@ -33,7 +28,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             buildingUIPresenter = new BuildingUIPresenter(buildingUIView);
         }
     }
-    
+
     public BaseBuilding GetBuilding(BuildingType buildingType)
     {
         if (buildings.TryGetValue(buildingType, out BaseBuilding building))
@@ -47,12 +42,17 @@ public class BuildingManager : SceneSingleton<BuildingManager>
         }
     }
 
+    public SerializedDictionary<BuildingType, BaseBuilding> GetBuildings()
+    {
+        return buildings;
+    }
+
     public void BuildOrUpgrade(BaseBuilding buildingPrefab)
     {
         // 개별 빌딩의 상태 머신을 통해 빌드 실행
         buildingPrefab.GetStateMachine().Build(buildingPrefab);
     }
-    
+
     // 특정 시간에 자원을 생산하도록 관리
     public void ProduceResourcesAtScheduledTimes(int hour)
     {
@@ -82,13 +82,15 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             if (building.IsCreated)
             {
                 int productionAmount = building.GetCurrentProductOutput();
-                
+
                 // 만약 현재 빌딩 타입이 병원, 오락시설일때 눌려 있는 상태라면 
                 if (building.GetBuildingData().type == BuildingType.RecoveryRoom)
                 {
                     if (isRecoveryRoomUsed)
                     {
                         LobbyMenuManager.Instance.ChangeHp(productionAmount);
+
+                        buildingUIPresenter.ShowProcessIcon(building.GetBuildingData().type);
                     }
                 }
                 else if (building.GetBuildingData().type == BuildingType.RecreationRoom)
@@ -96,13 +98,17 @@ public class BuildingManager : SceneSingleton<BuildingManager>
                     if (isRecreationRoomUsed)
                     {
                         LobbyMenuManager.Instance.ChangeStress(productionAmount);
+
+                        buildingUIPresenter.ShowProcessIcon(building.GetBuildingData().type);
                     }
                 }
                 else
                 {
                     GameResourceManager.Instance.AddResource(building.GetBuildingData().resourceType, productionAmount);
+
+                    buildingUIPresenter.ShowProcessIcon(building.GetBuildingData().type);
                 }
-                
+
                 Debug.Log($"{building.GetBuildingData().name} produced {productionAmount} resources.");
             }
         }
@@ -115,7 +121,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
         {
             buildingUIPresenter = new BuildingUIPresenter(buildingUIView);
         }
-        
+
         buildingUIPresenter.UpdateProductUIAndImage(type, imagePath, productionOutput);
     }
 
@@ -137,7 +143,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
                GameResourceManager.Instance.GetResourceAmount(ResourceType.Fuel) >= fuelCost &&
                GameResourceManager.Instance.GetResourceAmount(ResourceType.Workforce) >= workforceCost;
     }
-    
+
     // 빌딩의 레벨을 Get
     public int GetBuildingLevel(BuildingType buildingType)
     {
@@ -151,7 +157,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             return -1; // 빌딩이 없을 경우 -1 반환 (에러 표시용)
         }
     }
-    
+
     // 빌딩의 레벨을 설정
     public void SetBuildingLevel(BuildingType buildingType, int level)
     {
@@ -164,13 +170,50 @@ public class BuildingManager : SceneSingleton<BuildingManager>
             {
                 building.IsCreated = true;
                 building.GetStateMachine().Init(building);
+                
+                // Punch 애니메이션 반복
+               // buildingUIPresenter.StartPunchAnimation(buildingType);
             }
-            
+
             Debug.Log($"{buildingType} 레벨이 {level}로 설정되었습니다.");
         }
         else
         {
             Debug.LogWarning($"{buildingType} 빌딩을 찾을 수 없습니다.");
+        }
+    }
+
+    public void CheckBuildingAnimationLoop()
+    {
+        foreach (var kvp in GetBuildings())
+        {
+            BaseBuilding building = kvp.Value;
+
+            if (building.IsCreated)
+            {
+                buildingUIPresenter.StartBuildingAnimation(building.GetBuildingData().type);
+            }
+        }
+    }
+    
+    // 업그레이드가 가능하면 이미지 아이콘 활성화하기
+    public void CheckUpgradeAvailability()
+    {
+        foreach (var kvp in GetBuildings())
+        {
+            BuildingType buildingType = kvp.Key;
+            BaseBuilding building = kvp.Value;
+
+            if (CanUpgradeBuilding(building))
+            {
+                // 업그레이드 가능 UI 활성화
+                buildingUIPresenter.ShowEnableUpgradeIcon(buildingType);
+            }
+            else
+            {
+                // 업그레이드 가능 UI 비활성화
+                buildingUIPresenter.HideUpgradeIcon(buildingType);
+            }
         }
     }
 } // end class

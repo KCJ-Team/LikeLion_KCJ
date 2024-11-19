@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -70,6 +71,9 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
             float encounterInterval = gameTimeSetting.dayDuration / 2f;
             float nextEncounterTime = encounterInterval;
 
+            // 빌딩 애니메이션 3초 간격을 추적할 타이머
+            float animationCheckTimer = 0f;
+            
             while (dayTimer < gameTimeSetting.dayDuration)
             {
                 if (!isPaused)
@@ -81,7 +85,15 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     minute = (int)(totalMinutes % 60);
 
                     UpdateTimeUI();
-
+                    
+                    // 3초 간격으로 BuildingManager의 애니메이션 검사 호출
+                    animationCheckTimer += Time.deltaTime;
+                    if (animationCheckTimer >= 3f)
+                    {
+                        BuildingManager.Instance.CheckBuildingAnimationLoop();
+                        animationCheckTimer = 0f; // 타이머 초기화
+                    }
+                    
                     // 6시, 18시에는 자원 생산, 
                     if (hour == 6 && minute == 0|| hour == 18 && minute == 0)
                     {
@@ -117,6 +129,9 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     {
                         //hasCheckedAtMidnight = false;
                     }
+                    
+                    // 업그레이드 가능 여부 검사
+                    BuildingManager.Instance.CheckUpgradeAvailability();
 
                     if (dayTimer >= nextEncounterTime)
                     {
@@ -160,7 +175,27 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
     // D-day 텍스트 변경
     public void UpdateDayUI()
     {
-        textDday.text = $"D-{currentDay}";
+        // textDday.text = $"D-{currentDay}";
+        
+        // 텍스트 업데이트 로직
+        string newText = $"D-{currentDay}";
+    
+        // DOTween Sequence로 텍스트 효과 설정
+        Sequence textTween = DOTween.Sequence();
+
+        // 텍스트 크기 확대/축소 효과
+        textTween.Append(textDday.transform.DOScale(1.5f, 0.2f).SetEase(Ease.OutQuad))
+            .Append(textDday.transform.DOScale(1f, 0.2f).SetEase(Ease.OutQuad));
+
+        // 텍스트 색상 변화 효과 (선택 사항: 흰색에서 빨간색으로 잠시 변경)
+        textTween.Join(textDday.DOColor(Color.cyan, 0.2f))
+            .Append(textDday.DOColor(Color.white, 0.2f));
+
+        // 텍스트 변경
+        textDday.text = newText;
+
+        // 텍스트 트위닝 완료
+        textTween.Play();
     }
     
     // 시간 정지 토글 버튼

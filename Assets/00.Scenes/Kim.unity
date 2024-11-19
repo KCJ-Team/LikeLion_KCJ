@@ -2769,23 +2769,7 @@ MonoBehaviour:
   monsterPrefabs:
   - {fileID: 594325100295629049, guid: d51859dabce85a844856e049e03d2e94, type: 3}
   - {fileID: 6855889345758869292, guid: 415306a854c0b874a82e00ef7f8e6daa, type: 3}
-  spawnPoints:
-  - {fileID: 1829022049}
-  - {fileID: 1901113177}
-  - {fileID: 858208922}
-  - {fileID: 1123981371}
-  - {fileID: 1090422736}
-  - {fileID: 1262567044}
-  - {fileID: 775676527}
-  - {fileID: 1240034688}
-  - {fileID: 573473349}
-  - {fileID: 66844807}
-  - {fileID: 992483492}
-  - {fileID: 261420577}
-  - {fileID: 155522612}
-  - {fileID: 1401781469}
-  - {fileID: 380917655}
-  - {fileID: 1009212942}
+  spawnPoints: []
   bossPrefab: {fileID: 7921980321135972880, guid: d8f28545ab2604846a549447841ebf65,
     type: 3}
   BossSpawnPoints: {fileID: 1980072701}

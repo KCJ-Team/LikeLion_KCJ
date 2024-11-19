@@ -119,7 +119,7 @@ MonoBehaviour:
   speed: 50
   destructibleLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 384
 --- !u!1001 &7574665255978294636
 PrefabInstance:
   m_ObjectHideFlags: 0

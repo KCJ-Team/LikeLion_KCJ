@@ -81,12 +81,11 @@ public class GameSceneDataManager : MonoBehaviour
         {
             case "Lobby" :
                 LoadLobbyDataInDB();
-
                 break;
             
             case "Map_Elimination" :
                 // TODO : DB에서 플레이어 정보..!
-                
+                DungeonLoadData();
                 break;
         }
         
@@ -107,9 +106,6 @@ public class GameSceneDataManager : MonoBehaviour
 
         // 플레이어 모델 타입 설정
         ObjectManager.Instance.ActivatePlayerModel((PlayerModelType)playerModel.PlayerType);
-        
-        
-        
         
         // 자원 데이터를 GameResourceManager에 설정
         GameResourceManager.Instance.SetResourceAmount(ResourceType.Energy, playerModel.PlayerEnergy);
@@ -226,7 +222,18 @@ public class GameSceneDataManager : MonoBehaviour
     // TODO : 던전 진입시 씬 넘어갈때 로드할 데이터 
     public void DungeonLoadData()
     {
-        //hp, 어택 , 방어력, 장비
+        PlayerService playerService = new PlayerService();
+        PlayerModel playerModel = playerService.GetPlayer();
+        
+        if (playerModel == null)
+        {
+            Debug.LogError("Failed to load player data from the database.");
+            return;
+        }
+        //DungeonManager.Instance.SetStats(playerModel.PlayerHp, playerModel.PlayerDefense, playerModel.PlayerAttack);
+        
+        //EquipmentService equipmentService = new EquipmentService();
+        //equipmentService.LoadEquipment();
     }
 
     // TODO : 던전 게임 종료후 로비씬으로 넘어가기전 저장할 데이터 

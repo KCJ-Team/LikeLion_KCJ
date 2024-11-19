@@ -153,4 +153,16 @@ public class GameResourceManager : SceneSingleton<GameResourceManager>
         }
         return false;
     }
+    
+    // 특정 자원이 주어진 양보다 많은지 확인하는 메서드
+    public bool IsResourceSufficient(ResourceType type, int requiredAmount)
+    {
+        if (resources.TryGetValue(type, out GameResource resource))
+        {
+            return resource.CurrentAmount >= requiredAmount;
+        }
+
+        Debug.LogWarning($"Resource type not found: {type}");
+        return false; // 자원을 찾지 못한 경우 false 반환
+    }
 } // end class

@@ -19,6 +19,81 @@ MonoBehaviour:
     Slots:
     - AllowedItems: 
       card:
+        Name: Pistol
+        Id: 0
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: InvisibilityCard
+        Id: 12
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: KnockBackCard
+        Id: 13
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: MineCard
+        Id: 14
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: PullCard
+        Id: 15
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: ShadowCloneCard
+        Id: 16
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: APBuffCard
+        Id: 21
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: ASBuffCard
+        Id: 22
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: DefenceBuffCard
+        Id: 23
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: SpeedBuffCard
+        Id: 24
+      amount: 1
+    - AllowedItems: 
+      card:
+        Name: 
+        Id: -1
+      amount: 0
+    - AllowedItems: 
+      card:
+        Name: 
+        Id: -1
+      amount: 0
+    - AllowedItems: 
+      card:
+        Name: 
+        Id: -1
+      amount: 0
+    - AllowedItems: 
+      card:
+        Name: 
+        Id: -1
+      amount: 0
+    - AllowedItems: 
+      card:
+        Name: 
+        Id: -1
+      amount: 0
+    - AllowedItems: 
+      card:
         Name: 
         Id: -1
       amount: 0

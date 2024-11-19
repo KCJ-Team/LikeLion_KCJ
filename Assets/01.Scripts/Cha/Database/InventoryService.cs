@@ -19,7 +19,7 @@ public class InventoryService
     /// </summary>
     public bool InitialInventoryAndEquipment()
     {
-        CardDatabase cardDatabase = MainMenuManger.Instance.CardDatabase;
+        CardDatabase cardDatabase = MainMenuManager.Instance.CardDatabase;
 
         try
         {
@@ -61,7 +61,7 @@ public class InventoryService
             var inventoryList = dbConnection.Table<InventoryModel>().ToList();
             
             // 기존 인벤토리, 장비창 초기화
-            PlayerData playerData = MainMenuManger.Instance.playerData;
+            PlayerData playerData = MainMenuManager.Instance.playerData;
             playerData.inventory.Clear();
             playerData.equipment.Clear();
             

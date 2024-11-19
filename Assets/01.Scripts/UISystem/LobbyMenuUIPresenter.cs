@@ -18,23 +18,28 @@ public class LobbyMenuUIPresenter
 
     private void OnProfileButtonClicked()
     {
+        // 이거 PopupManager에 있는걸로 하면 되잖아 근데..
+        
         uiView.HideAllPanels();
         uiView.ShowPanel(uiView.profilePanel);
     }
     
     private void OnDeckButtonClicked()
     {
-        uiView.HideAllPanels();
+        uiView.HideAllPanels(uiView.popupInventory);
         uiView.ShowPanel(uiView.deckPanel);
-        uiView.ShowPanel(uiView.inventoryPopup);
+      //  uiView.ShowPanel(uiView.inventoryPopup);
+        uiView.ShowPopup(uiView.popupInventory);
 
         UpdateInventoryAndDeck();
     }
 
     private void OnStoreButtonClicked()
     {
-        uiView.HideAllPanels();
-        uiView.ShowPanel(uiView.storePopup);
+        uiView.HideAllPanels(uiView.popupStore);
+        // uiView.ShowPanel(uiView.storePopup);
+        uiView.ShowPopup(uiView.popupStore);
+
     }
     
     public void SetHpAndStress(float newHp, float newStress)

@@ -16,5 +16,6 @@ MonoBehaviour:
   resourceName: "\uC5F0\uAD6C"
   resourceType: 5
   icon: {fileID: 21300000, guid: 2c813ef8a1159bc4fb3a1a143b4403bb, type: 3}
+  initAmount: 50
   currentAmount: 0
   maxAmount: 999

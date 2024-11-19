@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,12 +47,29 @@ public class EncounterUIPresenter
         // 모든 오브젝트가 활성화되어 있으면 더 이상 활성화하지 않음
         if (activeCount >= uiView.encounterObjects.Count)
         {
+            // TODO : 사운드 알림 주기(Warning이랑 같이 단발성)
+            
             Debug.Log("All encounter objects are currently active.");
             return;
         }
+        
+        // 다음 오브젝트 가져오기
+        var encounterObject = uiView.encounterObjects[activeCount].gameObject;
 
-        // 다음 오브젝트 활성화
-        uiView.encounterObjects[activeCount].gameObject.SetActive(true);
+        // 초기 위치 설정 및 애니메이션 적용
+        var rectTransform = encounterObject.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            // 현재 위치에서 X축으로 +100만큼 이동
+            float targetX = rectTransform.anchoredPosition.x + 200f;
+
+            // 화면 안으로 슬라이드 애니메이션
+            rectTransform.DOAnchorPos(new Vector2(targetX, rectTransform.anchoredPosition.y), 1f)
+                .SetEase(Ease.OutQuad);
+        }
+        
+        // 활성화
+        encounterObject.SetActive(true);
         activeCount++;
     }
     
@@ -234,9 +252,30 @@ public class EncounterUIPresenter
             Debug.LogWarning("The selected button is already inactive or null.");
             return;
         }
+      
+        // 비활성화 애니메이션
+        var rectTransform = selectedEncounterButton.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            // 현재 위치에서 X축으로 -200만큼 이동
+            float targetX = rectTransform.anchoredPosition.x - 200f;
 
-        // 버튼 비활성화
-        selectedEncounterButton.gameObject.SetActive(false);
+            // 화면 밖으로 슬라이드 애니메이션
+            rectTransform.DOAnchorPos(new Vector2(targetX, rectTransform.anchoredPosition.y), 1f)
+                .SetEase(Ease.InQuad) // 부드럽게 사라지는 애니메이션
+                .OnComplete(() =>
+                {
+                    // 애니메이션 완료 후 비활성화
+                    selectedEncounterButton.gameObject.SetActive(false);
+                    selectedEncounterButton = null;
+                });
+        }
+        else
+        {
+            // 애니메이션 적용이 불가능한 경우 즉시 비활성화
+            selectedEncounterButton.gameObject.SetActive(false);
+            selectedEncounterButton = null;
+        }
 
         // 해당 버튼이 리스트에서 몇 번째인지 확인하고 activeCount 조정
         int index = uiView.encounterObjects.IndexOf(selectedEncounterButton);

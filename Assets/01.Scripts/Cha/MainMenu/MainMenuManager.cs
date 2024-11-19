@@ -150,9 +150,13 @@ public class MainMenuManger : SceneSingleton<MainMenuManger>
 
             if (encounterService.CreateEncounters())
             {
-                // // 인벤토리에 기본 무기 저장
+                // 인벤토리에 기본 무기 저장
                  InventoryService inventoryService = new InventoryService();
                
+                 //if (inventoryService.InitialInventoryAndEquipment())
+                // // 인벤토리에 기본 무기 저장
+                 //InventoryService inventoryService = new InventoryService();
+              
                  if (inventoryService.CreateInventory())
                 {
                      Debug.Log("New game data successfully saved.");

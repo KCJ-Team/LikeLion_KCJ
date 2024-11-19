@@ -108,6 +108,9 @@ public class GameSceneDataManager : MonoBehaviour
         // 플레이어 모델 타입 설정
         ObjectManager.Instance.ActivatePlayerModel((PlayerModelType)playerModel.PlayerType);
         
+        
+        
+        
         // 자원 데이터를 GameResourceManager에 설정
         GameResourceManager.Instance.SetResourceAmount(ResourceType.Energy, playerModel.PlayerEnergy);
         GameResourceManager.Instance.SetResourceAmount(ResourceType.Food, playerModel.PlayerFood);

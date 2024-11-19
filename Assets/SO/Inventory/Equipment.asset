@@ -24,9 +24,9 @@ MonoBehaviour:
       amount: 1
     - AllowedItems: 02000000
       card:
-        Name: 
-        Id: -1
-      amount: 0
+        Name: PullCard
+        Id: 15
+      amount: 1
     - AllowedItems: 02000000
       card:
         Name: SpeedBuffCard
@@ -34,6 +34,6 @@ MonoBehaviour:
       amount: 1
     - AllowedItems: 04000000
       card:
-        Name: 
-        Id: -1
-      amount: 0
+        Name: ASBuffCard
+        Id: 22
+      amount: 1

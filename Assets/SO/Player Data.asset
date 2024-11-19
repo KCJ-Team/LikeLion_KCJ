@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Player Data
   m_EditorClassIdentifier: 
   Character: {fileID: 0}
-  BaseHP: 1000
+  BaseHP: 100
   BaseMP: 0
   MoveSpeed: 5
   RotationSpeed: 10
-  AttackPower: 10
-  Defense: 50
+  AttackPower: 0
+  Defense: 0
   currentWeapon: {fileID: 0}
   currentQSkill: {fileID: 11400000, guid: 4da2763727fa8b940b1c7db5f0f0b935, type: 2}
   currentESkill: {fileID: 0}

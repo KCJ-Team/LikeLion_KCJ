@@ -148,8 +148,8 @@ public class GameSceneDataManager : MonoBehaviour
         
         // TODO : 확인필요
         // 인벤토리
-         // InventoryService inventoryService = new InventoryService();
-         // inventoryService.GetAllInventory(); // 인벤토리를 가져와 playerData의 inventory에 적재
+         InventoryService inventoryService = new InventoryService();
+         inventoryService.GetAllInventory(); // 인벤토리를 가져와 playerData의 inventory에 적재
         //
         // // // 이큅먼트
         // EquipmentService equipmentService = new EquipmentService();
@@ -226,7 +226,7 @@ public class GameSceneDataManager : MonoBehaviour
     // TODO : 던전 진입시 씬 넘어갈때 로드할 데이터 
     public void DungeonLoadData()
     {
-        
+        //hp, 어택 , 방어력, 장비
     }
 
     // TODO : 던전 게임 종료후 로비씬으로 넘어가기전 저장할 데이터 

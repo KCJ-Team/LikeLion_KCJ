@@ -1,13 +1,9 @@
 fileFormatVersion: 2
- HEAD:Assets/01.Scripts/Cha/Loading.meta
-feature/client
-guid: 282a840a8b79cb8429628a424ba720ba
-
+<<<<<<<< HEAD:Assets/01.Scripts/Cha/Loading.meta
 guid: f786f550b6a282149834a2bf0e65956c
-dev
-
+========
 guid: ab27b8959367e3740b34068a48b3ea7c
-feature/client:Assets/02.Prefabs/Player.meta
+>>>>>>>> feature/client:Assets/02.Prefabs/Player.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

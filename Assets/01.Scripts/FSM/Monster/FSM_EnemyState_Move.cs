@@ -30,7 +30,6 @@ public class FSM_EnemyState_Move : VMyState<FSM_EnemyState>
         if (enemy.IsDeath())
         {
             OwnerStateMachine.ChangeState(FSM_EnemyState.FSM_EnemyState_Dead);
-            return;
         }
         
         if (!enemy.DetectPlayer() || !enemy.IsPlayerInRange(enemy.detectionRadius))

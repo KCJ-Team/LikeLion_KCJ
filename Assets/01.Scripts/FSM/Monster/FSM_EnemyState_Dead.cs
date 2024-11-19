@@ -20,11 +20,6 @@ public class FSM_EnemyState_Dead : VMyState<FSM_EnemyState>
     
     protected override void EnterState()
     {
-        if (enemy.attackType == AttackType.Boss)
-        {
-            enemy.BossDeath();
-        }
-        
         _animator.CrossFade(AnimationHash.DeadHash, 0.0f);
         
         if (enemy.agent != null)

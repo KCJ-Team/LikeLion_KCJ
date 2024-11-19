@@ -14,7 +14,7 @@ public class LobbyMenuManager : SceneSingleton<LobbyMenuManager>
     public PlayerData playerData;
     public CardDatabase cardDatabase;
 
-    [Header("로비에서 관리할 플레이어의 정보들")] 
+    [Header("로비에서 관리할 플레이어의 정보들")]
     public float hp;
     public float stress;
     public float attack;

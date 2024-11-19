@@ -66,10 +66,14 @@ public class InventoryService
             playerData.equipment.Clear();
             
             Debug.Log("Player inventory cleared.");
+
+            int i = 0;
             
             // 각 InventoryModel을 Card로 변환하고 플레이어 인벤토리에 추가
-            foreach (var inventoryItem in inventoryList)
+            foreach (var inventoryItem in inventoryList) // 정해진 갯수만큼 돌아야하는데
             {
+                i++;
+                
                 // CardObject를 Card로 변환
                 CardObject cardObject = cardDatabase.CardObjects[inventoryItem.InventoryId];
                 if (cardObject != null)
@@ -78,6 +82,8 @@ public class InventoryService
 
                     bool result = playerData.inventory.AddItem(card, 1); // 수량은 1로 설정
                     Debug.Log($"{result} 결과! Added card {cardObject.name} (ID: {card.Id}) to player inventory.");
+                    
+                    Debug.Log($"{i}번 찍히고 있음");
                 }
                 else
                 {

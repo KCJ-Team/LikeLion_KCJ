@@ -54,7 +54,7 @@ public abstract class UserInterface : MonoBehaviour
         {
             Debug.LogError("HorizontalLayoutGroup 컴포넌트가 Content Panel에 없습니다!");
         }
-
+        
         CreateSlots(); // 슬롯 생성
 
         Debug.Log("UserInterface_Start실행 : " + this.interfaceType);
@@ -62,6 +62,12 @@ public abstract class UserInterface : MonoBehaviour
         // 현재 UI에서 마우스가 들어오거나 나갈 때의 이벤트를 등록
         // AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
         // AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
+    }
+
+    public void InitializeCard(InventorySlot slot)
+    {
+        slot.parent = this;
+        slot.onAfterUpdated += OnSlotUpdate;
     }
 
     // 매개변수의 slot으로 ui가 업데이트가 되어야하는 것.. 
@@ -87,6 +93,11 @@ public abstract class UserInterface : MonoBehaviour
             GameObject tempPrefab = slot.GetItemObject().characterPrefab;
             if (tempPrefab != null)
             {
+                if (slotDisplay == null)
+                {
+                    slotDisplay = tempPrefab;
+                }
+                
                 if (slotDisplay.transform.childCount > 0)
                 {
                     // Empty Slot이라면.. 하위오브젝트를 생성, 그게 아니라면 삭제하고 바꿔치기를 해야함. 
@@ -485,5 +496,27 @@ public abstract class UserInterface : MonoBehaviour
 
             Debug.Log($"Temp item created at position: {tempTransform.position}, size: {tempTransform.sizeDelta}");
         }
+    }
+    
+    private void OnEnable()
+    {
+        if (this.interfaceType == InterfaceType.Equipment) return;
+        CreateSlots();
+    }
+
+    private void OnDisable()
+    {
+        if (this.interfaceType == InterfaceType.Equipment) return;
+        
+        // slotsOnInterface의 모든 키(GameObject)를 순회
+        foreach (var slot in slotsOnInterface.Keys.ToList()) // ToList로 복사본을 순회
+        {
+            if (slot != null) // slot이 null이 아닌 경우만 파괴
+            {
+                Destroy(slot); // GameObject 파괴
+            }
+        }
+        
+        slotsOnInterface.Clear(); // 매핑된 슬롯 데이터도 초기화
     }
 } // end class

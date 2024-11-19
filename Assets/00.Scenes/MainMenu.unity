@@ -1833,6 +1833,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 1731142704375766307, guid: df6ce73cda5fade4dab010b3208af586,
+        type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 5106502870285714727, guid: df6ce73cda5fade4dab010b3208af586,
         type: 3}
       propertyPath: m_LocalPosition.x

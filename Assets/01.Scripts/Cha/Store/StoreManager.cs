@@ -42,11 +42,11 @@ public class StoreManager : SceneSingleton<StoreManager>
             if (GameResourceManager.Instance.ConsumeResource(ResourceType.Currency, currentStore.cost))
             {
                 // 인벤토리에 추가
+                // 추가할때 슬롯을 만들어줘야함..! 
                 LobbyMenuManager.Instance.playerData.inventory.AddItem(currentStore.storeCard.cardData, 1);
 
                 // 상점에서 지우기, 오브젝트도 지워줘야함..
                 LobbyMenuManager.Instance.storeData.RemoveItem(currentStore);
-               
                 OnItemPurchased?.Invoke(currentStore);
                 
                 // 팝업닫기

@@ -13,7 +13,7 @@ public class DynamicInterface_Lobby : UserInterface
 
     [SerializeField]
     //private List<GameObject> instantiatedSlots = new List<GameObject>();
-
+    
     public override void CreateSlots()
     {
         // 슬롯과 InventorySlot을 매핑하기 위한 딕셔너리 초기화
@@ -27,15 +27,16 @@ public class DynamicInterface_Lobby : UserInterface
         // instantiatedSlots.Clear();
     
         int itemCount = inventory.GetSlots.Count();
-       
     
-        // 슬롯 개수만큼 반복하여 슬롯을 생성
+        // 슬롯 개수만큼이 아니고.. 음.. itemObject가 -1이면 건너띄워야하지 않을까? 
         for (int i = 0; i < itemCount; i++)
         {
             CardObject itemObject = inventory.GetSlots[i].GetItemObject();
             
             // 만약 itemObject가 null이면.. 슬롯을 생성 XXX임 
             if (itemObject == null) continue;
+            if (itemObject.cardData.Id == -1) continue;
+            
             
             // 인터페이스 타입에 맞는 아이템만 생성
             if (this.interfaceType == InterfaceType.Weapon && itemObject.type != CardType.Weapon)

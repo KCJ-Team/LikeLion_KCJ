@@ -29,5 +29,4 @@ public class FSM_EnemyState_Dead : VMyState<FSM_EnemyState>
         
         Destroy(gameObject, 5f); 
     }
-    
 }

@@ -15,9 +15,9 @@ public class InventoryService
     }
 
     /// <summary>
-    /// 캐릭터 생성시 기본 인벤토리 아이템들 생성
+    /// 캐릭터 생성시 기본 인벤토리 아이템들을 cardDatabase에 가져와서, 넣어주고, 인벤과 SO를 초기화한후 인벤만 집어넣는다.
     /// </summary>
-    public bool CreateInventory()
+    public bool InitialInventoryAndEquipment()
     {
         CardDatabase cardDatabase = MainMenuManger.Instance.CardDatabase;
 
@@ -55,7 +55,36 @@ public class InventoryService
                 dbConnection.Insert(buffCard);
                 Debug.Log($"Buff card {buffId} added to inventory.");
             }
-    
+            
+            // 인벤토리 테이블에 카드를 추가했으면 곧바로 가지고 와서, 
+            // 전체 인벤토리를 가져옴
+            var inventoryList = dbConnection.Table<InventoryModel>().ToList();
+            
+            // 기존 인벤토리, 장비창 초기화
+            PlayerData playerData = MainMenuManger.Instance.playerData;
+            playerData.inventory.Clear();
+            playerData.equipment.Clear();
+            
+            Debug.Log("Player inventory cleared.");
+            
+            // 각 InventoryModel을 Card로 변환하고 플레이어 인벤토리에 추가
+            foreach (var inventoryItem in inventoryList)
+            {
+                // CardObject를 Card로 변환
+                CardObject cardObject = cardDatabase.CardObjects[inventoryItem.InventoryId];
+                if (cardObject != null)
+                {
+                    Card card = new Card(cardObject);
+
+                    bool result = playerData.inventory.AddItem(card, 1); // 수량은 1로 설정
+                    Debug.Log($"{result} 결과! Added card {cardObject.name} (ID: {card.Id}) to player inventory.");
+                }
+                else
+                {
+                    Debug.LogWarning($"CardObject with ID {inventoryItem.InventoryId} not found in CardDatabase.");
+                }
+            }
+            
             return true;
         }
         catch (Exception e)

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum PopupType
 {
-    BuildingUpgrade, Encounter, Store, Lab, Deck
+    BuildingUpgrade, Encounter, Store, Lab, Deck, Noti
 }
 
 public class PopupUIManager : SceneSingleton<PopupUIManager>
@@ -29,6 +29,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
     public PopupUI labPopup;
     public PopupUI storePopup;
     public PopupUI deckPopup;
+    public PopupUI notiPopup; // 알림팝업
     
     private void Awake()
     {
@@ -45,7 +46,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         // 1. 리스트 초기화
         allPopupList = new List<PopupUI>()
         {
-            buildingUpgradePopup, EncounterPopup, labPopup, storePopup, deckPopup
+            buildingUpgradePopup, EncounterPopup, labPopup, storePopup, deckPopup, notiPopup
         };
 
         // 2. 모든 팝업에 이벤트 등록
@@ -130,6 +131,8 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
                 return labPopup;
             case PopupType.Deck:
                 return deckPopup;
+            case PopupType.Noti:
+                return notiPopup;
             default:
                 Debug.LogWarning("Invalid PopupType requested.");
                 return null;
@@ -151,6 +154,9 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
             rectTransform.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutQuad); // 팝업 확대
         }
         
+        // 팝업 활성화될때.. 게임타임 멈추기?
+        GameTimeManager.Instance.SetPauseTime(true);
+        
         RefreshAllPopupDepth();
     }
     
@@ -165,7 +171,7 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         var rectTransform = popup.GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            rectTransform.DOScale(Vector3.zero, 0.15f).SetEase(Ease.InQuad) // 팝업 축소
+        rectTransform.DOScale(Vector3.zero, 0.15f).SetEase(Ease.InQuad) // 팝업 축소
                 .OnComplete(() =>
                 {
                     popup.gameObject.SetActive(false); // 애니메이션 완료 후 비활성화
@@ -175,6 +181,9 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
         {
             popup.gameObject.SetActive(false); // RectTransform이 없으면 바로 비활성화
         }
+        
+        // 팝업 닫힐때 게임타임 다시 시작
+        GameTimeManager.Instance.SetPauseTime(false);
         
         RefreshAllPopupDepth();
     }

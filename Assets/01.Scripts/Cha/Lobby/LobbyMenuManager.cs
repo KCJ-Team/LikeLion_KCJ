@@ -10,9 +10,10 @@ using UnityEngine.UI;
 /// </summary>
 public class LobbyMenuManager : SceneSingleton<LobbyMenuManager>
 {
-    [Header("Player Data..")] 
+    [Header("SO Data..")] 
     public PlayerData playerData;
     public CardDatabase cardDatabase;
+    public StoreData storeData;
 
     [Header("로비에서 관리할 플레이어의 정보들")]
     public float hp;

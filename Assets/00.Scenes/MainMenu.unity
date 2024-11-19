@@ -1630,6 +1630,7 @@ MonoBehaviour:
   gameTimeData: {fileID: 11400000, guid: 1820929a84cd5e84ca04d74c6c489096, type: 2}
   playerData: {fileID: 11400000, guid: a0dc0fd442d8dbc47a76bdd32a695e70, type: 2}
   CardDatabase: {fileID: 11400000, guid: 51bec8d7b147ca74f9cf0d148a51479e, type: 2}
+  storeData: {fileID: 11400000, guid: 45d390b5d125cdb4bb5535dcb0452b73, type: 2}
   mainTitlePanel: {fileID: 2146372925}
   settingsPanel: {fileID: 306721115}
   aboutUsPanel: {fileID: 1855262778}
@@ -1831,6 +1832,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731142704375766307, guid: df6ce73cda5fade4dab010b3208af586,
+        type: 3}
+      propertyPath: field of view
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5106502870285714727, guid: df6ce73cda5fade4dab010b3208af586,
         type: 3}

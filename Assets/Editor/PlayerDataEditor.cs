@@ -29,7 +29,7 @@ public class PlayerDataEditor : EditorWindow
     private void SaveInitialGameData()
     {
         // MainMenuManager 인스턴스 가져오기
-        MainMenuManger mainMenuManager = FindObjectOfType<MainMenuManger>();
+        MainMenuManager mainMenuManager = FindObjectOfType<MainMenuManager>();
 
         if (mainMenuManager == null)
         {

@@ -41,6 +41,10 @@ public class PlayerService
             
             dbConnection.Execute("DELETE FROM equipment");
             Debug.Log("equipment table data deleted.");
+            
+            // 스토어 
+            dbConnection.Execute("DELETE FROM store");
+            Debug.Log("store table data deleted.");
         }
         
         // guid 생성
@@ -51,11 +55,11 @@ public class PlayerService
         {
             PlayerId = id,
             PlayerType = (int)type,
-            PlayerEnergy = MainMenuManger.Instance.resourceDatas[ResourceType.Energy].initAmount,
-            PlayerFood = MainMenuManger.Instance.resourceDatas[ResourceType.Food].initAmount,
-            PlayerWorkforce = MainMenuManger.Instance.resourceDatas[ResourceType.Workforce].initAmount,
-            PlayerFuel = MainMenuManger.Instance.resourceDatas[ResourceType.Fuel].initAmount,
-            PlayerDDay = MainMenuManger.Instance.gameTimeData.startDay,
+            PlayerEnergy = MainMenuManager.Instance.resourceDatas[ResourceType.Energy].initAmount,
+            PlayerFood = MainMenuManager.Instance.resourceDatas[ResourceType.Food].initAmount,
+            PlayerWorkforce = MainMenuManager.Instance.resourceDatas[ResourceType.Workforce].initAmount,
+            PlayerFuel = MainMenuManager.Instance.resourceDatas[ResourceType.Fuel].initAmount,
+            PlayerDDay = MainMenuManager.Instance.gameTimeData.startDay,
             PlayerPowerplantLevel = -1,
             PlayerBiofarmLevel = -1,
             PlayerQuartersLevel = -1,
@@ -63,9 +67,9 @@ public class PlayerService
             PlayerResearchLabLevel = -1,
             PlayerRecoveryRoomLevel = -1,
             PlayerRecreationRoomLevel = -1,
-            PlayerHp = (int)MainMenuManger.Instance.playerData.BaseHP,
-            PlayerAttack = (int)MainMenuManger.Instance.playerData.AttackPower,
-            PlayerDefense = (int)MainMenuManger.Instance.playerData.Defense,
+            PlayerHp = (int)MainMenuManager.Instance.playerData.BaseHP,
+            PlayerAttack = (int)MainMenuManager.Instance.playerData.AttackPower,
+            PlayerDefense = (int)MainMenuManager.Instance.playerData.Defense,
         };
         
         try

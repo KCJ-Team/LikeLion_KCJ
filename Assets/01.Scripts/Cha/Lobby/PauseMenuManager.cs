@@ -11,6 +11,8 @@ public class PauseMenuManager : MonoBehaviour
     public Button btnSave;
     public Button btnSaveMainTitle;
 
+    public PopupUIManager PopupUIManager;
+
     private void Awake()
     {
         // ESC 메뉴 UI 초기화 및 비활성화
@@ -31,9 +33,10 @@ public class PauseMenuManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // 팝업이 열려 있으면 일시정지 메뉴를 띄우지 않음
-            if (!PopupUIManager.Instance.IsAnyPopupOpen())
+            if (PopupUIManager != null)
             {
-                TogglePauseMenu();
+                if (!PopupUIManager.Instance.IsAnyPopupOpen())
+                    TogglePauseMenu();
             }
         }
     }

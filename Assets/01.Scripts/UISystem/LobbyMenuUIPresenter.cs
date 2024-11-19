@@ -30,8 +30,6 @@ public class LobbyMenuUIPresenter
         uiView.ShowPanel(uiView.deckPanel);
       //  uiView.ShowPanel(uiView.inventoryPopup);
         uiView.ShowPopup(uiView.popupInventory);
-
-        UpdateInventoryAndDeck();
     }
 
     private void OnStoreButtonClicked()
@@ -39,7 +37,6 @@ public class LobbyMenuUIPresenter
         uiView.HideAllPanels(uiView.popupStore);
         // uiView.ShowPanel(uiView.storePopup);
         uiView.ShowPopup(uiView.popupStore);
-
     }
     
     public void SetHpAndStress(float newHp, float newStress)
@@ -72,20 +69,5 @@ public class LobbyMenuUIPresenter
         LobbyMenuManager.Instance.defense = newDefense;
 
         uiView.UpdateAttackAndDefenseUI();
-    }
-    
-    private void UpdateInventoryAndDeck()
-    {
-        // 여기에 inventory와 deck 관련 UI 업데이트 로직 추가
-        Debug.Log("Inventory and Deck updated.");
-        
-        // playerData에서 인벤토리 데이터 가져오기
-       // LobbyMenuManager.Instance.playerData.inventory.GetSlots[0;
-       // InventoryService inventoryService = new InventoryService();
-       // inventoryService.GetAllInventory(); // 인벤토리를 가져와 playerData의 inventory에 적재
-       //
-       //  
-        
-        
     }
 } // end class

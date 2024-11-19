@@ -54,7 +54,7 @@ public abstract class UserInterface : MonoBehaviour
         {
             Debug.LogError("HorizontalLayoutGroup 컴포넌트가 Content Panel에 없습니다!");
         }
-
+        
         CreateSlots(); // 슬롯 생성
 
         Debug.Log("UserInterface_Start실행 : " + this.interfaceType);
@@ -79,7 +79,7 @@ public abstract class UserInterface : MonoBehaviour
             {
                 Debug.Log($"프리팹제거, : {tempObject.name}");
                 Destroy(tempObject); // 카드가 없는 경우 해당 UI 객체를 제거
-               slotsOnInterface.Remove(tempObject);
+                slotsOnInterface.Remove(tempObject);
             }
         }
         else // 슬롯에 유효한 카드 데이터가 있는 경우
@@ -87,6 +87,11 @@ public abstract class UserInterface : MonoBehaviour
             GameObject tempPrefab = slot.GetItemObject().characterPrefab;
             if (tempPrefab != null)
             {
+                if (slotDisplay == null)
+                {
+                    slotDisplay = tempPrefab;
+                }
+                
                 if (slotDisplay.transform.childCount > 0)
                 {
                     // Empty Slot이라면.. 하위오브젝트를 생성, 그게 아니라면 삭제하고 바꿔치기를 해야함. 
@@ -485,5 +490,35 @@ public abstract class UserInterface : MonoBehaviour
 
             Debug.Log($"Temp item created at position: {tempTransform.position}, size: {tempTransform.sizeDelta}");
         }
+    }
+    
+    private void OnEnable()
+    {
+        if (this.interfaceType == InterfaceType.Equipment) return;
+        CreateSlots();
+    }
+
+    private void OnDisable()
+    {
+        if (this.interfaceType == InterfaceType.Equipment) return;
+        
+        // slotsOnInterface의 모든 키(GameObject)를 순회
+        foreach (var kvp in slotsOnInterface.ToList()) // ToList로 복사본을 순회
+        {
+            var slotGameObject = kvp.Key;
+            var inventorySlot = kvp.Value;
+
+            if (slotGameObject != null) // GameObject가 null이 아닌 경우만 처리
+            {
+                Destroy(slotGameObject); // GameObject 파괴
+            }
+
+            if (inventorySlot != null) // InventorySlot이 null이 아닌 경우
+            {
+                inventorySlot.onAfterUpdated -= OnSlotUpdate; // 델리게이트 해제
+            }
+        }
+        
+        slotsOnInterface.Clear(); // 매핑된 슬롯 데이터도 초기화
     }
 } // end class

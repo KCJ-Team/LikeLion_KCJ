@@ -9,7 +9,7 @@ public class InventoryObject : ScriptableObject
     public CardDatabase database;  // 카드 데이터베이스 (아이템에 대한 정보 포함)
     public InventoryType invenType;  // 인벤토리 타입 (예: 일반, 퀘스트 등)
     public CardType type;  // 카드의 타입 (예: 방어, 공격 등)
-
+    
     public InventorySlot[] GetSlots => Container.Slots;  // 슬롯 배열을 반환 (인벤토리 내 아이템들)
 
     [SerializeField] private Inventory Container = new Inventory();  // 인벤토리 슬롯들을 관리하는 Inventory 객체

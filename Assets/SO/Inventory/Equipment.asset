@@ -17,23 +17,23 @@ MonoBehaviour:
   type: 0
   Container:
     Slots:
-    - AllowedItems: 
+    - AllowedItems: 01000000
       card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
+        Name: Pistol
+        Id: 0
+      amount: 1
+    - AllowedItems: 02000000
       card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
+        Name: PullCard
+        Id: 15
+      amount: 1
+    - AllowedItems: 02000000
       card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
+        Name: SpeedBuffCard
+        Id: 24
+      amount: 1
+    - AllowedItems: 04000000
       card:
-        Name: 
-        Id: -1
-      amount: 0
+        Name: ASBuffCard
+        Id: 22
+      amount: 1

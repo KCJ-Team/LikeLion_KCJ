@@ -55,6 +55,29 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         StartCoroutine(DayCycle());
     }
     
+    private void Update()
+    {
+        // 1번 키 입력: Pause/Resume
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (isPaused)
+            {
+                SetPauseTime(false);
+            }
+            else
+            {
+                SetPauseTime(true);
+
+            }
+        }
+
+        // 2번 키 입력: 배속 토글
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ToggleDoubleTimeSpeed();
+        }
+    }
+    
     // 3분동안 하루가 지나감
     private IEnumerator DayCycle()
     {

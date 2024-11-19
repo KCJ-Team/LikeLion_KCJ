@@ -31,10 +31,16 @@ public class PlayerService
             dbConnection.Delete(existingPlayer);
             Debug.Log("Existing player data deleted.");
             
-            // TODO :
             // Encounter 테이블의 모든 데이터 삭제
             dbConnection.Execute("DELETE FROM encounter");
             Debug.Log("Encounter table data deleted.");
+            
+            // 인벤토리와 이큅먼트
+            dbConnection.Execute("DELETE FROM inventory");
+            Debug.Log("inventory table data deleted.");
+            
+            dbConnection.Execute("DELETE FROM equipment");
+            Debug.Log("equipment table data deleted.");
         }
         
         // guid 생성

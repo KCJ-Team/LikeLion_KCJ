@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ASBuffCard
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 0}
+  characterPrefab: {fileID: 8250591972788044732, guid: 849dc439b741f8248bf2d3255071046b,
+    type: 3}
   characterDisplay: {fileID: 0}
   stackable: 0
   type: 4

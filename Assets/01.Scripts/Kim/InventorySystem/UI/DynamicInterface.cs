@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -19,7 +20,7 @@ public class DynamicInterface : UserInterface
 
     public override void CreateSlots()
     {
-        slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
+        slotsOnInterface = new SerializedDictionary<GameObject, InventorySlot>();
         
         foreach (var slot in instantiatedSlots)
         {
@@ -40,7 +41,7 @@ public class DynamicInterface : UserInterface
             AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
             
-            inventory.GetSlots[i].slotDisplay = obj;
+            inventory.GetSlots[i].targetObject = obj;
             slotsOnInterface.Add(obj, inventory.GetSlots[i]);
             instantiatedSlots.Add(obj);
         }

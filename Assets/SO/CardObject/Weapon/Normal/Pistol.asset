@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 21300000, guid: c7bf45f0ef95bed4491c5809fc6bf484, type: 3}
+  characterPrefab: {fileID: 8250591972788044732, guid: a56adf25492df9e44b44a2248b06afcb,
+    type: 3}
   characterDisplay: {fileID: 7302123484152104804, guid: f638dd9e56fdd0b45ac30294e3affa8e,
     type: 3}
   stackable: 0
   type: 1
   grade: 0
   weaponType: 1
+  baseDamage: 0
   attackSpeed: 1
-  damage: 1
   Ammo: 10
   projectilePrefab: {fileID: 5938167112633497377, guid: bc718012c21bdfc48981cc6f1bddbeed,
     type: 3}

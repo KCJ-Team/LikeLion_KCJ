@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 21300000, guid: c7bf45f0ef95bed4491c5809fc6bf484, type: 3}
+  characterPrefab: {fileID: 8250591972788044732, guid: fe47d7f12f2fdc140b76ae9520990976,
+    type: 3}
   characterDisplay: {fileID: 7302123484152104804, guid: f638dd9e56fdd0b45ac30294e3affa8e,
     type: 3}
   stackable: 0

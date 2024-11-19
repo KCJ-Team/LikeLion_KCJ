@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 21300000, guid: c7bf45f0ef95bed4491c5809fc6bf484, type: 3}
+  characterPrefab: {fileID: 8250591972788044732, guid: 99dbe95059ad20e4c9d2d26bda08f4eb,
+    type: 3}
   characterDisplay: {fileID: 3921922232464505208, guid: 1f40ad99d42d0804381a4399e94a8afb,
     type: 3}
   stackable: 0
   type: 1
   grade: 0
   weaponType: 2
+  baseDamage: 0
   attackSpeed: 4
-  damage: 10
   Ammo: 10
   projectilePrefab: {fileID: 5938167112633497377, guid: bc718012c21bdfc48981cc6f1bddbeed,
     type: 3}

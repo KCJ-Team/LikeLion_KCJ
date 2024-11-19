@@ -10,103 +10,48 @@ using UnityEngine.UI;
 /// </summary>
 public class LobbyMenuManager : SceneSingleton<LobbyMenuManager>
 {
-    [Header("Player Data..")] public PlayerData playerData;
+    [Header("Player Data..")] 
+    public PlayerData playerData;
+    public CardDatabase cardDatabase;
 
-    [Header("로비에서 관리할 플레이어의 정보들")] public float hp;
+    [Header("로비에서 관리할 플레이어의 정보들")] 
+    public float hp;
     public float stress;
     public float attack;
     public float defense;
 
-    [Header("Down 패널 버튼들")] 
-    public Button btnDeck;
-    public Button btnStore;
+    [Header("UI MVP 패턴")] 
+    [SerializeField] private LobbyMenuUIView lobbyMenuUIView;
+    public LobbyMenuUIPresenter lobbyMenuUIPresenter;
     
-    [Header("Down 버튼 누르면 열릴 UI 패널들")]
-    public GameObject deckPanel;
-    public GameObject storePanel;
-    
-    [Header("HP와 Stress UI")] public Slider hpSlider;
-    public Text hpText;
-    public Slider stressSlider;
-    public Text stressText;
-    public Text attackText;
-    public Text defenseText;
-
     private void Start()
     {
-        // 버튼 클릭 이벤트 연결
-        btnDeck.onClick.AddListener(() => ShowPanel(deckPanel));
-        btnStore.onClick.AddListener(() => ShowPanel(storePanel));
-        
-        // 초기 상태: 모든 패널 비활성화
-        HideAllPanels();
+        lobbyMenuUIPresenter = new LobbyMenuUIPresenter(lobbyMenuUIView);
     }
     
-    private void HideAllPanels()
-    {
-        // 모든 패널을 비활성화
-        if (deckPanel != null) deckPanel.SetActive(false);
-        if (storePanel != null) storePanel.SetActive(false);
-    }
-    
-    private void ShowPanel(GameObject panelToShow)
-    {
-        HideAllPanels();
-        
-        // 선택한 패널만 활성화
-        panelToShow.SetActive(true);
-    }
-
     public void SetHpAndStress(float newHp, float newStress)
     {
-        hp = Mathf.Clamp(newHp, 0.0f, playerData.BaseHP);
-        stress = Mathf.Clamp(newStress, 0.0f, 100.0f);
-
-        Debug.Log($"SetHpAndStress: HP = {hp}, Stress = {stress}");
-        
-        UpdateHpAndStressUI();
-    }
-
-    public void UpdateHpAndStressUI()
-    {
-        hpSlider.DOValue(hp, 0.5f).OnUpdate(() =>
+        if (lobbyMenuUIPresenter == null)
         {
-            hpText.text = $"{Mathf.Round(hpSlider.value)}/{playerData.BaseHP}";
-        });
+            lobbyMenuUIPresenter = new LobbyMenuUIPresenter(lobbyMenuUIView);
+        }
         
-        stressSlider.DOValue(stress, 0.5f).OnUpdate(() =>
-        {
-            stressText.text = $"{Mathf.Round(stressSlider.value)}/100";
-        });
+        lobbyMenuUIPresenter.SetHpAndStress(newHp, newStress);
     }
-
+    
     public void ChangeHp(float amount)
     {
-        hp = Mathf.Clamp(hp + amount, 0.0f, playerData.BaseHP);
-        
-        Debug.Log($"ChangeHp: HP changed to {hp}");
-        UpdateHpAndStressUI();
+        lobbyMenuUIPresenter.ChangeHp(amount);
     }
 
     public void ChangeStress(float amount)
     {
-        stress = Mathf.Clamp(stress - amount, 0.0f, 100.0f);
-        
-        Debug.Log($"ChangeStress: Stress changed to {stress}");
-        UpdateHpAndStressUI();
+        lobbyMenuUIPresenter.ChangeStress(amount);
     }
 
     public void SetAttackAndDefense(float newAttack, float newDefense)
     {
-        attack = newAttack;
-        defense = newDefense;
-
-        UpdateAttackAndDefenseUI();
+        lobbyMenuUIPresenter.SetAttackAndDefense(newAttack, newDefense);
     }
-
-    public void UpdateAttackAndDefenseUI()
-    {
-        attackText.text = $"{attack}";
-        defenseText.text = $"{defense}";
-    }
+    
 } // end class

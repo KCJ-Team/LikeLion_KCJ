@@ -5,8 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - OtherPlayer
+feature/client
   - Enemy
   - SkyboxCamera
+
+  - Slot
+dev
   layers:
   - Default
   - TransparentFX

@@ -36,7 +36,7 @@ public class LobbyMenuManagerEditor : Editor
         lobbyMenuManager.attack = EditorGUILayout.FloatField("Attack Value", lobbyMenuManager.attack);
         if (GUI.changed)
         {
-            lobbyMenuManager.UpdateAttackAndDefenseUI();
+            //lobbyMenuManager.lobbyMenuUIPresenter.UpdateAttackAndDefenseUI();
         }
 
         // Defense 슬라이더
@@ -44,7 +44,7 @@ public class LobbyMenuManagerEditor : Editor
         lobbyMenuManager.defense = EditorGUILayout.FloatField("Defense Value", lobbyMenuManager.defense);
         if (GUI.changed)
         {
-            lobbyMenuManager.UpdateAttackAndDefenseUI();
+            //lobbyMenuManager.lobbyMenuUIPresenter.UpdateAttackAndDefenseUI();
         }
 
         // 값이 변경된 경우 실시간 반영

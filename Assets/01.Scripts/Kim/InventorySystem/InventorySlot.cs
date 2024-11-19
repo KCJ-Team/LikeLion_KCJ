@@ -12,7 +12,7 @@ public class InventorySlot
     public UserInterface parent;
     
     [System.NonSerialized]
-    public GameObject slotDisplay;
+    public GameObject targetObject;
     
     [System.NonSerialized] 
     public Action<InventorySlot> onAfterUpdated;
@@ -46,6 +46,7 @@ public class InventorySlot
         onBeforeUpdated?.Invoke(this);
         card = itemValue;
         amount = amountValue;
+        Debug.Log($"update Slot 실행 카드 : {itemValue.Name}");
         onAfterUpdated?.Invoke(this);
     }
     

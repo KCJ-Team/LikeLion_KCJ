@@ -951,6 +951,7 @@ MonoBehaviour:
   encounterData: {fileID: 11400000, guid: 7df09f45da82e244f8df092c1c978f37, type: 2}
   gameTimeData: {fileID: 11400000, guid: 1820929a84cd5e84ca04d74c6c489096, type: 2}
   playerData: {fileID: 11400000, guid: a0dc0fd442d8dbc47a76bdd32a695e70, type: 2}
+  CardDatabase: {fileID: 11400000, guid: 51bec8d7b147ca74f9cf0d148a51479e, type: 2}
   mainTitlePanel: {fileID: 2146372925}
   settingsPanel: {fileID: 306721115}
   aboutUsPanel: {fileID: 1855262778}

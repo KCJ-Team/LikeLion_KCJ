@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public enum PopupType
@@ -139,7 +140,17 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
     public void OpenPopup(PopupUI popup)
     {
         activePopupLList.AddFirst(popup);
+        
         popup.gameObject.SetActive(true);
+        
+        // 활성화 애니메이션
+        var rectTransform = popup.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            rectTransform.localScale = Vector3.zero; // 초기 크기 설정
+            rectTransform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack); // 팝업 확대
+        }
+        
         RefreshAllPopupDepth();
     }
     
@@ -147,7 +158,24 @@ public class PopupUIManager : SceneSingleton<PopupUIManager>
     public void ClosePopup(PopupUI popup)
     {
         activePopupLList.Remove(popup);
+        
         popup.gameObject.SetActive(false);
+        
+        // 비활성화 애니메이션
+        var rectTransform = popup.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            rectTransform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack) // 팝업 축소
+                .OnComplete(() =>
+                {
+                    popup.gameObject.SetActive(false); // 애니메이션 완료 후 비활성화
+                });
+        }
+        else
+        {
+            popup.gameObject.SetActive(false); // RectTransform이 없으면 바로 비활성화
+        }
+        
         RefreshAllPopupDepth();
     }
     

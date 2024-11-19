@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -60,9 +61,103 @@ public class BuildingUIPresenter
         }
     }
     
-    /// <summary>
+    // Process Image 처리
+    public void ShowProcessIcon(BuildingType buildingType)
+    {
+        if (uiView.buildingUIs.TryGetValue(buildingType, out var uiDictionary) &&
+            uiDictionary.TryGetValue(BuildingUIType.ProcessImage, out var processImage))
+        {
+            processImage.SetActive(true);
+
+            // 초기 투명도와 위치 설정
+            var imageComponent = processImage.GetComponent<CanvasGroup>();
+            if (imageComponent == null)
+            {
+                imageComponent = processImage.AddComponent<CanvasGroup>();
+            }
+            imageComponent.alpha = 1f;
+
+            var originalPosition = processImage.transform.localPosition;
+
+            // 등장 애니메이션: 크기 팽창
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(processImage.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f, 10, 1f)) // 크기 팽창
+                .AppendInterval(1.5f) // 1.5초 유지
+                .Append(processImage.transform.DOLocalMoveY(originalPosition.y + 30f, 0.5f)) // 위로 이동
+                .Join(imageComponent.DOFade(0f, 0.5f)) // 서서히 투명해짐
+                .OnComplete(() =>
+                {
+                    processImage.SetActive(false); // 완전히 사라진 뒤 비활성화
+                    processImage.transform.localPosition = originalPosition; // 위치 초기화
+                    imageComponent.alpha = 1f; // 투명도 초기화
+                });
+
+            Debug.Log($"ProcessImage for {buildingType} is now animated.");
+        }
+        else
+        {
+            Debug.LogWarning($"No ProcessImage found for BuildingType: {buildingType}");
+        }
+    }
+    
+    // 빌딩 업그레이드 가능시 업그레이드 아이콘 연출
+    public void ShowEnableUpgradeIcon(BuildingType buildingType)
+    {
+        if (uiView.buildingUIs.TryGetValue(buildingType, out var uiDictionary) &&
+            uiDictionary.TryGetValue(BuildingUIType.EnableUpgradeImage, out var upgradeIcon))
+        {
+            // 이미 활성화되어 있다면 다시 실행하지 않음
+            if (upgradeIcon.activeSelf) return;
+
+            upgradeIcon.SetActive(true);
+
+            var canvasGroup = upgradeIcon.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = upgradeIcon.AddComponent<CanvasGroup>();
+            }
+
+            // 초기 투명도 설정
+            canvasGroup.alpha = 1f;
+
+            // 깜빡이는 애니메이션
+            canvasGroup.DOFade(0.5f, 0.2f)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetEase(Ease.InOutSine);
+            
+            Debug.Log($"Upgrade icon for {buildingType} is now visible and animated.");
+        }
+        else
+        {
+            Debug.LogWarning($"No EnableUpgradeImage found for BuildingType: {buildingType}");
+        }
+    }
+    
+    // 빌딩 업그레이드 했을때 아이콘 사라지게 
+    public void HideUpgradeIcon(BuildingType buildingType)
+    {
+        if (uiView.buildingUIs.TryGetValue(buildingType, out var uiDictionary) &&
+            uiDictionary.TryGetValue(BuildingUIType.EnableUpgradeImage, out var upgradeIcon))
+        {
+            var canvasGroup = upgradeIcon.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = upgradeIcon.AddComponent<CanvasGroup>();
+            }
+
+            // 기존 애니메이션 정지 및 부드러운 페이드 아웃
+            canvasGroup.DOKill();
+            canvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+            {
+                upgradeIcon.SetActive(false);
+                canvasGroup.alpha = 1f; // 다음 사용을 위해 초기화
+            });
+            
+            Debug.Log($"Upgrade icon for {buildingType} is now hidden.");
+        }
+    }
+    
     /// 연구 버튼 클릭 시 호출
-    /// </summary>
     private void OnLearnButtonClicked(int techIndex)
     {
         if (techIndex < 0 || techIndex >= TechManager.Instance.techs.Count)
@@ -310,12 +405,14 @@ public class BuildingUIPresenter
         {
             building.IsCreated = true;
         }
+        
+        // 업그레이드 완료 후 업그레이드 아이콘 숨기기
+        HideUpgradeIcon(building.GetBuildingData().type);
 
         // 팝업 자동 닫기
         PopupUIManager.Instance.ClosePopup(popup);
     }
-
-    // TODO 
+    
     public void UpdateProductUIAndImage(BuildingType type, string imagePath, int productionOutput)
     {
         Sprite newSprite = !string.IsNullOrEmpty(imagePath) ? Resources.Load<Sprite>(imagePath) : null;
@@ -359,6 +456,42 @@ public class BuildingUIPresenter
         if (craftingButton.gameObject.activeSelf)
         {
             craftingButton.gameObject.SetActive(false);
+        }
+    }
+    
+    // Punch 애니메이션 반복
+    public void StartBuildingAnimation(BuildingType buildingType)
+    {
+        if (uiView.buildingUIs.TryGetValue(buildingType, out var uiDictionary) &&
+            uiDictionary.TryGetValue(BuildingUIType.BuildingButton, out var buildingButton))
+        {
+            var rectTransform = buildingButton.GetComponent<RectTransform>();
+            if (rectTransform == null)
+            {
+                Debug.LogWarning($"No RectTransform found for {buildingType}'s BuildingButton.");
+                return;
+            }
+
+            // 기존 애니메이션 정지
+            rectTransform.DOKill();
+
+            // 랜덤 지연 시간 설정 (1초에서 3초 사이)
+            float randomDelay = UnityEngine.Random.Range(0.5f, 2f);
+            
+            // 랜덤 지연 후 애니메이션 시작
+            DOVirtual.DelayedCall(randomDelay, () =>
+            {
+                rectTransform.DOShakePosition(1f, new Vector3(3f, 0f, 0f), 10, 90, false, true)
+                    .SetEase(Ease.InOutSine);
+
+                Debug.Log($"Punch animation started for {buildingType} with a delay of {randomDelay} seconds.");
+            });
+
+            Debug.Log($"Punch animation started for {buildingType}.");
+        }
+        else
+        {
+            Debug.LogWarning($"Building button not found for {buildingType}.");
         }
     }
 } // end class

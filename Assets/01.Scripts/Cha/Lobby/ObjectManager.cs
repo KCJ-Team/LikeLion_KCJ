@@ -9,10 +9,14 @@ using UnityEngine;
 /// </summary>
 public class ObjectManager : SceneSingleton<ObjectManager>
 {
-    [Header("Player 모델 오브젝트들")] 
+    [Header("로비에서 사용할 Player 모델 오브젝트들")] 
     public GameObject malePlayerObj;
     public GameObject femalePlayerObj;
 
+    [Header("던전에서 사용할 Player 프리팹 ")] 
+    public GameObject maleChracterPrefab;
+    public GameObject femaleChracterPrefab;
+    
     [Header("Map 모델 오브젝트들")] 
     public GameObject planets; // 상위 오브젝트
     public List<GameObject> planetObjs = new(); // 하위 오브젝트 자동 추가 리스트
@@ -36,7 +40,7 @@ public class ObjectManager : SceneSingleton<ObjectManager>
             }
             
             // 모든 오브젝트 비활성화
-            child.gameObject.SetActive(isActive);
+            // child.gameObject.SetActive(isActive);
         }
 
         Debug.Log("Planet objects initialized, and all deactivated.");
@@ -63,12 +67,15 @@ public class ObjectManager : SceneSingleton<ObjectManager>
         switch (playerType)
         {
             case PlayerModelType.Male:
+                // 11.19 hyuna 플레이어 데이터 스크립터블 오브젝트에 설정
                 malePlayerObj.SetActive(true);
+                LobbyMenuManager.Instance.playerData.Character = maleChracterPrefab;
                 Debug.Log("Male player object activated.");
                 break;
                 
             case PlayerModelType.Female:
                 femalePlayerObj.SetActive(true);
+                LobbyMenuManager.Instance.playerData.Character = femaleChracterPrefab;
                 Debug.Log("Female player object activated.");
                 break;
 

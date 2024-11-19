@@ -6,11 +6,12 @@ TagManager:
   tags:
   - OtherPlayer
   - Enemy
+  - SkyboxCamera
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Post Process
   - Water
   - UI
   - Player

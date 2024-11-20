@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
-  cooldown: 0
+  cooldown: 10
   MinePrefab: {fileID: 3329389453230081448, guid: 4431301e78c814e4db5812baf2beca3e,
     type: 3}

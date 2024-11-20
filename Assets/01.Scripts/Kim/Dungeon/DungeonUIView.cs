@@ -42,7 +42,7 @@ public class DungeonUIView : MonoBehaviour
 
     public void UpdateRemainingMonsters(int remaining)
     {
-        textRemaingMonster.text = $"Remaining Monsters: {remaining}";
+        textRemaingMonster.text = $"{remaining}";
     }
 
     public void UpdateBossSpawned(bool isSpawned)
@@ -52,7 +52,14 @@ public class DungeonUIView : MonoBehaviour
 
     public void UpdateSkillCooldowns(int slotNum, int cooldowns)
     {
-        textCooltimes[slotNum].text = $"{cooldowns}";
+        if (cooldowns == 0)
+        {
+            textCooltimes[slotNum].text = null;
+        }
+        else
+        {
+            textCooltimes[slotNum].text = $"{cooldowns}";
+        }
     }
     
 }

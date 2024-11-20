@@ -18,6 +18,8 @@ public class KnockBackFiringState : SkillState
     {
         hasFired = false;
         stateTimer = 0f;
+        
+        CameraShaking.Instance.OnShakeCamera(0.1f,0.1f);
     }
     
     public override void UpdateState()

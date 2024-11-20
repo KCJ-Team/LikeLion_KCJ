@@ -17,11 +17,11 @@ public class KnockbackProjectileHitState : ProjectileState
     
     public override void UpdateState()
     {
-        // 제거 상태에서는 업데이트 불필요
+        
     }
     
     public override void ExitState()
     {
-        // 제거 상태에서는 종료 로직 불필요
+        
     }
 }

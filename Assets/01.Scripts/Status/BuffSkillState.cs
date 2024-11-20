@@ -28,7 +28,7 @@ public class BuffSkillState : SkillState
                 GameObject effectObject = Object.Instantiate(
                     buffSkill.EffectPrefab,
                     GameManager.Instance.Player.transform.position,
-                    Quaternion.Euler(-90f, 0f, 0f),  // x: -90, y: 0, z: 0 회전 적용
+                    Quaternion.Euler(-90,0,0),
                     GameManager.Instance.Player.transform
                 );
             

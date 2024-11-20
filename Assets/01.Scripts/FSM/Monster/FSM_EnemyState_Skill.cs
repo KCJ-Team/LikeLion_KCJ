@@ -21,11 +21,6 @@ public class FSM_EnemyState_Skill : VMyState<FSM_EnemyState>
     {
         _animator.CrossFade(AnimationHash.SkillHash, 0.0f);
         
-        if (enemy.agent != null)
-        {
-            enemy.agent.isStopped = true;
-        }
-
         SpawnMonsters();
     }
 

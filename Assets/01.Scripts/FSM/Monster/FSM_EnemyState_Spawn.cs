@@ -18,11 +18,6 @@ public class FSM_EnemyState_Spawn : VMyState<FSM_EnemyState>
     protected override void EnterState()
     {
         _animator.CrossFade(AnimationHash.SpawnHash, 0.0f);
-        
-        if (enemy.agent != null)
-        {
-            enemy.agent.isStopped = true;
-        }
     }
 
     protected override void ExcuteState()
@@ -32,7 +27,7 @@ public class FSM_EnemyState_Spawn : VMyState<FSM_EnemyState>
         if (stateInfo.shortNameHash == AnimationHash.SpawnHash && 
             stateInfo.normalizedTime >= 1.0f)
         {
-            OwnerStateMachine.ChangeState(FSM_EnemyState.FSM_EnemyState_Idle);
+            OwnerStateMachine.ChangeState(FSM_EnemyState.FSM_EnemyState_Move);
         }
     }
 }

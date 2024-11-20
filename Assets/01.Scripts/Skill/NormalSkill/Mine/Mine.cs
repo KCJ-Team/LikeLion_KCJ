@@ -18,6 +18,7 @@ public class Mine : Skill
 
         if (pr != null)
         {
+            Debug.Log("넘김");
             pr.Initialize(direction, damage);
         }
     }

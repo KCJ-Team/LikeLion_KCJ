@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2239cdeb81b2d458fbcb3a001c9540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   cooldown: 0
   skillDuration: 2
+  EffectPrefab: {fileID: 419411002348774512, guid: 247a3e752e93a864db063f5c85fd8391,
+    type: 3}
   buffEffects:
   - type: 0
     value: 5

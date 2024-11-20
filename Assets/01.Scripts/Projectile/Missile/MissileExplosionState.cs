@@ -27,6 +27,7 @@ public class MissileExplosionState : ProjectileState
         hasDamageApplied = false;
         isDamageScheduled = false;
         ScheduleExplosionDamage(); // 데미지 적용을 예약
+        
     }
     
     public override void UpdateState()

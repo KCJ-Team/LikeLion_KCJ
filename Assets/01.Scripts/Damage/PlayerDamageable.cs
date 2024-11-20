@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -26,9 +27,11 @@ public class PlayerDamageable : DamageableObject
             TakeDamage(monsterDamageValue.Damage);
         }
     }
-
+    
     public override void TakeDamage(float damage)
     {
+        Debug.Log("데미지 입음");
+        
         if (!IsAlive) return;
 
         // 방어력에 따른 데미지 감소 계산

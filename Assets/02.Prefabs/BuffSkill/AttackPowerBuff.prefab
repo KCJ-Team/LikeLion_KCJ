@@ -47,7 +47,7 @@ MonoBehaviour:
   damage: 0
   cooldown: 0
   skillDuration: 5
-  EffectPrefab: {fileID: 1269619656826376, guid: 5c734c7bc14483a4d9b880211468f63d,
+  EffectPrefab: {fileID: 419411002348774512, guid: 247a3e752e93a864db063f5c85fd8391,
     type: 3}
   buffEffects:
   - type: 1

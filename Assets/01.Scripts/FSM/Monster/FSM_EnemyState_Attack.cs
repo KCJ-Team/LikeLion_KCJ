@@ -18,15 +18,9 @@ public class FSM_EnemyState_Attack : VMyState<FSM_EnemyState>
 
     protected override void EnterState()
     {
+        Debug.Log("공격");
         _animator.CrossFade(AnimationHash.AttackHash, enemy.crossFadeDuration);
         
-        if (enemy.agent != null)
-        {
-            enemy.agent.isStopped = true;
-            // 공격 애니메이션의 루트모션 적용
-            _animator.applyRootMotion = enemy.useRootMotion;
-        }
-
         // 상태 진입 시 다음 공격 시간 초기화
         nextAttackTime = 0;
         
@@ -45,12 +39,6 @@ public class FSM_EnemyState_Attack : VMyState<FSM_EnemyState>
             return;
         }
         
-        if (!enemy.DetectPlayer())
-        {
-            OwnerStateMachine.ChangeState(FSM_EnemyState.FSM_EnemyState_Idle);
-            return;
-        }
-
         if (!enemy.IsPlayerInRange(enemy.attackRange))
         {
             OwnerStateMachine.ChangeState(FSM_EnemyState.FSM_EnemyState_Move);

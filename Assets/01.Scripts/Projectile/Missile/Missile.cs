@@ -28,7 +28,6 @@ public class Missile : Projectile
         if (((1 << other.gameObject.layer) & GroundLayers) != 0)
         {
             ChangeState(new MissileExplosionState(this, targetLayers));
-            
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -11,11 +12,17 @@ public class MonsterDamageable : DamageableObject
         // Projectile 레이어의 오브젝트와 충돌했을 때
         if (other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
         {
+            Debug.Log("피격");
             // Projectile.cs에서 설정한 damage 값을 가져와 TakeDamage 메소드에 전달
             Projectile projectile = other.gameObject.GetComponent<Projectile>();
             projectileDamage = projectile.damage;
             TakeDamage(projectileDamage);
         }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        
     }
 
     public override void TakeDamage(float damage)

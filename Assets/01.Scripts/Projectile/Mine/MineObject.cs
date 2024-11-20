@@ -5,14 +5,10 @@ public class MineObject : Projectile
     [SerializeField] private LayerMask targetLayer;        // 폭발을 트리거할 레이어
     [SerializeField] private float explosionRadius = 5f;   // 폭발 범위
     [SerializeField] private float explosionDuration = 1f; // 폭발 지속 시간
-    [SerializeField] private ParticleSystem explosionEffect; // 폭발 이펙트
+    [SerializeField] private GameObject explosionEffect; // 폭발 이펙트
+    [SerializeField] private GameObject WaveEffect;
     
     private bool hasExploded = false;
-
-    private void Start()
-    {
-        Initialize(Vector3.zero, 0f); // 데미지는 사용하지 않으므로 0으로 설정
-    }
 
     protected override ProjectileState GetInitialState()
     {
@@ -34,14 +30,13 @@ public class MineObject : Projectile
         {
             hasExploded = true;
             
-            // 폭발 이펙트 재생
-            if (explosionEffect != null)
-            {
-                explosionEffect.Play();
-            }
+            CameraShaking.Instance.OnShakeCamera(0.2f,0.1f);
 
+            GameObject effectObject = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            GameObject waveObject = Instantiate(WaveEffect, transform.position, Quaternion.identity);
+            
             // 일정 시간 후 파괴
-            Destroy(gameObject, explosionDuration);
+            Destroy(gameObject);
         }
     }
 

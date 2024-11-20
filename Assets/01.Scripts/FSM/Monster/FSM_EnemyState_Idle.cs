@@ -16,13 +16,6 @@ public class FSM_EnemyState_Idle : VMyState<FSM_EnemyState>
     protected override void EnterState()
     {
         _animator.CrossFade(AnimationHash.IdleHash, enemy.crossFadeDuration);
-        
-        if (enemy.agent != null)
-        {
-            enemy.agent.isStopped = true;
-            // 루트모션 설정
-            _animator.applyRootMotion = enemy.useRootMotion;
-        }
     }
 
     protected override void ExcuteState()
@@ -30,11 +23,6 @@ public class FSM_EnemyState_Idle : VMyState<FSM_EnemyState>
         if (enemy.IsDeath())
         {
             OwnerStateMachine.ChangeState(FSM_EnemyState.FSM_EnemyState_Dead);
-        }
-        
-        if (enemy.DetectPlayer() && enemy.IsPlayerInRange(enemy.detectionRadius))
-        {
-            OwnerStateMachine.ChangeState(FSM_EnemyState.FSM_EnemyState_Move);
         }
     }
 }

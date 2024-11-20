@@ -153,6 +153,6 @@ MonoBehaviour:
   pullableLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  pullForce: 10
+  pullForce: 30
   maxPullDistance: 15
   destroyDistance: 2

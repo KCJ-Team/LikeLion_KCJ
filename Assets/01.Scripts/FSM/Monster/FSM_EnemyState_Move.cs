@@ -16,13 +16,6 @@ public class FSM_EnemyState_Move : VMyState<FSM_EnemyState>
     protected override void EnterState()
     {
         _animator.CrossFade(AnimationHash.MoveHash, enemy.crossFadeDuration);
-        
-        if (enemy.agent != null)
-        {
-            enemy.agent.isStopped = false;
-            // 이동 중에는 NavMeshAgent가 이동을 제어하도록 루트모션 비활성화
-            _animator.applyRootMotion = false;
-        }
     }
 
     protected override void ExcuteState()
@@ -30,11 +23,6 @@ public class FSM_EnemyState_Move : VMyState<FSM_EnemyState>
         if (enemy.IsDeath())
         {
             OwnerStateMachine.ChangeState(FSM_EnemyState.FSM_EnemyState_Dead);
-        }
-        
-        if (!enemy.DetectPlayer() || !enemy.IsPlayerInRange(enemy.detectionRadius))
-        {
-            OwnerStateMachine.ChangeState(FSM_EnemyState.FSM_EnemyState_Idle);
             return;
         }
 
@@ -43,16 +31,14 @@ public class FSM_EnemyState_Move : VMyState<FSM_EnemyState>
             OwnerStateMachine.ChangeState(FSM_EnemyState.FSM_EnemyState_Attack);
             return;
         }
-
-        // 플레이어 위치로 이동
-        enemy.agent.SetDestination(enemy.playerTransform.position);
+        else
+        {
+            enemy.DetectPlayer();
+        }
     }
 
     protected override void ExitState()
     {
-        if (enemy.agent != null)
-        {
-            enemy.agent.isStopped = true;
-        }
+        
     }
 }

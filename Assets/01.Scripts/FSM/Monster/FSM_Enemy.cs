@@ -36,10 +36,9 @@ public class FSM_Enemy : StateMachine<FSM_EnemyState>
     public AttackType attackType = AttackType.Melee;
     
     [Header("Detection Settings")]
-    public float detectionRadius = 10f;
     public float attackRange = 2f;
     public float attackCooldown = 2f;
-    public LayerMask playerLayer;
+    public float moveSpeed = 2f;
     
     [Header("Melee Attack Settings")]
     public GameObject meleeAttackPrefab;
@@ -57,7 +56,6 @@ public class FSM_Enemy : StateMachine<FSM_EnemyState>
     
     [Header("References")]
     public Transform playerTransform;
-    public NavMeshAgent agent;
     
     [Header("Animation Settings")]
     public float crossFadeDuration = 0.25f;  // 애니메이션 전환 시간
@@ -68,8 +66,13 @@ public class FSM_Enemy : StateMachine<FSM_EnemyState>
     private void Awake()
     {
         base.Awake();
-        agent = GetComponent<NavMeshAgent>();
         _monsterHealth = GetComponent<MonsterHealth>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        playerTransform = GameManager.Instance.Player.transform;
     }
 
     public bool IsDeath()
@@ -84,47 +87,32 @@ public class FSM_Enemy : StateMachine<FSM_EnemyState>
         }
     }
 
-    public bool DetectPlayer()
+    public void DetectPlayer()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
-        
-        if (colliders.Length > 0)
+        float distance = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
+
+        // 플레이어와의 거리가 stopDistance보다 크면 따라감
+        if (distance > attackRange)
         {
-            float closestDistance = float.MaxValue;
-            Transform closestPlayer = null;
-            
-            foreach (var collider in colliders)
-            {
-                float distance = Vector3.Distance(transform.position, collider.transform.position);
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestPlayer = collider.transform;
-                }
-            }
+            // 플레이어 방향 계산
+            Vector3 direction = (GameManager.Instance.Player.transform.position - transform.position).normalized;
 
-            playerTransform = closestPlayer;
-            return true;
+            // 적이 플레이어 방향으로 이동
+            transform.position += direction * (moveSpeed * Time.deltaTime);
+
+            // 적이 플레이어를 향해 회전
+            transform.LookAt(GameManager.Instance.Player.transform.position);
         }
-
-        playerTransform = null;
-        return false;
     }
     
     public bool IsPlayerInRange(float range)
     {
-        if (playerTransform == null) return false;
-        
-        // 플레이어와의 직선 거리만 체크
-        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+        float distanceToPlayer = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
         return distanceToPlayer <= range;
     }
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
-        
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }

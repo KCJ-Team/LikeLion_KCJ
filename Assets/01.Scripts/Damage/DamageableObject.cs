@@ -11,7 +11,7 @@ public class DamageableObject : MonoBehaviour, IDamageable
     // 방어력당 데미지 감소율 (0.005f = 0.5%)
     private const float DEFENSE_REDUCTION_RATE = 0.005f;
 
-    private void Awake()
+    private void Start()
     {
         _playerData = GameManager.Instance.playerData;
         health = GetComponent<Health>();

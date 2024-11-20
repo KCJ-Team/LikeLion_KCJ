@@ -18,6 +18,8 @@ public class MineExplosionState : ProjectileState
             explosionStartTime = Time.time;
             isExploding = true;
         }
+        
+        //TODO: 이펙트 집어넣기
     }
 
     public override void UpdateState()

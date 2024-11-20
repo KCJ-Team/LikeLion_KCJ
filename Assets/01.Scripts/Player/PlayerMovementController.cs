@@ -22,6 +22,9 @@ public class PlayerMovementController
     private Quaternion _lastRotation;
     private const float PositionUpdateThreshold = 0.01f; // 위치 변경 감지 임계값
     private const float RotationUpdateThreshold = 0.1f;  // 회전 변경 감지 임계값
+    
+    private CursorLockMode _defaultCursorMode;
+    private CursorLockMode _aimCursorMode;
 
     public MovementInfo MovementInfo => new MovementInfo
     {
@@ -43,6 +46,10 @@ public class PlayerMovementController
         _targetRotation = _transform.rotation;
         _lastPosition = _transform.position;
         _lastRotation = _transform.rotation;
+        
+        // 기본 커서 설정
+        Cursor.lockState = _defaultCursorMode;
+        Cursor.visible = true;
     }
 
     public void HandleMovement()
@@ -56,7 +63,16 @@ public class PlayerMovementController
     {
         Vector2 input = InputManager.Instance.GetMovementInput();
         _movement = new Vector3(input.x, 0f, input.y);
+        
+        // 조준 모드 전환 시 커서 변경
+        bool wasAimLocked = _isAimLocked;
         _isAimLocked = Input.GetMouseButton(1);
+        
+        if (wasAimLocked != _isAimLocked)
+        {
+            UpdateCursor();
+        }
+        
         _isSkillActive = _animator.GetBool("IsSkill");
     }
 
@@ -80,6 +96,7 @@ public class PlayerMovementController
     {
         if (_isAimLocked || _isSkillActive)
         {
+            
             LookAtMouse();
             _transform.rotation = Quaternion.Slerp(_transform.rotation, _targetRotation, Time.deltaTime * RotationSpeed * 2f);
         }
@@ -98,6 +115,7 @@ public class PlayerMovementController
 
     private void LookAtMouse()
     {
+        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, _transform.position);
 
@@ -111,6 +129,23 @@ public class PlayerMovementController
             {
                 _targetRotation = Quaternion.LookRotation(direction.normalized);
             }
+        }
+    }
+    
+    private void UpdateCursor()
+    {
+        if (_isAimLocked)
+        {
+            // 조준 모드일 때 커서 변경
+            Vector2 hotspot = new Vector2(256, 256); // 예: 32x32 커서의 중앙점
+            Cursor.SetCursor(Resources.Load<Texture2D>("Cursors/AimCursor"), hotspot, CursorMode.Auto);
+            Cursor.lockState = _aimCursorMode;
+        }
+        else
+        {
+            // 기본 커서로 복귀
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            Cursor.lockState = _defaultCursorMode;
         }
     }
 

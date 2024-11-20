@@ -23,6 +23,8 @@ public class PullFiringState : SkillState
         // 상태 시작 시 초기화
         hasFired = false;
         stateTimer = 0f;
+        
+        CameraShaking.Instance.OnShakeCamera(0.1f,0.1f);
     }
 
     public override void UpdateState()

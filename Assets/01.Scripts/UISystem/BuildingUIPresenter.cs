@@ -158,7 +158,7 @@ public class BuildingUIPresenter
                 canvasGroup.alpha = 1f; // 다음 사용을 위해 초기화
             });
             
-            Debug.Log($"Upgrade icon for {buildingType} is now hidden.");
+            // Debug.Log($"Upgrade icon for {buildingType} is now hidden.");
         }
     }
     

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -164,5 +165,10 @@ public class GameResourceManager : SceneSingleton<GameResourceManager>
 
         Debug.LogWarning($"Resource type not found: {type}");
         return false; // 자원을 찾지 못한 경우 false 반환
+    }
+
+    public void WarningWorkforceResourceUI()
+    {
+        gameResourceUIPresneter.WarningWorkforceResourceUI();
     }
 } // end class

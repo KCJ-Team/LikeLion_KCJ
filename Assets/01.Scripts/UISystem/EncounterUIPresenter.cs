@@ -125,7 +125,30 @@ public class EncounterUIPresenter
         GameResourceManager.Instance.AddResource(ResourceType.Energy, popupData.Choice1RewardEnergy);
         GameResourceManager.Instance.AddResource(ResourceType.Food, popupData.Choice1RewardFood);
         GameResourceManager.Instance.AddResource(ResourceType.Fuel, popupData.Choice1RewardFuel);
-        GameResourceManager.Instance.AddResource(ResourceType.Workforce, popupData.Choice1RewardWorkforce);
+        
+        // 11.20 hyuna 노동력을 추가할땐, 현재 빌딩의 레벨을 보고 판단해야함. 만약 초과된다면 UI에 표시를 해주어야 한다. (빨갛게 잠깐)
+        int currentWorkforce = GameResourceManager.Instance.GetResourceAmount(ResourceType.Workforce); // 현재 노동력량
+        int totalWorkforce = currentWorkforce + popupData.Choice1RewardWorkforce; // 현재 노동력량 + 리워드 노동력량
+        int currentProductionOutput = BuildingManager.Instance.GetBuilding(BuildingType.Quarters).GetCurrentProductOutput(); // 숙소의 현재 가능한 수용량
+
+        if (totalWorkforce > currentProductionOutput) // 현재 일꾼수 + 보상 일꾼수가 숙소의 현재 수용량보다 높다면
+        {
+            // 초과된 Workforce 계산
+            int excessWorkforce = totalWorkforce - currentProductionOutput;
+
+            // 초과된 Workforce를 제한하여 추가
+            GameResourceManager.Instance.AddResource(ResourceType.Workforce, popupData.Choice1RewardWorkforce - excessWorkforce);
+
+            // UI에 초과된 상태 표시 (빨간색으로 잠시 강조)
+            GameResourceManager.Instance.WarningWorkforceResourceUI();
+
+            Debug.Log($"Workforce 추가 초과: {excessWorkforce}. 제한된 Workforce가 추가되었습니다.");
+        }
+        else
+        {
+            // Workforce 추가
+            GameResourceManager.Instance.AddResource(ResourceType.Workforce, popupData.Choice1RewardWorkforce);
+        }
 
         // 팩션 수치 변경
         if (popupData.Choice1Faction != FactionType.None)
@@ -197,8 +220,31 @@ public class EncounterUIPresenter
         popup.SetContent("ChoiceRewardEnergy", $"{popupData.Choice2RewardEnergy}");
         popup.SetContent("ChoiceRewardFood", $"{popupData.Choice2RewardFood}");
         popup.SetContent("ChoiceRewardFuel", $"{popupData.Choice2RewardFuel}");
-        popup.SetContent("ChoiceRewardWorkforce", $"{popupData.Choice2RewardWorkforce}");
-    
+        
+        // 11.20 hyuna 노동력을 추가할땐, 현재 빌딩의 레벨을 보고 판단해야함. 만약 초과된다면 UI에 표시를 해주어야 한다. (빨갛게 잠깐)
+        int currentWorkforce = GameResourceManager.Instance.GetResourceAmount(ResourceType.Workforce); // 현재 노동력량
+        int totalWorkforce = currentWorkforce + popupData.Choice2RewardWorkforce; // 현재 노동력량 + 리워드 노동력량
+        int currentProductionOutput = BuildingManager.Instance.GetBuilding(BuildingType.Quarters).GetCurrentProductOutput(); // 숙소의 현재 가능한 수용량
+
+        if (totalWorkforce > currentProductionOutput) // 현재 일꾼수 + 보상 일꾼수가 숙소의 현재 수용량보다 높다면
+        {
+            // 초과된 Workforce 계산
+            int excessWorkforce = totalWorkforce - currentProductionOutput;
+
+            // 초과된 Workforce를 제한하여 추가
+            GameResourceManager.Instance.AddResource(ResourceType.Workforce, popupData.Choice2RewardWorkforce - excessWorkforce);
+
+            // UI에 초과된 상태 표시 (빨간색으로 잠시 강조)
+            GameResourceManager.Instance.WarningWorkforceResourceUI();
+
+            Debug.Log($"Workforce 추가 초과: {excessWorkforce}. 제한된 Workforce가 추가되었습니다.");
+        }
+        else
+        {
+            // Workforce 추가
+            GameResourceManager.Instance.AddResource(ResourceType.Workforce, popupData.Choice2RewardWorkforce);
+        }
+        
         // 해당 팩션 아이콘 활성화, 인카운터 아이콘 변경
         popup.SetContent("IconEncounter", "", popupData.EncounterResultIcon);
 

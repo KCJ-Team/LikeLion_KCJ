@@ -284,14 +284,18 @@ public class GameSceneDataManager : MonoBehaviour
     }
     
     // DB의 데이터들을 초기화. 게임 엔딩시 사용.
-    // TODO : 
     public void ClearDataInDB()
     {
         PlayerService playerService = new PlayerService();
         EncounterService encounterService = new EncounterService();
-
+        InventoryService inventoryService = new InventoryService();
+        StoreService storeService = new StoreService();
+        EquipmentService equipmentService = new EquipmentService();
+        
         playerService.DeletePlayer();
         encounterService.DeleteEncounters();
+        inventoryService.DeleteInventory();
+        storeService.DeleteStore();
         
         Debug.Log("All game data cleared successfully.");
     }

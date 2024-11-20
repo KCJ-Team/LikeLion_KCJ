@@ -171,4 +171,22 @@ public class InventoryService
             Debug.LogError($"Error updating inventory: {e.Message}");
         }
     }
+
+    public void DeleteInventory()
+    {
+        try
+        {
+            // 데이터베이스에서 전체 InventoryModel 데이터를 삭제
+            dbConnection.Execute("DELETE FROM inventory");
+
+            // PlayerData의 인벤토리 초기화
+            LobbyMenuManager.Instance.playerData.inventory.Clear();
+
+            Debug.Log("Inventory data deleted successfully.");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error deleting inventory: {e.Message}");
+        }
+    }
 } // end class

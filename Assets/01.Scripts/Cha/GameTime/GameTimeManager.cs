@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 public class GameTimeManager : SceneSingleton<GameTimeManager>
 {
-    [Header("Game Time Settings")] public GameTimeSetting gameTimeSetting;
+    [Header("Game Time Settings")] 
+    public GameTimeSetting gameTimeSetting;
     public bool isPaused = false; // 시간 정지 여부
     public bool enableXSpeed = false; // 배속 가능성
 
@@ -37,7 +38,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
 
     // 자원 상태가 경고인지 확인하는 변수
     private bool resourceWarningTriggered = false;
-
+    
     private void Start()
     {
         if (gameTimeSetting == null)
@@ -297,14 +298,14 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         bool stressWarning = LobbyMenuManager.Instance.stress > 90.0f; // Stress 경고 조건, 90이상
 
         Debug.Log(
-            $"[현재 리소스] hasZeroResource: {hasZeroResource}, hpWarning: {hpWarning}, stressWarning: {stressWarning}, Combined Condition: {hasZeroResource || hpWarning || stressWarning}");
+            $"체크 리소스 워닝 : [현재 리소스] hasZeroResource: {hasZeroResource}, hpWarning: {hpWarning}, stressWarning: {stressWarning}, Combined Condition: {hasZeroResource || hpWarning || stressWarning}");
 
         if (hasZeroResource || hpWarning || stressWarning)
         {
             // 처음 자원이 0이 되었을 때 경고 활성화 (panelWarning을 표시하고 다음날에만 폭동 엔딩 발동 조건 설정)
             if (!resourceWarningTriggered && !panelWarning.activeSelf)
             {
-                Debug.Log("Warning: Resource at zero for the first time. Displaying warning message.");
+                Debug.Log("Warning: 첫번째로 0. 워닝 패널 활성화");
 
                 resourceWarningTriggered = true; // 처음 경고 상태로 설정
                 panelWarning.SetActive(true); // 경고 패널 표시
@@ -315,7 +316,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
             // 경고가 활성화된 상태에서 여전히 조건 충족 시 폭동 엔딩 발동
             else if (resourceWarningTriggered && panelWarning.activeSelf)
             {
-                Debug.Log("Resource is still zero after one day. Triggering Riot Ending.");
+                Debug.Log("2번째로 0. 워닝 패널 활성화 된 상태에서 폭동 엔딩 발생");
 
                 // 생존일 수 계산
                 int daySurvived = gameTimeSetting.startDay - currentDay;

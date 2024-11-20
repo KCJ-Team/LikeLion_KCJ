@@ -16,7 +16,7 @@ public abstract class BaseBuilding : MonoBehaviour, IBuilding
     {
         stateMachine = new BuildingStateMachine(); // 각 빌딩별 고유의 상태 머신 생성
     }
-
+    
     public virtual void Build()
     {
         Debug.Log(building.BuildingData.name + " has been built.");

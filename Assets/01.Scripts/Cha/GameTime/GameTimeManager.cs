@@ -8,8 +8,7 @@ using UnityEngine.UI;
 
 public class GameTimeManager : SceneSingleton<GameTimeManager>
 {
-    [FormerlySerializedAs("gameTimeSettings")] [Header("Game Time Settings")]
-    public GameTimeSetting gameTimeSetting; 
+    [Header("Game Time Settings")] public GameTimeSetting gameTimeSetting;
     public bool isPaused = false; // 시간 정지 여부
     public bool enableXSpeed = false; // 배속 가능성
 
@@ -19,26 +18,25 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
     private int hour;
     private int minute;
 
-    [Header("UIs")] 
-    public Text textTimer;
+    [Header("UIs")] public Text textTimer;
     public Button btnStopNStart;
     public Button btnSpeed;
     public Image imageStopNStart;
     public Text textDday;
     public GameObject panelWarning;
-    
+
     // icons..
     public Sprite iconPause;
     public Sprite iconPlay;
-    
+
     // 플래그: 21시 자원 소비가 하루에 한 번만 실행되도록 제어
     private bool hasConsumedAt21 = false;
-    
+
     // 12시의 자원 생산을 담당하는 플래그
     public bool hasProducedAt12PM = false; // 12시 자원 생산 플래그
-    
+
     // 자원 상태가 경고인지 확인하는 변수
-    private bool resourceWarningTriggered = false; 
+    private bool resourceWarningTriggered = false;
 
     private void Start()
     {
@@ -47,14 +45,14 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
             Debug.LogError("GameTimeSettings ScriptableObject is not assigned!");
             return;
         }
-        
+
         // 버튼 이벤트 등록
         btnStopNStart.onClick.AddListener(TogglePauseTime);
         btnSpeed.onClick.AddListener(ToggleDoubleTimeSpeed);
-        
+
         StartCoroutine(DayCycle());
     }
-    
+
     private void Update()
     {
         // 1번 키 입력: Pause/Resume
@@ -67,7 +65,6 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
             else
             {
                 SetPauseTime(true);
-
             }
         }
 
@@ -77,7 +74,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
             ToggleDoubleTimeSpeed();
         }
     }
-    
+
     // 3분동안 하루가 지나감
     private IEnumerator DayCycle()
     {
@@ -96,7 +93,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
 
             // 빌딩 애니메이션 3초 간격을 추적할 타이머
             float animationCheckTimer = 0f;
-            
+
             while (dayTimer < gameTimeSetting.dayDuration)
             {
                 if (!isPaused)
@@ -108,7 +105,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     minute = (int)(totalMinutes % 60);
 
                     UpdateTimeUI();
-                    
+
                     // 3초 간격으로 BuildingManager의 애니메이션 검사 호출
                     animationCheckTimer += Time.deltaTime;
                     if (animationCheckTimer >= 3f)
@@ -116,9 +113,9 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                         BuildingManager.Instance.CheckBuildingAnimationLoop();
                         animationCheckTimer = 0f; // 타이머 초기화
                     }
-                    
+
                     // 6시, 18시에는 자원 생산, 
-                    if (hour == 6 && minute == 0|| hour == 18 && minute == 0)
+                    if (hour == 6 && minute == 0 || hour == 18 && minute == 0)
                     {
                         BuildingManager.Instance.ProduceResourcesAtScheduledTimes(hour);
                     }
@@ -131,14 +128,14 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                             BuildingManager.Instance.ProduceResourcesAtScheduledTimes(hour);
                         }
                     }
-                    
+
                     // 21시에는 자원 소비 (한 번만 실행)
                     else if (hour == 21 && minute == 0 && !hasConsumedAt21)
                     {
                         ConsumeResources();
                         hasConsumedAt21 = true; // 플래그를 설정하여 중복 실행 방지
                     }
-                    
+
                     // 자정에 플래그 초기화 (다음 날을 위해)
                     if (hour == 0 && minute == 0)
                     {
@@ -146,13 +143,13 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                         CheckResourceWarning();
                         //hasCheckedAtMidnight = true; // 자정 검사를 완료 표시
                     }
-                    
+
                     // 자정이 지난 후 플래그 초기화
                     if (hour == 1 && minute == 0)
                     {
                         //hasCheckedAtMidnight = false;
                     }
-                    
+
                     // 업그레이드 가능 여부 검사
                     BuildingManager.Instance.CheckUpgradeAvailability();
 
@@ -171,38 +168,38 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
             UpdateDayUI();
 
             // TODO : currentday가 3때부터 d-day 색을 빨갛게 하거나 해야함
-            
+
             if (currentDay == 0)
             {
                 // Day 0에서 리소스를 검사하고 엔딩 결정
                 CheckResourceWarning();
 
-                if (!resourceWarningTriggered)  // 자원이 충분하다면 팩션 엔딩으로
+                if (!resourceWarningTriggered) // 자원이 충분하다면 팩션 엔딩으로
                 {
                     GameEndFaction();
                 }
-                
+
                 yield break;
             }
         }
 
         Debug.Log("D-Day reached! Game cycle complete!");
     }
-    
+
     // 시:분 형태로 시간 UI 업데이트
     private void UpdateTimeUI()
     {
         textTimer.text = $"{hour:D2}:{minute:D2}";
     }
-    
+
     // D-day 텍스트 변경
     public void UpdateDayUI()
     {
         // textDday.text = $"D-{currentDay}";
-        
+
         // 텍스트 업데이트 로직
         string newText = $"D-{currentDay}";
-    
+
         // DOTween Sequence로 텍스트 효과 설정
         Sequence textTween = DOTween.Sequence();
 
@@ -220,16 +217,18 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         // 텍스트 트위닝 완료
         textTween.Play();
     }
-    
+
     // 시간 정지 토글 버튼
     public void TogglePauseTime()
     {
         isPaused = !isPaused;
-        
+
         // isPaused 상태에 따라 아이콘 업데이트
         imageStopNStart.sprite = isPaused ? iconPlay : iconPause;
+
+        SoundManager.Instance.PlayUISound(UISoundType.Click);
     }
-    
+
     // 외부에서 직접 게임 시간을 멈추거나 시작하도록 설정하는 메서드
     public void SetPauseTime(bool pause)
     {
@@ -237,17 +236,19 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
 
         // isPaused 상태에 따라 아이콘 업데이트
         imageStopNStart.sprite = isPaused ? iconPlay : iconPause;
-    
+
         // 빌딩 생산 중단 또는 재개
         // BuildingManager.Instance.UpdateAllProductions(isPaused);
     }
-    
+
     // 2배속 토글 버튼
     public void ToggleDoubleTimeSpeed()
     {
         enableXSpeed = !enableXSpeed;
+
+        SoundManager.Instance.PlayUISound(UISoundType.Click);
     }
-    
+
     public bool IsScheduledProductionTime()
     {
         return (hour == 6 && minute == 0) || (hour == 18 && minute == 0);
@@ -263,15 +264,15 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         // 현재 일수에 따른 감소량 설정
         if (currentDay <= 10 && currentDay > 5) // Day 10 ~ Day 5까지 -20
         {
-            amount = baseConsumptionAmount * 2;  
+            amount = baseConsumptionAmount * 2;
         }
-        else if (currentDay <= 5 && currentDay > 1)  // Day 5 ~ Day 2 -40
+        else if (currentDay <= 5 && currentDay > 1) // Day 5 ~ Day 2 -40
         {
-            amount = baseConsumptionAmount * 4; 
+            amount = baseConsumptionAmount * 4;
         }
         else if (currentDay == 1) // Day 1 에는 -60
         {
-            amount = baseConsumptionAmount * 6;  // Day 1에는 -60
+            amount = baseConsumptionAmount * 6; // Day 1에는 -60
         }
 
         // 자원 소비 적용
@@ -279,12 +280,15 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         GameResourceManager.Instance.ConsumeResourceWithCheck(ResourceType.Energy, amount);
         GameResourceManager.Instance.ConsumeResourceWithCheck(ResourceType.Food, amount);
         GameResourceManager.Instance.ConsumeResourceWithCheck(ResourceType.Fuel, amount);
-        
+
+        // 24.11.20 빼기 아이콘
+        GameResourceManager.Instance.gameResourceUIPresneter.ShowIconConsumeAt9PM();
+
         // 디버깅 정보 출력
         Debug.Log("Resources consumed at 9AM.");
         Debug.Log($"Resources consumed: {amount} for each resource type on Day {currentDay}.");
     }
-    
+
     // 0시마다 실행하는 자원 검사 함수. 폭동 엔딩 가능
     private void CheckResourceWarning()
     {
@@ -292,19 +296,22 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         bool hpWarning = LobbyMenuManager.Instance.hp < 10.0f; // HP 경고 조건, 10이하
         bool stressWarning = LobbyMenuManager.Instance.stress > 90.0f; // Stress 경고 조건, 90이상
 
-        Debug.Log($"[현재 리소스] hasZeroResource: {hasZeroResource}, hpWarning: {hpWarning}, stressWarning: {stressWarning}, Combined Condition: {hasZeroResource || hpWarning || stressWarning}");
-        
+        Debug.Log(
+            $"[현재 리소스] hasZeroResource: {hasZeroResource}, hpWarning: {hpWarning}, stressWarning: {stressWarning}, Combined Condition: {hasZeroResource || hpWarning || stressWarning}");
+
         if (hasZeroResource || hpWarning || stressWarning)
         {
             // 처음 자원이 0이 되었을 때 경고 활성화 (panelWarning을 표시하고 다음날에만 폭동 엔딩 발동 조건 설정)
             if (!resourceWarningTriggered && !panelWarning.activeSelf)
             {
                 Debug.Log("Warning: Resource at zero for the first time. Displaying warning message.");
-                
+
                 resourceWarningTriggered = true; // 처음 경고 상태로 설정
-                panelWarning.SetActive(true);    // 경고 패널 표시
+                panelWarning.SetActive(true); // 경고 패널 표시
+
+                SoundManager.Instance.PlayUISound(UISoundType.Alert);
             }
-            
+
             // 경고가 활성화된 상태에서 여전히 조건 충족 시 폭동 엔딩 발동
             else if (resourceWarningTriggered && panelWarning.activeSelf)
             {
@@ -312,7 +319,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
 
                 // 생존일 수 계산
                 int daySurvived = gameTimeSetting.startDay - currentDay;
-            
+
                 // 엔딩 분기
                 if (hpWarning)
                 {
@@ -329,10 +336,9 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     Debug.Log("Resource Warning active. Triggering Riot Ending.");
                     EndingManager.Instance.ShowEnding(EndingType.RIOT, daySurvived); // Riot 엔딩
                 }
-                else
-                {
-                    EndingManager.Instance.ShowEnding(EndingType.RIOT, daySurvived); // Riot 엔딩
-                }
+
+                EndingManager.Instance.ShowEnding(EndingType.RIOT, daySurvived); // Riot 엔딩
+
 
                 // 엔딩 이후 경고 초기화
                 resourceWarningTriggered = false;
@@ -343,13 +349,13 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         {
             // 디버깅 메시지로 초기화 상태 확인
             Debug.Log($"리소스가 해제 되어야함!!!!");
-            
+
             // 자원이 충분해지면 경고 초기화
             resourceWarningTriggered = false;
             panelWarning.SetActive(false);
         }
     }
-    
+
     // Day 0이 될때 팩션 엔딩
     private void GameEndFaction()
     {
@@ -358,7 +364,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
         // 가장 지지도가 높은 팩션 가져오기
         Faction leadingFaction = FactionManager.Instance.GetLeadingFaction();
         EndingType endingType;
-        
+
         if (leadingFaction != null)
         {
             switch (leadingFaction.type)
@@ -379,10 +385,10 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     endingType = EndingType.NONE;
                     break;
             }
-            
+
             // 생존일 수 계산
             int daySurvived = gameTimeSetting.startDay - currentDay;
-            
+
             // 엔딩 타입에 따라 EndingManager를 통해 엔딩을 출력
             EndingManager.Instance.ShowEnding(endingType, daySurvived, leadingFaction.icon);
         }

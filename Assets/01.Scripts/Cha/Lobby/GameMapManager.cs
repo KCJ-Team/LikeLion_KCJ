@@ -65,8 +65,13 @@ public class GameMapManager : SceneSingleton<GameMapManager>
                 {
                     selectedMapData = map.GetMapData();
                     UpdateUI(selectedMapData);
-                    
-                    if (!panelMapInfo.activeSelf) panelMapInfo.SetActive(true);
+
+                    if (!panelMapInfo.activeSelf)
+                    {
+                        panelMapInfo.SetActive(true);
+                        
+                        SoundManager.Instance.PlayUISound(UISoundType.Click);
+                    }
                 }
                 else
                 {

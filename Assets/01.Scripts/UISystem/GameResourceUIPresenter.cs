@@ -24,5 +24,10 @@ public class GameResourceUIPresenter
             GameResourceManager.Instance.GetResourceAmount(ResourceType.Currency)
         );
     }
+
+    public void ShowIconConsumeAt9PM()
+    {
+        uiView.ShowIconConsumeAt9PM();
+    }
    
 } // end class

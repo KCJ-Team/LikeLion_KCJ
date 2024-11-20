@@ -79,18 +79,28 @@ public class GameSceneDataManager : MonoBehaviour
         // TODO : scene의 이름을 보고 Lobby, Map_Elimination이면 해줘야함
         switch (scene.name)
         {
+            case "MainMenu" :
+                SoundManager.Instance.PlayBGM(BGMSoundType.MainMenuTheme);
+                break;
+            
             case "Lobby" :
                 LoadLobbyDataInDB();
+                SoundManager.Instance.PlayBGM(BGMSoundType.LobbyTheme);
+                
                 break;
             
             case "Map_Elimination" :
                 // TODO : DB에서 플레이어 정보..!
                 LoadDungeonDataInDB();
+                SoundManager.Instance.PlayBGM(BGMSoundType.DungeonTheme);
+
                 break;
             // Test!!!
             case "Map_Elimination_UI" :
                 // TODO : DB에서 플레이어 정보..!
                 LoadDungeonDataInDB();
+                SoundManager.Instance.PlayBGM(BGMSoundType.DungeonTheme);
+
                 break;
         }
         

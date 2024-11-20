@@ -49,6 +49,9 @@ public class StoreManager : SceneSingleton<StoreManager>
                 LobbyMenuManager.Instance.storeData.RemoveItem(currentStore);
                 OnItemPurchased?.Invoke(currentStore);
                 
+                // 구매 사운드 
+                SoundManager.Instance.PlayUISound(UISoundType.Noti);
+                
                 // 팝업닫기
                 PopupUI popup = PopupUIManager.Instance.GetPopup(PopupType.Noti);
                 PopupUIManager.Instance.ClosePopup(popup);

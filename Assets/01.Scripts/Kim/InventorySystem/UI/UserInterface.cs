@@ -275,6 +275,9 @@ public abstract class UserInterface : MonoBehaviour
         if (this.interfaceType == InterfaceType.Equipment) return;
 
         CreateTempItem(obj);
+        
+        // 241120 hyuna
+        SoundManager.Instance.PlayUISound(UISoundType.Pop);
         // MouseData.tempItemBeingDragged = CreateTempItem(obj); // 드래그 중 표시할 임시 아이템 생성
     }
 
@@ -378,14 +381,12 @@ public abstract class UserInterface : MonoBehaviour
                         // 장착(스왑)
                         inventory.SwapItems(sourceSlot, targetSlot);
                         Debug.Log($"아이템을 {obj.name}에서 {hitObject.name} 슬롯으로 이동");
-                    }
-                    else
-                    {
                         
+                        SoundManager.Instance.PlayUISound(UISoundType.OK);
                     }
                 }
                 
-                break; // 유효한 슬롯을 찾았으면 더 이상 반복할 필요 없음
+                break;
             }
         }
 
@@ -394,6 +395,8 @@ public abstract class UserInterface : MonoBehaviour
         {
             Debug.Log("유효한 슬롯에 드롭되지 않음. 드래그 취소");
             Destroy(MouseData.tempItemBeingDragged); // 임시 아이템 제거
+            
+            SoundManager.Instance.PlayUISound(UISoundType.Cancel);
         }
 
         // if (MouseData.slotHoveredOver != null)

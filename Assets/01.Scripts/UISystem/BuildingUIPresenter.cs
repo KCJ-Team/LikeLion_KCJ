@@ -78,7 +78,11 @@ public class BuildingUIPresenter
             imageComponent.alpha = 1f;
 
             var originalPosition = processImage.transform.localPosition;
+            var originalScale = processImage.transform.localScale;
 
+            // hyuna sound
+            SoundManager.Instance.PlaySFX(SFXSoundType.PositivePop);
+            
             // 등장 애니메이션: 크기 팽창
             Sequence sequence = DOTween.Sequence();
             sequence.Append(processImage.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f, 10, 1f)) // 크기 팽창
@@ -89,6 +93,7 @@ public class BuildingUIPresenter
                 {
                     processImage.SetActive(false); // 완전히 사라진 뒤 비활성화
                     processImage.transform.localPosition = originalPosition; // 위치 초기화
+                    processImage.transform.localScale = originalScale; // 크기 초기화
                     imageComponent.alpha = 1f; // 투명도 초기화
                 });
 
@@ -476,13 +481,17 @@ public class BuildingUIPresenter
             rectTransform.DOKill();
 
             // 랜덤 지연 시간 설정 (1초에서 3초 사이)
-            float randomDelay = UnityEngine.Random.Range(0.5f, 2f);
+            float randomDelay = Random.Range(0.5f, 2f);
             
             // 랜덤 지연 후 애니메이션 시작
             DOVirtual.DelayedCall(randomDelay, () =>
             {
                 rectTransform.DOShakePosition(1f, new Vector3(3f, 0f, 0f), 10, 90, false, true)
                     .SetEase(Ease.InOutSine);
+                
+                // hyuna 11.20 sound 추가
+                SoundManager.Instance.PlayUISound(UISoundType.Thick);
+                
 
                 Debug.Log($"Punch animation started for {buildingType} with a delay of {randomDelay} seconds.");
             });

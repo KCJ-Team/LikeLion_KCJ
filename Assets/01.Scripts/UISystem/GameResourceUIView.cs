@@ -16,6 +16,8 @@ public class GameResourceUIView : MonoBehaviour
     public TextMeshProUGUI fuelText;
     public TextMeshProUGUI researchText;
     public TextMeshProUGUI currencyText;
+
+    public Image iconConsume;
     
     //[Header("자원이 0일경우 Warning Text, 자원이 0일때 1day가 지나면 GameOver")]
     
@@ -28,6 +30,37 @@ public class GameResourceUIView : MonoBehaviour
         UpdateTextWithTypingEffect(fuelText, fuel);
         UpdateTextWithTypingEffect(researchText, research);
         UpdateTextWithTypingEffect(currencyText, currency);
+    }
+
+    public void ShowIconConsumeAt9PM()
+    {
+        // 초기 투명도와 위치 설정
+        var canvasGroup = iconConsume.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = iconConsume.gameObject.AddComponent<CanvasGroup>();
+        }
+        canvasGroup.alpha = 1f;
+
+        var originalPosition = iconConsume.transform.localPosition;
+        var originalScale = iconConsume.transform.localScale; // 원래 크기 저장
+
+        // 효과음 재생
+        SoundManager.Instance.PlaySFX(SFXSoundType.NegativePop);
+
+        // DOTween 애니메이션 설정
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(iconConsume.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f, 10, 1f)) // 크기 팽창 효과
+            .AppendInterval(1.5f) // 1.5초 유지
+            .Append(iconConsume.transform.DOLocalMoveY(originalPosition.y + 30f, 0.5f)) // 위로 이동
+            .Join(canvasGroup.DOFade(0f, 0.5f)) // 서서히 투명해짐
+            .OnComplete(() =>
+            {
+                iconConsume.gameObject.SetActive(false); // 완전히 사라진 뒤 비활성화
+                iconConsume.transform.localPosition = originalPosition; // 위치 초기화
+                iconConsume.transform.localScale = originalScale; // 크기 초기화
+                canvasGroup.alpha = 1f; // 투명도 초기화
+            });
     }
 
     private void UpdateTextWithTypingEffect(TextMeshProUGUI textElement, int newValue)

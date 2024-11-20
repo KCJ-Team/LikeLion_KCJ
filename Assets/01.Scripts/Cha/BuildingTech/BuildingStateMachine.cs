@@ -38,6 +38,9 @@ public class Level0State : IBuildingState
             // 연구실이 아니라면
             if (buildingData.type != BuildingType.ResearchLab)
                 stateMachine.ChangeState(new Level1State()); // 상태 전환
+            
+            // hyuna 11.20 Build시 사운드 
+            SoundManager.Instance.PlayUISound(UISoundType.Noti);
         }
         else
         {
@@ -85,6 +88,9 @@ public class Level1State : IBuildingState
             building.CurrentLevel++;
             
             stateMachine.ChangeState(new Level2State()); // 상태 전환
+            
+            SoundManager.Instance.PlayUISound(UISoundType.Noti);
+
         }
         else
         {
@@ -136,6 +142,7 @@ public class Level2State : IBuildingState
             building.CurrentLevel++;
             
             // 최종 업그레이드 끝.
+            SoundManager.Instance.PlayUISound(UISoundType.Noti);
         }
         else
         {

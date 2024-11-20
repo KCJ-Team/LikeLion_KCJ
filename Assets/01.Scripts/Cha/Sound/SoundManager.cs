@@ -13,7 +13,7 @@ public enum AudioSourceType
 
 public enum SFXSoundType
 {
-    PositivePop, NegativePop
+    PositivePop, NegativePop, Skill_Invisibility,Skill_KnockBack, Skill_Mine, Skill_Pull, Skill_Shadow, Skill_BlackHole, Skill_Bomb, Skill_RainBullet, Skill_Turret, Buff
 }
 
 public enum BGMSoundType
@@ -31,7 +31,7 @@ public enum UISoundType
 
 public enum MonsterSoundType
 {
-    Idle, Damaged
+    Idle, Died
 }
 
 public class SoundManager : MonoBehaviour

@@ -19,19 +19,19 @@ MonoBehaviour:
     Slots:
     - AllowedItems: 
       card:
-        Name: Pistol
-        Id: 0
-      amount: 1
+        Name: 
+        Id: -1
+      amount: 0
     - AllowedItems: 
       card:
-        Name: InvisibilityCard
-        Id: 12
-      amount: 1
+        Name: 
+        Id: -1
+      amount: 0
     - AllowedItems: 
       card:
-        Name: KnockBackCard
-        Id: 13
-      amount: 1
+        Name: 
+        Id: -1
+      amount: 0
     - AllowedItems: 
       card:
         Name: MineCard
@@ -54,9 +54,9 @@ MonoBehaviour:
       amount: 1
     - AllowedItems: 
       card:
-        Name: ASBuffCard
-        Id: 22
-      amount: 1
+        Name: 
+        Id: -1
+      amount: 0
     - AllowedItems: 
       card:
         Name: DefenceBuffCard
@@ -67,81 +67,6 @@ MonoBehaviour:
         Name: SpeedBuffCard
         Id: 24
       amount: 1
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
-    - AllowedItems: 
-      card:
-        Name: 
-        Id: -1
-      amount: 0
     - AllowedItems: 
       card:
         Name: 

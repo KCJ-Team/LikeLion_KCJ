@@ -11,7 +11,7 @@ public class PlayerCharacterController : MonoBehaviour
     // Sub-controllers
     private PlayerMovementController _movementController;
     private PlayerCombatController _combatController;
-    private PlayerSkillController _skillController;
+    public PlayerSkillController _skillController;
     private PlayerAnimationController _animationController;
     private PlayerInventoryController _inventoryController;
 

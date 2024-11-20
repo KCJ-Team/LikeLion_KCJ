@@ -7,6 +7,7 @@ public class FSM_EnemyState_Dead : VMyState<FSM_EnemyState>
     private Animator _animator;
     private MonsterHealth _monsterHealth;
     private BoxCollider _collider;
+    private Rigidbody _rigidbody;
     
     [Header("Dissolve Effect Settings")]
     [SerializeField] private Material dissolveMaterial;  // 디졸브 메테리얼
@@ -25,6 +26,7 @@ public class FSM_EnemyState_Dead : VMyState<FSM_EnemyState>
         _animator = GetComponent<Animator>();
         _monsterHealth = GetComponent<MonsterHealth>();
         _collider = GetComponent<BoxCollider>();
+        _rigidbody = GetComponent<Rigidbody>();
         
         // 메시 렌더러 컴포넌트들 가져오기
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -41,6 +43,7 @@ public class FSM_EnemyState_Dead : VMyState<FSM_EnemyState>
     {
         _animator.CrossFade(AnimationHash.DeadHash, 0.0f);
         _collider.enabled = false;
+        _rigidbody.useGravity = false;
         StartCoroutine(DissolveEffect());
     }
     

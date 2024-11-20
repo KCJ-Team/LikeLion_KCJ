@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  cooldown: 0
+  cooldown: 15
   EffectPrefab: {fileID: 2348986143147364520, guid: 8c6cde8dbb8347aab27e692b0c8d4032,
     type: 3}
   damageRadius: 5
-  damageInterval: 1
+  damageInterval: 0.5
   damageDuration: 8
   targetLayer:
     serializedVersion: 2

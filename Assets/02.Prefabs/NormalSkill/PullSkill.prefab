@@ -45,8 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  cooldown: 0
+  cooldown: 10
   ProjectilePrefab: {fileID: 5938167112633497377, guid: 41cd078708b656049a1d20e38c0ebfb7,
     type: 3}
-  projectileSpeed: 0
   projectileLifetime: 5

@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: {fileID: 8966254859239675267, guid: 401c62491d6805b4a903bc127f96b53a,
     type: 3}
-  BaseHP: 1000
+  BaseHP: 100
   BaseMP: 0
   MoveSpeed: 5
   RotationSpeed: 10
   AttackPower: 50
   Defense: 50
-  currentWeapon: {fileID: 11400000, guid: bb46793e81c086346bf1a579568d5682, type: 2}
-  currentQSkill: {fileID: 11400000, guid: 477c98f24f1ff934497afdf0d7392461, type: 2}
-  currentESkill: {fileID: 11400000, guid: dff83beaf5057634bbe5d264106dc137, type: 2}
-  currentBuff: {fileID: 11400000, guid: b170e2d289ad81440bc9d78827fa98c3, type: 2}
+  currentWeapon: {fileID: 11400000, guid: 9a38115a129a1e54f9531d205c72a1ec, type: 2}
+  currentQSkill: {fileID: 11400000, guid: 59ca03e86d1a72a4c8f1a175da53dc43, type: 2}
+  currentESkill: {fileID: 11400000, guid: 477c98f24f1ff934497afdf0d7392461, type: 2}
+  currentBuff: {fileID: 11400000, guid: 1fe912be947687240a4b00e9c0519d5a, type: 2}
   inventory: {fileID: 11400000, guid: 71f46ef98d566734ab3e136541e8c918, type: 2}
   equipment: {fileID: 11400000, guid: bdfea5a70f038e941956793be8b4a503, type: 2}

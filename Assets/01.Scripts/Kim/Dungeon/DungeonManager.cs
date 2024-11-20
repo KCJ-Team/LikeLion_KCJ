@@ -9,6 +9,9 @@ public class DungeonManager : SceneSingleton<DungeonManager>
     [Header("Player Data")] 
     public PlayerData playerData;
     public CardDatabase cardDatabase;
+    private WeaponManager _weaponManager;
+    private PlayerCharacterController _characterController;
+    public Spawner _Spawner;
 
     [Header("던전에서 관리할 플레이어의 정보들")]
     public float hp;
@@ -23,7 +26,21 @@ public class DungeonManager : SceneSingleton<DungeonManager>
 
     private void Start()
     {
+        _weaponManager = GameManager.Instance.Player.GetComponent<WeaponManager>();
+        _characterController = GameManager.Instance.Player.GetComponent<PlayerCharacterController>();
         dungeonUIPresenter = new DungeonUIPresenter(dungeonUIView);
+    }
+
+    public void Update()
+    {
+        UpdateAmmo(_weaponManager.GetCurrentAmmo(),_weaponManager.GetMaxAmmo());
+        UpdateRemainingMonsters(_Spawner.RemainingMonsters);
+        SetBossSpawned(_Spawner.IsBossSpawned);
+
+        SetSkillCooldownBySlotNumber(0,_characterController._skillController.GetSkillCooldown(KeyCode.Q));
+        SetSkillCooldownBySlotNumber(1,_characterController._skillController.GetSkillCooldown(KeyCode.E));
+        SetSkillCooldownBySlotNumber(2,_characterController._skillController.GetSkillCooldown(KeyCode.F));
+        
     }
 
     public void SetStats(float newHp, float newDefence, float newAttack)
@@ -51,7 +68,7 @@ public class DungeonManager : SceneSingleton<DungeonManager>
         dungeonUIPresenter.SetBossSpawned(isSpawned);
     }
 
-    public void SetSkillCooldownBySlotNumber(int slotNum, int coolDown)
+    public void SetSkillCooldownBySlotNumber(int slotNum, float coolDown)
     {
         dungeonUIPresenter.SetSkillCooldownBySlotNumber(slotNum, coolDown);
     }

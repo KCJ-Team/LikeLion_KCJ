@@ -13,8 +13,8 @@ public class PlayerInventoryController
 
     public void Initialize()
     {
-        _playerData.inventory.Clear();
-        _playerData.equipment.Clear();
+        // _playerData.inventory.Clear();
+        // _playerData.equipment.Clear();
     }
 
     public void HandleInventory()

@@ -85,7 +85,12 @@ public class GameSceneDataManager : MonoBehaviour
             
             case "Map_Elimination" :
                 // TODO : DB에서 플레이어 정보..!
-                DungeonLoadData();
+                LoadDungeonDataInDB();
+                break;
+            // Test!!!
+            case "Map_Elimination_UI" :
+                // TODO : DB에서 플레이어 정보..!
+                LoadDungeonDataInDB();
                 break;
         }
         
@@ -220,7 +225,7 @@ public class GameSceneDataManager : MonoBehaviour
     }
     
     // TODO : 던전 진입시 씬 넘어갈때 로드할 데이터 
-    public void DungeonLoadData()
+    public void LoadDungeonDataInDB()
     {
         PlayerService playerService = new PlayerService();
         PlayerModel playerModel = playerService.GetPlayer();
@@ -230,16 +235,42 @@ public class GameSceneDataManager : MonoBehaviour
             Debug.LogError("Failed to load player data from the database.");
             return;
         }
-        //DungeonManager.Instance.SetStats(playerModel.PlayerHp, playerModel.PlayerDefense, playerModel.PlayerAttack);
         
-        //EquipmentService equipmentService = new EquipmentService();
-        //equipmentService.LoadEquipment();
+        // 플레이어 정보
+        DungeonManager.Instance.SetStats(playerModel.PlayerHp, playerModel.PlayerDefense, playerModel.PlayerAttack);
+        
+        // 던전 레전드 보상 여부
+        DungeonManager.Instance.isPossibleLegendWeapon = playerModel.PlayerTech03IsLearned == 1 ? true : false;
+        
+        Debug.Log("던전 진입, 던전 데이터 로드 완료.");
     }
 
     // TODO : 던전 게임 종료후 로비씬으로 넘어가기전 저장할 데이터 
-    public void DungeonSaveData()
+    public void SaveDungeonDataInDB()
     {
+        // 플레이어 hp, attack, defense??
         
+    }
+
+    // TODO : Clear쪽에서 불러야함. 
+    public void DungeonClearReward()
+    { 
+        // 던전보상 : 스트레스 지수 20( 다 DB에 저장하면 됨)
+        PlayerService playerService = new PlayerService();
+        
+        // 현재 플레이어 아이디를 가지고 와서
+        string playerId = playerService.GetPlayer().PlayerId;
+
+        playerService.UpdatePlayerResources(playerId, 30, 30, 20, 30, 0, 200);
+        
+        // TODO : 확인필요
+        // 플레이어 컨트롤러의 health? 가 변하는 health? 
+        float hp = GameManager.Instance.Player.GetComponent<PlayerHealth>().CurrentHealth;
+        float attack = DungeonManager.Instance.playerData.AttackPower;
+        float defense = DungeonManager.Instance.playerData.Defense;
+        float stress = 20f;
+
+        playerService.UpdatePlayerStats(playerId, hp, stress, attack, defense);
     }
     
     // DB의 데이터들을 초기화. 게임 엔딩시 사용.

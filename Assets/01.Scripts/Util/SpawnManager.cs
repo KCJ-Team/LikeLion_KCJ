@@ -12,10 +12,12 @@ public class SpawnManager : MonoBehaviour
     public int monstersPerWave = 5;    // 한 번에 생성할 몬스터 수
     public float spawnInterval = 10f;   // 생성 간격 (초)
 
-    [Header("UI")] public GameObject dungeonClearPanel;
-
+    [Header("UI")] 
+    public GameObject dungeonClearPanel;
+    
     [Header("Rewards")]
     public CardObject[] possibleWeapons; 
+    public CardObject[] possibleLegendWeapons; 
 
     private void Awake()
     {
@@ -30,7 +32,14 @@ public class SpawnManager : MonoBehaviour
     {
         if (spawner.IsBossSpawned && spawner.BossMonster == null)
         {
-            DungeonClear();
+            if (DungeonManager.Instance.isPossibleLegendWeapon)
+            {
+                DungeonLegendClear();
+            }
+            else
+            {
+                DungeonClear();
+            }
         }
     }
 
@@ -64,6 +73,27 @@ public class SpawnManager : MonoBehaviour
         
             // 인벤토리에 무기 추가
             GameManager.Instance.playerData.inventory.AddItem(new Card(rewardWeapon), 1);
+
+            GameSceneDataManager.Instance.DungeonClearReward();
+        }
+    }
+    
+    // hyuna. 레전드 보상 무기
+    private void DungeonLegendClear()
+    {
+        dungeonClearPanel.SetActive(true);
+        
+        if (possibleLegendWeapons != null && possibleLegendWeapons.Length > 0)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, possibleLegendWeapons.Length);
+            CardObject rewardWeapon = possibleLegendWeapons[randomIndex];
+        
+            // 인벤토리에 무기 추가
+            GameManager.Instance.playerData.inventory.AddItem(new Card(rewardWeapon), 1);
+            
+            GameSceneDataManager.Instance.DungeonClearReward();
+            
+            Debug.Log("고급 무기 여부 확인, 고급 무기 제공");
         }
     }
 }

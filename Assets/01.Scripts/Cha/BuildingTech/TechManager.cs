@@ -94,9 +94,18 @@ public class TechManager : SceneSingleton<TechManager>
     // 탐험 보상에서 고급 무기 획득률 증가
     private void ApplyExplorationEnhancement()
     {
-        // 탐험 보상에서 고급 무기 획득 확률 증가
-        // ExplorationManager.Instance.IncreaseRareItemDropRate(0.2f); // 20% 증가 (예시)
+        // DB의 데이터만 true로 날려주면 됨.
+        PlayerService playerService = new PlayerService();
+        string playerId = playerService.GetPlayer().PlayerId;
+        
+        // bool 값을 int로 변환
+        int techLearned1 = techs[0].isLearned ? 1 : 0;
+        int techLearned2 = techs[1].isLearned ? 1 : 0;
+        int techLearned3 = techs[2].isLearned ? 1 : 0;
+        
+        // DB에 저장. 
+        playerService.UpdateTechLearnedStatus(playerId, techLearned1, techLearned2, techLearned3);
 
-        // Debug.Log("탐험 보상 강화 적용: 고급 무기 획득 확률이 증가했습니다.");
+        Debug.Log("탐험 보상 강화 적용: 고급 무기 획득 확률이 증가했습니다.");
     }
 } // end class

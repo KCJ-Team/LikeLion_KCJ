@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonUIPresenter : MonoBehaviour
+public class DungeonUIPresenter
 {
     private readonly DungeonUIView uiView;
 
@@ -20,5 +20,25 @@ public class DungeonUIPresenter : MonoBehaviour
         DungeonManager.Instance.attack = newAttack;
         
         uiView.UpdateStats();
+    }
+    
+    public void SetAmmo(int currentAmmo, int maxAmmo)
+    {
+        uiView.UpdateAmmo(currentAmmo, maxAmmo);
+    }
+
+    public void SetRemainingMonsters(int remaining)
+    {
+        uiView.UpdateRemainingMonsters(remaining);
+    }
+
+    public void SetBossSpawned(bool isSpawned)
+    {
+        uiView.UpdateBossSpawned(isSpawned);
+    }
+
+    public void SetSkillCooldownBySlotNumber(int slotNum, int coolDown)
+    {
+        uiView.UpdateSkillCooldowns(slotNum, coolDown);
     }
 }

@@ -882,6 +882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 546225f607b8a8c499e51dbc55efd1e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dissolveMaterial: {fileID: 2100000, guid: 63fa0eadad4293b469f628c80ad3d491, type: 2}
+  dissolveTime: 5
+  dissolveParamName: _DissolveAmount
 --- !u!114 &7118487939160977452
 MonoBehaviour:
   m_ObjectHideFlags: 0

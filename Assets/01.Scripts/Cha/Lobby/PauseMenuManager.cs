@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenuManager : MonoBehaviour
@@ -38,6 +39,10 @@ public class PauseMenuManager : MonoBehaviour
                 if (!PopupUIManager.Instance.IsAnyPopupOpen())
                     TogglePauseMenu();
             }
+            else
+            {
+                TogglePauseMenu();
+            }
         }
     }
     
@@ -62,14 +67,29 @@ public class PauseMenuManager : MonoBehaviour
     // Save 버튼 클릭 메서드
     private void SaveGameData()
     {
-        GameSceneDataManager.Instance.SaveLobbyDataInDB();
-        Debug.Log("Game data saved.");
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // 현재 씬 이름을 기준으로 저장 메서드 호출
+        switch (currentSceneName)
+        {
+            case "Lobby":
+                GameSceneDataManager.Instance.SaveLobbyDataInDB();
+                Debug.Log("Lobby data saved.");
+                break;
+            case "Map_Elimination" : case "Map_Elimination_UI":
+                GameSceneDataManager.Instance.SaveDungeonDataInDB();
+                Debug.Log("Battle data saved.");
+                break;
+            default:
+                Debug.LogWarning("No specific save logic for this scene. Implement logic for scene: " + currentSceneName);
+                break;
+        }
     }
 
     // Save and Main Title 버튼 클릭 메서드
     private void SaveAndBackToMainTitle()
     {
-        GameSceneDataManager.Instance.SaveLobbyDataInDB();
+        SaveGameData();
         Debug.Log("Game data saved. And Back To MainMenu");
         
         Time.timeScale = 1; // 시간 스케일 복구

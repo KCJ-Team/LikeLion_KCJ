@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 public class DungeonUIView : MonoBehaviour
 {
@@ -12,6 +13,17 @@ public class DungeonUIView : MonoBehaviour
     public Text attackText;
     public Text defenseText;
 
+    [Header("Ammo")] 
+    public Text textAmmo;
+
+    [Header("Monster Wave")] 
+    public Text textRemaingMonster;
+    public GameObject panelBossSpawned;
+
+    [FormerlySerializedAs("textCooltime")] [Header("Skills")] 
+    public Text[] textCooltimes;
+    
+    // TODO : 던전매니저의 hp, attack, defense 실시간 관리할건지? 
     public void UpdateStats()
     {
         hpSlider.DOValue(DungeonManager.Instance.hp, 0.5f).OnUpdate(() =>
@@ -22,4 +34,25 @@ public class DungeonUIView : MonoBehaviour
         attackText.text = $"{DungeonManager.Instance.attack}";
         defenseText.text = $"{DungeonManager.Instance.defense}";
     }
+    
+    public void UpdateAmmo(int currentAmmo, int maxAmmo)
+    {
+        textAmmo.text = $"{currentAmmo}/{maxAmmo}";
+    }
+
+    public void UpdateRemainingMonsters(int remaining)
+    {
+        textRemaingMonster.text = $"Remaining Monsters: {remaining}";
+    }
+
+    public void UpdateBossSpawned(bool isSpawned)
+    {
+        panelBossSpawned.SetActive(isSpawned);
+    }
+
+    public void UpdateSkillCooldowns(int slotNum, int cooldowns)
+    {
+        textCooltimes[slotNum].text = $"{cooldowns}";
+    }
+    
 }

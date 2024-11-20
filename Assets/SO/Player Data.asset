@@ -18,8 +18,8 @@ MonoBehaviour:
   BaseMP: 0
   MoveSpeed: 5
   RotationSpeed: 10
-  AttackPower: 0
-  Defense: 0
+  AttackPower: 10
+  Defense: 50
   currentWeapon: {fileID: 0}
   currentQSkill: {fileID: 0}
   currentESkill: {fileID: 0}

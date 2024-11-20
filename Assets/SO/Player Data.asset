@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9126b84355ad44446b40afb1020e1112, type: 3}
   m_Name: Player Data
   m_EditorClassIdentifier: 
-  Character: {fileID: 3690492922936840452, guid: ede0a9af93339b54786edb344c2f2d3e,
+  Character: {fileID: 8966254859239675267, guid: 401c62491d6805b4a903bc127f96b53a,
     type: 3}
   BaseHP: 100
   BaseMP: 0
@@ -20,9 +20,9 @@ MonoBehaviour:
   RotationSpeed: 10
   AttackPower: 0
   Defense: 0
-  currentWeapon: {fileID: 0}
-  currentQSkill: {fileID: 0}
-  currentESkill: {fileID: 0}
+  currentWeapon: {fileID: 11400000, guid: bb46793e81c086346bf1a579568d5682, type: 2}
+  currentQSkill: {fileID: 11400000, guid: 4da2763727fa8b940b1c7db5f0f0b935, type: 2}
+  currentESkill: {fileID: 11400000, guid: 477c98f24f1ff934497afdf0d7392461, type: 2}
   currentBuff: {fileID: 0}
   inventory: {fileID: 11400000, guid: 71f46ef98d566734ab3e136541e8c918, type: 2}
   equipment: {fileID: 11400000, guid: bdfea5a70f038e941956793be8b4a503, type: 2}

@@ -859,6 +859,28 @@ MonoBehaviour:
     _serializedList:
     - Key: 0
       Value: {fileID: 8300000, guid: 9d0113dd16699ce4ea3c58dd422fdc1f, type: 3}
+    - Key: 1
+      Value: {fileID: 8300000, guid: e759c65f76c80834abc572593f946008, type: 3}
+    - Key: 2
+      Value: {fileID: 8300000, guid: cc6699269b4c1d44ea1e860518b9bb73, type: 3}
+    - Key: 3
+      Value: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
+    - Key: 4
+      Value: {fileID: 8300000, guid: 7c59ead1c0a254004bc52e663fd40aa4, type: 3}
+    - Key: 5
+      Value: {fileID: 8300000, guid: 23521bf6cf1e34f51ba1a86ec9553326, type: 3}
+    - Key: 6
+      Value: {fileID: 8300000, guid: 303d44c8d6ec943a38df8ec10b19d9c7, type: 3}
+    - Key: 7
+      Value: {fileID: 8300000, guid: 6a55b1210d28e48f9be508821dfab1d3, type: 3}
+    - Key: 8
+      Value: {fileID: 8300000, guid: 4d6d816408e48e7428e863203522508f, type: 3}
+    - Key: 9
+      Value: {fileID: 8300000, guid: f7cb05528799aa54eab2a0a5fb417d53, type: 3}
+    - Key: 10
+      Value: {fileID: 8300000, guid: 9b9e1115e2f917541801d99c24ba4dbb, type: 3}
+    - Key: 11
+      Value: {fileID: 8300000, guid: cc6699269b4c1d44ea1e860518b9bb73, type: 3}
   uiClips:
     _serializedList:
     - Key: 0
@@ -882,7 +904,11 @@ MonoBehaviour:
     - Key: 10
       Value: {fileID: 8300000, guid: 73ca8aa7afcc04a5b9205a82f49bdfb8, type: 3}
   monsterClips:
-    _serializedList: []
+    _serializedList:
+    - Key: 0
+      Value: {fileID: 8300000, guid: 88ba551e6eb3847279ac2fea8b38e665, type: 3}
+    - Key: 1
+      Value: {fileID: 8300000, guid: ac6034ade498bb94b87620cdf6eac48b, type: 3}
   weaponClips:
     _serializedList:
     - Key: 1

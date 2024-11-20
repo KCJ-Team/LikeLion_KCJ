@@ -10394,21 +10394,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 287195322317940676, guid: 95d0eb1584532024e8b7ad59fe748455,
-        type: 3}
-      propertyPath: sfxClips._serializedList.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 287195322317940676, guid: 95d0eb1584532024e8b7ad59fe748455,
-        type: 3}
-      propertyPath: sfxClips._serializedList.Array.data[1].Key
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 287195322317940676, guid: 95d0eb1584532024e8b7ad59fe748455,
-        type: 3}
-      propertyPath: sfxClips._serializedList.Array.data[1].Value
-      value: 
-      objectReference: {fileID: 8300000, guid: e759c65f76c80834abc572593f946008, type: 3}
     - target: {fileID: 6632281644060706811, guid: 95d0eb1584532024e8b7ad59fe748455,
         type: 3}
       propertyPath: m_Name

@@ -64,7 +64,7 @@ public class PlayerService
             PlayerDDay = MainMenuManager.Instance.gameTimeData.startDay,
             PlayerPowerplantLevel = -1,
             PlayerBiofarmLevel = -1,
-            PlayerQuartersLevel = -1,
+            PlayerQuartersLevel = 0, // -1 초기레벨은 0으로 주자
             PlayerFuelplantLevel = -1,
             PlayerResearchLabLevel = -1,
             PlayerRecoveryRoomLevel = -1,

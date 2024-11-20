@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using SQLite;
@@ -78,6 +79,24 @@ public class StoreService
         catch (System.Exception e)
         {
             Debug.LogError($"Error saving equipment: {e.Message}");
+        }
+    }
+
+    public void DeleteStore()
+    {
+        try
+        {
+            // 데이터베이스에서 전체 StoreModel 데이터를 삭제
+            dbConnection.Execute("DELETE FROM store");
+
+            // StoreData 초기화
+            LobbyMenuManager.Instance.storeData.ClearAllItems();
+
+            Debug.Log("Store data deleted successfully.");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error deleting store: {e.Message}");
         }
     }
 } // end class

@@ -47,7 +47,7 @@ public class EncounterUIPresenter
         // 모든 오브젝트가 활성화되어 있으면 더 이상 활성화하지 않음
         if (activeCount >= uiView.encounterObjects.Count)
         {
-            // TODO : 사운드 알림 주기(Warning이랑 같이 단발성)
+            // SoundManager.Instance.PlayUISound(UISoundType.Noti);
             
             Debug.Log("All encounter objects are currently active.");
             return;

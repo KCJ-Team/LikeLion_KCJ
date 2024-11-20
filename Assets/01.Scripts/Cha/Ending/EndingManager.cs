@@ -48,6 +48,8 @@ public class EndingManager : SceneSingleton<EndingManager>
     {
         if (panelEnding != null)
         {
+            SoundManager.Instance.PlayUISound(UISoundType.Ending);
+            
             panelEnding.SetActive(true); // 엔딩 패널 표시
             
             textEndingTitle.text = ending.endingTitle;
@@ -69,7 +71,7 @@ public class EndingManager : SceneSingleton<EndingManager>
             }
             
             // 게임 시간 멈춤
-            GameTimeManager.Instance.TogglePauseTime();
+            GameTimeManager.Instance.SetPauseTime(true);
         }
     }
     

@@ -59,6 +59,8 @@ public class PlayerService
             PlayerFood = MainMenuManager.Instance.resourceDatas[ResourceType.Food].initAmount,
             PlayerWorkforce = MainMenuManager.Instance.resourceDatas[ResourceType.Workforce].initAmount,
             PlayerFuel = MainMenuManager.Instance.resourceDatas[ResourceType.Fuel].initAmount,
+            PlayerResearch = MainMenuManager.Instance.resourceDatas[ResourceType.Research].initAmount,
+            PlayerCurrency = MainMenuManager.Instance.resourceDatas[ResourceType.Currency].initAmount,
             PlayerDDay = MainMenuManager.Instance.gameTimeData.startDay,
             PlayerPowerplantLevel = -1,
             PlayerBiofarmLevel = -1,

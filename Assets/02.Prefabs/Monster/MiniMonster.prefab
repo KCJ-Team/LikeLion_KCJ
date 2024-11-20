@@ -454,6 +454,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 546225f607b8a8c499e51dbc55efd1e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dissolveMaterial: {fileID: 2100000, guid: 35ff627a51f624248bac3e0af1709390, type: 2}
+  dissolveTime: 5
+  dissolveParamName: _DissolveAmount
 --- !u!114 &1227895335968784675
 MonoBehaviour:
   m_ObjectHideFlags: 0

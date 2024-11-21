@@ -22,6 +22,7 @@ public class RainBulletAttackState : SkillState
     {
         elapsedTime = 0f;
         lastDamageTime = 0f;
+        SoundManager.Instance.PlaySFX(SFXSoundType.Skill_RainBullet);
     }
 
     public override void UpdateState()

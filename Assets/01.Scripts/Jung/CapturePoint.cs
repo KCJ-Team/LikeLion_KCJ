@@ -10,7 +10,7 @@ public class CapturePoint : MonoBehaviour
 
     public LayerMask playerLayer; // 플레이어 레이어 설정
     public LayerMask enemyLayer; // 적 레이어 설정
-    public float detectionRadius = 5f; // 감지 반경
+    public Vector3 boxSize = new Vector3(5f, 5f, 5f); // 감지 박스 크기
 
     private bool playerInZone = false;
     private int enemyCount = 0;
@@ -31,12 +31,11 @@ public class CapturePoint : MonoBehaviour
         if (playerInZone && enemyCount == 0)
         {
             captureTime -= Time.deltaTime;
-            //captureTime = Mathf.Clamp(captureTime, 0f, 10f);
 
             // 슬라이더 값 갱신
             CPSlider.value = captureTime;
 
-            if (captureTime == 0)
+            if (captureTime <= 0)
             {
                 Debug.Log("Point Captured!");
             }
@@ -45,12 +44,12 @@ public class CapturePoint : MonoBehaviour
 
     void DetectEntities()
     {
-        // 현재 반경 내의 모든 플레이어 감지
-        Collider[] playerColliders = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
+        // 현재 박스 영역 내의 모든 플레이어 감지
+        Collider[] playerColliders = Physics.OverlapBox(transform.position, boxSize / 2, Quaternion.identity, playerLayer);
         playerInZone = playerColliders.Length > 0; // 플레이어가 있으면 true, 없으면 false
 
-        // 현재 반경 내의 모든 적 감지
-        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, detectionRadius, enemyLayer);
+        // 현재 박스 영역 내의 모든 적 감지
+        Collider[] enemyColliders = Physics.OverlapBox(transform.position, boxSize / 2, Quaternion.identity, enemyLayer);
         enemyCount = enemyColliders.Length; // 적의 수를 업데이트
     }
 
@@ -58,6 +57,6 @@ public class CapturePoint : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.DrawWireCube(transform.position, boxSize);
     }
 }

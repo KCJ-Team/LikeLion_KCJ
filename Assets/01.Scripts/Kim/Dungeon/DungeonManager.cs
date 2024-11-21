@@ -12,6 +12,7 @@ public class DungeonManager : SceneSingleton<DungeonManager>
     private WeaponManager _weaponManager;
     private PlayerCharacterController _characterController;
     public Spawner _Spawner;
+    public bool isPlayerDead;
 
     [Header("던전에서 관리할 플레이어의 정보들")]
     public float hp;
@@ -20,8 +21,7 @@ public class DungeonManager : SceneSingleton<DungeonManager>
     public bool isPossibleLegendWeapon; // 연구실에서 고급 무기 보상을 연구했다면,
 
     [Header("UI MVP 패턴")] 
-    [SerializeField] 
-    public DungeonUIView dungeonUIView;
+    [SerializeField] public DungeonUIView dungeonUIView;
     public DungeonUIPresenter dungeonUIPresenter;
 
     private void Start()
@@ -35,12 +35,13 @@ public class DungeonManager : SceneSingleton<DungeonManager>
     {
         UpdateAmmo(_weaponManager.GetCurrentAmmo(),_weaponManager.GetMaxAmmo());
         UpdateRemainingMonsters(_Spawner.RemainingMonsters);
-        SetBossSpawned(_Spawner.IsBossSpawned);
+        SetBossTimer((int)_Spawner.RemainingBossTime);
+        SetBossSpawned(_Spawner.IsBossStart);
 
         SetSkillCooldownBySlotNumber(0,_characterController._skillController.GetSkillCooldown(KeyCode.Q));
         SetSkillCooldownBySlotNumber(1,_characterController._skillController.GetSkillCooldown(KeyCode.E));
         SetSkillCooldownBySlotNumber(2,_characterController._skillController.GetSkillCooldown(KeyCode.F));
-        
+        dungeonUIPresenter.SetStats(GameManager.Instance.Player.GetComponent<PlayerHealth>().CurrentHealth,playerData.AttackPower ,playerData.Defense);
     }
 
     public void SetStats(float newHp, float newDefence, float newAttack)
@@ -66,6 +67,11 @@ public class DungeonManager : SceneSingleton<DungeonManager>
     public void SetBossSpawned(bool isSpawned)
     {
         dungeonUIPresenter.SetBossSpawned(isSpawned);
+    }
+
+    public void SetBossTimer(int remaining)
+    {
+        dungeonUIPresenter.SetBossTimer(remaining);
     }
 
     public void SetSkillCooldownBySlotNumber(int slotNum, float coolDown)

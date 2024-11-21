@@ -8,8 +8,8 @@ public class PlayerHealth : Health
     
     protected override void Start()
     {
-        base.Start();
         _playerData = GameManager.Instance.playerData;
         maxHealth = _playerData.BaseHP;
+        base.Start();
     }
 }

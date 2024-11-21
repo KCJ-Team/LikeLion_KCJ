@@ -15,6 +15,9 @@ public class MissileBombing : Skill
     public void CreateEffectWithDamage(Vector3 targetPosition)
     {
         GameObject effect = Instantiate(EffectPrefab, targetPosition, Quaternion.identity);
+        
+        SoundManager.Instance.PlaySFX(SFXSoundType.Skill_Bomb);
+        
         DamageArea damageArea = effect.GetComponent<DamageArea>();
         damageArea.Initialize(damage, damageRadius, damageInterval, damageDuration, targetLayer);
     }

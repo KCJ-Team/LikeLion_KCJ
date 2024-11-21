@@ -3529,7 +3529,7 @@ MonoBehaviour:
   attackType: 1
   attackRange: 3
   attackCooldown: 3
-  moveSpeed: 5
+  moveSpeed: 2.5
   meleeAttackPrefab: {fileID: 7708867684429993673, guid: 2a7b4db5f9696454ca322534a1dca0fe,
     type: 3}
   meleeAttackOffset: {x: 0, y: 0, z: 0}

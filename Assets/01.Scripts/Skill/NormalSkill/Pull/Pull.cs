@@ -34,6 +34,8 @@ public class Pull : Skill
         
         GameObject projectile = Instantiate(ProjectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
         
+        SoundManager.Instance.PlaySFX(SFXSoundType.Skill_Pull);
+        
         PullProjectile pr = projectile.GetComponent<PullProjectile>();
             
         if (projectile != null)

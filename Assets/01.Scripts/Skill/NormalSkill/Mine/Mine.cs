@@ -9,9 +9,10 @@ public class Mine : Skill
 
     public void MineInstall(Vector3 targetPosition)
     {
-        // 전달받은 위치에 터렛 생성
+        
         currentMine = Instantiate(MinePrefab, targetPosition, Quaternion.identity);
-
+        SoundManager.Instance.PlaySFX(SFXSoundType.Skill_Mine);
+        
         Vector3 direction = Vector3.zero;
         
         Projectile pr = currentMine.GetComponent<Projectile>();

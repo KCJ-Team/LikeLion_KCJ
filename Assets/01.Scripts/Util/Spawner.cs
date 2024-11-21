@@ -14,8 +14,9 @@ public class Spawner : MonoBehaviour
     public float bossSpawnTime = 60f; // 보스 생성까지 남은 시간 (초)
 
     private int spawnedMonsters = 0;
-    private float countdown;
+    public float countdown = 1;
     private bool bossSpawned = false;
+    private bool bossStart = false;
     private GameObject bossMonster;
 
     // 외부 접근을 위한 프로퍼티
@@ -23,6 +24,7 @@ public class Spawner : MonoBehaviour
     public float RemainingBossTime => countdown;
     public bool IsBossSpawned => bossSpawned;
     public GameObject BossMonster => bossMonster;
+    public bool IsBossStart => bossStart;
 
     void Start()
     {
@@ -31,6 +33,10 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
+        if (bossStart && countdown > 0)
+        {
+            countdown -= Time.deltaTime;
+        }
         
     }
 
@@ -47,7 +53,12 @@ public class Spawner : MonoBehaviour
 
             if (RemainingMonsters == 0 && !bossSpawned)
             {
-                Invoke("SpawnBoss",bossSpawnTime);
+                bossStart = true;
+                
+                if (bossStart)
+                {
+                    Invoke("SpawnBoss", bossSpawnTime);
+                }
             }
         }
     }

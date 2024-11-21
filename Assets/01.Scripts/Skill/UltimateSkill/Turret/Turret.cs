@@ -13,7 +13,7 @@ public class Turret : Skill
         Vector3 direction = Vector3.zero;
         
         currentTurret = Instantiate(TurretPrefab, targetPosition, Quaternion.identity);
-        SoundManager.Instance.PlaySFX(SFXSoundType.Skill_Turret);
+        SoundManager.Instance.PlaySFX(SFXSoundType.Buff);
 
         TurretObject pr = currentTurret.GetComponent<TurretObject>();
         if (currentTurret != null)

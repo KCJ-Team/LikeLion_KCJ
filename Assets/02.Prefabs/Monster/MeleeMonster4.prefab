@@ -468,8 +468,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 3, z: 2}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 5, y: 6.2790904, z: 2}
+  m_Center: {x: 0, y: 2.6395452, z: 0}
 --- !u!54 &2221665341355822692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -489,7 +489,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 320
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -577,6 +577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c2c1d301f60564aa6ab9da267b413c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BloodEffect: {fileID: 3548588485384254792, guid: 2f9e7dc163581394da1e00b561eed65d,
+    type: 3}
 --- !u!114 &697545302368775105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,7 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c375b385ea78f448514a17b49dd07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 500
   currentHealth: 0
   IsDead: 0
   OnHealthChanged:

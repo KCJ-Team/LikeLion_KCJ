@@ -23,6 +23,6 @@ MonoBehaviour:
   weaponType: 4
   baseDamage: 20
   attackSpeed: 1
-  Ammo: 10
+  Ammo: 7
   projectilePrefab: {fileID: 5938167112633497377, guid: d0eaf85ff56d0c64fb405794ea432135,
     type: 3}

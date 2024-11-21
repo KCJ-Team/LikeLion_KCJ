@@ -46,11 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   cooldown: 15
-  duration: 3
+  duration: 1.5
   radius: 5
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  skillEffect: {fileID: 0}
+  skillEffect: {fileID: 6597932298756112774, guid: 8141d18bc44ff6c40a68c70358ea3121,
+    type: 3}
+  effectParent: {fileID: 0}
   animator: {fileID: 0}
   animationTrigger: RainBullet

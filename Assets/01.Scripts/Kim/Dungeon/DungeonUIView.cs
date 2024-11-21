@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,8 @@ public class DungeonUIView : MonoBehaviour
     public GameObject panelBossSpawned;
 
     public Button LobbyBtn;
+    public Button LobbyBtn2;
+    public GameObject Died;
 
     [FormerlySerializedAs("textCooltime")] [Header("Skills")] 
     public Text[] textCooltimes;
@@ -29,8 +32,21 @@ public class DungeonUIView : MonoBehaviour
     private void Start()
     {
         LobbyBtn.onClick.AddListener(() => GameSceneDataManager.Instance.LoadScene("Lobby"));
+        LobbyBtn2.onClick.AddListener(() => GameSceneDataManager.Instance.LoadScene("Lobby"));
     }
-    
+
+    public void Update()
+    {
+        if (GameManager.Instance.Player == null)
+        {
+            Died.SetActive(true);
+        }
+        else
+        {
+            Died.SetActive(false);
+        }
+    }
+
     public void UpdateStats()
     {
         hpSlider.DOValue(DungeonManager.Instance.hp, 0.5f).OnUpdate(() =>

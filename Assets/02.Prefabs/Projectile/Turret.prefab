@@ -286,7 +286,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   detectionRadius: 10
-  attackInterval: 2
+  attackInterval: 1
   projectilePrefab: {fileID: 5938167112633497377, guid: f51cb8d3740fe924e9570be93b24f5e3,
     type: 3}
   firePoint: {fileID: 1507067115033748950}

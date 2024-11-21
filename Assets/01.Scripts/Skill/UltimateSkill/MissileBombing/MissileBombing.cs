@@ -14,6 +14,7 @@ public class MissileBombing : Skill
 
     public void CreateEffectWithDamage(Vector3 targetPosition)
     {
+        Debug.Log("미사일");
         GameObject effect = Instantiate(EffectPrefab, targetPosition, Quaternion.identity);
         
         SoundManager.Instance.PlaySFX(SFXSoundType.Skill_Bomb);

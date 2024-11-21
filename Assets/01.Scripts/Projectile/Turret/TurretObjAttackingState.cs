@@ -1,3 +1,4 @@
+using PlayerInfo;
 using UnityEngine;
 
 public class TurretObjAttackingState : ProjectileState
@@ -46,6 +47,7 @@ public class TurretObjAttackingState : ProjectileState
 
     private void Attack(Vector3 direction)
     {
+        SoundManager.Instance.WeaponSound(PlayerWeaponType.Pistol);
         turret.FireProjectile(direction);
     }
 

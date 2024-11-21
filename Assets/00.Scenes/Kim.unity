@@ -2669,6 +2669,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c2c1d301f60564aa6ab9da267b413c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BloodEffect: {fileID: 0}
+--- !u!1001 &155056431
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 287195322317940676, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: sfxClips._serializedList.Array.data[8].Value
+      value: 
+      objectReference: {fileID: 8300000, guid: 0255c679719974f4b9757d0c7d4f2627, type: 3}
+    - target: {fileID: 287195322317940676, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: sfxClips._serializedList.Array.data[9].Value
+      value: 
+      objectReference: {fileID: 8300000, guid: 48283adefda01514e851c40517a63d59, type: 3}
+    - target: {fileID: 6632281644060706811, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_Name
+      value: SoundManager 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032861196218148932, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032861196218148932, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032861196218148932, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032861196218148932, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032861196218148932, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032861196218148932, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032861196218148932, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032861196218148932, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032861196218148932, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032861196218148932, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 95d0eb1584532024e8b7ad59fe748455, type: 3}
 --- !u!1 &155522611
 GameObject:
   m_ObjectHideFlags: 0
@@ -3515,6 +3594,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 59839665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &973384546
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 594325100295629049, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_Name
+      value: MeleeMonster
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313995718564088408, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313995718564088408, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313995718564088408, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313995718564088408, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313995718564088408, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313995718564088408, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313995718564088408, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313995718564088408, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313995718564088408, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313995718564088408, guid: d51859dabce85a844856e049e03d2e94,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d51859dabce85a844856e049e03d2e94, type: 3}
 --- !u!1 &992483491
 GameObject:
   m_ObjectHideFlags: 0
@@ -4309,6 +4456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c2c1d301f60564aa6ab9da267b413c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BloodEffect: {fileID: 0}
 --- !u!136 &1342126536
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4885,6 +5033,7 @@ MonoBehaviour:
   BossSpawnPoints: {fileID: 1980072701}
   totalMonsters: 5
   bossSpawnTime: 10
+  countdown: 1
 --- !u!4 &2046113694
 Transform:
   m_ObjectHideFlags: 0
@@ -9324,3 +9473,5 @@ SceneRoots:
   - {fileID: 3810915}
   - {fileID: 2318604958431265091}
   - {fileID: 109463400}
+  - {fileID: 155056431}
+  - {fileID: 973384546}

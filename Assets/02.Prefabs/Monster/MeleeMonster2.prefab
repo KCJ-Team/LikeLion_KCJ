@@ -809,7 +809,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 320
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -897,6 +897,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c2c1d301f60564aa6ab9da267b413c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BloodEffect: {fileID: 3548588485384254792, guid: 2f9e7dc163581394da1e00b561eed65d,
+    type: 3}
 --- !u!114 &3508425062881314564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -909,7 +911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c375b385ea78f448514a17b49dd07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 500
   currentHealth: 0
   IsDead: 0
   OnHealthChanged:
@@ -940,8 +942,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2.4510584, z: 1.9500432}
-  m_Center: {x: 0, y: 1.2255292, z: -0.06300617}
+  m_Size: {x: 2, y: 3.8949313, z: 1.9500433}
+  m_Center: {x: 0, y: 1.9474657, z: -0.06300621}
 --- !u!1 &7923431643084346031
 GameObject:
   m_ObjectHideFlags: 0

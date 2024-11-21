@@ -128,20 +128,26 @@ public class BuildingManager : SceneSingleton<BuildingManager>
     // 빌딩 업그레이드에 필요한 자원을 확인하는 메서드
     public bool CanUpgradeBuilding(BaseBuilding building)
     {
-        BuildingData buildingData = building.GetBuildingData();
-        float multiplier = building.CurrentMultiplier; // 레벨에 따른 배율 적용
+        // 자원이 업그레이드가 가능할떄, 충분할떄 현재 레벨을 확인해야한다.. 
+        if (building.GetBuilding().CurrentLevel < building.GetBuildingData().maxLevel)
+        {
+            BuildingData buildingData = building.GetBuildingData();
+            float multiplier = building.CurrentMultiplier; // 레벨에 따른 배율 적용
 
-        // 멀티플라이어가 적용된 업그레이드 비용 계산
-        int energyCost = (int)(buildingData.baseCostEnergy * multiplier);
-        int foodCost = (int)(buildingData.baseCostFood * multiplier);
-        int fuelCost = (int)(buildingData.baseCostFuel * multiplier);
-        int workforceCost = (int)(buildingData.baseCostWorkforce * multiplier);
+            // 멀티플라이어가 적용된 업그레이드 비용 계산
+            int energyCost = (int)(buildingData.baseCostEnergy * multiplier);
+            int foodCost = (int)(buildingData.baseCostFood * multiplier);
+            int fuelCost = (int)(buildingData.baseCostFuel * multiplier);
+            int workforceCost = (int)(buildingData.baseCostWorkforce * multiplier);
 
-        // 자원이 충분한지 검사
-        return GameResourceManager.Instance.GetResourceAmount(ResourceType.Energy) >= energyCost &&
-               GameResourceManager.Instance.GetResourceAmount(ResourceType.Food) >= foodCost &&
-               GameResourceManager.Instance.GetResourceAmount(ResourceType.Fuel) >= fuelCost &&
-               GameResourceManager.Instance.GetResourceAmount(ResourceType.Workforce) >= workforceCost;
+            // 자원이 충분한지 검사
+            return GameResourceManager.Instance.GetResourceAmount(ResourceType.Energy) >= energyCost &&
+                   GameResourceManager.Instance.GetResourceAmount(ResourceType.Food) >= foodCost &&
+                   GameResourceManager.Instance.GetResourceAmount(ResourceType.Fuel) >= fuelCost &&
+                   GameResourceManager.Instance.GetResourceAmount(ResourceType.Workforce) >= workforceCost;
+        }
+
+        return false;
     }
 
     // 빌딩의 레벨을 Get

@@ -84,6 +84,10 @@ public class PauseMenuManager : MonoBehaviour
                 Debug.LogWarning("No specific save logic for this scene. Implement logic for scene: " + currentSceneName);
                 break;
         }
+        
+        canvasPauseMenu.SetActive(false);
+        
+        Time.timeScale = 1; // 게임 재개
     }
 
     // Save and Main Title 버튼 클릭 메서드

@@ -5,23 +5,23 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/00.Scenes/ServerTest.unity
     guid: ede385ab16793a14d990233f314e6ed5
-  - enabled: 1
+  - enabled: 0
     path: Assets/00.Scenes/Kim.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/00.Scenes/Loading.unity
-    guid: 75447baf2df48384c810a790b9dda37b
-  - enabled: 1
     path: Assets/00.Scenes/MainMenu.unity
     guid: c861b60f05ec4ba40b19ed73c85b7913
+  - enabled: 1
+    path: Assets/00.Scenes/Loading.unity
+    guid: 75447baf2df48384c810a790b9dda37b
   - enabled: 1
     path: Assets/00.Scenes/Lobby.unity
     guid: ffae5535be8b3ce40b5dca6ee07df94b
   - enabled: 1
     path: Assets/00.Scenes/Map_Elimination.unity
-    guid: 70facf48a1308234ca80a825b3f845a3
+    guid: 6ec122f881d50d347953b4ceb4ca1d81
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

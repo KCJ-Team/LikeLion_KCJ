@@ -59,35 +59,48 @@ public class InventoryService
             // 인벤토리 테이블에 카드를 추가했으면 곧바로 가지고 와서, 
             // 전체 인벤토리를 가져옴
             var inventoryList = dbConnection.Table<InventoryModel>().ToList();
+            if (inventoryList == null || inventoryList.Count == 0)
+            {
+                Debug.LogError("No inventory data found in database.");
+            }
             
-            // 기존 인벤토리, 장비창 초기화
+            // // 기존 인벤토리, 장비창 초기화
             PlayerData playerData = MainMenuManager.Instance.playerData;
             playerData.inventory.Clear();
             playerData.equipment.Clear();
             
-            Debug.Log("Player inventory cleared.");
-
-            int i = 0;
+            Debug.Log("플레이어 데이터의 인벤토리, 장비 cleared.");
             
-            // 각 InventoryModel을 Card로 변환하고 플레이어 인벤토리에 추가
-            foreach (var inventoryItem in inventoryList) // 정해진 갯수만큼 돌아야하는데
+            int i = 0;
+            //
+            // // 각 InventoryModel을 Card로 변환하고 플레이어 인벤토리에 추가
+            foreach (var inventoryItem in inventoryList)
             {
                 i++;
                 
-                // CardObject를 Card로 변환
+                // CardObject 조회
                 CardObject cardObject = cardDatabase.CardObjects[inventoryItem.InventoryId];
-                if (cardObject != null)
+                if (cardObject == null)
                 {
-                    Card card = new Card(cardObject);
-
-                    bool result = playerData.inventory.AddItem(card, 1); // 수량은 1로 설정
-                    Debug.Log($"{result} 결과! Added card {cardObject.name} (ID: {card.Id}) to player inventory.");
-                    
-                    Debug.Log($"{i}번 찍히고 있음");
+                    Debug.LogError($"CardObject with ID {inventoryItem.InventoryId} is null in CardDatabase.");
+                    continue;
                 }
-                else
+
+                try
                 {
-                    Debug.LogWarning($"CardObject with ID {inventoryItem.InventoryId} not found in CardDatabase.");
+                    // CardObject를 Card로 변환..? 
+                    Card card = cardObject.CreateCard();
+                    
+                    // 플레이어 인벤토리에 추가
+                    bool result = playerData.inventory.AddItem(card, 1);
+                    if (!result)
+                    {
+                        Debug.LogError($"Failed to add card {cardObject.name} (ID: {card.Id}) to player inventory.");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Error processing card with ID {inventoryItem.InventoryId}: {e.Message}\n{e.StackTrace}");
                 }
             }
             

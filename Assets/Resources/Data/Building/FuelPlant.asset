@@ -23,6 +23,6 @@ MonoBehaviour:
   maxLevel: 2
   productionOutput: 5
   description: "\uD0D0\uD5D8 \uD560 \uC218 \uC788\uB294 \uC5F0\uB8CC\uC0DD\uC0B0"
-  level1ImagePath: Data/Building/FuelPlant_1
-  level2ImagePath: Data/Building/FuelPlant_2
+  level1ImagePath: Data/Building/Refinery_1
+  level2ImagePath: Data/Building/Refinery_2
   resourceType: 4

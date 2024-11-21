@@ -230,6 +230,36 @@ public class PlayerService
         }
     }
     
+    public bool UpdatePlayerHp(string playerId, float hp)
+    {
+        try
+        {
+            // PlayerId로 플레이어 데이터를 가져옴
+            var playerModel = dbConnection.Table<PlayerModel>().FirstOrDefault(p => p.PlayerId == playerId);
+            if (playerModel != null)
+            {
+                // HP, 스트레스, 공격력, 방어력을 업데이트
+                playerModel.PlayerHp = hp;
+  
+                // 데이터베이스에 업데이트
+                dbConnection.Update(playerModel);
+
+                Debug.Log("Player stats updated successfully.");
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning("Player not found for updating stats.");
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to update player stats: " + ex.Message);
+            return false;
+        }
+    }
+    
     public bool UpdateTechLearnedStatus(string playerId, int tech01IsLearned, int tech02IsLearned, int tech03IsLearned)
     {
         try

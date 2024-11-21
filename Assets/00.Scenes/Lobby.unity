@@ -36346,27 +36346,27 @@ MonoBehaviour:
     - Key: 1
       Value:
         resourceData: {fileID: 11400000, guid: 148d5d4ae6ba14f4cbac2f9849aa7c04, type: 2}
-        currentAmount: 100
+        currentAmount: 400
     - Key: 2
       Value:
         resourceData: {fileID: 11400000, guid: 5b080c783f978734382df8005a545c50, type: 2}
-        currentAmount: 100
+        currentAmount: 400
     - Key: 3
       Value:
         resourceData: {fileID: 11400000, guid: e78df6a78b67c984aa549ab491c269cd, type: 2}
-        currentAmount: 100
+        currentAmount: 400
     - Key: 4
       Value:
         resourceData: {fileID: 11400000, guid: 15ecc87f8fbbdb741bc23d0da82c635b, type: 2}
-        currentAmount: 100
+        currentAmount: 400
     - Key: 5
       Value:
         resourceData: {fileID: 11400000, guid: a3d061864fbd1f94d9cbeaf34058fe31, type: 2}
-        currentAmount: 100
+        currentAmount: 400
     - Key: 6
       Value:
         resourceData: {fileID: 11400000, guid: 84fe4482de0ca934d91ed9394d35d72c, type: 2}
-        currentAmount: 100
+        currentAmount: 400
   gameResourceUIView: {fileID: 7568496791694088422}
 --- !u!1 &3561764294871468504
 GameObject:

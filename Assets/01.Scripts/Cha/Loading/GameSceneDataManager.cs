@@ -254,15 +254,22 @@ public class GameSceneDataManager : MonoBehaviour
         
         Debug.Log("던전 진입, 던전 데이터 로드 완료.");
     }
-
-    // TODO : 던전 게임 종료후 로비씬으로 넘어가기전 저장할 데이터 
+    
     public void SaveDungeonDataInDB()
     {
-        // 플레이어 hp, attack, defense??
+        // 플레이어 hp
+        PlayerService playerService = new PlayerService();
+        string playerId = playerService.GetPlayer().PlayerId;
         
+        float hp = DungeonManager.Instance.hp;
+        
+        bool result = playerService.UpdatePlayerHp(playerId, hp);
+        if (result)
+        {
+            Debug.Log("던전 종료 저장, 플레이어 hp 저장 완료.");
+        }
     }
-
-    // TODO : Clear쪽에서 불러야함. 
+    
     public void DungeonClearReward()
     { 
         // 던전보상 : 스트레스 지수 20( 다 DB에 저장하면 됨)

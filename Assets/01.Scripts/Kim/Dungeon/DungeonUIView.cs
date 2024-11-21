@@ -18,12 +18,19 @@ public class DungeonUIView : MonoBehaviour
 
     [Header("Monster Wave")] 
     public Text textRemaingMonster;
+    public Text textRemaingBossTime;
     public GameObject panelBossSpawned;
+
+    public Button LobbyBtn;
 
     [FormerlySerializedAs("textCooltime")] [Header("Skills")] 
     public Text[] textCooltimes;
     
-    // TODO : 던전매니저의 hp, attack, defense 실시간 관리할건지? 
+    private void Start()
+    {
+        LobbyBtn.onClick.AddListener(() => GameSceneDataManager.Instance.LoadScene("Lobby"));
+    }
+    
     public void UpdateStats()
     {
         hpSlider.DOValue(DungeonManager.Instance.hp, 0.5f).OnUpdate(() =>
@@ -50,6 +57,20 @@ public class DungeonUIView : MonoBehaviour
         panelBossSpawned.SetActive(isSpawned);
     }
 
+    public void UpdateRemainingBossTimer(int remaining)
+    {
+        textRemaingBossTime.text = $"{remaining}";
+
+        if (remaining == 0)
+        {
+            textRemaingBossTime.text = "SPAWN";
+        }
+        else
+        {
+            textRemaingBossTime.text = $"{remaining}";
+        }
+    }
+
     public void UpdateSkillCooldowns(int slotNum, int cooldowns)
     {
         if (cooldowns == 0)
@@ -61,5 +82,6 @@ public class DungeonUIView : MonoBehaviour
             textCooltimes[slotNum].text = $"{cooldowns}";
         }
     }
+
     
 }

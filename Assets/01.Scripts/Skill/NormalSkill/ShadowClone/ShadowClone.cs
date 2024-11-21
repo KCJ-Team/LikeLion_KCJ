@@ -91,6 +91,8 @@ public class ShadowClone : Skill
                 
                 cloneObject = Instantiate(player, spawnPosition, player.transform.rotation);
                 
+                SoundManager.Instance.PlaySFX(SFXSoundType.Skill_Shadow);
+                
                 RemoveUnnecessaryComponents(cloneObject);
                 
                 cloneAnimator = cloneObject.GetComponent<Animator>();

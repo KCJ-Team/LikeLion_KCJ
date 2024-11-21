@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using PlayerInfo;
 using Random = UnityEngine.Random;
 
 public class WeaponManager : MonoBehaviour
@@ -155,6 +156,22 @@ public class WeaponManager : MonoBehaviour
         else
         {
             FireSingleProjectile(direction);
+        }
+
+        switch (playerData.currentWeapon.weaponType)
+        {
+            case WeaponType.Pistol:
+                SoundManager.Instance.WeaponSound(PlayerWeaponType.Pistol);
+                break;
+            case WeaponType.Rifle:
+                SoundManager.Instance.WeaponSound(PlayerWeaponType.Assault);
+                break;
+            case WeaponType.ShotGun:
+                SoundManager.Instance.WeaponSound(PlayerWeaponType.Shotgun);
+                break;
+            case WeaponType.SniperRifle:
+                SoundManager.Instance.WeaponSound(PlayerWeaponType.Sniper);
+                break;
         }
     }
     

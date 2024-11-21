@@ -71,6 +71,8 @@ public class PlayerCharacterController : MonoBehaviour
         _animationController.TriggerDeathAnimation();
         _skillController.CleanupSkills();
         DisableComponents();
+        //DungeonManager.Instance.
+        Destroy(gameObject,5f);
     }
 
     private void DisableComponents()

@@ -37,6 +37,11 @@ public class DungeonUIPresenter
         uiView.UpdateBossSpawned(isSpawned);
     }
 
+    public void SetBossTimer(int remaining)
+    {
+        uiView.UpdateRemainingBossTimer(remaining);
+    }
+
     public void SetSkillCooldownBySlotNumber(int slotNum, float coolDown)
     {
         uiView.UpdateSkillCooldowns(slotNum, (int)coolDown);

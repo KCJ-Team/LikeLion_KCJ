@@ -37,6 +37,8 @@ public class KnockBack : Skill
         {
             projectile.Initialize(direction, damage);
         }
+        
+        SoundManager.Instance.PlaySFX(SFXSoundType.Skill_KnockBack);
             
         Destroy(projectile, projectileLifetime);
     }

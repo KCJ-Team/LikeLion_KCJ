@@ -21,7 +21,16 @@ public class BuildingPopupData : IPopupData
         
         Title = buildingBase.GetBuildingData().name;
         Description = buildingBase.GetBuildingData().description;
-        CurrentLevelText = $"Lv.{buildingBase.GetBuilding().CurrentLevel}";
+        
+        // 11.21 현재 레벨이 max라면 max레벨로 보여주기 
+        if (buildingBase.GetBuilding().CurrentLevel == buildingBase.GetBuildingData().maxLevel)
+        {
+            CurrentLevelText = $"Lv.Max";
+        }
+        else
+        {
+            CurrentLevelText = $"Lv.{buildingBase.GetBuilding().CurrentLevel}";
+        }
         
         float multiplier = buildingBase.CurrentMultiplier; // 현재 레벨에 따른 배율
 

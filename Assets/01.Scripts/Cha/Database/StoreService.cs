@@ -72,7 +72,7 @@ public class StoreService
                 }
                 else
                 {
-                    Debug.LogWarning($"CardObject with ID {store.StoreId} not found in CardDatabase.");
+                    Debug.LogError($"CardObject with ID {store.StoreId} not found in CardDatabase.");
                 }
             }
         }

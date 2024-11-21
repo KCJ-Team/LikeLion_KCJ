@@ -141,7 +141,9 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     if (hour == 0 && minute == 0)
                     {
                         hasConsumedAt21 = false; // 자정에 플래그 초기화
-                        CheckResourceWarning();
+                        
+                        if (currentDay != 0)
+                            CheckResourceWarning();
                         //hasCheckedAtMidnight = true; // 자정 검사를 완료 표시
                     }
 

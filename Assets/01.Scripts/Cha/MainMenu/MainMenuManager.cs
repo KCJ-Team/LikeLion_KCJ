@@ -26,7 +26,8 @@ public class MainMenuManager : SceneSingleton<MainMenuManager>
 
     private List<GameObject> panels;
 
-    [Header("Buttons")] public Button btnNewGame;
+    [Header("Buttons")] 
+    public Button btnNewGame;
     public Button btnContinue;
     public Button btnSettings;
     public Button btnAboutUs;
@@ -61,6 +62,13 @@ public class MainMenuManager : SceneSingleton<MainMenuManager>
 
         // 플레이어 정보가 저장이 되어있는지를 검사하고 있으면 Continue 버튼 활성화 아님 비활성화
         VisibleContinueButton();
+
+        InitCardDataBase();
+    }
+
+    private void InitCardDataBase()
+    {
+        CardDatabase.InitializeIDs();
     }
 
     /// <summary>

@@ -28,6 +28,7 @@ public class DungeonUIView : MonoBehaviour
 
     [FormerlySerializedAs("textCooltime")] [Header("Skills")] 
     public Text[] textCooltimes;
+    public GameObject[] panelEmptyCooltimes;
     
     private void Start()
     {
@@ -91,13 +92,14 @@ public class DungeonUIView : MonoBehaviour
     {
         if (cooldowns == 0)
         {
+            panelEmptyCooltimes[slotNum].SetActive(false);
             textCooltimes[slotNum].text = null;
         }
         else
         {
+            // hyuna Cooltime 패널 보여주기
+            panelEmptyCooltimes[slotNum].SetActive(true);
             textCooltimes[slotNum].text = $"{cooldowns}";
         }
     }
-
-    
 }

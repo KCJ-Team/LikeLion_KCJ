@@ -7807,7 +7807,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 385dce3fc9f7d434cb640e4d4d497263, type: 3}
-    m_FontSize: 75
+    m_FontSize: 68
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 4
@@ -7818,7 +7818,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SCI-FI GAME GUI
+  m_Text: Frontiers Of Mars
 --- !u!1 &2761946894459526187
 GameObject:
   m_ObjectHideFlags: 0
@@ -10570,7 +10570,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 514.3, y: 133.1}
+  m_SizeDelta: {x: 601.84, y: 133.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5239265619598926947
 GameObject:

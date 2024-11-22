@@ -28,16 +28,16 @@ public class BuildingUIPresenter
             var craftingGO = uiElements[BuildingUIType.CraftingButton];
             var craftingButton = craftingGO.GetComponent<Button>();
             craftingButton?.onClick.AddListener(() => OnBuildingPopupButtonClicked(craftingButton));
-            
+
             // BuildingButton 클릭 이벤트 등록
             var buildingGO = uiElements[BuildingUIType.BuildingButton];
             var buildingButton = buildingGO.GetComponent<Button>();
             buildingButton?.onClick.AddListener(() => OnBuildingListButtonClicked(buildingButton));
-            
+
             // 초기 비활성화
             uiElements[BuildingUIType.ProcessImage].SetActive(false);
             uiElements[BuildingUIType.EnableUpgradeImage].SetActive(false);
-            
+
             // UseButton은 선택적으로 처리
             if (uiElements.TryGetValue(BuildingUIType.UseButton, out GameObject useGO) && useGO != null)
             {
@@ -51,7 +51,7 @@ public class BuildingUIPresenter
 
         // 팝업창의 업그레이드 버튼 등록
         uiView.buildUpgradeButton.onClick.AddListener(BuildOrUpgradeBuilding);
-        
+
         // 연구실의 Learn 버튼들 클릭 이벤트 등록
         for (int i = 0; i < uiView.btnLearns.Length; i++)
         {
@@ -60,7 +60,7 @@ public class BuildingUIPresenter
             button.onClick.AddListener(() => OnLearnButtonClicked(index));
         }
     }
-    
+
     // Process Image 처리
     public void ShowProcessIcon(BuildingType buildingType)
     {
@@ -75,6 +75,7 @@ public class BuildingUIPresenter
             {
                 imageComponent = processImage.AddComponent<CanvasGroup>();
             }
+
             imageComponent.alpha = 1f;
 
             var originalPosition = processImage.transform.localPosition;
@@ -82,7 +83,7 @@ public class BuildingUIPresenter
 
             // hyuna sound
             SoundManager.Instance.PlaySFX(SFXSoundType.PositivePop);
-            
+
             // 등장 애니메이션: 크기 팽창
             Sequence sequence = DOTween.Sequence();
             sequence.Append(processImage.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f, 10, 1f)) // 크기 팽창
@@ -104,7 +105,7 @@ public class BuildingUIPresenter
             Debug.LogWarning($"No ProcessImage found for BuildingType: {buildingType}");
         }
     }
-    
+
     // 빌딩 업그레이드 가능시 업그레이드 아이콘 연출
     public void ShowEnableUpgradeIcon(BuildingType buildingType)
     {
@@ -129,15 +130,13 @@ public class BuildingUIPresenter
             canvasGroup.DOFade(0.5f, 0.2f)
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine);
-            
-            Debug.Log($"Upgrade icon for {buildingType} is now visible and animated.");
         }
         else
         {
             Debug.LogWarning($"No EnableUpgradeImage found for BuildingType: {buildingType}");
         }
     }
-    
+
     // 빌딩 업그레이드 했을때 아이콘 사라지게 
     public void HideUpgradeIcon(BuildingType buildingType)
     {
@@ -157,11 +156,11 @@ public class BuildingUIPresenter
                 upgradeIcon.SetActive(false);
                 canvasGroup.alpha = 1f; // 다음 사용을 위해 초기화
             });
-            
+
             // Debug.Log($"Upgrade icon for {buildingType} is now hidden.");
         }
     }
-    
+
     /// 연구 버튼 클릭 시 호출
     private void OnLearnButtonClicked(int techIndex)
     {
@@ -179,7 +178,7 @@ public class BuildingUIPresenter
         // UI 업데이트 => 체크로바꾸기? 
         UpdateLearnButtonUI(techIndex);
     }
-    
+
     private void UpdateLearnButtonUI(int techIndex)
     {
         if (techIndex < 0 || techIndex >= TechManager.Instance.techs.Count)
@@ -238,7 +237,7 @@ public class BuildingUIPresenter
             Debug.LogWarning("BaseBuilding component not found on the parent of the button.");
         }
     }
-    
+
     // 연구실 전용 팝업창 열기
     private void OpenResearchLabPopup(BaseBuilding buildingBase)
     {
@@ -257,7 +256,7 @@ public class BuildingUIPresenter
         for (int i = 0; i < TechManager.Instance.techs.Count; i++)
         {
             Tech tech = TechManager.Instance.techs[i];
-            
+
             if (!tech.isLearned && availableResearchPoints >= tech.techCost)
             {
                 // 연구 가능: objLearn 활성화, imageLearned 비활성화
@@ -298,18 +297,18 @@ public class BuildingUIPresenter
                     BuildingManager.Instance.isRecoveryRoomUsed = true;
 
                     useButton.transform.GetChild(0).GetComponent<Image>().sprite = uiView.iconUnused;
-                    
+
                     Debug.Log("병원 플레이어 사용. HP 회복 시작");
                 }
                 else
                 {
                     BuildingManager.Instance.isRecoveryRoomUsed = false;
-                   
+
                     useButton.transform.GetChild(0).GetComponent<Image>().sprite = uiView.iconUse;
 
                     Debug.Log("병원 플레이어 미사용. HP 회복 스탑");
                 }
-            } 
+            }
             // 오락시설이라면, 플레이어의 Stress 자원을 감소시키는 로직
             else if (buildingBase.GetBuildingData().type == BuildingType.RecreationRoom)
             {
@@ -317,17 +316,17 @@ public class BuildingUIPresenter
                 if (!BuildingManager.Instance.isRecreationRoomUsed)
                 {
                     BuildingManager.Instance.isRecreationRoomUsed = true;
-                  
+
                     useButton.transform.GetChild(0).GetComponent<Image>().sprite = uiView.iconUnused;
-                    
+
                     Debug.Log("오락시설 플레이어 사용. 스트레스 감소 시작");
                 }
                 else
                 {
                     BuildingManager.Instance.isRecreationRoomUsed = false;
-                    
+
                     useButton.transform.GetChild(0).GetComponent<Image>().sprite = uiView.iconUse;
-                    
+
                     Debug.Log("오락시설 플레이어 미사용. 스트레스 감소 스탑");
                 }
             }
@@ -337,7 +336,7 @@ public class BuildingUIPresenter
             Debug.LogWarning("BaseBuilding component not found on the parent of the button.");
         }
     }
-    
+
     // 팝업창 열기 및 콘텐츠 설정
     private void OpenBuildingPopup(BaseBuilding buildingBase)
     {
@@ -403,44 +402,44 @@ public class BuildingUIPresenter
         // BuildingManager를 통해 빌딩 생성 또는 업그레이드
         BaseBuilding building = buildingPopupData.BuildingBase;
 
+        building.IsCreated = true;
         BuildingManager.Instance.BuildOrUpgrade(building);
 
         // isCreated가 false였다면, 이제 생성되었으므로 true로 설정
-        if (!building.IsCreated)
-        {
-            building.IsCreated = true;
-        }
-        
+        //if (!building.IsCreated)
+        //{
+        //}
+
         // 업그레이드 완료 후 업그레이드 아이콘 숨기기
         HideUpgradeIcon(building.GetBuildingData().type);
 
         // 팝업 자동 닫기
         PopupUIManager.Instance.ClosePopup(popup);
     }
-    
+
     public void UpdateProductUIAndImage(BuildingType type, string imagePath, int productionOutput)
     {
         Sprite newSprite = !string.IsNullOrEmpty(imagePath) ? Resources.Load<Sprite>(imagePath) : null;
-        
+
         if (uiView.buildingUIs.ContainsKey(type))
         {
             Button buildingButton = uiView.buildingUIs[type][BuildingUIType.BuildingButton].GetComponent<Button>();
             Image buildingImage = buildingButton.image;
-        
+
             // 이미지 경로가 유효하면 스프라이트 변경, 그렇지 않으면 알파값만 조정
             if (newSprite != null)
             {
                 buildingImage.sprite = newSprite;
             }
-        
+
             // 알파값을 1로 설정하여 완전히 불투명하게 만들기
             Color color = buildingImage.color;
             color.a = 1f;
             buildingImage.color = color;
-        
+
             // 버튼 활성화
             buildingButton.enabled = true;
-            
+
             // Clinic 또는 RecreationRoom 타입이라면 UseButton 활성화
             if ((type == BuildingType.RecoveryRoom || type == BuildingType.RecreationRoom) && buildingButton.enabled)
             {
@@ -454,16 +453,16 @@ public class BuildingUIPresenter
         {
             Debug.LogWarning($"Sprite not found at path: {imagePath} or BuildingType {type} not found in UI view.");
         }
-        
+
         // 빌딩의 크래프팅 버튼 상태 설정
         Button craftingButton = uiView.buildingUIs[type][BuildingUIType.CraftingButton].GetComponent<Button>();
-        
+
         if (craftingButton.gameObject.activeSelf)
         {
             craftingButton.gameObject.SetActive(false);
         }
     }
-    
+
     // Punch 애니메이션 반복
     public void StartBuildingAnimation(BuildingType buildingType)
     {
@@ -482,18 +481,15 @@ public class BuildingUIPresenter
 
             // 랜덤 지연 시간 설정 (1초에서 3초 사이)
             float randomDelay = Random.Range(0.5f, 2f);
-            
+
             // 랜덤 지연 후 애니메이션 시작
             DOVirtual.DelayedCall(randomDelay, () =>
             {
                 rectTransform.DOShakePosition(1f, new Vector3(3f, 0f, 0f), 10, 90, false, true)
                     .SetEase(Ease.InOutSine);
-                
+
                 // hyuna 11.20 sound 추가
                 SoundManager.Instance.PlayUISound(UISoundType.Thick);
-                
-
-                Debug.Log($"Punch animation started for {buildingType} with a delay of {randomDelay} seconds.");
             });
 
             Debug.Log($"Punch animation started for {buildingType}.");

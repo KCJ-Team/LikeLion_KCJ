@@ -34,6 +34,7 @@ public class Level0State : IBuildingState
             
             // 현재 레벨 증가
             building.CurrentLevel++;
+            buildingPrefab.IsCreated = true;
             
             // 연구실이 아니라면
             if (buildingData.type != BuildingType.ResearchLab)

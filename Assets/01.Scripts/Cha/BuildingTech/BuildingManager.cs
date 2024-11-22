@@ -15,12 +15,7 @@ public class BuildingManager : SceneSingleton<BuildingManager>
 
     [Header("특정 빌딩의 UseButton 상태 플래그")] public bool isRecoveryRoomUsed = false; // 병원 UseButton 플래그
     public bool isRecreationRoomUsed = false; // 오락시설 UseButton 플래그
-
-    // 자원 생산 플래그
-    private bool hasProducedAt6AM = false;
-    private bool hasProducedAt6PM = false;
-    private bool hasProducedAt12PM = false; // 12시 자원 생산 플래그
-
+    
     private void Start()
     {
         if (buildingUIPresenter == null)
@@ -53,34 +48,41 @@ public class BuildingManager : SceneSingleton<BuildingManager>
         buildingPrefab.GetStateMachine().Build(buildingPrefab);
     }
 
+    private bool hasProducedAt6AM = false;
+    private bool hasProducedAt12PM = false;
+    private bool hasProducedAt18PM = false;
+    
     // 특정 시간에 자원을 생산하도록 관리
     public void ProduceResourcesAtScheduledTimes(int hour)
     {
         if (hour == 6 && !hasProducedAt6AM)
         {
             ProduceAllResources();
-            hasProducedAt6AM = true;
-            hasProducedAt6PM = false; // 오후 생산 플래그 초기화
+            hasProducedAt6AM = true; // 6시 생산 완료 플래그 설정
         }
-        else if (hour == 18 && !hasProducedAt6PM)
+        else if (hour == 18 && !hasProducedAt12PM)
         {
             ProduceAllResources();
-            hasProducedAt6PM = true;
-            hasProducedAt6AM = false; // 다음 날 오전 생산 플래그 초기화
+            hasProducedAt18PM = true; // 18시 생산 완료 플래그 설정
         }
-        else if (hour == 12)
+        else if (hour == 12 && !hasProducedAt18PM)
         {
             ProduceAllResources();
+            hasProducedAt12PM = true; // 12시 생산 완료 플래그 설정
         }
     }
 
     // 모든 빌딩의 자원을 생산하는 메서드
     private void ProduceAllResources()
     {
+        Debug.Log("6시랑 18시, ProduceAllResources()");
+
         foreach (var building in buildings.Values)
         {
             if (building.IsCreated)
             {
+                Debug.Log($"6시랑 18시, ProduceAllResources()_{building.name} is 만들어진 빌딩");
+
                 int productionAmount = building.GetCurrentProductOutput();
 
                 // 만약 현재 빌딩 타입이 병원, 오락시설일때 눌려 있는 상태라면 

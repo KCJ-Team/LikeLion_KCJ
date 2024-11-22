@@ -64,6 +64,7 @@ public class InventoryObject : ScriptableObject
         {
             if (GetSlots[i].card.Id == item.Id)
             {
+                
                 return GetSlots[i];  // 아이템이 발견되면 해당 슬롯 반환
             }
         }

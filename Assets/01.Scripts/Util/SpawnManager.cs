@@ -18,6 +18,8 @@ public class SpawnManager : MonoBehaviour
     [Header("Rewards")]
     public CardObject[] possibleWeapons; 
     public CardObject[] possibleLegendWeapons; 
+    
+    private bool isDungeonCleared = false; // 던전 클리어 상태를 확인하는 플래그
 
     private void Awake()
     {
@@ -30,7 +32,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Update()
     {
-        if (spawner.IsBossSpawned && spawner.BossMonster == null)
+        if (spawner.IsBossSpawned && spawner.BossMonster == null && !isDungeonCleared)
         {
             if (DungeonManager.Instance.isPossibleLegendWeapon)
             {
@@ -40,59 +42,69 @@ public class SpawnManager : MonoBehaviour
             {
                 DungeonClear();
             }
+            
+            isDungeonCleared = true; // 던전 클리어 처리 중인 상태로 변경
+
         }
     }
 
     private IEnumerator SpawnMonsterRoutine()
     {
-        while (!spawner.IsBossSpawned)  // 보스가 생성되지 않은 동안 반복
+        while (!spawner.IsBossSpawned && !isDungeonCleared) // 클리어 상태에서는 실행 중단
         {
-            // 한 번에 5마리씩 생성
             for (int i = 0; i < monstersPerWave; i++)
             {
-                // 아직 생성할 몬스터가 남아있다면 생성
                 if (spawner.RemainingMonsters > 0)
                 {
                     spawner.SpawnMonster();
                 }
             }
 
-            // 10초 대기
             yield return new WaitForSeconds(spawnInterval);
         }
     }
 
     private void DungeonClear()
     {
+        if (isDungeonCleared) return; // 이미 클리어 상태라면 실행하지 않음
+
         dungeonClearPanel.SetActive(true);
-        
+    
         if (possibleWeapons != null && possibleWeapons.Length > 0)
         {
             int randomIndex = UnityEngine.Random.Range(0, possibleWeapons.Length);
             CardObject rewardWeapon = possibleWeapons[randomIndex];
-        
-            // 인벤토리에 무기 추가
-            GameManager.Instance.playerData.inventory.AddItem(new Card(rewardWeapon), 1);
 
+            Card card = rewardWeapon.CreateCard();
+    
+            // 인벤토리에 무기 추가
+            GameManager.Instance.playerData.inventory.AddItem(card, 1);
+            GameManager.Instance.CardDatabase.InitializeIDs();
+        
             GameSceneDataManager.Instance.DungeonClearReward();
         }
     }
+
     
     // hyuna. 레전드 보상 무기
     private void DungeonLegendClear()
     {
+        if (isDungeonCleared) return; // 이미 클리어 상태라면 실행하지 않음
+
         dungeonClearPanel.SetActive(true);
-        
+    
         if (possibleLegendWeapons != null && possibleLegendWeapons.Length > 0)
         {
             int randomIndex = UnityEngine.Random.Range(0, possibleLegendWeapons.Length);
             CardObject rewardWeapon = possibleLegendWeapons[randomIndex];
-        
-            // 인벤토리에 무기 추가
-            GameManager.Instance.playerData.inventory.AddItem(new Card(rewardWeapon), 1);
-            
+
+            Card card = rewardWeapon.CreateCard();
+            GameManager.Instance.playerData.inventory.AddItem(card, 1);
+
+            GameManager.Instance.CardDatabase.InitializeIDs();
+
             GameSceneDataManager.Instance.DungeonClearReward();
-            
+        
             Debug.Log("고급 무기 여부 확인, 고급 무기 제공");
         }
     }

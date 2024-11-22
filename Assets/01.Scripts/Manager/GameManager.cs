@@ -6,6 +6,7 @@ public class GameManager : SceneSingleton<GameManager>
 {
     public GameObject Player;
     public PlayerData playerData;
+    public CardDatabase CardDatabase;
 
     protected override void Awake()
     {

@@ -29,7 +29,10 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
     // icons..
     public Sprite iconPause;
     public Sprite iconPlay;
-
+    
+    private bool hasProducedAt6AM = false;
+    private bool hasProducedAt18PM = false;
+    
     // 플래그: 21시 자원 소비가 하루에 한 번만 실행되도록 제어
     private bool hasConsumedAt21 = false;
 
@@ -99,7 +102,7 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
             {
                 if (!isPaused)
                 {
-                    dayTimer += Time.deltaTime * (enableXSpeed ? gameTimeSetting.xSpeed : 1f);
+                    dayTimer += Time.deltaTime * (enableXSpeed ? gameTimeSetting.xSpeed : 1f); // Time.deltaTime // deltaTime으로 하면 씹힘...
 
                     float totalMinutes = (dayTimer / gameTimeSetting.dayDuration) * 1440;
                     hour = (int)(totalMinutes / 60) % 24;
@@ -116,9 +119,18 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
                     }
 
                     // 6시, 18시에는 자원 생산, 
-                    if (hour == 6 && minute == 0 || hour == 18 && minute == 0)
+                    if (hour == 6 && !hasProducedAt6AM)
                     {
+                        Debug.LogWarning("6시, 자원 생산 시작");
                         BuildingManager.Instance.ProduceResourcesAtScheduledTimes(hour);
+                        hasProducedAt6AM = true;
+                    }
+                    
+                    if (hour == 18 && !hasProducedAt18PM)
+                    {
+                        Debug.LogWarning("18시, 자원 생산 시작");
+                        BuildingManager.Instance.ProduceResourcesAtScheduledTimes(hour);
+                        hasProducedAt18PM = true;
                     }
 
                     if (hour == 12 && minute == 0)
@@ -169,8 +181,6 @@ public class GameTimeManager : SceneSingleton<GameTimeManager>
             currentDay--;
 
             UpdateDayUI();
-
-            // TODO : currentday가 3때부터 d-day 색을 빨갛게 하거나 해야함
 
             if (currentDay == 0)
             {

@@ -21,7 +21,7 @@ MonoBehaviour:
   AttackPower: 50
   Defense: 50
   currentWeapon: {fileID: 11400000, guid: bb46793e81c086346bf1a579568d5682, type: 2}
-  currentQSkill: {fileID: 11400000, guid: ec980ab9a36ee104ba16e3911df66e5a, type: 2}
+  currentQSkill: {fileID: 11400000, guid: 4da2763727fa8b940b1c7db5f0f0b935, type: 2}
   currentESkill: {fileID: 11400000, guid: 477c98f24f1ff934497afdf0d7392461, type: 2}
   currentBuff: {fileID: 11400000, guid: 1fe912be947687240a4b00e9c0519d5a, type: 2}
   inventory: {fileID: 11400000, guid: 71f46ef98d566734ab3e136541e8c918, type: 2}

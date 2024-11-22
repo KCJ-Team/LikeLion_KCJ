@@ -2680,6 +2680,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 287195322317940676, guid: 95d0eb1584532024e8b7ad59fe748455,
         type: 3}
+      propertyPath: sfxClips._serializedList.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 287195322317940676, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: sfxClips._serializedList.Array.data[12].Key
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 287195322317940676, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
       propertyPath: sfxClips._serializedList.Array.data[8].Value
       value: 
       objectReference: {fileID: 8300000, guid: 0255c679719974f4b9757d0c7d4f2627, type: 3}
@@ -2688,6 +2698,11 @@ PrefabInstance:
       propertyPath: sfxClips._serializedList.Array.data[9].Value
       value: 
       objectReference: {fileID: 8300000, guid: 48283adefda01514e851c40517a63d59, type: 3}
+    - target: {fileID: 287195322317940676, guid: 95d0eb1584532024e8b7ad59fe748455,
+        type: 3}
+      propertyPath: sfxClips._serializedList.Array.data[12].Value
+      value: 
+      objectReference: {fileID: 8300000, guid: 57365afabf7d4d8408e3166bc90acba0, type: 3}
     - target: {fileID: 6632281644060706811, guid: 95d0eb1584532024e8b7ad59fe748455,
         type: 3}
       propertyPath: m_Name

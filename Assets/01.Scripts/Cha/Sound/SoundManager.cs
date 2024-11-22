@@ -13,7 +13,7 @@ public enum AudioSourceType
 
 public enum SFXSoundType
 {
-    PositivePop, NegativePop, Skill_Invisibility,Skill_KnockBack, Skill_Mine, Skill_Pull, Skill_Shadow, Skill_BlackHole, Skill_Bomb, Skill_RainBullet, Skill_Turret, Buff
+    PositivePop, NegativePop, Skill_Invisibility,Skill_KnockBack, Skill_Mine, Skill_Pull, Skill_Shadow, Skill_BlackHole, Skill_Bomb, Skill_RainBullet, Skill_Turret, Buff, Mine
 }
 
 public enum BGMSoundType

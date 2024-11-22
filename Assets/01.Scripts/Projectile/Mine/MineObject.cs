@@ -34,7 +34,7 @@ public class MineObject : Projectile
 
             GameObject effectObject = Instantiate(explosionEffect, transform.position, Quaternion.identity);
             GameObject waveObject = Instantiate(WaveEffect, transform.position, Quaternion.identity);
-            
+            SoundManager.Instance.PlaySFX(SFXSoundType.Mine);
             // 일정 시간 후 파괴
             Destroy(gameObject);
         }

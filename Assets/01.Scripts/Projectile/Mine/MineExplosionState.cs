@@ -19,6 +19,7 @@ public class MineExplosionState : ProjectileState
             isExploding = true;
         }
         
+        
         //TODO: 이펙트 집어넣기
     }
 

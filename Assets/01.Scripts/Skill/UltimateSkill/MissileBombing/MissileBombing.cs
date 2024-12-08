@@ -1,30 +1,58 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MissileBombing : Skill
 {
-    [Header("Effect Settings")]
-    [SerializeField] private GameObject EffectPrefab;
-    
-    [Header("Damage Settings")]
-    [SerializeField] private float damageRadius = 5f;     // 데미지를 입히는 범위
-    [SerializeField] private float damageInterval = 0.5f; // 데미지를 주는 간격
-    public float damageDuration = 3f;   // 데미지 지속 시간
-    [SerializeField] private LayerMask targetLayer;       // 데미지를 받을 대상의 레이어
+    private PlayerDecteting playerDecteting;
 
-    public void CreateEffectWithDamage(Vector3 targetPosition)
+    [SerializeField] private int missileCount = 3; // 미사일 개수
+    [SerializeField] private float spawnInterval = 0.5f; // 미사일 생성 간격
+    [SerializeField] private GameObject missilePrefab; // 미사일 프리팹
+
+    private void Awake()
     {
-        Debug.Log("미사일");
-        GameObject effect = Instantiate(EffectPrefab, targetPosition, Quaternion.identity);
+        playerDecteting = GameManager.Instance.Player.GetComponent<PlayerDecteting>();
+    }
+
+    public void FireMissile()
+    {
+        StartCoroutine(SpawnMissilesWithInterval());
+    }
+
+    private IEnumerator SpawnMissilesWithInterval()
+    {
+        for (int i = 0; i < missileCount; i++)
+        {
+            if (playerDecteting.nearestTarget != null)
+            {
+                GameObject spawnedMissile = Instantiate(missilePrefab, transform.position, Quaternion.identity);
+            
+                Vector3 targetPosition = playerDecteting.nearestTarget.transform.position;
+                Vector2 direction = (targetPosition - transform.position).normalized;
+
+                // 회전 계산
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion rotation = Quaternion.Euler(0, 0, angle - 90);
+            
+                spawnedMissile.transform.rotation = rotation;
+            
+                if (spawnedMissile.TryGetComponent<ExplosionProjectile>(out ExplosionProjectile projectile))
+                {
+                    float finalDamage = damage;
+                    projectile.Initialize(direction, finalDamage);
+                }
+            }
+            
+            yield return new WaitForSeconds(spawnInterval);
+        }
         
-        SoundManager.Instance.PlaySFX(SFXSoundType.Skill_Bomb);
-        
-        DamageArea damageArea = effect.GetComponent<DamageArea>();
-        damageArea.Initialize(damage, damageRadius, damageInterval, damageDuration, targetLayer);
+        Destroy(gameObject);
     }
 
     public override SkillState GetInitialState()
     {
-        return new MissilePreparingState(this);
+        return new MissileFiringState(this);
     }
 }

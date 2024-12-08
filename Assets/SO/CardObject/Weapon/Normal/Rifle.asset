@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb8d0de68db3a04a8e2244289c33ad5, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: c7bf45f0ef95bed4491c5809fc6bf484, type: 3}
   characterPrefab: {fileID: 8250591972788044732, guid: 99dbe95059ad20e4c9d2d26bda08f4eb,
     type: 3}
   characterDisplay: {fileID: 3921922232464505208, guid: 1f40ad99d42d0804381a4399e94a8afb,
@@ -23,6 +22,6 @@ MonoBehaviour:
   weaponType: 2
   baseDamage: 8
   attackSpeed: 4
-  Ammo: 20
-  projectilePrefab: {fileID: 5938167112633497377, guid: bc718012c21bdfc48981cc6f1bddbeed,
+  attackRange: 5
+  projectilePrefab: {fileID: 1191633118959278913, guid: 6d48aa53cc5cefc4bbb4634e1220d8bf,
     type: 3}

@@ -27,20 +27,20 @@ public class DungeonManager : SceneSingleton<DungeonManager>
     private void Start()
     {
         _weaponManager = GameManager.Instance.Player.GetComponent<WeaponManager>();
-        _characterController = GameManager.Instance.Player.GetComponent<PlayerCharacterController>();
+        //_characterController = GameManager.Instance.Player.GetComponent<PlayerCharacterController>();
         dungeonUIPresenter = new DungeonUIPresenter(dungeonUIView);
     }
 
     public void Update()
     {
-        UpdateAmmo(_weaponManager.GetCurrentAmmo(),_weaponManager.GetMaxAmmo());
+        //UpdateAmmo(_weaponManager.GetCurrentAmmo(),_weaponManager.GetMaxAmmo());
         UpdateRemainingMonsters(_Spawner.RemainingMonsters);
         SetBossTimer((int)_Spawner.RemainingBossTime);
         SetBossSpawned(_Spawner.IsBossStart);
 
-        SetSkillCooldownBySlotNumber(0,_characterController._skillController.GetSkillCooldown(KeyCode.Q));
-        SetSkillCooldownBySlotNumber(1,_characterController._skillController.GetSkillCooldown(KeyCode.E));
-        SetSkillCooldownBySlotNumber(2,_characterController._skillController.GetSkillCooldown(KeyCode.F));
+        // SetSkillCooldownBySlotNumber(0,_characterController._skillController.GetSkillCooldown(KeyCode.Q));
+        // SetSkillCooldownBySlotNumber(1,_characterController._skillController.GetSkillCooldown(KeyCode.E));
+        // SetSkillCooldownBySlotNumber(2,_characterController._skillController.GetSkillCooldown(KeyCode.F));
         dungeonUIPresenter.SetStats(GameManager.Instance.Player.GetComponent<PlayerHealth>().CurrentHealth,playerData.AttackPower ,playerData.Defense);
     }
 

@@ -8,11 +8,11 @@ public class WeaponCardObject : CardObject
     public WeaponType weaponType;
     
     [SerializeField]
-    private float baseDamage; // 기본 데미지 값
-    public float attackSpeed;
-    public int Ammo;
+    private float baseDamage;   // 기본 데미지 값
+    public float attackSpeed;   // 무기 공격 속도 ex) 1 = 1초에 1번, 2 = 1초에 2번, 0.5 = 1초에 0.5번
+    public float attackRange;   // 무기 사거리 ex) 사거리 안에 들어왔을 때 공격을 시작
     
-    public GameObject projectilePrefab; // 발사체 프리팹 (근접 무기는 null)
+    public GameObject projectilePrefab; // 발사체 프리팹
     
     // 등급에 따른 데미지 계수 설정
     private const float NORMAL_DAMAGE_MULTIPLIER = 1.0f;

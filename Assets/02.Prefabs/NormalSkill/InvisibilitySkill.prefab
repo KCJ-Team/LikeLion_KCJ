@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41488225fa82ac44298160860e246204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   cooldown: 5
-  cloakingMat: {fileID: 2100000, guid: 6ed8008cbeefe974fb6d96c57dfbec90, type: 2}
-  duration: 10
+  duration: 3

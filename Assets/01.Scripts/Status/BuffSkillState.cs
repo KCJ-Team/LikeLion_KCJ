@@ -20,7 +20,7 @@ public class BuffSkillState : SkillState
         // 플레이어의 Status 컴포넌트 가져오기
         targetStatus = GameManager.Instance.Player.GetComponent<Status>();
         
-        SoundManager.Instance.PlaySFX(SFXSoundType.Buff);
+        //SoundManager.Instance.PlaySFX(SFXSoundType.Buff);
     
         if (targetStatus != null)
         {

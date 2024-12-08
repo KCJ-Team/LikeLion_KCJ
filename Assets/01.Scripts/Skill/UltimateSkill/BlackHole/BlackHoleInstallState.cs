@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class BlackHoleInstallState : SkillState
 {
-    private BlackHole _blackHole;
-    private Vector3 targetPosition;
+    private BlackHole blackHole;
     
-    public BlackHoleInstallState(Skill skill, Vector3 target) : base(skill)
+    public BlackHoleInstallState(Skill skill) : base(skill)
     {
-        _blackHole = skill as BlackHole;
-        targetPosition = target;
+        blackHole = skill as BlackHole;
     }
 
     public override void EnterState()
     {
-        _blackHole.BlackHoleInstall(targetPosition);
+        blackHole.BlackHoleInstall();
     }
 
     public override void UpdateState()
     {
-        Object.Destroy(_blackHole.gameObject);
+        
     }
 
     public override void ExitState()

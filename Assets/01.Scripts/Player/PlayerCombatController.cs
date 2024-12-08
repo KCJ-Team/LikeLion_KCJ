@@ -30,7 +30,7 @@ public class PlayerCombatController
     {
         if (Input.GetMouseButton(1) && Input.GetMouseButton(0))
         {
-            _weaponManager.Attack();
+            //_weaponManager.Attack();
         }
     }
 }

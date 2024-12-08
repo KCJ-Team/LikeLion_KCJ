@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb8d0de68db3a04a8e2244289c33ad5, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 0}
   characterPrefab: {fileID: 8250591972788044732, guid: b303f1f7eac193449902642529680f24,
     type: 3}
   characterDisplay: {fileID: 4653492567734856790, guid: c86babe08f621f6409e5ee60abf12454,
@@ -23,6 +22,6 @@ MonoBehaviour:
   weaponType: 4
   baseDamage: 20
   attackSpeed: 1
-  Ammo: 7
-  projectilePrefab: {fileID: 5938167112633497377, guid: d0eaf85ff56d0c64fb405794ea432135,
+  attackRange: 3
+  projectilePrefab: {fileID: 1191633118959278913, guid: 6d48aa53cc5cefc4bbb4634e1220d8bf,
     type: 3}

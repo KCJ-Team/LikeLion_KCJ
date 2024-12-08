@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MineObject : Projectile
@@ -14,10 +15,9 @@ public class MineObject : Projectile
     {
         return new MineExplosionState(this);
     }
-
-    private void OnTriggerEnter(Collider other)
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // 특정 레이어의 물체가 닿았는지 확인
         if (!hasExploded && (targetLayer.value & (1 << other.gameObject.layer)) != 0)
         {
             Explode();
@@ -30,12 +30,11 @@ public class MineObject : Projectile
         {
             hasExploded = true;
             
-            CameraShaking.Instance.OnShakeCamera(0.2f,0.1f);
+            //CameraShaking.Instance.OnShakeCamera(0.2f,0.1f);
 
-            GameObject effectObject = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            GameObject waveObject = Instantiate(WaveEffect, transform.position, Quaternion.identity);
+            // GameObject effectObject = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            // GameObject waveObject = Instantiate(WaveEffect, transform.position, Quaternion.identity);
             
-            // 일정 시간 후 파괴
             Destroy(gameObject);
         }
     }

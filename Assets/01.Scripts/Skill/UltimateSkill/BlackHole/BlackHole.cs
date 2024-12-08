@@ -1,29 +1,47 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class BlackHole : Skill
 {
-    [SerializeField] private GameObject BlackHolePrefab;
-    private GameObject currentBlackHole;
+    private PlayerDecteting playerDecteting;
+    public float spawnRadius;
+    private GameObject currentBlackhole;
     
-    public void BlackHoleInstall(Vector3 targetPosition)
+    [SerializeField] private GameObject blackHolePrefab;
+    
+    private void Awake()
     {
-        // 전달받은 위치에 터렛 생성
-        currentBlackHole = Instantiate(BlackHolePrefab, targetPosition, Quaternion.identity);
-        SoundManager.Instance.PlaySFX(SFXSoundType.Skill_BlackHole);
+        spawnRadius = GameManager.Instance.playerData.currentWeapon.attackRange;
+    }
+    
+    public void BlackHoleInstall()
+    {
+        float angle = Random.Range(0f, 360f);
+        float distance = Random.Range(0f, spawnRadius);
         
-        Vector3 direction = Vector3.zero;
-        Projectile pr = currentBlackHole.GetComponent<Projectile>();
-            
-        if (currentBlackHole != null)
+        float angleRad = angle * Mathf.Deg2Rad;
+        
+        Vector2 spawnPosition = new Vector2(
+            transform.position.x + Mathf.Cos(angleRad) * distance,
+            transform.position.y + Mathf.Sin(angleRad) * distance
+        );
+        
+        currentBlackhole = Instantiate(blackHolePrefab, spawnPosition, Quaternion.identity);
+
+        if (currentBlackhole.TryGetComponent<BlackHoleProjectile>(out BlackHoleProjectile projectile))
         {
-            pr.Initialize(direction, damage);
+            projectile.Initialize(Vector3.zero, damage);
         }
+        
+        Destroy(gameObject);
     }
     
     public override SkillState GetInitialState()
     {
-        return new BlackHolePreparingState(this);
+        return new BlackHoleInstallState(this);
     }
 }

@@ -1,17 +1,15 @@
 using System;
 using UnityEngine;
 
-/// <summary>
-/// 플레이어의 데미지 처리 클래스
-/// </summary>
+// 플레이어의 데미지 처리 클래스
 public class PlayerDamageable : DamageableObject
 {
     // 방어력당 데미지 감소율 (0.005f = 0.5%)
     private const float DEFENSE_REDUCTION_RATE = 0.005f;
 
     private float projectileDamage;
-
-    private void OnTriggerEnter(Collider other)
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
         {
@@ -27,11 +25,9 @@ public class PlayerDamageable : DamageableObject
             TakeDamage(monsterDamageValue.Damage);
         }
     }
-    
+
     public override void TakeDamage(float damage)
     {
-        Debug.Log("데미지 입음");
-        
         if (!IsAlive) return;
 
         // 방어력에 따른 데미지 감소 계산
@@ -51,5 +47,4 @@ public class PlayerDamageable : DamageableObject
             OnDeath();
         }
     }
-    
 }

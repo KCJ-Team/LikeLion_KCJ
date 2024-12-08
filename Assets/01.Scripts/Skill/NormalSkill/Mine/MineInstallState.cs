@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class MineInstallState : SkillState
 {
-    private Mine _mine;
-    private Vector3 targetPosition;
+    private Mine mine;
     
-    public MineInstallState(Skill skill, Vector3 target) : base(skill)
+    public MineInstallState(Skill skill) : base(skill)
     {
-        _mine = skill as Mine;
-        targetPosition = target;
+        mine = skill as Mine;
     }
 
     public override void EnterState()
     {
-        _mine.MineInstall(targetPosition);
+        mine.MineInstall();
     }
 
     public override void UpdateState()
     {
-        Object.Destroy(_mine.gameObject);
+        
     }
 
     public override void ExitState()

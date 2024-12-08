@@ -37,7 +37,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         _movementController = new PlayerMovementController(this, transform, _animator);
         _combatController = new PlayerCombatController(this, _weaponManager);
-        _skillController = new PlayerSkillController(this, playerData);
+        //_skillController = new PlayerSkillController(this, playerData);
         _animationController = new PlayerAnimationController(_animator);
         _inventoryController = new PlayerInventoryController(playerData);
     }
@@ -60,7 +60,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         _movementController.HandleMovement();
         _combatController.HandleCombat();
-        _skillController.HandleSkills();
+        //_skillController.HandleSkills();
         _animationController.UpdateAnimations(_movementController.MovementInfo);
         _inventoryController.HandleInventory();
     }
@@ -69,7 +69,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         _health.IsDead = true;
         _animationController.TriggerDeathAnimation();
-        _skillController.CleanupSkills();
+        //_skillController.CleanupSkills();
         DisableComponents();
         //DungeonManager.Instance.
         Destroy(gameObject,5f);
@@ -95,6 +95,6 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void OnDestroy()
     {
-        _skillController.CleanupSkills();
+        //_skillController.CleanupSkills();
     }
 }

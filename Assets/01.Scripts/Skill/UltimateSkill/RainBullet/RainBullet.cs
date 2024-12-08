@@ -1,33 +1,52 @@
-using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RainBullet : Skill
 {
-    [SerializeField] public float duration = 3f;          
-    [SerializeField] private float radius = 5f;            
-    [SerializeField] private LayerMask targetLayer;
+    public float damageRadius = 5f;      // 데미지를 줄 거리
+    public LayerMask targetLayer;       // 데미지를 받을 레이어
+    public float damageInterval = 0.5f; // 데미지 주기 (초)
+    public float totalDamageDuration = 3f; // 데미지 지속 시간 (초)
     
+    private Collider2D[] targetsInRange;
     
-    [SerializeField] private GameObject skillEffect;   // 스킬 이펙트
-    [SerializeField] private Transform effectParent;   // 이펙트가 생성될 부모 Transform
-    [SerializeField] private Animator animator;        // 애니메이터 컴포넌트
-    
-    [SerializeField] private string animationTrigger = "RainBullet"; // 애니메이션 트리거 이름
-
-    public float Radius => radius;
-    public LayerMask TargetLayer => targetLayer;
-    public Animator SkillAnimator => animator;
-    public GameObject SkillEffect => skillEffect;
-    public Transform EffectParent => effectParent;
-    public string AnimationTrigger => animationTrigger;
-
-    private void Awake()
+    private void Start()
     {
-        animator = GameManager.Instance.Player.GetComponent<Animator>();
-        //effectParent = GameManager.Instance.Player.transform;
+        damageRadius = GameManager.Instance.playerData.currentWeapon.attackRange;
     }
+    
+    public void StartDamageProcess()
+    {
+        StartCoroutine(ApplyDamageOverTime());
+    }
+    
+    private IEnumerator ApplyDamageOverTime()
+    {
+        float elapsedTime = 0f;
 
+        while (elapsedTime < totalDamageDuration)
+        {
+            // 현재 범위 내의 모든 대상 가져오기
+            targetsInRange = Physics2D.OverlapCircleAll(transform.position, damageRadius, targetLayer);
 
+            foreach (var target in targetsInRange)
+            {
+                // 대상의 Health 컴포넌트를 찾아 데미지 적용
+                MonsterDamageable damageable = target.GetComponent<MonsterDamageable>();
+                if (damageable != null)
+                {
+                    damageable.TakeDamage(damage);
+                }
+            }
+
+            elapsedTime += damageInterval; 
+            yield return new WaitForSeconds(damageInterval);
+        }
+        
+        Destroy(gameObject);
+    }
+    
     public override SkillState GetInitialState()
     {
         return new RainBulletAttackState(this, damage);

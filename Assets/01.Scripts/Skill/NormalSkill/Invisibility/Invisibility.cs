@@ -1,94 +1,36 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Invisibility : Skill 
 {
-    [SerializeField] private Material cloakingMat;
-    public float duration = 5f;
-
-    private List<RendererInfo> renderersInfo = new List<RendererInfo>();
-    private bool isInvisible = false;
-    private float remainingDuration;
-
-    private class RendererInfo
+    public float duration;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    
+    private void OnEnable()
     {
-        public SkinnedMeshRenderer Renderer;
-        public Material OriginalMaterial;
-
-        public RendererInfo(SkinnedMeshRenderer renderer, Material originalMaterial)
-        {
-            Renderer = renderer;
-            OriginalMaterial = originalMaterial;
-        }
-    }
-
-    private void Awake()
-    {
-        SkinnedMeshRenderer[] allRenderers = GameManager.Instance.Player.GetComponentsInChildren<SkinnedMeshRenderer>();
-        
-        foreach (SkinnedMeshRenderer renderer in allRenderers)
-        {
-            if (renderer.material != null)
-            {
-                renderersInfo.Add(new RendererInfo(renderer, new Material(renderer.material)));
-            }
-        }
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-        
-        if (isInvisible)
-        {
-            remainingDuration -= Time.deltaTime;
-
-            if (remainingDuration <= 0)
-            {
-                Visible();
-            }
-        }
+        spriteRenderer = GameManager.Instance.Player.GetComponent<SpriteRenderer>();
     }
 
     public void Invisible()
     {
-        if (CanUseSkill())
-        {
-            foreach (var rendererInfo in renderersInfo)
-            {
-                if (rendererInfo.Renderer != null && cloakingMat != null)
-                {
-                    rendererInfo.Renderer.material = cloakingMat;
-                }
-            }
-            isInvisible = true;
-            remainingDuration = duration;
-        }
+        StartCoroutine(InvisibleCoroutine());
     }
-
-    public void Visible()
+    
+    private IEnumerator InvisibleCoroutine()
     {
-        if (isInvisible)
-        {
-            foreach (var rendererInfo in renderersInfo)
-            {
-                if (rendererInfo.Renderer != null && rendererInfo.OriginalMaterial != null)
-                {
-                    rendererInfo.Renderer.material = rendererInfo.OriginalMaterial;
-                }
-            }
-            isInvisible = false;
-            currentCooldown = cooldown;
-            remainingDuration = 0f;
-        }
-    }
+        Color currentColor = spriteRenderer.color;
 
-    public bool CanUseSkill()
-    {
-        return currentCooldown <= 0 && !isInvisible && 
-               renderersInfo.Count > 0 && cloakingMat != null;
+        spriteRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, 0.3f);
+        
+        yield return new WaitForSeconds(duration);
+        
+        spriteRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, 1);
+        
+        Destroy(gameObject);
     }
-
+    
     public override SkillState GetInitialState()
     {
         return new InvisibilityState(this);

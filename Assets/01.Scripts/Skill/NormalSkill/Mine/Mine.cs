@@ -5,27 +5,43 @@ using UnityEngine;
 public class Mine : Skill
 {
     [SerializeField] private GameObject MinePrefab;
+    public float spawnRadius;
     private GameObject currentMine;
 
-    public void MineInstall(Vector3 targetPosition)
+    private void Start()
     {
+        spawnRadius = GameManager.Instance.playerData.currentWeapon.attackRange;
+    }
+    
+    public void MineInstall()
+    {
+        float angle = Random.Range(0f, 360f);
+        float distance = Random.Range(0f, spawnRadius);
         
-        currentMine = Instantiate(MinePrefab, targetPosition, Quaternion.identity);
-        SoundManager.Instance.PlaySFX(SFXSoundType.Skill_Mine);
+        float angleRad = angle * Mathf.Deg2Rad;
+        
+        Vector2 spawnPosition = new Vector2(
+            transform.position.x + Mathf.Cos(angleRad) * distance,
+            transform.position.y + Mathf.Sin(angleRad) * distance
+        );
+        
+        currentMine = Instantiate(MinePrefab, spawnPosition, Quaternion.identity);
+        //SoundManager.Instance.PlaySFX(SFXSoundType.Skill_Mine);
         
         Vector3 direction = Vector3.zero;
         
         Projectile pr = currentMine.GetComponent<Projectile>();
-
+    
         if (pr != null)
         {
-            Debug.Log("넘김");
             pr.Initialize(direction, damage);
         }
+        
+        Destroy(gameObject);
     }
     
     public override SkillState GetInitialState()
     {
-        return new MinePreparingState(this);
+        return new MineInstallState(this);
     }
 }

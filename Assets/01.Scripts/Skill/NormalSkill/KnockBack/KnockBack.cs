@@ -1,50 +1,58 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class KnockBack : Skill
 {
-    [SerializeField] private GameObject knockbackProjectilePrefab;
-    [SerializeField] private float projectileLifetime = 5f;
-    private Transform firePoint;
+    public float pushRadius;
+    public float pushForce = 10f;
+    public LayerMask targetLayer;
     
+    private HashSet<Collider2D> pushedObjects = new HashSet<Collider2D>();
+
     private void Start()
     {
-        firePoint = GameManager.Instance.Player.GetComponent<WeaponManager>().firePoint;
+        pushRadius = GameManager.Instance.playerData.currentWeapon.attackRange;
     }
-    
-    public void FireProjectile()
+
+    public void KnockBackObject()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        Vector3 targetPosition;
-            
-        if (Physics.Raycast(ray, out hit))
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, pushRadius, targetLayer);
+
+        foreach (var hitCollider in hitColliders)
         {
-            targetPosition = new Vector3(hit.point.x, firePoint.position.y, hit.point.z);
-        }
-        else
-        {
-            targetPosition = ray.GetPoint(1000f);
-            targetPosition.y = firePoint.position.y;
-        }
-            
-        Vector3 direction = (targetPosition - firePoint.position).normalized;
-            
-        GameObject projectileObj = Instantiate(knockbackProjectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
-            
-        KnockbackProjectile projectile = projectileObj.GetComponent<KnockbackProjectile>();
-            
-        if (projectile != null)
-        {
-            projectile.Initialize(direction, damage);
+            if (!pushedObjects.Contains(hitCollider))
+            {
+                pushedObjects.Add(hitCollider);
+
+                Vector2 pushDirection = hitCollider.transform.position - transform.position;
+                pushDirection.Normalize();
+
+                Rigidbody2D rb = hitCollider.GetComponent<Rigidbody2D>();
+                
+                if (rb != null)
+                {
+                    float distance = Vector2.Distance(transform.position, hitCollider.transform.position);
+                    float forceMultiplier = Mathf.Clamp01(1 - (distance / pushRadius));
+
+                    rb.drag = 5f; // 저항 추가
+                    rb.AddForce(pushDirection * (pushForce * forceMultiplier), ForceMode2D.Impulse);
+
+                    // 속도 제한
+                    float maxSpeed = 10f;
+                    if (rb.velocity.magnitude > maxSpeed)
+                    {
+                        rb.velocity = rb.velocity.normalized * maxSpeed;
+                    }
+                }
+            }
         }
         
-        SoundManager.Instance.PlaySFX(SFXSoundType.Skill_KnockBack);
-            
-        Destroy(projectile, projectileLifetime);
+        Destroy(gameObject);
     }
     
     public override SkillState GetInitialState()
     {
-        return new KnockBackFiringState(this);
+        return new KnockBackState(this);
     }
 }

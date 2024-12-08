@@ -5,22 +5,21 @@ using UnityEngine;
 public class TurretInstallState : SkillState
 {
     private Turret _turret;
-    private Vector3 targetPosition;
     
-    public TurretInstallState(Skill skill, Vector3 target) : base(skill)
+    public TurretInstallState(Skill skill) : base(skill)
     {
         _turret = skill as Turret;
-        targetPosition = target;
+        
     }
 
     public override void EnterState()
     {
-        _turret.TurretInstall(targetPosition);
+        _turret.TurretInstall();
     }
 
     public override void UpdateState()
     {
-        Object.Destroy(_turret.gameObject);
+        
     }
 
     public override void ExitState()

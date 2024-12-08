@@ -3,89 +3,90 @@ using UnityEngine;
 
 public class TurretObject : Projectile
 {
-    [SerializeField] private LayerMask targetLayer;        // 감지할 대상의 레이어
-    [SerializeField] private float detectionRadius = 10f;  // 감지 범위
-    [SerializeField] private float attackInterval = 1f;    // 공격 간격
-    [SerializeField] private GameObject projectilePrefab;  // 발사체 프리팹
-    [SerializeField] private Transform firePoint;          // 발사 위치
-    [SerializeField] private Transform turretHead;         // 회전할 터렛 헤드 (자식 오브젝트)
-    [SerializeField] private float duration = 10f;         // 터렛 지속시간 (초)
-
-    private Transform target;                              // 현재 타겟
-    private float destroyTime;                            // 터렛이 파괴될 시간
-
+    public RaycastHit2D[] targets;
+    public float detectingRange;
+    public LayerMask targetLayer;
+    public Transform nearestTarget;
+    public GameObject bulletPrefab;
+    public float duration;
+    
+    [SerializeField] private float attackSpeed; // 초당 공격 횟수
+    private float lastAttackTime = 0f; // 마지막 공격 시간
+    private float spawnTime;
+    
     private void Start()
     {
-        //base.Start();
-        destroyTime = Time.time + duration;
+        spawnTime = Time.time;
     }
 
     private void Update()
     {
-        base.Update();
-        
-        // 지속시간이 끝나면 터렛 파괴
-        if (Time.time >= destroyTime)
+        if (Time.time - spawnTime >= duration)
         {
             Destroy(gameObject);
+            return;
         }
+        
+        base.Update();
+    }
+    
+    public void AttackingTarget()
+    {
+        if (nearestTarget != null && Time.time >= lastAttackTime + (1f / attackSpeed))
+        {
+            GameObject spawnedBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+
+            // 방향 계산
+            Vector3 targetPosition = nearestTarget.transform.position;
+            Vector2 direction = (targetPosition - transform.position).normalized;
+
+            // 회전 계산
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.Euler(0, 0, angle - 90);
+
+            // 총알 회전 적용
+            spawnedBullet.transform.rotation = rotation;
+
+            if (spawnedBullet.TryGetComponent<StandardProjectile>(out StandardProjectile projectile))
+            {
+                projectile.Initialize(direction, damage);
+            }
+
+            // 마지막 공격 시간 업데이트
+            lastAttackTime = Time.time;
+        }
+    }
+    
+    public void DetectingEnemy()
+    {
+        targets = Physics2D.CircleCastAll(transform.position, detectingRange, Vector2.zero, 0, targetLayer);
+
+        nearestTarget = GetNearest();
+    }
+    
+    private Transform GetNearest()
+    {
+        Transform result = null;
+        float diff = 100;
+
+        foreach (RaycastHit2D target in targets)
+        {
+            Vector3 myPos = transform.position;
+            Vector3 targetPos = target.transform.position;
+            float curDiff = Vector3.Distance(myPos, targetPos);
+
+            if (curDiff < diff)
+            {
+                diff = curDiff;
+                result = target.transform;
+            }
+        }
+
+        return result;
     }
     
     protected override ProjectileState GetInitialState()
     {
         return new TurretObjDetectingState(this);
     }
-
-    // 발사체 발사 메서드
-    public void FireProjectile(Vector3 direction)
-    {
-        if (projectilePrefab != null && firePoint != null)
-        {
-            GameObject projectileObj = Instantiate(projectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
-            
-            StandardProjectile pr = projectileObj.GetComponent<StandardProjectile>();
-            
-            if (pr != null)
-            {
-                pr.Initialize(direction, damage);
-            }
-        }
-    }
-
-    // 타겟을 향해 터렛 헤드를 회전시키는 메서드
-    public void RotateTurretHead(Vector3 targetPosition)
-    {
-        if (turretHead != null)
-        {
-            // 타겟 방향 계산 (Y축 회전만 적용)
-            Vector3 directionToTarget = targetPosition - turretHead.position;
-            directionToTarget.y = 0; // Y축 높이 차이 무시
-
-            if (directionToTarget != Vector3.zero)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(directionToTarget);
-                turretHead.rotation = lookRotation;
-            }
-        }
-    }
-
-    // 타겟 탐색 메서드
-    public Transform DetectTarget()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, targetLayer);
-        
-        if (colliders.Length > 0)
-        {
-            return colliders[0].transform;
-        }
-        
-        return null;
-    }
-
-    // 게터/세터 메서드들
-    public float GetAttackInterval() => attackInterval;
-    public Transform GetTarget() => target;
-    public void SetTarget(Transform newTarget) => target = newTarget;
-    public float GetDetectionRadius() => detectionRadius;
-    public float GetRemainingTime() => Mathf.Max(0, destroyTime - Time.time);
 }

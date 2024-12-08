@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb8d0de68db3a04a8e2244289c33ad5, type: 3}
   m_Name: Sniper
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 0}
   characterPrefab: {fileID: 8250591972788044732, guid: 80175a3a64cf9884e9f817cf18d44be1,
     type: 3}
   characterDisplay: {fileID: 6499000194494919818, guid: 5f742be40d7cfe94ebd2f15f1027dfbb,
@@ -23,6 +22,6 @@ MonoBehaviour:
   weaponType: 3
   baseDamage: 25
   attackSpeed: 1
-  Ammo: 5
-  projectilePrefab: {fileID: 5938167112633497377, guid: bc718012c21bdfc48981cc6f1bddbeed,
+  attackRange: 10
+  projectilePrefab: {fileID: 1191633118959278913, guid: 6d48aa53cc5cefc4bbb4634e1220d8bf,
     type: 3}

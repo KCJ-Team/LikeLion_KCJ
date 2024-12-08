@@ -9,7 +9,8 @@ public class InputManager : DD_Singleton<InputManager>
         // 수평 및 수직 입력을 가져옵니다.
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        // 정규화된 2D 벡터를 반환합니다.
+        
+        
         return new Vector2(horizontal, vertical).normalized;
     }
 }

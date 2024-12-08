@@ -15,13 +15,13 @@ public static class ExtensionMethods
         {
             if (_slot.Value.card.Id >= 0)
             {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.GetItemObject().uiDisplay;
+                //_slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.GetItemObject().uiDisplay;
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
             }
             else
             {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
+                //_slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
             }

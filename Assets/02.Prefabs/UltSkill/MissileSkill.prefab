@@ -45,12 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  cooldown: 15
-  EffectPrefab: {fileID: 2348986143147364520, guid: 8c6cde8dbb8347aab27e692b0c8d4032,
+  cooldown: 0
+  missileCount: 3
+  spawnInterval: 0.5
+  spawnRadius: 2
+  missilePrefab: {fileID: 5711343108617512066, guid: c7c628754ba3843469ec671fb1f556ee,
     type: 3}
-  damageRadius: 5
-  damageInterval: 0.5
-  damageDuration: 8
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256

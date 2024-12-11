@@ -20,7 +20,7 @@ MonoBehaviour:
   type: 1
   grade: 0
   weaponType: 1
-  baseDamage: 0
+  baseDamage: 5
   attackSpeed: 1.5
   attackRange: 3
   projectilePrefab: {fileID: 1191633118959278913, guid: 6d48aa53cc5cefc4bbb4634e1220d8bf,

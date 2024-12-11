@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -6,6 +6,7 @@ public class ShadowClone : Skill
 {
     private GameObject player;
     private GameObject clone;
+    public float duration;
     public float spawnRadius = 5f;
 
     private void Awake()
@@ -33,7 +34,7 @@ public class ShadowClone : Skill
         clone = Instantiate(player, spawnPosition, Quaternion.identity);
         DestroyComponents();
         
-        Destroy(gameObject);
+        GameManager.Instance.Player = clone;
     }
 
     private void DestroyComponents()
@@ -41,6 +42,21 @@ public class ShadowClone : Skill
         Destroy(clone.GetComponent<PlayerController>());
         Destroy(clone.GetComponent<PlayerSkillController>());
         Destroy(clone.GetComponent<PlayerDecteting>());
+    }
+
+    public void DestroyCloneObject()
+    {
+        StartCoroutine(DestroyClone());
+    }
+    
+    private IEnumerator DestroyClone()
+    {
+        yield return new WaitForSeconds(duration);
+        
+        GameManager.Instance.Player = player;
+        
+        Destroy(clone);
+        Destroy(gameObject);
     }
     
     public override SkillState GetInitialState()

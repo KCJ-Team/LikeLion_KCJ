@@ -80,7 +80,7 @@ public class Status : MonoBehaviour
                     playerData.currentWeapon.attackSpeed += effect.value; //공격속도 증가
                     break;
                 case BuffType.AttackPower:
-                    playerData.AttackPower += effect.value; //공격력 증가 근데 무기에 따른 공격력을 변화 해야될지도
+                    playerData.AttackPower += effect.value;
                     break;
                 case BuffType.Defense:
                     playerData.Defense += effect.value;
@@ -90,7 +90,6 @@ public class Status : MonoBehaviour
     }
     
     // 버프 효과 제거
-    // 적용된 효과를 원래대로 되돌림
     private void RemoveBuffEffect(Buff buff)
     {
         foreach (var effect in buff.effects)

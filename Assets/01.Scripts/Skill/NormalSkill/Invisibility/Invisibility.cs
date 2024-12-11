@@ -20,11 +20,15 @@ public class Invisibility : Skill
     
     private IEnumerator InvisibleCoroutine()
     {
+        GameManager.Instance.playerData.IsInvisable = true;
+        
         Color currentColor = spriteRenderer.color;
 
         spriteRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, 0.3f);
         
         yield return new WaitForSeconds(duration);
+        
+        GameManager.Instance.playerData.IsInvisable = false;
         
         spriteRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, 1);
         

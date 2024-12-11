@@ -12,6 +12,7 @@ public class ShadowCloneState : SkillState
     public override void EnterState()
     {
         shadowClone.SpawnClone();
+        shadowClone.DestroyCloneObject();
     }
 
     public override void UpdateState()

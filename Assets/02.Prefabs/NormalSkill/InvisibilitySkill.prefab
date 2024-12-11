@@ -45,5 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  cooldown: 5
+  cooldown: 0
   duration: 3
+  spriteRenderer: {fileID: 0}

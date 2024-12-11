@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private GameObject bullet;
     
     //공격 관련 변수들
-    private float attackSpeed; // 초당 공격 횟수
+    //private float attackSpeed; // 초당 공격 횟수
     private float lastAttackTime = 0f; // 마지막 공격 시간
     private int shotgunBulletCount = 5; // 산탄 총알 개수
     private float shotgunSpreadAngle = 30f; // 산탄 퍼짐 각도
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     {
         weaponType = playerData.currentWeapon.weaponType;
         //moveSpeed = playerData.MoveSpeed;
-        attackSpeed = playerData.currentWeapon.attackSpeed;
+        //attackSpeed = playerData.currentWeapon.attackSpeed;
         bullet = playerData.currentWeapon.projectilePrefab;
     }
     
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
     private void AutoAttack()
     {
         // 가장 가까운 타겟이 있고, 공격 쿨다운이 지났는지 확인
-        if (playerDecteting.nearestTarget != null && Time.time >= lastAttackTime + (1f / attackSpeed))
+        if (playerDecteting.nearestTarget != null && Time.time >= lastAttackTime + (1f / playerData.currentWeapon.attackSpeed))
         {
             GameObject spawnedBullet = Instantiate(bullet, transform.position, Quaternion.identity);
 
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
     private void ShotGunAttack()
     {
         // 가장 가까운 타겟이 있고, 공격 쿨다운이 지났는지 확인
-        if (playerDecteting.nearestTarget != null && Time.time >= lastAttackTime + (1f / attackSpeed))
+        if (playerDecteting.nearestTarget != null && Time.time >= lastAttackTime + (1f / playerData.currentWeapon.attackSpeed))
         {
             // 기본 방향 계산
             Vector3 targetPosition = playerDecteting.nearestTarget.transform.position;

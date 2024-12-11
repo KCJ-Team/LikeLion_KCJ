@@ -18,7 +18,7 @@ public class PlayerDamageable : DamageableObject
             TakeDamage(projectileDamage);
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyDamage"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             MonsterDamageValue monsterDamageValue = other.gameObject.GetComponent<MonsterDamageValue>();
             

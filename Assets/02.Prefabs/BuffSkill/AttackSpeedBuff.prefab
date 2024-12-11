@@ -51,4 +51,4 @@ MonoBehaviour:
     type: 3}
   buffEffects:
   - type: 3
-    value: 1.5
+    value: 10

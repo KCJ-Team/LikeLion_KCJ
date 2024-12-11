@@ -13,7 +13,7 @@ public class BlackHoleActiveState : ProjectileState
 
     public override void EnterState()
     {
-        
+        blackHoleProjectile.DestroyBlackhole();
     }
 
     public override void UpdateState()

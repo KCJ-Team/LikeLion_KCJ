@@ -7,6 +7,7 @@ public class BlackHoleProjectile : Projectile
 {
     protected Vector3 direction;
     
+    public float duration;
     public float attractionForce = 10f;  // 끌어당기는 힘의 세기
     public float attractionRadius = 5f;  // 영향을 미치는 반경
     public float maxSpeed = 3f;  // 최대 이동 속도 제한
@@ -74,6 +75,17 @@ public class BlackHoleProjectile : Projectile
                 }
             }
         }
+    }
+
+    public void DestroyBlackhole()
+    {
+        StartCoroutine(DestroyObject());
+    }
+    
+    private IEnumerator DestroyObject()
+    {
+        yield return new WaitForSeconds(duration);
+        Destroy(gameObject);
     }
     
     protected override ProjectileState GetInitialState()

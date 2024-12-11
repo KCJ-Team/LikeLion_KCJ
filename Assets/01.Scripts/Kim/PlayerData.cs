@@ -15,6 +15,8 @@ public class PlayerData : ScriptableObject
     public float AttackPower;
     public float Defense;
     
+    public bool IsInvisable = false;
+    
     // 현재 장착한 장비 및 인벤토리, equipment 데이터
     [Header("Skill and Inventory")]
     public WeaponCardObject currentWeapon;

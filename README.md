@@ -38,7 +38,7 @@
 
 ## 🎬 시연 영상
 
-- [📺 게임 플레이 데모 영상]([https://youtu.be/3vN_pJEplKI](https://www.youtube.com/watch?v=rs7eIDn_kDI))
+- [📺 게임 플레이 데모 영상](https://www.youtube.com/watch?v=rs7eIDn_kDI)
 
 ---
 
